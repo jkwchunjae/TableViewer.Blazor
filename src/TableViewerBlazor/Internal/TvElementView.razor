@@ -22,3 +22,9 @@
         <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" />
     </div>
 }
+@if (Data is string stringData)
+{
+    <div class="table-cell">
+        <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
+    </div>
+}

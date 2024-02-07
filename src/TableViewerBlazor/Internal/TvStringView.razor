@@ -1,0 +1,21 @@
+﻿@inherits TvViewBase
+
+@if (Data == string.Empty)
+{
+    <span class="empty-string">Empty</span>
+}
+else
+{
+    <span>@Data</span>
+}
+
+<style>
+    .empty-string {
+        color: #bbb;
+        font-style: italic;
+    }
+</style>
+
+@code {
+    [Parameter] public string Data { get; set; } = null!;
+}
