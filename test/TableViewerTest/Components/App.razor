@@ -7,11 +7,11 @@
     <base href="/" />
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="TableViewerTest.styles.css" />
-    <HeadOutlet />
+    <HeadOutlet @rendermode="RenderMode.InteractiveServer"/>
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="RenderMode.InteractiveServer"/>
     <script src="_framework/blazor.web.js"></script>
 </body>
 
