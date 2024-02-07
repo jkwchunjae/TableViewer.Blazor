@@ -4,5 +4,41 @@
 
 Welcome to your new app.
 
-<TableViewer />
+<TableViewer Data="person"/>
 
+<TableViewer Data="people"/>
+
+@code {
+    Person person = new Person
+        {
+            Id = 213,
+            Name = "User name",
+            Attributes = new Dictionary<string, object>
+            {
+                ["age"] = 12,
+            },
+        };
+
+    Person[] people = new Person[]
+    {
+        new Person
+        {
+            Id = 213,
+            Name = "User name",
+            Attributes = new Dictionary<string, object>
+            {
+                ["age"] = 12,
+            },
+        },
+        new Person
+        {
+            Id = 999,
+            Name = "second name",
+            Attributes = new Dictionary<string, object>
+            {
+                ["age"] = 12,
+                ["location"] = "France",
+            },
+        },
+    };
+}
