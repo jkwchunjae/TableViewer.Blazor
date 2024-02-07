@@ -7,4 +7,14 @@ public partial class TvElementView : TvViewBase
     [Parameter] public object? Data { get; set; }
 
     private bool IsNull => Data == null;
+    private bool IsNumber => Data switch
+    {
+        byte => true,
+        int => true,
+        long => true,
+        float => true,
+        double => true,
+        decimal => true,
+        _ => false,
+    };
 }

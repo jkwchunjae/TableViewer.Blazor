@@ -1,0 +1,28 @@
+﻿@inherits TvViewBase
+
+<span class="number @align">
+    @Data
+</span>
+
+<style>
+    :host {
+        display: flex;
+        align-items: center;
+    }
+    .number {
+        display: block;
+        color: #00f;
+    }
+    .right {
+        text-align: right;
+        padding-right: 1em;
+    }
+</style>
+
+@code {
+    [Parameter] public object Data { get; set; } = null!;
+
+    [Parameter] public bool AlighRight { get; set; } = false;
+
+    private string align => AlighRight ? "right" : string.Empty;
+}
