@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using TableViewerBlazor.Options;
 
 namespace TableViewerBlazor.Internal;
 
