@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace TableViewerBlazor;
+namespace TableViewerBlazor.Internal;
 
 public class TvViewBase : ComponentBase
 {
