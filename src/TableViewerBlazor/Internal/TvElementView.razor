@@ -1,4 +1,6 @@
 ﻿@inherits TvViewBase
 
-<h3>TvElementView</h3>
-
+@if (IsNull)
+{
+    <TvNullView />
+}
