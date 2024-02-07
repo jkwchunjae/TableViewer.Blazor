@@ -4,25 +4,25 @@
 {
     <TvNullView />
 }
-@if (IsNumber)
+else if (IsNumber)
 {
     <div class="table-cell">
         <TvNumberView Data="Data!" Options="Options" Depth="Depth" />
     </div>
 }
-@if (Data is bool boolData)
+else if (Data is bool boolData)
 {
     <div class="table-cell">
         <TvBooleanView Data="boolData" Options="Options" Depth="Depth" />
     </div>
 }
-@if (Data is DateTime datetimeData)
+else if (Data is DateTime datetimeData)
 {
     <div class="table-cell">
         <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" />
     </div>
 }
-@if (Data is string stringData)
+else if (Data is string stringData)
 {
     <div class="table-cell">
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
