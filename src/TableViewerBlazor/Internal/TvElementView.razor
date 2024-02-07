@@ -6,9 +6,19 @@
 }
 @if (IsNumber)
 {
-    <TvNumberView Data="Data!" Options="Options" Depth="Depth" />
+    <div class="table-cell">
+        <TvNumberView Data="Data!" Options="Options" Depth="Depth" />
+    </div>
 }
 @if (Data is bool boolData)
 {
-    <TvBooleanView Data="boolData" Options="Options" Depth="Depth" />
+    <div class="table-cell">
+        <TvBooleanView Data="boolData" Options="Options" Depth="Depth" />
+    </div>
+}
+@if (Data is DateTime datetimeData)
+{
+    <div class="table-cell">
+        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" />
+    </div>
 }
