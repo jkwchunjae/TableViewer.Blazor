@@ -1,10 +1,14 @@
 ﻿@inherits TvViewBase
 
-@if (IsNull)
+@if (Data is null)
 {
     <TvNullView />
 }
 @if (IsNumber)
 {
     <TvNumberView Data="Data!" Options="Options" Depth="Depth" />
+}
+@if (Data is bool boolData)
+{
+    <TvBooleanView Data="boolData" Options="Options" Depth="Depth" />
 }

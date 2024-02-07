@@ -6,7 +6,6 @@ public partial class TvElementView : TvViewBase
 {
     [Parameter] public object? Data { get; set; }
 
-    private bool IsNull => Data == null;
     private bool IsNumber => Data switch
     {
         byte => true,

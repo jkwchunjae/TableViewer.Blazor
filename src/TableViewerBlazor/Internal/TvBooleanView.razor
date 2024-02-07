@@ -1,0 +1,27 @@
+﻿@inherits TvViewBase
+
+@if (Data)
+{
+    <span class="value-true">TRUE</span>
+}
+else
+{
+    <span class="value-false">FALSE</span>
+}
+
+<style>
+    :host {
+        display: flex;
+        align-items: center;
+    }
+    .value-true {
+        font-weight: bold;
+    }
+    .value-false {
+        color: #999;
+    }
+</style>
+
+@code {
+    [Parameter] public bool Data { get; set; }
+}
