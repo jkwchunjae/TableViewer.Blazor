@@ -1,4 +1,5 @@
 ﻿@inherits TvViewBase
+@using System.Collections
 
 @if (Data is null)
 {
@@ -26,5 +27,11 @@ else if (Data is string stringData)
 {
     <div class="table-cell">
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
+    </div>
+}
+else if (Data is IEnumerable enumerableData)
+{
+    <div class="table-cell">
+        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" />
     </div>
 }

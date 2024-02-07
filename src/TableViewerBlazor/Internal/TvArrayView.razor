@@ -1,0 +1,44 @@
+@inherits TvViewBase
+
+<div class="table-wrapper">
+  @if (Open)
+  {
+  <table class="table-viewer">
+    <thead>
+      <tr>
+        <th @onclick="ToggleOpen">
+          (@all.Count() items)
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var (index, item) in DataArray)
+      {
+        <tr>
+          <td class="index">@index</td>
+          <td class="item">
+            <TvElementView Data="@item" Options="Options" Depth="Depth + 1"/>
+          </td>
+        </tr>
+      }
+      @if (HasMoreItems)
+      {
+        <tr>
+          <td class="index"></td>
+          <td>
+            <button @onclick="@(() => MoreItems())">
+              more
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  }
+  else
+  {
+    <div class="title" @onclick="ToggleOpen">
+      array (length: @all.Count())
+    </div>
+  }
+</div>
