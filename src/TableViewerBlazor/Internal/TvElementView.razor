@@ -29,9 +29,15 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
-else if (Data is IEnumerable enumerableData)
+else if (Data is IEnumerable enumerableData && !(Data is IDictionary))
 {
     <div class="table-cell">
         <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" />
+    </div>
+}
+else
+{
+    <div class="table-cell">
+        <TvObjectView Data="Data" Options="Options" Depth="Depth" />
     </div>
 }
