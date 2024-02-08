@@ -6,8 +6,12 @@
   <table class="table-viewer">
     <thead>
       <tr>
-        <th @onclick="ToggleOpen">
-          (@all.Count() items)
+        <th @onclick="ToggleOpen" class="title" colspan="2">
+          <div class="title-wrap">
+            <span class="key-name">
+              (@all.Count() items)
+            </span>
+          </div>
         </th>
       </tr>
     </thead>
@@ -42,3 +46,21 @@
     </div>
   }
 </div>
+
+<style>
+  .index {
+    font-style: italic;
+    color: #999;
+    text-align: right;
+    min-width: 40px;
+    border: 1px solid #ddd;
+    border-right: 0px;
+    padding-right: 5px;
+  }
+  .item {
+    border: 1px solid #ddd;
+    border-left: 0px;
+    padding-left: 5px;
+    min-width: 100px;
+  }
+</style>
