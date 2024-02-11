@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableViewerTest", "TableVie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableViewerBlazor", "..\src\TableViewerBlazor\TableViewerBlazor.csproj", "{6940E364-7F79-41EC-87CE-A347CEEAD070}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{9B21699D-C3B6-4CD5-8F4D-DD552CF496EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6940E364-7F79-41EC-87CE-A347CEEAD070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6940E364-7F79-41EC-87CE-A347CEEAD070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6940E364-7F79-41EC-87CE-A347CEEAD070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B21699D-C3B6-4CD5-8F4D-DD552CF496EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B21699D-C3B6-4CD5-8F4D-DD552CF496EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B21699D-C3B6-4CD5-8F4D-DD552CF496EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B21699D-C3B6-4CD5-8F4D-DD552CF496EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
