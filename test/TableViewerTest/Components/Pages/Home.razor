@@ -10,8 +10,16 @@ Welcome to your new app.
 
 <TableViewer Data="people"/>
 
+<TableViewer Data="peopleRecord"/>
+
+<table>
+    <tr>
+        <td>test</td>
+    </tr>
+</table>
+
 @code {
-    object test = "hihi";
+    object test = new object? [] {null, 2, null, 2, 3,};
     Person person = new Person
         {
             Id = 213,
@@ -31,6 +39,8 @@ Welcome to your new app.
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
+                ["true"] = true,
+                ["false"] = false,
             },
         },
         new Person
@@ -43,5 +53,29 @@ Welcome to your new app.
                 ["location"] = "France",
             },
         },
+    };
+
+    PersonRecord[] peopleRecord = new PersonRecord[]
+    {
+        null,
+        new PersonRecord(
+            Id: 213,
+            Name: "User name",
+            Attributes: new Dictionary<string, object>
+            {
+                ["age"] = 12,
+                ["true"] = true,
+                ["false"] = false,
+            }
+        ),
+        new PersonRecord(
+            Id: 999,
+            Name: "second name",
+            Attributes: new Dictionary<string, object>
+            {
+                ["age"] = 12,
+                ["location"] = "France",
+            }
+        ),
     };
 }

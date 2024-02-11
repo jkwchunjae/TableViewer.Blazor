@@ -6,3 +6,5 @@ public class Person
     public string? Name { get; set; }
     public Dictionary<string, object> Attributes { get; set; }
 }
+
+public record PersonRecord(int Id, string? Name, Dictionary<string, object> Attributes);
