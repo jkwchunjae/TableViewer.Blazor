@@ -30,7 +30,12 @@ internal static class TypeCheckHelper
             if (dataType.GenericTypeArguments.Length == 1)
             {
                 var nestedType = dataType.GenericTypeArguments[0];
-                return nestedType.IsObject();
+                if (nestedType.IsObject())
+                {
+                    return true;
+                }
+                var firstType = arr.Cast<object?>().FirstOrDefault()?.GetType();
+                return firstType?.IsObject() ?? false;
             }
             else
             {
