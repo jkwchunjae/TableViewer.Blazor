@@ -31,9 +31,9 @@ else if (Data is string stringData)
 }
 else if (IsObjectArray)
 {
+    var array = (Data as IEnumerable)!.Cast<object?>();
     <div class="table-cell">
-        object array
-        @* <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" /> *@
+        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" />
     </div>
 }
 else if (Data is IEnumerable enumerableData && !(Data is IDictionary))
