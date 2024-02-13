@@ -51,6 +51,10 @@ internal static class TypeCheckHelper
         {
             return false;
         }
+        if (type == typeof(DateTime))
+        {
+            return false;
+        }
         if (type.IsPrimitive)
         {
             return false;
