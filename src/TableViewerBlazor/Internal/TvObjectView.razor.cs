@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Reflection;
 using Microsoft.AspNetCore.Components;
 
 namespace TableViewerBlazor.Internal;
@@ -25,14 +24,20 @@ public partial class TvObjectView : TvViewBase
 
     private IEnumerable<(object Key, object? Value)> Convert(object obj)
     {
-        var fields = obj.GetType()
-            .GetFields()
-            .Select(f => (f.Name, f.GetValue(obj)));
-        var properties = obj.GetType()
-            .GetProperties()
-            .Select(p => (p.Name, p.GetValue(obj)));
+        var properties = obj.GetType().GetProperties()
+            .Where(p => p.Name != "Parser")
+            .Where(p => p.Name != "Descriptor")
+            ;
 
-        return fields.Concat(properties)
-            .Select(x => ((object)x.Name, x.Item2));
+        foreach (var property in properties.Where(p => p.PropertyType != typeof(Type)))
+        {
+            yield return (property.Name, property.GetValue(obj));
+        }
+
+        //var fields = obj.GetType().GetFields();
+        //foreach (var field in fields.Where(f => f.IsPublic).Where(f => f.FieldType != typeof(Type)))
+        //{
+        //    yield return (field.Name, field.GetValue(obj));
+        //}
     }
 }

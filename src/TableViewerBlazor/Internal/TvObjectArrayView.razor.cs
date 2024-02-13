@@ -28,11 +28,11 @@ public partial class TvObjectArrayView : TvViewBase
         {
             return property.GetValue(item);
         }
-        var field = dataType?.GetField(key);
-        if (field != null)
-        {
-            return field.GetValue(item);
-        }
+        //var field = dataType?.GetField(key);
+        //if (field != null)
+        //{
+        //    return field.GetValue(item);
+        //}
         return null;
     }
 }
@@ -42,13 +42,23 @@ public static class ObjectArrayHelper
     public static IEnumerable<string> GetKeys(this object? data)
     {
         if (data == null)
-            return Enumerable.Empty<string>();
+            yield break;
 
         var dataType = data.GetType();
-        var properties = dataType.GetProperties();
-        var fields = dataType.GetFields();
 
-        return properties.Select(p => p.Name)
-            .Concat(fields.Select(f => f.Name));
+        var properties = dataType.GetProperties()
+            .Where(p => p.Name != "Parser")
+            .Where(p => p.Name != "Descriptor")
+            ;
+        foreach (var property in properties)
+        {
+            yield return property.Name;
+        }
+
+        //var fields = dataType.GetFields();
+        //foreach (var field in fields)
+        //{
+        //    yield return field.Name;
+        //}
     }
 }
