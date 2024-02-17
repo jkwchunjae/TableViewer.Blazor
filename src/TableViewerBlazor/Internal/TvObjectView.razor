@@ -1,33 +1,44 @@
 @inherits TvViewBase
 
 <div>
-  <table class="table-viewer">
-    <thead>
-      <tr>
-        <th colspan="2" class="title">
-          <div class="title-wrap">
-            <span class="key-name">
-              @Items.Count() keys
-            </span>
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var (key, value) in Items)
-      {
+  @if (Open)
+  {
+    <table class="table-viewer">
+      <thead>
         <tr>
-          <td class="name">@key</td>
-          <td class="value">
-            <TvElementView
-              Parent="@this"
-              Data="value"
-              Options="Options"
-              Depth="Depth + 1"
-            />
-          </td>
+          <th colspan="2" class="title" @onclick="ToggleOpen">
+            <div class="title-wrap">
+              <span class="key-name">
+                @Items.Count() keys
+              </span>
+            </div>
+          </th>
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @foreach (var (key, value) in Items)
+        {
+          <tr>
+            <td class="name">@key</td>
+            <td class="value">
+              <TvElementView
+                Parent="@this"
+                Data="value"
+                Options="Options"
+                Depth="Depth + 1"
+              />
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  else
+  {
+    <div class="title title-wrap" @onclick="ToggleOpen">
+      <span class="key-name">
+        object ( @Items.Count() keys)
+      </span>
+    </div>
+  }
 </div>

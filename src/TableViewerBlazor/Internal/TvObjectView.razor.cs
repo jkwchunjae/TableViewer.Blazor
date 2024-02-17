@@ -7,12 +7,23 @@ public partial class TvObjectView : TvViewBase
 {
     [Parameter] public object? Data { get; set; }
 
+    bool Open = false;
+
     private IEnumerable<(object Key, object? Value)> Items =>
         Data switch
         {
             IDictionary dictionary => Convert(dictionary),
             _ => Convert(Data!),
         };
+
+
+    protected override void OnInitialized()
+    {
+        if (Options != null)
+        {
+            Open = Depth <= Options.OpenDepth;
+        }
+    }
 
     private IEnumerable<(object Key, object? Value)> Convert(IDictionary dictionary)
     {
@@ -39,5 +50,10 @@ public partial class TvObjectView : TvViewBase
         //{
         //    yield return (field.Name, field.GetValue(obj));
         //}
+    }
+
+    private void ToggleOpen()
+    {
+        Open = !Open;
     }
 }
