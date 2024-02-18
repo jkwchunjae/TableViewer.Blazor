@@ -67,3 +67,31 @@ table.table-viewer {
     }
   }
 }
+
+.table-array, .table-object, .table-object-array {
+  .title {
+    background-color: #4c74b2;
+    color: #fff;
+    font-size: small;
+    padding: 2px;
+    cursor: pointer;
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+
+      .key-name {
+        margin: 0 16px 0 0;
+      }
+
+      .table-button-group {
+        display: inline-block;
+        visibility: hidden;
+      }
+
+      &:hover .table-button-group {
+        visibility: initial;
+      }
+    }
+  }
+}

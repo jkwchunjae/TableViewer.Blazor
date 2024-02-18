@@ -56,4 +56,26 @@ table.table-viewer tbody tr td {
   padding: 2px;
 }
 
+.table-array .title, .table-object .title, .table-object-array .title {
+  background-color: #4c74b2;
+  color: #fff;
+  font-size: small;
+  padding: 2px;
+  cursor: pointer;
+}
+.table-array .title .title-wrap, .table-object .title .title-wrap, .table-object-array .title .title-wrap {
+  display: flex;
+  align-items: center;
+}
+.table-array .title .title-wrap .key-name, .table-object .title .title-wrap .key-name, .table-object-array .title .title-wrap .key-name {
+  margin: 0 16px 0 0;
+}
+.table-array .title .title-wrap .table-button-group, .table-object .title .title-wrap .table-button-group, .table-object-array .title .title-wrap .table-button-group {
+  display: inline-block;
+  visibility: hidden;
+}
+.table-array .title .title-wrap:hover .table-button-group, .table-object .title .title-wrap:hover .table-button-group, .table-object-array .title .title-wrap:hover .table-button-group {
+  visibility: initial;
+}
+
 /*# sourceMappingURL=table-viewer.css.map */

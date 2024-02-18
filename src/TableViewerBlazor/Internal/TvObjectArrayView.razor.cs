@@ -6,18 +6,24 @@ public partial class TvObjectArrayView : TvViewBase
 {
     [Parameter] public IEnumerable<object?> Data { get; set; } = null!;
 
+    bool Open = false;
+
     IEnumerable<object?> array => Data ?? Enumerable.Empty<object?>();
 
     private string[] Keys = Array.Empty<string>();
+    private int TableColumns => Keys.Length + 1;
 
-    protected override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
             Keys = firstData.GetKeys().ToArray();
         }
-        return base.OnInitializedAsync();
+        if (Options != null)
+        {
+            Open = Depth <= Options.OpenDepth;
+        }
     }
 
     private object? GetValue(object? item, string key)
@@ -34,6 +40,11 @@ public partial class TvObjectArrayView : TvViewBase
         //    return field.GetValue(item);
         //}
         return null;
+    }
+
+    private void ToggleOpen()
+    {
+        Open = !Open;
     }
 }
 
