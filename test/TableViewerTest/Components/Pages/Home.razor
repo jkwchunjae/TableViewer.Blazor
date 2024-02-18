@@ -1,15 +1,19 @@
 ﻿@page "/"
+@inject IJSRuntime Js
 
 <PageTitle>Home</PageTitle>
 
 Welcome to your new app.
 
 <div style="padding-left: 40vw;">
-<TableViewer Data="test" />
+<TableViewer Data="test" Options="optionForTest"/>
 
 <TableViewer Data="person"/>
 
-<TableViewer Data="people"/>
+@if (optionForPeople != null)
+{
+    <TableViewer Data="people" Options="optionForPeople"/>
+}
 
 <TableViewer Data="peopleRecord"/>
 </div>
@@ -17,6 +21,22 @@ Welcome to your new app.
 
 @code {
     object test = new object? [] {null, 2, null, 2, 3,};
+    TvOptions optionForTest = new TvOptions
+    {
+        Actions = new List<ITvAction>()
+        {
+            new TvAction<int>
+            {
+                Label = "Console log",
+                Action = number =>
+                {
+                    Console.WriteLine(number);
+                    return Task.CompletedTask;
+                },
+            },
+        },
+    };
+    TvOptions? optionForPeople = null;
     Person person = new Person
         {
             Id = 213,
@@ -39,6 +59,19 @@ Welcome to your new app.
                 ["true"] = true,
                 ["false"] = false,
             },
+            People = new PersonRecord[]
+            {
+                new PersonRecord(
+                    Id: 213,
+                    Name: "User name",
+                    Attributes: new Dictionary<string, object>
+                    {
+                        ["age"] = 12,
+                        ["true"] = true,
+                        ["false"] = false,
+                    }
+                ),
+            }
         },
         new Person
         {
@@ -80,4 +113,32 @@ Welcome to your new app.
             }
         ),
     };
+
+    protected override void OnInitialized()
+    {
+        optionForPeople = new TvOptions
+        {
+            Actions = new List<ITvAction>()
+            {
+                new TvAction<Person>
+                {
+                    Condition = (person, depth) => true,
+                    Label = "Console log person",
+                    Action = async (person) =>
+                    {
+                        await ConsoleWrite(person);
+                    },
+                },
+                new TvAction<PersonRecord>
+                {
+                    Label = "Console log person record",
+                },
+            },
+        };
+    }
+
+    private async Task ConsoleWrite(object obj)
+    {
+        await Js.InvokeVoidAsync("console.log", obj);
+    }
 }

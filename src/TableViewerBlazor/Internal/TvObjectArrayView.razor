@@ -19,6 +19,7 @@
           {
             <th class="title">@key</th>
           }
+          <th class="title">...</th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,20 @@
                   />
                 </td>
               }
+              <td class="value">
+                @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+                {
+                  @if (action.Condition(item, Depth))
+                  {
+                    <button
+                      class="action"
+                      @onclick="() => action.Action(item)"
+                    >
+                      @action.Label
+                    </button>
+                  }
+                }
+              </td>
             }
           </tr>
         }
