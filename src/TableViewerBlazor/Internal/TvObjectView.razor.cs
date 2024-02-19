@@ -35,21 +35,27 @@ public partial class TvObjectView : TvViewBase
 
     private IEnumerable<(object Key, object? Value)> Convert(object obj)
     {
-        var properties = obj.GetType().GetProperties()
-            .Where(p => p.Name != "Parser")
-            .Where(p => p.Name != "Descriptor")
-            ;
-
-        foreach (var property in properties.Where(p => p.PropertyType != typeof(Type)))
+        if (Options?.ReadProperty ?? false)
         {
-            yield return (property.Name, property.GetValue(obj));
+            var properties = obj.GetType().GetProperties()
+                .Where(p => p.CanRead)
+                .Where(p => p.PropertyType != typeof(Type));
+            foreach (var property in properties)
+            {
+                yield return (property.Name, property.GetValue(obj));
+            }
         }
 
-        //var fields = obj.GetType().GetFields();
-        //foreach (var field in fields.Where(f => f.IsPublic).Where(f => f.FieldType != typeof(Type)))
-        //{
-        //    yield return (field.Name, field.GetValue(obj));
-        //}
+        if (Options?.ReadField ?? false)
+        {
+            var fields = obj.GetType().GetFields()
+                .Where(f => f.IsPublic)
+                .Where(f => f.FieldType != typeof(Type));
+            foreach (var field in fields)
+            {
+                yield return (field.Name, field.GetValue(obj));
+            }
+        }
     }
 
     private void ToggleOpen()

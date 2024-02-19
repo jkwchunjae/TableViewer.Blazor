@@ -18,7 +18,7 @@ public partial class TvObjectArrayView : TvViewBase
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
-            Keys = firstData.GetKeys().ToArray();
+            Keys = GetKeys(firstData).ToArray();
         }
         if (Options != null)
         {
@@ -34,11 +34,11 @@ public partial class TvObjectArrayView : TvViewBase
         {
             return property.GetValue(item);
         }
-        //var field = dataType?.GetField(key);
-        //if (field != null)
-        //{
-        //    return field.GetValue(item);
-        //}
+        var field = dataType?.GetField(key);
+        if (field != null)
+        {
+           return field.GetValue(item);
+        }
         return null;
     }
 
@@ -46,30 +46,34 @@ public partial class TvObjectArrayView : TvViewBase
     {
         Open = !Open;
     }
-}
 
-public static class ObjectArrayHelper
-{
-    public static IEnumerable<string> GetKeys(this object? data)
+    private IEnumerable<string> GetKeys(object? data)
     {
         if (data == null)
             yield break;
 
         var dataType = data.GetType();
 
-        var properties = dataType.GetProperties()
-            .Where(p => p.Name != "Parser")
-            .Where(p => p.Name != "Descriptor")
-            ;
-        foreach (var property in properties)
+        if (Options?.ReadProperty ?? false)
         {
-            yield return property.Name;
+            var properties = dataType.GetProperties()
+                .Where(p => p.CanRead)
+                .Where(p => p.PropertyType != typeof(Type));
+            foreach (var property in properties)
+            {
+                yield return property.Name;
+            }
         }
 
-        //var fields = dataType.GetFields();
-        //foreach (var field in fields)
-        //{
-        //    yield return field.Name;
-        //}
+        if (Options?.ReadField ?? false)
+        {
+            var fields = dataType.GetFields()
+                .Where(f => f.IsPublic)
+                .Where(f => f.FieldType != typeof(Type));
+            foreach (var field in fields)
+            {
+                yield return field.Name;
+            }
+        }
     }
 }
