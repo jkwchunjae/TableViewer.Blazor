@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Reflection;
 using Microsoft.AspNetCore.Components;
 
 namespace TableViewerBlazor.Internal;
@@ -9,12 +10,8 @@ public partial class TvObjectView : TvViewBase
 
     bool Open = false;
 
-    private IEnumerable<(object Key, object? Value)> Items =>
-        Data switch
-        {
-            IDictionary dictionary => Convert(dictionary),
-            _ => Convert(Data!),
-        };
+    private string[] Keys = Array.Empty<string>();
+    private IEnumerable<(string Key, object? Value)> Items = Enumerable.Empty<(string, object?)>();
 
 
     protected override void OnInitialized()
@@ -23,39 +20,60 @@ public partial class TvObjectView : TvViewBase
         {
             Open = Depth <= Options.OpenDepth;
         }
-    }
-
-    private IEnumerable<(object Key, object? Value)> Convert(IDictionary dictionary)
-    {
-        foreach (var key in dictionary.Keys)
+        if (Data != null)
         {
-            yield return (key, dictionary[key]);
+            var keys = GetKeys(Data);
+
+            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys, keyInfo => keyInfo.Key));
+            if (columnOption != null)
+            {
+                keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
+            }
+
+            Items = keys
+                .Select(keyInfo => (keyInfo.Key, GetValue(Data, keyInfo.MemberInfo)))
+                .ToArray();
         }
     }
 
-    private IEnumerable<(object Key, object? Value)> Convert(object obj)
+    private IEnumerable<(string Key, MemberInfo MemberInfo)> GetKeys(object data)
     {
+        if (data == null)
+            yield break;
+
+        var dataType = data.GetType();
+
         if (Options?.ReadProperty ?? false)
         {
-            var properties = obj.GetType().GetProperties()
+            var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
                 .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
-                yield return (property.Name, property.GetValue(obj));
+                yield return (property.Name, property);
             }
         }
 
         if (Options?.ReadField ?? false)
         {
-            var fields = obj.GetType().GetFields()
+            var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
                 .Where(f => f.FieldType != typeof(Type));
             foreach (var field in fields)
             {
-                yield return (field.Name, field.GetValue(obj));
+                yield return (field.Name, field);
             }
         }
+    }
+
+    private object? GetValue(object obj, MemberInfo memberInfo)
+    {
+        return memberInfo switch
+        {
+            PropertyInfo property => property.GetValue(obj, null),
+            FieldInfo field => field.GetValue(obj),
+            _ => null,
+        };
     }
 
     private void ToggleOpen()

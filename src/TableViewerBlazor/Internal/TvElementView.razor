@@ -29,6 +29,10 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
+else if (Data is IDictionary)
+{
+    <span>dictionary</span>
+}
 else if (IsObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();

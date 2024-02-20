@@ -10,8 +10,18 @@ public class TvColumnVisibleOption
         return Before.All(key => keys.Contains(key));
     }
 
+    public bool Matched<T>(IEnumerable<T> keys, Func<T, string> getKey)
+    {
+        return Before.All(before => keys.Any(key => getKey(key) == before));
+    }
+
     public IEnumerable<string> NewKeys(IEnumerable<string> keys)
     {
         return After.Where(key => keys.Contains(key));
+    }
+
+    public IEnumerable<T> NewKeys<T>(IEnumerable<T> keyInfos, Func<T, string> getKey)
+    {
+        return keyInfos.Where(keyInfo => After.Any(after => getKey(keyInfo) == after));
     }
 }
