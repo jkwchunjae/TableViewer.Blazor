@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTest")]
@@ -59,10 +60,23 @@ internal static class TypeCheckHelper
         {
             return false;
         }
+        if (CheckAnonymousType(type))
+        {
+            return true;
+        }
         if (type == typeof(object))
         {
             return false;
         }
         return true;
+
+        bool CheckAnonymousType(Type type)
+        {
+            // https://stackoverflow.com/questions/2483023/how-to-test-if-a-type-is-anonymous
+            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && type.Attributes.HasFlag(TypeAttributes.NotPublic);
+        }
     }
 }
