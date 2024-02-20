@@ -8,7 +8,7 @@ Welcome to your new app.
 <div style="padding-left: 40vw;">
 <TableViewer Data="test" Options="optionForTest"/>
 
-<TableViewer Data="person"/>
+<TableViewer Data="person" Options="personOption"/>
 
 @if (optionForPeople != null)
 {
@@ -46,6 +46,17 @@ Welcome to your new app.
                 ["age"] = 12,
             },
         };
+    TvOptions personOption = new TvOptions
+    {
+        ColumnVisible = new []
+        {
+            new TvColumnVisibleOption
+            {
+                Before = ["Id", "Name", "Attributes"],
+                After = ["Id", "Name"],
+            },
+        },
+    };
 
     Person[] people = new Person[]
     {
@@ -133,6 +144,14 @@ Welcome to your new app.
                 {
                     Label = "Console log person record",
                 },
+            },
+            ColumnVisible = new TvColumnVisibleOption[]
+            {
+                // new TvColumnVisibleOption
+                // {
+                //     Before = ["Id", "Name", "Attributes", "People"],
+                //     After = ["Id", "Name"],
+                // },
             },
         };
     }
