@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>0.0.3-alpha</Version>
+    <Version>0.0.4-alpha</Version>
     <Authors>jkwchunjae</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
