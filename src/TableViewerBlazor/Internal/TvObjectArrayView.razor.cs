@@ -23,12 +23,15 @@ public partial class TvObjectArrayView : TvViewBase
             var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys));
             if (columnOption != null)
             {
-                Keys = columnOption.NewKeys(keys).ToArray();
+                keys = columnOption.NewKeys(keys).ToArray();
             }
-            else
+            if (Options?.DisableKeys?.Any() ?? false)
             {
-                Keys = keys.ToArray();
+                keys = keys
+                    .Where(key => Options!.DisableKeys!.All(disable => disable != key));
             }
+
+            Keys = keys.ToArray();
         }
         if (Options != null)
         {

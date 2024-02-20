@@ -8,4 +8,5 @@ public class TvOptions
     public bool ReadField { get; set; } = true;
     public IEnumerable<ITvAction>? Actions { get; set; }
     public IEnumerable<TvColumnVisibleOption>? ColumnVisible { get; set; }
+    public IEnumerable<string>? DisableKeys { get; set; }
 }

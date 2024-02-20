@@ -28,7 +28,25 @@ public partial class TvDictionaryView : TvViewBase
     {
         foreach (var key in data.Keys)
         {
-            yield return (key, data[key]);
+            if (EnabledKey(key))
+            {
+                yield return (key, data[key]);
+            }
+        }
+
+        bool EnabledKey(object key)
+        {
+            if (Options?.DisableKeys?.Any() ?? false)
+            {
+                if (key is string keystr)
+                {
+                    if (Options.DisableKeys.Any(disabled => disabled == keystr))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

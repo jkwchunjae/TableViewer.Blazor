@@ -30,6 +30,12 @@ public partial class TvObjectView : TvViewBase
                 keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
             }
 
+            if (Options?.DisableKeys?.Any() ?? false)
+            {
+                keys = keys
+                    .Where(key => Options!.DisableKeys!.All(disable => disable != key.Key));
+            }
+
             Items = keys
                 .Select(keyInfo => (keyInfo.Key, GetValue(Data, keyInfo.MemberInfo)))
                 .ToArray();
