@@ -18,7 +18,17 @@ public partial class TvObjectArrayView : TvViewBase
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
-            Keys = GetKeys(firstData).ToArray();
+            var keys = GetKeys(firstData);
+
+            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys));
+            if (columnOption != null)
+            {
+                Keys = columnOption.NewKeys(keys).ToArray();
+            }
+            else
+            {
+                Keys = keys.ToArray();
+            }
         }
         if (Options != null)
         {
