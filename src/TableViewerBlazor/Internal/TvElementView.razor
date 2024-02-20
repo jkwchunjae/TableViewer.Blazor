@@ -29,9 +29,11 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
-else if (Data is IDictionary)
+else if (Data is IDictionary dictionary)
 {
-    <span>dictionary</span>
+    <div class="table-cell">
+        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" />
+    </div>
 }
 else if (IsObjectArray)
 {
