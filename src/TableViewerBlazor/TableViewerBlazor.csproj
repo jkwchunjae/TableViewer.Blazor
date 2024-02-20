@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>0.0.2-alpha</Version>
+    <Version>0.0.3-alpha</Version>
     <Authors>jkwchunjae</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
