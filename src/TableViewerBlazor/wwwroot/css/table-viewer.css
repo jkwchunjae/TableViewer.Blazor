@@ -24,6 +24,12 @@ table.table-viewer .title .title-wrap .table-button-group {
 table.table-viewer .title .title-wrap:hover .table-button-group {
   visibility: initial;
 }
+table.table-viewer .typeheader {
+  background-color: #ddd;
+  font-weight: bold;
+  border: 1px solid #777;
+  padding: 0.05em 0.3em 0.15em 0.3em;
+}
 table.table-viewer tbody tr .name {
   background-color: #ccc;
   font-weight: bold;
