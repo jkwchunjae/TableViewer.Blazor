@@ -9,12 +9,12 @@ public partial class TvArrayView : TvViewBase
 {
     [Parameter] public IEnumerable Data { get; set; } = null!;
 
-    private IEnumerable<object?> all;
-    private IEnumerable<(int Index, object? Item)> DataArray;
+    private IEnumerable<object?>? all;
+    private IEnumerable<(int Index, object? Item)>? DataArray;
     int VisibleItems = 2;
     bool Open = false;
 
-    bool HasMoreItems => DataArray.Count() < all.Count();
+    bool HasMoreItems => DataArray?.Count() < all?.Count();
 
     protected override void OnInitialized()
     {
@@ -25,8 +25,7 @@ public partial class TvArrayView : TvViewBase
             {
                 VisibleItems = Options.ArrayVisibleDepth;
             }
-            all = Data
-                .Cast<object?>();
+            all = Data.Cast<object>();
             DataArray = all
                 .Select((item, index) => (index, item))
                 .Take(VisibleItems);
@@ -36,7 +35,7 @@ public partial class TvArrayView : TvViewBase
     private void MoreItems()
     {
         VisibleItems *= 2;
-        DataArray = all
+        DataArray = all?
             .Select((item, index) => (index, item))
             .Take(VisibleItems);
         StateHasChanged();

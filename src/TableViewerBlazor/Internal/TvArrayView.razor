@@ -1,7 +1,7 @@
 @inherits TvViewBase
 
 <div class="table-array">
-  @if (Open)
+  @if (Open && DataArray != null && all != null)
   {
   <table class="table-viewer">
     <thead>
@@ -53,7 +53,7 @@
   else
   {
     <div class="title" @onclick="ToggleOpen">
-      array (length: @all.Count())
+      array (length: @(all?.Count() ?? 0))
     </div>
   }
 </div>
