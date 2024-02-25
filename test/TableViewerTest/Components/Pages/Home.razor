@@ -64,6 +64,7 @@ Welcome to your new app.
         {
             Id = 213,
             Name = "User name",
+            Birth = DateTime.UtcNow,
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -88,6 +89,7 @@ Welcome to your new app.
         {
             Id = 999,
             Name = "second name",
+            Birth = new DateTime(1989, 2, 1, 5, 12, 1, DateTimeKind.Utc),
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,

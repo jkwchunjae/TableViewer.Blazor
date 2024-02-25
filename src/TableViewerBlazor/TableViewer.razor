@@ -1,16 +1,8 @@
 ﻿@inherits TvViewBase
 
-<TvElementView Data="Data" Options="Options" Depth="1"/>
+<TvElementView
+    Data="Data"
+    Options="Options"
+    Depth="1"
+/>
 
-@code {
-    [Parameter]
-    public object? Data { get; set; }
-
-    protected override void OnInitialized()
-    {
-        if (Options == null)
-        {
-            Options = new TvOptions();
-        }
-    }
-}
