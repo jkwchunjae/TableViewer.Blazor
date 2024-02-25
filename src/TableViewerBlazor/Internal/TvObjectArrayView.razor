@@ -53,7 +53,7 @@
                   {
                     <button
                       class="action"
-                      @onclick="() => action.Action(item)"
+                      @onclick="@(() => ButtonAction(item, action))"
                     >
                       @action.Label
                     </button>

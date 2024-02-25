@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using TableViewerBlazor.Options;
 
 namespace TableViewerBlazor.Internal;
 
@@ -88,5 +89,10 @@ public partial class TvObjectArrayView : TvViewBase
                 yield return field.Name;
             }
         }
+    }
+
+    private async Task ButtonAction(object? item, ITvAction action)
+    {
+        await action.Action(item);
     }
 }
