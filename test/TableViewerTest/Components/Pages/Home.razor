@@ -6,6 +6,10 @@
 Welcome to your new app.
 
 <div style="padding-left: 40vw;">
+    <button @onclick="Open">click</button>
+
+    @if (open)
+    {
 <TableViewer Data="test" Options="optionForTest"/>
 
 <TableViewer Data="person" Options="personOption"/>
@@ -16,6 +20,7 @@ Welcome to your new app.
 }
 
 <TableViewer Data="peopleRecord"/>
+    }
 </div>
 
 
@@ -161,5 +166,12 @@ Welcome to your new app.
     private async Task ConsoleWrite(object obj)
     {
         await Js.InvokeVoidAsync("console.log", obj);
+    }
+
+    bool open = false;
+    private Task Open()
+    {
+        open = true;
+        return Task.CompletedTask;
     }
 }

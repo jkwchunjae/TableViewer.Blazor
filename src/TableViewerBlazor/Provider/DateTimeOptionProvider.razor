@@ -1,0 +1,15 @@
+﻿@using Microsoft.JSInterop
+@using TableViewerBlazor.Service
+@inject IJSRuntime Js
+@inject DateTimeService DateTimeService
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var module = await Js.InvokeAsync<IJSObjectReference>("import", "./_content/TableViewerBlazor/js/table-viewer.js");
+        var timezoneOptions = await module.InvokeAsync<TvDateTimeOptions>("getTimezoneOptions");
+        // await Js.InvokeVoidAsync("console.log", timezoneOptions);
+
+        DateTimeService.Options = timezoneOptions;
+    }
+}

@@ -1,3 +1,4 @@
+using TableViewerBlazor.Service;
 using TableViewerTest.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddRazorComponents()
     {
         config.DetailedErrors = true;
     });
+
+builder.Services.AddTableViewer();
 
 var app = builder.Build();
 
