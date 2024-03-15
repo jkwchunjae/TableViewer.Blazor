@@ -1,0 +1,36 @@
+﻿@attribute [Stories("TableViewer/ObjectView")]
+
+<Stories TComponent="TableViewer">
+
+    <Story Name="Default">
+
+        <Arguments>
+            <Arg For="tv => tv.Data" Value="TestData"/>
+            <Arg For="tv => tv.Options" Value="options" />
+        </Arguments>
+
+        <Template>
+            <TableViewer @attributes="context.Args">
+            </TableViewer>
+        </Template>
+
+    </Story>
+
+</Stories>
+
+@code {
+    class TestClass
+    {
+        public string? Property1 { get; set; }
+    }
+
+    TestClass TestData = new TestClass
+    {
+        Property1 = "Value1",
+    };
+
+    TvOptions options = new TvOptions
+    {
+        OpenDepth = 2,
+    };
+}
