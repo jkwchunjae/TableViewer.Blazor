@@ -58,8 +58,8 @@
   }
   else
   {
-    <div class="title" @onclick="ToggleOpen">
-      array (length: @(all?.Count() ?? 0))
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        array (@(all?.Count() ?? 0) items)
+    </MudButton>
   }
 </div>

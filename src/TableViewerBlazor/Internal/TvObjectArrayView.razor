@@ -9,7 +9,7 @@
           <th colspan="@TableColumns" class="title" @onclick="ToggleOpen">
             <div class="title-wrap">
                 <span>
-                    ( @array.Count() items)
+                    (@array.Count() items)
                 </span>
             </div>
           </th>
@@ -28,7 +28,7 @@
           <tr>
             @if (item == null)
             {
-              <td colspan="@Keys.Count()">
+              <td colspan="@(Keys.Count() + 1)">
                 <TvNullView Options="Options" Depth="Depth + 1" />
               </td>
             }
@@ -68,8 +68,8 @@
   }
   else
   {
-    <div class="title" @onclick="ToggleOpen">
-      array ( @array.Count() items)
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        array (@array.Count() items)
+    </MudButton>
   }
 </div>

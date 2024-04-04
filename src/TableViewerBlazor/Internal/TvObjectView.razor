@@ -35,10 +35,8 @@
   }
   else
   {
-    <div class="title title-wrap" @onclick="ToggleOpen">
-      <span class="key-name">
-        object ( @Items.Count() keys)
-      </span>
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        object (@Items.Count() keys)
+    </MudButton>
   }
 </div>
