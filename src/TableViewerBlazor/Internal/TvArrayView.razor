@@ -3,10 +3,13 @@
 <div class="table-array">
   @if (Open && DataArray != null && all != null)
   {
-  <table class="table-viewer">
+  <MudSimpleTable Dense="true" Hover="true" Striped="true" Bordered="true" Style="display: inline-block;">
+    <colgroup>
+      <col style="width: 40px;"/>
+    </colgroup>
     <thead>
       <tr>
-        <th @onclick="ToggleOpen" class="title" colspan="3">
+        <th @onclick="ToggleOpen" class="title" colspan="@(HasAnyAction ? 3 : 2)">
           <div class="title-wrap">
             <span class="key-name">
               (@all.Count() items)
@@ -23,6 +26,8 @@
           <td class="item">
             <TvElementView Data="@item" Options="Options" Depth="Depth + 1"/>
           </td>
+          @if (HasAnyAction)
+          {
           <td class="item">
             @foreach (var action in Options?.Actions ?? Enumerable.Empty<ITvAction>())
             {
@@ -34,6 +39,7 @@
               }
             }
           </td>
+          }
         </tr>
       }
       @if (HasMoreItems)
@@ -48,7 +54,7 @@
         </tr>
       }
     </tbody>
-  </table>
+  </MudSimpleTable>
   }
   else
   {
