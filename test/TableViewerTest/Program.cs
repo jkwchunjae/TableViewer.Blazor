@@ -1,3 +1,4 @@
+using MudBlazor.Services;
 using TableViewerBlazor.Service;
 using TableViewerTest.Components;
 
@@ -10,6 +11,7 @@ builder.Services.AddRazorComponents()
         config.DetailedErrors = true;
     });
 
+builder.Services.AddMudServices();
 builder.Services.AddTableViewer();
 
 var app = builder.Build();
