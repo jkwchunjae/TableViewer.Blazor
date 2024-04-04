@@ -3,7 +3,7 @@
 <div class="table-object-array">
   @if (Open)
   {
-    <table class="table-viewer">
+    <MudSimpleTable Dense="true" Hover="true" Striped="true" Bordered="true" Style="display: inline-block;">
       <thead>
         <tr>
           <th colspan="@TableColumns" class="title" @onclick="ToggleOpen">
@@ -64,7 +64,7 @@
           </tr>
         }
       </tbody>
-    </table>
+    </MudSimpleTable>
   }
   else
   {
