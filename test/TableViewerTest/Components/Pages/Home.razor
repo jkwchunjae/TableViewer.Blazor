@@ -33,6 +33,7 @@ Welcome to your new app.
             new TvAction<int>
             {
                 Label = "Console log",
+                Condition = (number, depth) => false,
                 Action = number =>
                 {
                     Console.WriteLine(number);

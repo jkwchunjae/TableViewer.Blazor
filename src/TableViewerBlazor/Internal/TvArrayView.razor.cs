@@ -10,6 +10,7 @@ public partial class TvArrayView : TvViewBase
     [Parameter] public IEnumerable Data { get; set; } = null!;
 
     private IEnumerable<object?>? all;
+    private bool HasAnyAction;
     private IEnumerable<(int Index, object? Item)>? DataArray;
     int VisibleItems = 2;
     bool Open = false;
@@ -26,6 +27,7 @@ public partial class TvArrayView : TvViewBase
                 VisibleItems = Options.ArrayVisibleDepth;
             }
             all = Data.Cast<object>();
+            HasAnyAction = all.Any(HasAction);
             DataArray = all
                 .Select((item, index) => (index, item))
                 .Take(VisibleItems);
@@ -39,6 +41,11 @@ public partial class TvArrayView : TvViewBase
             .Select((item, index) => (index, item))
             .Take(VisibleItems);
         StateHasChanged();
+    }
+
+    private bool HasAction(object? item)
+    {
+        return Options?.Actions?.Any(action => action.Condition(item, Depth)) ?? false;
     }
 
     private void ToggleOpen()
