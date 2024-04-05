@@ -19,7 +19,10 @@
           {
             <th class="typeheader">@key</th>
           }
-          <th class="typeheader">...</th>
+          @if (HasAnyAction)
+          {
+            <th class="typeheader">...</th>
+          }
         </tr>
       </thead>
       <tbody>
@@ -46,20 +49,24 @@
                   />
                 </td>
               }
-              <td class="value">
-                @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
-                {
-                  @if (action.Condition(item, Depth))
-                  {
-                    <button
-                      class="action"
-                      @onclick="@(() => ButtonAction(item, action))"
-                    >
-                      @action.Label
-                    </button>
-                  }
-                }
-              </td>
+
+              @if (HasAnyAction)
+              {
+                  <td class="value">
+                    @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+                    {
+                      @if (action.Condition(item, Depth))
+                      {
+                        <button
+                          class="action"
+                          @onclick="@(() => ButtonAction(item, action))"
+                        >
+                          @action.Label
+                        </button>
+                      }
+                    }
+                  </td>
+              }
             }
           </tr>
         }
