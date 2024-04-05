@@ -5,6 +5,6 @@ namespace TableViewerBlazor.Internal;
 
 public class TvViewBase : ComponentBase
 {
-    [Parameter] public TvOptions? Options { get; set; }
+    [Parameter] public TvOptions Options { get; set; } = new TvOptions();
     [Parameter] public int Depth { get; set; }
 }

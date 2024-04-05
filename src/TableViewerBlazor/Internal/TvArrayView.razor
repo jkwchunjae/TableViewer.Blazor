@@ -3,7 +3,7 @@
 <div class="table-array">
   @if (Open && DataArray != null && all != null)
   {
-  <MudSimpleTable Dense="true" Hover="true" Striped="true" Bordered="true" Style="display: inline-block;">
+  <MudSimpleTable Dense="Options.Styles.Dense" Hover="Options.Styles.Hover" Striped="Options.Styles.Striped" Bordered="Options.Styles.Bordered" Style="display: inline-block;">
     <colgroup>
       <col style="width: 40px;"/>
     </colgroup>
@@ -29,7 +29,7 @@
           @if (HasAnyAction)
           {
           <td class="item">
-            @foreach (var action in Options?.Actions ?? Enumerable.Empty<ITvAction>())
+            @foreach (var action in Options.Actions ?? Enumerable.Empty<ITvAction>())
             {
               @if (action.Condition(item, Depth))
               {
