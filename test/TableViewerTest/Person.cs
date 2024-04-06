@@ -7,7 +7,7 @@ public class Person
     public DateTime? Birth { get; set; }
     public Dictionary<string, object>? Attributes { get; set; }
 
-    public PersonRecord[] People { get; set; } = Array.Empty<PersonRecord>();
+    public PersonRecord[]? People { get; set; }
 }
 
 public record PersonRecord(int Id, string? Name, Dictionary<string, object>? Attributes);
