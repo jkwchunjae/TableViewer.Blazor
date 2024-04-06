@@ -5,23 +5,21 @@
   {
   <MudSimpleTable Dense="Options.Styles.Dense" Hover="Options.Styles.Hover" Striped="Options.Styles.Striped" Bordered="Options.Styles.Bordered" Style="display: inline-block;">
       <thead>
-        <tr>
-          <th colspan="@TableColumns" class="title" @onclick="ToggleOpen">
-            <div class="title-wrap">
-                <span>
-                    (@array.Count() items)
-                </span>
-            </div>
+        <tr class="tv-title-counter">
+          <th colspan="@TableColumns" @onclick="ToggleOpen">
+            <span>
+                (@array.Count() items)
+            </span>
           </th>
         </tr>
         <tr>
           @foreach (var key in Keys)
           {
-            <th class="typeheader">@key</th>
+            <th class="tv-type-header">@key</th>
           }
           @if (HasAnyAction)
           {
-            <th class="typeheader">...</th>
+            <th class="tv-type-header">...</th>
           }
         </tr>
       </thead>

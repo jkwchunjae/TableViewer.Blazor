@@ -1,104 +1,113 @@
-table.table-viewer {
-  border-collapse: collapse;
-  border: 2px solid #4c74b2;
-  background-color: white;
-
-  .title {
-    background-color: #4c74b2;
-    color: #fff;
-    font-size: small;
-    padding: 2px;
-    cursor: pointer;
-
-    .title-wrap {
-      display: flex;
-      align-items: center;
-
-      .key-name {
-        margin: 0 16px 0 0;
-      }
-
-      .table-button-group {
-        display: inline-block;
-        visibility: hidden;
-      }
-
-      &:hover .table-button-group {
-        visibility: initial;
-      }
-    }
-  }
-
-  .typeheader {
-    background-color: #ddd;
-    font-weight: bold;
-    border: 1px solid #777;
-    padding: 0.05em 0.3em 0.15em 0.3em;
-  }
-
-  tbody {
-    tr {
-      .name {
-        background-color: #ccc;
-        font-weight: bold;
-        border: 1px solid #777;
-        border-right: 0px;
-        min-width: 40px;
-      }
-      .value {
-        border: 1px solid #ddd;
-        border-left: 0px;
-        padding-left: 5px;
-        min-width: 100px;
-      }
-
-      .index {
-        font-style: italic;
-        color: #999;
-        text-align: right;
-        min-width: 40px;
-        border: 1px solid #ddd;
-        border-right: 0px;
-        padding-right: 5px;
-      }
-      .item {
-        border: 1px solid #ddd;
-        border-left: 0px;
-        padding-left: 5px;
-        min-width: 100px;
-      }
-
-      td {
-        padding: 2px;
-      }
-    }
-  }
+.tv-title-counter {
+  // background-color: #949494;
+}
+.tv-type-header {
+  // border: 1px solid rgba(224, 224, 224, 1);
+  // background-color: rgb(240, 240, 240);
 }
 
-.table-array, .table-object, .table-object-array {
-  .title {
-    background-color: #4c74b2;
-    color: #fff;
-    font-size: small;
-    padding: 2px;
-    cursor: pointer;
 
-    .title-wrap {
-      display: flex;
-      align-items: center;
+// table.table-viewer {
+//   border-collapse: collapse;
+//   border: 2px solid #4c74b2;
+//   background-color: white;
 
-      .key-name {
-        margin: 0 16px 0 0;
-      }
+//   .title {
+//     background-color: #4c74b2;
+//     color: #fff;
+//     font-size: small;
+//     padding: 2px;
+//     cursor: pointer;
 
-      .table-button-group {
-        display: inline-block;
-        visibility: hidden;
-      }
+//     .title-wrap {
+//       display: flex;
+//       align-items: center;
 
-      &:hover .table-button-group {
-        visibility: initial;
-      }
-    }
-  }
-}
+//       .key-name {
+//         margin: 0 16px 0 0;
+//       }
+
+//       .table-button-group {
+//         display: inline-block;
+//         visibility: hidden;
+//       }
+
+//       &:hover .table-button-group {
+//         visibility: initial;
+//       }
+//     }
+//   }
+
+//   .typeheader {
+//     background-color: #ddd;
+//     font-weight: bold;
+//     border: 1px solid #777;
+//     padding: 0.05em 0.3em 0.15em 0.3em;
+//   }
+
+//   tbody {
+//     tr {
+//       .name {
+//         background-color: #ccc;
+//         font-weight: bold;
+//         border: 1px solid #777;
+//         border-right: 0px;
+//         min-width: 40px;
+//       }
+//       .value {
+//         border: 1px solid #ddd;
+//         border-left: 0px;
+//         padding-left: 5px;
+//         min-width: 100px;
+//       }
+
+//       .index {
+//         font-style: italic;
+//         color: #999;
+//         text-align: right;
+//         min-width: 40px;
+//         border: 1px solid #ddd;
+//         border-right: 0px;
+//         padding-right: 5px;
+//       }
+//       .item {
+//         border: 1px solid #ddd;
+//         border-left: 0px;
+//         padding-left: 5px;
+//         min-width: 100px;
+//       }
+
+//       td {
+//         padding: 2px;
+//       }
+//     }
+//   }
+// }
+
+// .table-array, .table-object, .table-object-array {
+//   .title {
+//     background-color: #4c74b2;
+//     color: #fff;
+//     font-size: small;
+//     padding: 2px;
+//     cursor: pointer;
+
+//     .title-wrap {
+//       display: flex;
+//       align-items: center;
+
+//       .key-name {
+//         margin: 0 16px 0 0;
+//       }
+
+//       .table-button-group {
+//         display: inline-block;
+//         visibility: hidden;
+//       }
+
+//       &:hover .table-button-group {
+//         visibility: initial;
+//       }
+//     }
+//   }
+// }
