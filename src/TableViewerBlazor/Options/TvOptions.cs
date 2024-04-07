@@ -11,11 +11,3 @@ public class TvOptions
     public IEnumerable<string>? DisableKeys { get; set; }
     public TvStyleOption Styles { get; set; } = new();
 }
-
-public class TvStyleOption
-{
-    public bool Dense { get; set; } = true;
-    public bool Hover { get; set; } = false;
-    public bool Striped { get; set; } = false;
-    public bool Bordered { get; set; } = true;
-}
