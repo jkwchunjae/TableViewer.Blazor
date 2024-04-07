@@ -3,18 +3,22 @@
 <div class="table-array">
   @if (Open && DataArray != null && all != null)
   {
-  <MudSimpleTable Dense="Options.Styles.Dense" Hover="Options.Styles.Hover" Striped="Options.Styles.Striped" Bordered="Options.Styles.Bordered" Style="display: inline-block;">
+  <MudSimpleTable
+    Dense="Options.Styles.Dense"
+    Hover="Options.Styles.Hover"
+    Striped="Options.Styles.Striped"
+    Bordered="Options.Styles.Bordered"
+    Style="display: inline-block;"
+  >
     <colgroup>
       <col style="width: 40px;"/>
     </colgroup>
     <thead>
       <tr>
-        <th @onclick="ToggleOpen" class="title" colspan="@(HasAnyAction ? 3 : 2)">
-          <div class="title-wrap">
-            <span class="key-name">
-              (@all.Count() items)
-            </span>
-          </div>
+        <th class="tv-title-counter" colspan="@(HasAnyAction ? 3 : 2)" @onclick="ToggleOpen">
+          <span>
+            (@all.Count() items)
+          </span>
         </th>
       </tr>
     </thead>
@@ -56,7 +60,7 @@
       {
         <tr>
           <td class="index"></td>
-          <td>
+          <td colspan="@(HasAnyAction ? 2 : 1)">
             <button @onclick="@(() => MoreItems())">
               more
             </button>

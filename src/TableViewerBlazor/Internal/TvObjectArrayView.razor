@@ -3,10 +3,16 @@
 <div class="table-object-array">
   @if (Open)
   {
-  <MudSimpleTable Dense="Options.Styles.Dense" Hover="Options.Styles.Hover" Striped="Options.Styles.Striped" Bordered="Options.Styles.Bordered" Style="display: inline-block;">
+  <MudSimpleTable
+    Dense="Options.Styles.Dense"
+    Hover="Options.Styles.Hover"
+    Striped="Options.Styles.Striped"
+    Bordered="Options.Styles.Bordered"
+    Style="display: inline-block;"
+  >
       <thead>
-        <tr class="tv-title-counter">
-          <th colspan="@TableColumns" @onclick="ToggleOpen">
+        <tr>
+          <th class="tv-title-counter" colspan="@TableColumns" @onclick="ToggleOpen">
             <span>
                 (@array.Count() items)
             </span>
