@@ -3,23 +3,30 @@
 <div class="table-object-array">
   @if (Open)
   {
-    <table class="table-viewer">
+  <MudSimpleTable
+    Dense="Options.Styles.Dense"
+    Hover="Options.Styles.Hover"
+    Striped="Options.Styles.Striped"
+    Bordered="Options.Styles.Bordered"
+    Style="display: inline-block;"
+  >
       <thead>
         <tr>
-          <th colspan="@TableColumns" class="title" @onclick="ToggleOpen">
-            <div class="title-wrap">
-                <span>
-                    ( @array.Count() items)
-                </span>
-            </div>
+          <th class="tv-title-counter" colspan="@TableColumns" @onclick="ToggleOpen">
+            <span>
+                (@array.Count() items)
+            </span>
           </th>
         </tr>
         <tr>
           @foreach (var key in Keys)
           {
-            <th class="typeheader">@key</th>
+            <th class="tv-type-header">@key</th>
           }
-          <th class="typeheader">...</th>
+          @if (HasAnyAction)
+          {
+            <th class="tv-type-header">...</th>
+          }
         </tr>
       </thead>
       <tbody>
@@ -28,7 +35,7 @@
           <tr>
             @if (item == null)
             {
-              <td colspan="@Keys.Count()">
+              <td colspan="@(Keys.Count() + 1)">
                 <TvNullView Options="Options" Depth="Depth + 1" />
               </td>
             }
@@ -46,30 +53,41 @@
                   />
                 </td>
               }
-              <td class="value">
-                @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
-                {
-                  @if (action.Condition(item, Depth))
-                  {
-                    <button
-                      class="action"
-                      @onclick="@(() => ButtonAction(item, action))"
-                    >
-                      @action.Label
-                    </button>
-                  }
-                }
-              </td>
+
+              @if (HasAnyAction)
+              {
+                  <td class="value">
+                    @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+                    {
+                      @if (action.Condition(item, Depth))
+                      {
+                        <MudButton OnClick="@(() => ButtonAction(item, action))"
+                          Variant="action.Style.Variant"
+                          Size="action.Style.Size"
+                          Color="action.Style.Color"
+                          Style="@action.Style.Style"
+
+                          StartIcon="@action.Style.StartIcon"
+                          EndIcon="@action.Style.EndIcon"
+                          IconSize="action.Style.IconSize"
+                          IconColor="action.Style.IconColor"
+                        >
+                          @action.Label
+                        </MudButton>
+                      }
+                    }
+                  </td>
+              }
             }
           </tr>
         }
       </tbody>
-    </table>
+    </MudSimpleTable>
   }
   else
   {
-    <div class="title" @onclick="ToggleOpen">
-      array ( @array.Count() items)
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        array (@array.Count() items)
+    </MudButton>
   }
 </div>

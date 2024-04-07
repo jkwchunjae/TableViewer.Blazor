@@ -3,15 +3,22 @@
 <div class="table-array">
   @if (Open && DataArray != null && all != null)
   {
-  <table class="table-viewer">
+  <MudSimpleTable
+    Dense="Options.Styles.Dense"
+    Hover="Options.Styles.Hover"
+    Striped="Options.Styles.Striped"
+    Bordered="Options.Styles.Bordered"
+    Style="display: inline-block;"
+  >
+    <colgroup>
+      <col style="width: 40px;"/>
+    </colgroup>
     <thead>
       <tr>
-        <th @onclick="ToggleOpen" class="title" colspan="3">
-          <div class="title-wrap">
-            <span class="key-name">
-              (@all.Count() items)
-            </span>
-          </div>
+        <th class="tv-title-counter" colspan="@(HasAnyAction ? 3 : 2)" @onclick="ToggleOpen">
+          <span>
+            (@all.Count() items)
+          </span>
         </th>
       </tr>
     </thead>
@@ -23,24 +30,37 @@
           <td class="item">
             <TvElementView Data="@item" Options="Options" Depth="Depth + 1"/>
           </td>
+          @if (HasAnyAction)
+          {
           <td class="item">
-            @foreach (var action in Options?.Actions ?? Enumerable.Empty<ITvAction>())
+            @foreach (var action in Options.Actions ?? Enumerable.Empty<ITvAction>())
             {
               @if (action.Condition(item, Depth))
               {
-                <button @onclick="@(() => action.Action(item))">
+                <MudButton OnClick="@(() => action.Action(item))"
+                  Variant="action.Style.Variant"
+                  Size="action.Style.Size"
+                  Color="action.Style.Color"
+                  Style="@action.Style.Style"
+
+                  StartIcon="@action.Style.StartIcon"
+                  EndIcon="@action.Style.EndIcon"
+                  IconSize="action.Style.IconSize"
+                  IconColor="action.Style.IconColor"
+                >
                   @action.Label
-                </button>
+                </MudButton>
               }
             }
           </td>
+          }
         </tr>
       }
       @if (HasMoreItems)
       {
         <tr>
           <td class="index"></td>
-          <td>
+          <td colspan="@(HasAnyAction ? 2 : 1)">
             <button @onclick="@(() => MoreItems())">
               more
             </button>
@@ -48,12 +68,12 @@
         </tr>
       }
     </tbody>
-  </table>
+  </MudSimpleTable>
   }
   else
   {
-    <div class="title" @onclick="ToggleOpen">
-      array (length: @(all?.Count() ?? 0))
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        array (@(all?.Count() ?? 0) items)
+    </MudButton>
   }
 </div>

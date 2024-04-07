@@ -5,9 +5,7 @@
 
 Welcome to your new app.
 
-<div style="padding-left: 40vw;">
-    <button @onclick="Open">click</button>
-
+<div style="padding-left: 10vw;">
     @if (open)
     {
 <TableViewer Data="test" Options="optionForTest"/>
@@ -33,6 +31,7 @@ Welcome to your new app.
             new TvAction<int>
             {
                 Label = "Console log",
+                Condition = (number, depth) => true,
                 Action = number =>
                 {
                     Console.WriteLine(number);
@@ -132,10 +131,11 @@ Welcome to your new app.
         ),
     };
 
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
         optionForPeople = new TvOptions
         {
+            OpenDepth = 99,
             Actions = new List<ITvAction>()
             {
                 new TvAction<Person>
@@ -146,6 +146,11 @@ Welcome to your new app.
                     {
                         await ConsoleWrite(person);
                     },
+                    Style = new TvButtonStyle
+                    {
+                        StartIcon = Icons.Material.Filled.Person,
+                        IconSize = Size.Small,
+                    }
                 },
                 new TvAction<PersonRecord>
                 {
@@ -161,6 +166,9 @@ Welcome to your new app.
                 // },
             },
         };
+
+        open = true;
+        return Task.CompletedTask;
     }
 
     private async Task ConsoleWrite(object obj)
@@ -168,10 +176,5 @@ Welcome to your new app.
         await Js.InvokeVoidAsync("console.log", obj);
     }
 
-    bool open = false;
-    private Task Open()
-    {
-        open = true;
-        return Task.CompletedTask;
-    }
+    bool open = true;
 }

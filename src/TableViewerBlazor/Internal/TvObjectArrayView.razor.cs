@@ -12,10 +12,12 @@ public partial class TvObjectArrayView : TvViewBase
     IEnumerable<object?> array => Data ?? Enumerable.Empty<object?>();
 
     private string[] Keys = Array.Empty<string>();
-    private int TableColumns => Keys.Length + 1;
+    private bool HasAnyAction;
+    private int TableColumns => Keys.Length + (HasAnyAction ? 1 : 0);
 
     protected override void OnInitialized()
     {
+        HasAnyAction = Data.Any(HasAction);
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
@@ -94,5 +96,10 @@ public partial class TvObjectArrayView : TvViewBase
     private async Task ButtonAction(object? item, ITvAction action)
     {
         await action.Action(item);
+    }
+
+    private bool HasAction(object? item)
+    {
+        return Options?.Actions?.Any(action => action.Condition(item, Depth)) ?? false;
     }
 }

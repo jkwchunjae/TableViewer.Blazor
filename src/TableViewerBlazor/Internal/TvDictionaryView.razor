@@ -3,15 +3,19 @@
 <div class="table-object">
   @if (Open)
   {
-    <table class="table-viewer">
+    <MudSimpleTable
+      Dense="Options.Styles.Dense"
+      Hover="Options.Styles.Hover"
+      Striped="Options.Styles.Striped"
+      Bordered="Options.Styles.Bordered"
+      Style="display: inline-block;"
+    >
       <thead>
         <tr>
-          <th colspan="2" class="title" @onclick="ToggleOpen">
-            <div class="title-wrap">
-              <span class="key-name">
-                @Items.Count() keys
-              </span>
-            </div>
+          <th class="tv-title-counter" colspan="2" @onclick="ToggleOpen">
+            <span>
+              @Items.Count() keys
+            </span>
           </th>
         </tr>
       </thead>
@@ -38,14 +42,12 @@
           </tr>
         }
       </tbody>
-    </table>
+    </MudSimpleTable>
   }
   else
   {
-    <div class="title title-wrap" @onclick="ToggleOpen">
-      <span class="key-name">
-        object ( @Items.Count() keys)
-      </span>
-    </div>
+    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+        object (@Items.Count() keys)
+    </MudButton>
   }
 </div>
