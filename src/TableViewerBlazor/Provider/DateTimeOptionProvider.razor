@@ -6,7 +6,7 @@
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var module = await Js.InvokeAsync<IJSObjectReference>("import", "./_content/TableViewerBlazor/js/table-viewer.js");
+        var module = await Js.InvokeAsync<IJSObjectReference>("import", "./_content/TableViewer.MudBlazor/js/table-viewer.js");
         var timezoneOptions = await module.InvokeAsync<TvDateTimeOptions>("getTimezoneOptions");
         // await Js.InvokeVoidAsync("console.log", timezoneOptions);
 
