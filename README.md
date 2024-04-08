@@ -1,2 +1,2 @@
-# TableViewer.Blazor
+# TableViewer.MudBlazor
 Spread anything!!
