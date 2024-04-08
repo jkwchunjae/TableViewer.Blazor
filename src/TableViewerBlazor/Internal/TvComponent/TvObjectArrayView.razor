@@ -76,6 +76,17 @@
                         {
                           classText += " mud-button-dense";
                         }
+                        if (action is ITvDoubleClickAction dbAction)
+                        {
+                          <TvDoubleClickButton
+                            Class="@classText"
+                            Option="@dbAction"
+                          >
+                            @action.Label
+                          </TvDoubleClickButton>
+                        }
+                        else
+                        {
                         <MudButton OnClick="@(() => ButtonAction(item, action))"
                           Class="@classText"
                           Variant="action.Style.Variant"
@@ -90,6 +101,7 @@
                         >
                           @action.Label
                         </MudButton>
+                        }
                       }
                     }
                   </td>
