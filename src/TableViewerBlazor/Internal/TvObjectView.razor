@@ -3,11 +3,17 @@
 <div class="table-object">
   @if (Open)
   {
+    string classText = string.Empty;
+    if (Options.Style.SuperDense)
+    {
+      classText += " mud-table-super-dense";
+    }
   <MudSimpleTable
-    Dense="Options.Styles.Dense"
-    Hover="Options.Styles.Hover"
-    Striped="Options.Styles.Striped"
-    Bordered="Options.Styles.Bordered"
+    Class="@classText"
+    Dense="Options.Style.Dense"
+    Hover="Options.Style.Hover"
+    Striped="Options.Style.Striped"
+    Bordered="Options.Style.Bordered"
     Style="display: inline-block;"
   >
       <thead>
@@ -39,7 +45,20 @@
   }
   else
   {
-    <MudButton OnClick="ToggleOpen" Variant="Variant.Outlined" Size="Size.Small">
+    string classText = string.Empty;
+    if (Options.Style.SuperDense)
+    {
+      classText += " mud-button-super-dense";
+    }
+    else if (Options.Style.Dense)
+    {
+      classText += " mud-button-dense";
+    }
+    <MudButton OnClick="ToggleOpen"
+      Class="@classText"
+      Variant="Variant.Outlined"
+      Size="Size.Small"
+    >
         object (@Items.Count() keys)
     </MudButton>
   }

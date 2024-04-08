@@ -9,5 +9,5 @@ public class TvOptions
     public IEnumerable<ITvAction>? Actions { get; set; }
     public IEnumerable<TvColumnVisibleOption>? ColumnVisible { get; set; }
     public IEnumerable<string>? DisableKeys { get; set; }
-    public TvStyleOption Styles { get; set; } = new();
+    public TvStyleOption Style { get; set; } = new();
 }

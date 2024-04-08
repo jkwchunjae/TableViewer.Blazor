@@ -33,4 +33,6 @@ public class TvButtonStyle
     public string? EndIcon { get; set; } = null;
     public Size IconSize { get; set; } = Size.Small;
     public Color IconColor { get; set; } = Color.Default;
+    public bool Dense { get; set; } = true;
+    public bool SuperDense { get; set; } = false;
 }

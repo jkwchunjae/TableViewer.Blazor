@@ -1,3 +1,16 @@
+.mud-simple-table.mud-table-super-dense tr td, .mud-simple-table.mud-table-super-dense tr th {
+  padding: 0.1rem 0.5rem;
+}
 
+button.mud-button.mud-button-super-dense {
+  padding: 1px 5px;
+}
+button.mud-button.mud-button-super-dense span.mud-button-label {
+  line-height: normal;
+}
+
+button.mud-button.mud-button-dense span.mud-button-label {
+  line-height: normal;
+}
 
 /*# sourceMappingURL=table-viewer.css.map */
