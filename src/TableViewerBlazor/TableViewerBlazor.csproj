@@ -4,12 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Title>TableViewer.Blazor</Title>
+    <Title>TableViewer.MudBlazor</Title>
+    <PackageId>TableViewer.MudBlazor</PackageId>
+    <Version>0.0.1-alpha</Version>
     <PackageProjectUrl>https://github.com/jkwchunjae/TableViewer.Blazor</PackageProjectUrl>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>0.0.4-alpha</Version>
     <Authors>jkwchunjae</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
