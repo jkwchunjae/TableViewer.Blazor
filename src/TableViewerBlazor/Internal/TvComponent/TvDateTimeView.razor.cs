@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TableViewerBlazor.Service;
 
-namespace TableViewerBlazor.Internal;
+namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvDateTimeView : TvViewBase
 {
