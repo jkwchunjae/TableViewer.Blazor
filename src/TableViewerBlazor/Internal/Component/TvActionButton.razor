@@ -1,0 +1,63 @@
+﻿@inherits TvViewBase
+
+@{
+    var item = Item;
+    var action = Action;
+}
+
+@if (action.Condition(item, Depth))
+{
+    string classText = string.Empty;
+    if (action.Style.SuperDense)
+    {
+        classText += " mud-button-super-dense";
+    }
+    else if (action.Style.Dense)
+    {
+        classText += " mud-button-dense";
+    }
+    if (action is ITvDoubleClickAction doubleClickAction)
+    {
+        <TvDoubleClickButton
+            Item="item"
+            Class="@classText"
+            DoubleClickAction="doubleClickAction"
+        >
+            @action.Label
+        </TvDoubleClickButton>
+    }
+    else if (action is ITvOneClickAction oneClickAction)
+    {
+        <TvOneClickButton
+            Item="item"
+            OneClickAction="oneClickAction"
+            Class="@classText"
+            Variant="action.Style.Variant"
+            Size="action.Style.Size"
+            Color="action.Style.Color"
+            Style="@action.Style.Style"
+            StartIcon="@action.Style.StartIcon"
+            EndIcon="@action.Style.EndIcon"
+            IconSize="action.Style.IconSize"
+            IconColor="action.Style.IconColor"
+        />
+    }
+    else
+    {
+        <MudButton
+            OnClick="@(() => action.Action(item))"
+            Class="@classText"
+            Variant="action.Style.Variant"
+            Size="action.Style.Size"
+            Color="action.Style.Color"
+            Style="@action.Style.Style"
+            StartIcon="@action.Style.StartIcon"
+            EndIcon="@action.Style.EndIcon"
+            IconSize="action.Style.IconSize"
+            IconColor="action.Style.IconColor"
+        >
+            @action.Label
+        </MudButton>
+    }
+}
+
