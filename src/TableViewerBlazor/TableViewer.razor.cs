@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using TableViewerBlazor.Internal;
+using TableViewerBlazor.Internal.TvComponent;
 using TableViewerBlazor.Options;
 
 namespace TableViewerBlazor;

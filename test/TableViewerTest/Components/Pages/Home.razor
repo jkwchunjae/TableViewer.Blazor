@@ -28,7 +28,7 @@ Welcome to your new app.
     {
         Actions = new List<ITvAction>()
         {
-            new TvAction<int>
+            new TvDoubleClickAction<int>
             {
                 Label = "Console log",
                 Condition = (number, depth) => true,
@@ -36,6 +36,10 @@ Welcome to your new app.
                 {
                     Console.WriteLine(number);
                     return Task.CompletedTask;
+                },
+                SecondStyle = new TvSecondButtonStyle
+                {
+                    Variant = Variant.Filled,
                 },
             },
         },
@@ -138,7 +142,7 @@ Welcome to your new app.
             OpenDepth = 99,
             Actions = new List<ITvAction>()
             {
-                new TvAction<Person>
+                new TvDoubleClickAction<Person>
                 {
                     Condition = (person, depth) => true,
                     Label = "Console log person",
@@ -146,12 +150,19 @@ Welcome to your new app.
                     {
                         await ConsoleWrite(person);
                     },
+                    ResetDelay = TimeSpan.FromSeconds(1),
                     Style = new TvButtonStyle
                     {
                         StartIcon = Icons.Material.Filled.Person,
                         IconSize = Size.Small,
-                        SuperDense = true,
-                    }
+                        SuperDense = false,
+                    },
+                    SecondStyle = new TvSecondButtonStyle
+                    {
+                        Variant = Variant.Filled,
+                        Color = Color.Tertiary,
+                        IconColor = Color.Dark,
+                    },
                 },
                 new TvAction<PersonRecord>
                 {

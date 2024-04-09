@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace TableViewerBlazor.Internal;
+namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvDictionaryView : TvViewBase
 {

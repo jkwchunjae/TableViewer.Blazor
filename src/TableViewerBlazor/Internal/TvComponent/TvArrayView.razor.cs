@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace TableViewerBlazor.Internal;
+namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvArrayView : TvViewBase
 {

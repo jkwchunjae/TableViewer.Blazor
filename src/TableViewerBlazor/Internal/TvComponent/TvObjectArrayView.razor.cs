@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using TableViewerBlazor.Options;
 
-namespace TableViewerBlazor.Internal;
+namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvObjectArrayView : TvViewBase
 {

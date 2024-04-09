@@ -1,0 +1,38 @@
+@inherits MudButton
+
+@{
+    var option = DoubleClickAction;
+}
+
+@if (State == ButtonState.First)
+{
+    <MudButton OnClick="ClickFirst"
+               Class="@Class"
+               Variant="option.Style.Variant"
+               Size="option.Style.Size"
+               Color="option.Style.Color"
+               Style="@option.Style.Style"
+               StartIcon="@option.Style.StartIcon"
+               EndIcon="@option.Style.EndIcon"
+               IconSize="option.Style.IconSize"
+               IconColor="option.Style.IconColor"
+    >
+        @ChildContent
+    </MudButton>
+}
+else
+{
+    <MudButton OnClick="ClickSecond"
+               Class="@Class"
+               Variant="option.SecondStyle.Variant"
+               Size="option.Style.Size"
+               Color="option.SecondStyle.Color"
+               Style="@option.Style.Style"
+               StartIcon="@option.Style.StartIcon"
+               EndIcon="@option.Style.EndIcon"
+               IconSize="option.Style.IconSize"
+               IconColor="option.SecondStyle.IconColor"
+    >
+        @ChildContent
+    </MudButton>
+}

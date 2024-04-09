@@ -65,32 +65,12 @@
                   <td class="value">
                     @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
                     {
-                      @if (action.Condition(item, Depth))
-                      {
-                        string classText = string.Empty;
-                        if (action.Style.SuperDense)
-                        {
-                          classText += " mud-button-super-dense";
-                        }
-                        else if (action.Style.Dense)
-                        {
-                          classText += " mud-button-dense";
-                        }
-                        <MudButton OnClick="@(() => ButtonAction(item, action))"
-                          Class="@classText"
-                          Variant="action.Style.Variant"
-                          Size="action.Style.Size"
-                          Color="action.Style.Color"
-                          Style="@action.Style.Style"
-
-                          StartIcon="@action.Style.StartIcon"
-                          EndIcon="@action.Style.EndIcon"
-                          IconSize="action.Style.IconSize"
-                          IconColor="action.Style.IconColor"
-                        >
-                          @action.Label
-                        </MudButton>
-                      }
+                      <TvActionButton
+                        Options="Options"
+                        Depth="Depth"
+                        Item="item"
+                        Action="action"
+                      />
                     }
                   </td>
               }

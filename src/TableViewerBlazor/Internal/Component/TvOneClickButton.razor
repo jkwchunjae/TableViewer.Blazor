@@ -1,0 +1,47 @@
+﻿@inherits MudButton
+
+@{
+    var option = OneClickAction;
+}
+
+<MudButton OnClick="Click"
+           Disabled="State == ButtonState.Progressing || State == ButtonState.Done || Disabled"
+           ButtonType="ButtonType"
+           Href="@Href"
+           Target="@Target"
+           DisableElevation="DisableElevation"
+           DisableRipple="DisableRipple"
+           StartIcon="@StartIcon"
+           EndIcon="@EndIcon"
+           IconColor="IconColor"
+           IconClass="@IconClass"
+           Color="Color"
+           Size="Size"
+           Variant="Variant"
+           FullWidth="FullWidth"
+           Class="@Class"
+           Style="@Style"
+           Tag="Tag"
+           UserAttributes="UserAttributes"
+>
+    @if (State == ButtonState.Default)
+    {
+        @option.Label
+    }
+    else if (State == ButtonState.Progressing)
+    {
+        <MudProgressCircular
+            Color="option.ProgressStyle.Color"
+            Size="option.ProgressStyle.Size"
+            Indeterminate="true"
+            />
+    }
+    else if (State == ButtonState.Done)
+    {
+        @option.LabelAfterClick
+    }
+    else
+    {
+        @ChildContent
+    }
+</MudButton>
