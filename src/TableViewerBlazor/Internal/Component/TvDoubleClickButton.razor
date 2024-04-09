@@ -1,38 +1,38 @@
 @inherits MudButton
 
 @{
-    var action = DoubleClickAction;
+    var option = DoubleClickAction;
 }
 
 @if (State == ButtonState.First)
 {
     <MudButton OnClick="ClickFirst"
                Class="@Class"
-               Variant="action.Style.Variant"
-               Size="action.Style.Size"
-               Color="action.Style.Color"
-               Style="@action.Style.Style"
-               StartIcon="@action.Style.StartIcon"
-               EndIcon="@action.Style.EndIcon"
-               IconSize="action.Style.IconSize"
-               IconColor="action.Style.IconColor"
+               Variant="option.Style.Variant"
+               Size="option.Style.Size"
+               Color="option.Style.Color"
+               Style="@option.Style.Style"
+               StartIcon="@option.Style.StartIcon"
+               EndIcon="@option.Style.EndIcon"
+               IconSize="option.Style.IconSize"
+               IconColor="option.Style.IconColor"
     >
-        @action.Label
+        @ChildContent
     </MudButton>
 }
 else
 {
     <MudButton OnClick="ClickSecond"
                Class="@Class"
-               Variant="action.SecondStyle.Variant"
-               Size="action.Style.Size"
-               Color="action.SecondStyle.Color"
-               Style="@action.Style.Style"
-               StartIcon="@action.Style.StartIcon"
-               EndIcon="@action.Style.EndIcon"
-               IconSize="action.Style.IconSize"
-               IconColor="action.SecondStyle.IconColor"
+               Variant="option.SecondStyle.Variant"
+               Size="option.Style.Size"
+               Color="option.SecondStyle.Color"
+               Style="@option.Style.Style"
+               StartIcon="@option.Style.StartIcon"
+               EndIcon="@option.Style.EndIcon"
+               IconSize="option.Style.IconSize"
+               IconColor="option.SecondStyle.IconColor"
     >
-        @action.Label
+        @ChildContent
     </MudButton>
 }
