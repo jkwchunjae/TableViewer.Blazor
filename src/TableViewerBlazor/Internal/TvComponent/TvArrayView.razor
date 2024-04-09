@@ -52,20 +52,31 @@
                 {
                   classText += " mud-button-dense";
                 }
-                <MudButton OnClick="@(() => action.Action(item))"
-                  Class="@classText"
-                  Variant="action.Style.Variant"
-                  Size="action.Style.Size"
-                  Color="action.Style.Color"
-                  Style="@action.Style.Style"
+                if (action is ITvDoubleClickAction doubleClickAction)
+                {
+                  <TvDoubleClickButton
+                    Item="item"
+                    Class="@classText"
+                    DoubleClickAction="doubleClickAction"
+                  />
+                }
+                else
+                {
+                  <MudButton OnClick="@(() => action.Action(item))"
+                    Class="@classText"
+                    Variant="action.Style.Variant"
+                    Size="action.Style.Size"
+                    Color="action.Style.Color"
+                    Style="@action.Style.Style"
 
-                  StartIcon="@action.Style.StartIcon"
-                  EndIcon="@action.Style.EndIcon"
-                  IconSize="action.Style.IconSize"
-                  IconColor="action.Style.IconColor"
-                >
-                  @action.Label
-                </MudButton>
+                    StartIcon="@action.Style.StartIcon"
+                    EndIcon="@action.Style.EndIcon"
+                    IconSize="action.Style.IconSize"
+                    IconColor="action.Style.IconColor"
+                  >
+                    @action.Label
+                  </MudButton>
+                }
               }
             }
           </td>
