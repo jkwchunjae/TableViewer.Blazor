@@ -29,6 +29,10 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
+else if (Data != null && Depth > 1)
+{
+    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" />
+}
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
