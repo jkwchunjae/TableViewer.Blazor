@@ -10,4 +10,5 @@ public class TvOptions
     public IEnumerable<TvColumnVisibleOption>? ColumnVisible { get; set; }
     public IEnumerable<string>? DisableKeys { get; set; }
     public TvStyleOption Style { get; set; } = new();
+    public TvEditorOption Editor { get; set; } = new();
 }
