@@ -5,9 +5,11 @@ namespace TableViewerBlazor.Options;
 public interface ITvEditorOption
 {
     delegate bool EditorOptionCondition(object? data, int depth, string path);
+    delegate bool EditorOptionConditionByType(Type type, int depth, string path);
     string Language { get; }
     Func<object, string>? Serializer { get; }
     EditorOptionCondition? Condition { get; }
+    EditorOptionConditionByType ConditionByType { get; }
 }
 
 public class TvEditorOption<T> : ITvEditorOption
@@ -22,6 +24,9 @@ public class TvEditorOption<T> : ITvEditorOption
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
         (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+
+    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
+        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
 }
 
 public class TvJsonEditorOption<T> : ITvEditorOption
@@ -41,6 +46,9 @@ public class TvJsonEditorOption<T> : ITvEditorOption
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
         (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+
+    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
+        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
 }
 
 public class TvYamlEditorOption<T> : ITvEditorOption
@@ -59,4 +67,7 @@ public class TvYamlEditorOption<T> : ITvEditorOption
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
         (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+
+    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
+        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
 }
