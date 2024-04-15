@@ -180,18 +180,7 @@ Welcome to your new app.
             },
             Editor = new ITvEditorOption[]
             {
-                new TvEditorOption<IEnumerable<PersonRecord>>
-                {
-                    Language = "json",
-                    Serializer = (IEnumerable<PersonRecord> data) => JsonSerializer.Serialize(data, new JsonSerializerOptions
-                    {
-                        WriteIndented = true,
-                    }),
-                    Condition = (pr, depth, path) =>
-                    {
-                        return true;
-                    },
-                },
+                new TvJsonEditorOption<IEnumerable<PersonRecord>>(),
                 new TvEditorOption<Dictionary<string, object>>
                 {
                     Language = "json",
