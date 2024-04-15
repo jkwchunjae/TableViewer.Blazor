@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Text.Json
 @inject IJSRuntime Js
 
 <PageTitle>Home</PageTitle>
@@ -17,7 +18,10 @@ Welcome to your new app.
     <TableViewer Data="people" Options="optionForPeople"/>
 }
 
-<TableViewer Data="peopleRecord"/>
+@if (optionForPR != null)
+{
+    <TableViewer Data="peopleRecord" Options="optionForPR"/>
+}
     }
 </div>
 
@@ -91,6 +95,16 @@ Welcome to your new app.
                         ["false"] = false,
                     }
                 ),
+                new PersonRecord(
+                    Id: 213,
+                    Name: "User 2",
+                    Attributes: new Dictionary<string, object>
+                    {
+                        ["age"] = 12,
+                        ["true"] = true,
+                        ["false"] = false,
+                    }
+                ),
             }
         },
         new Person
@@ -135,11 +149,13 @@ Welcome to your new app.
         ),
     };
 
+    TvOptions optionForPR = null;
+
     protected override Task OnInitializedAsync()
     {
         optionForPeople = new TvOptions
         {
-            OpenDepth = 99,
+            OpenDepth = 9,
             Actions = new List<ITvAction>()
             {
                 new TvDoubleClickAction<Person>
@@ -176,6 +192,35 @@ Welcome to your new app.
                 //     Before = ["Id", "Name", "Attributes", "People"],
                 //     After = ["Id", "Name"],
                 // },
+            },
+            Editor = new ITvEditorOption[]
+            {
+                new TvYamlEditorOption<PersonRecord>()
+                {
+                    Condition = (data, depth, path) =>
+                    {
+                        return data?.Name == "User name";
+                    },
+                },
+                // new TvYamlEditorOption<Dictionary<string, object>>(),
+            },
+        };
+
+        optionForPR = new TvOptions
+        {
+            Actions = new ITvAction[]
+            {
+                new TvAction<PersonRecord>
+                {
+                    Action = async (person) =>
+                    {
+                        await Js.InvokeVoidAsync("console.log", person);
+                    },
+                },
+            },
+            Editor = new ITvEditorOption[]
+            {
+                new TvJsonEditorOption<PersonRecord>(),
             },
         };
 

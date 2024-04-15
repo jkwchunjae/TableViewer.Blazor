@@ -29,20 +29,24 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
+else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
+{
+    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" EditorOption="editorOption"/>
+}
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
         <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" />
     </div>
 }
-else if (IsObjectArray)
+else if (IsObjectArray && UseObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
     <div class="table-cell">
         <TvObjectArrayView Data="array" Options="Options" Depth="Depth" />
     </div>
 }
-else if (Data is IEnumerable enumerableData && !(Data is IDictionary))
+else if (Data is IEnumerable enumerableData)
 {
     <div class="table-cell">
         <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" />
