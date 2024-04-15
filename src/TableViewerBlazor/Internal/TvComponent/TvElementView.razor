@@ -29,9 +29,9 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
     </div>
 }
-else if (Data != null && Depth > 1)
+else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
 {
-    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" />
+    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" EditorOption="editorOption"/>
 }
 else if (Data is IDictionary dictionary)
 {
