@@ -42,3 +42,21 @@ public class TvJsonEditorOption<T> : ITvEditorOption
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
         (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
 }
+
+public class TvYamlEditorOption<T> : ITvEditorOption
+{
+    private static readonly YamlDotNet.Serialization.ISerializer defaultSerializer = new YamlDotNet.Serialization.SerializerBuilder()
+        .Build();
+
+    public string Language { get; } = "json";
+    public Func<T, string> Serializer { get; set; } =
+        (T data) => defaultSerializer.Serialize(data);
+    public Func<T?, int, string, bool> Condition { get; set; } =
+        (T? data, int depth, string path) => true;
+
+    Func<object, string>? ITvEditorOption.Serializer =>
+        (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
+
+    ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
+        (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+}
