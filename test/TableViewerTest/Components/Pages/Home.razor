@@ -92,6 +92,16 @@ Welcome to your new app.
                         ["false"] = false,
                     }
                 ),
+                new PersonRecord(
+                    Id: 213,
+                    Name: "User 2",
+                    Attributes: new Dictionary<string, object>
+                    {
+                        ["age"] = 12,
+                        ["true"] = true,
+                        ["false"] = false,
+                    }
+                ),
             }
         },
         new Person
@@ -140,7 +150,7 @@ Welcome to your new app.
     {
         optionForPeople = new TvOptions
         {
-            OpenDepth = 99,
+            OpenDepth = 1,
             Actions = new List<ITvAction>()
             {
                 new TvDoubleClickAction<Person>
@@ -180,19 +190,8 @@ Welcome to your new app.
             },
             Editor = new ITvEditorOption[]
             {
-                new TvJsonEditorOption<IEnumerable<PersonRecord>>(),
-                new TvEditorOption<Dictionary<string, object>>
-                {
-                    Language = "json",
-                    Serializer = (Dictionary<string, object> data) => JsonSerializer.Serialize(data, new JsonSerializerOptions
-                    {
-                        WriteIndented = true,
-                    }),
-                    Condition = (pr, depth, path) =>
-                    {
-                        return true;
-                    },
-                },
+                new TvYamlEditorOption<IEnumerable<PersonRecord>>(),
+                // new TvYamlEditorOption<Dictionary<string, object>>(),
             },
         };
 
