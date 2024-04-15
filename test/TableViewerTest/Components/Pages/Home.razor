@@ -18,7 +18,10 @@ Welcome to your new app.
     <TableViewer Data="people" Options="optionForPeople"/>
 }
 
-<TableViewer Data="peopleRecord"/>
+@if (optionForPR != null)
+{
+    <TableViewer Data="peopleRecord" Options="optionForPR"/>
+}
     }
 </div>
 
@@ -146,11 +149,13 @@ Welcome to your new app.
         ),
     };
 
+    TvOptions optionForPR = null;
+
     protected override Task OnInitializedAsync()
     {
         optionForPeople = new TvOptions
         {
-            OpenDepth = 1,
+            OpenDepth = 9,
             Actions = new List<ITvAction>()
             {
                 new TvDoubleClickAction<Person>
@@ -190,8 +195,32 @@ Welcome to your new app.
             },
             Editor = new ITvEditorOption[]
             {
-                new TvYamlEditorOption<IEnumerable<PersonRecord>>(),
+                new TvYamlEditorOption<PersonRecord>()
+                {
+                    Condition = (data, depth, path) =>
+                    {
+                        return data?.Name == "User name";
+                    },
+                },
                 // new TvYamlEditorOption<Dictionary<string, object>>(),
+            },
+        };
+
+        optionForPR = new TvOptions
+        {
+            Actions = new ITvAction[]
+            {
+                new TvAction<PersonRecord>
+                {
+                    Action = async (person) =>
+                    {
+                        await Js.InvokeVoidAsync("console.log", person);
+                    },
+                },
+            },
+            Editor = new ITvEditorOption[]
+            {
+                new TvJsonEditorOption<PersonRecord>(),
             },
         };
 
