@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Text.Json
 @inject IJSRuntime Js
 
 <PageTitle>Home</PageTitle>
@@ -176,6 +177,33 @@ Welcome to your new app.
                 //     Before = ["Id", "Name", "Attributes", "People"],
                 //     After = ["Id", "Name"],
                 // },
+            },
+            Editor = new ITvEditorOption[]
+            {
+                new TvEditorOption<IEnumerable<PersonRecord>>
+                {
+                    Language = "json",
+                    Serializer = (IEnumerable<PersonRecord> data) => JsonSerializer.Serialize(data, new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                    }),
+                    Condition = (pr, depth, path) =>
+                    {
+                        return true;
+                    },
+                },
+                new TvEditorOption<Dictionary<string, object>>
+                {
+                    Language = "json",
+                    Serializer = (Dictionary<string, object> data) => JsonSerializer.Serialize(data, new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                    }),
+                    Condition = (pr, depth, path) =>
+                    {
+                        return true;
+                    },
+                },
             },
         };
 
