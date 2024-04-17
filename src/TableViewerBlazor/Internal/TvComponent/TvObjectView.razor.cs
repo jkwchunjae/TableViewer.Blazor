@@ -18,7 +18,7 @@ public partial class TvObjectView : TvViewBase
     {
         if (Options != null)
         {
-            Open = Depth <= Options.OpenDepth;
+            Open = Depth <= Options.GlobalOpenDepth;
         }
         if (Data != null)
         {
