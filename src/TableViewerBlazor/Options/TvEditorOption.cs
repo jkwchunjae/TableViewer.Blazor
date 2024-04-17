@@ -2,20 +2,43 @@ using System.Text.Json;
 
 namespace TableViewerBlazor.Options;
 
+public static class TvEditorOptionExtension
+{
+    public static bool TryGetEditorOption(this TvOptions tvOptions, object? data, int depth, string path, out ITvEditorOption option)
+    {
+        var editorOption = tvOptions.Editor?.FirstOrDefault(x => x.Condition?.Invoke(data, depth, path) ?? false);
+
+        if (editorOption != null)
+        {
+            option = editorOption;
+            return true;
+        }
+        else
+        {
+            option = null!;
+            return false;
+        }
+    }
+}
+
 public interface ITvEditorOption
 {
     delegate bool EditorOptionCondition(object? data, int depth, string path);
     delegate bool EditorOptionConditionByType(Type type, int depth, string path);
     string Language { get; }
+    EditorSize? LayoutMaxSize { get; }
     Func<object, string>? Serializer { get; }
     EditorOptionCondition? Condition { get; }
     EditorOptionConditionByType ConditionByType { get; }
 }
 
+public record EditorSize(int? Height, int? Width);
+
 public class TvEditorOption<T> : ITvEditorOption
 {
     public delegate bool EditorOptionConditionT(T? data, int depth, string path);
     public string Language { get; set; } = "json";
+    public EditorSize? LayoutMaxSize { get; set; }
     public Func<T, string>? Serializer { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
 
@@ -36,6 +59,7 @@ public class TvJsonEditorOption<T> : ITvEditorOption
         WriteIndented = true,
     };
     public string Language { get; } = "json";
+    public EditorSize? LayoutMaxSize { get; set; }
     public Func<T, string> Serializer { get; set; } =
         (T data) => JsonSerializer.Serialize(data, defaultSerializerOption);
     public Func<T?, int, string, bool> Condition { get; set; } =
@@ -57,6 +81,7 @@ public class TvYamlEditorOption<T> : ITvEditorOption
         .Build();
 
     public string Language { get; } = "json";
+    public EditorSize? LayoutMaxSize { get; set; }
     public Func<T, string> Serializer { get; set; } =
         (T data) => defaultSerializer.Serialize(data);
     public Func<T?, int, string, bool> Condition { get; set; } =

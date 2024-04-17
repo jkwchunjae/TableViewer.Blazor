@@ -21,11 +21,14 @@ public partial class TvMonacoEditorViewer : TvViewBase
     {
         InvokeAsync(async () =>
         {
-            await Task.Delay(10);
+            // TODO: 좀 더 좋은 방법을 찾아야 함.
+            await Task.Delay(100);
+            var editorHeight = Math.Min(height * 20, EditorOption.LayoutMaxSize?.Height ?? int.MaxValue);
+            var editorWidth = Math.Min(width * 10, EditorOption.LayoutMaxSize?.Width ?? int.MaxValue);
             await Editor.Layout(new Dimension
             {
-                Height = height * 20,
-                Width = width * 10,
+                Height = editorHeight,
+                Width = editorWidth,
             });
             StateHasChanged();
         });

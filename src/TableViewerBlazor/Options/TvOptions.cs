@@ -11,20 +11,4 @@ public class TvOptions
     public IEnumerable<string>? DisableKeys { get; set; }
     public TvStyleOption Style { get; set; } = new();
     public IEnumerable<ITvEditorOption>? Editor { get; set; }
-
-    public bool TryGetEditorOption(object? data, int depth, string path, out ITvEditorOption option)
-    {
-        var editorOption = Editor?.FirstOrDefault(x => x.Condition?.Invoke(data, depth, path) ?? false);
-
-        if (editorOption != null)
-        {
-            option = editorOption;
-            return true;
-        }
-        else
-        {
-            option = null!;
-            return false;
-        }
-    }
 }
