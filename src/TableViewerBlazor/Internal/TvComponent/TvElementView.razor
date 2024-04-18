@@ -8,53 +8,53 @@
 else if (IsNumber)
 {
     <div class="table-cell">
-        <TvNumberView Data="Data!" Options="Options" Depth="Depth" />
+        <TvNumberView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (Data is bool boolData)
 {
     <div class="table-cell">
-        <TvBooleanView Data="boolData" Options="Options" Depth="Depth" />
+        <TvBooleanView Data="boolData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (Data is DateTime datetimeData)
 {
     <div class="table-cell">
-        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" />
+        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (Data is string stringData)
 {
     <div class="table-cell">
-        <TvStringView Data="@stringData" Options="Options" Depth="Depth" />
+        <TvStringView Data="@stringData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
 {
-    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" EditorOption="editorOption"/>
+    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption"/>
 }
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
-        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" />
+        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (IsObjectArray && UseObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
     <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" />
+        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else if (Data is IEnumerable enumerableData)
 {
     <div class="table-cell">
-        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" />
+        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
 else
 {
     <div class="table-cell">
-        <TvObjectView Data="Data" Options="Options" Depth="Depth" />
+        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
