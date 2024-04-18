@@ -34,7 +34,12 @@
         <tr>
           <td class="index">@index</td>
           <td class="item">
-            <TvElementView Data="@item" Options="Options" Depth="Depth + 1"/>
+            <TvElementView
+                Data="@item"
+                Options="Options"
+                Depth="Depth + 1"
+                OpenDepth="OpenDepth"
+            />
           </td>
           @if (HasAnyAction)
           {

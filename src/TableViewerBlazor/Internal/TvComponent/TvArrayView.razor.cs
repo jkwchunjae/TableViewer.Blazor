@@ -21,7 +21,7 @@ public partial class TvArrayView : TvViewBase
     {
         if (Options != null)
         {
-            Open = Depth <= Options.GlobalOpenDepth;
+            Open = Depth <= OpenDepth;
             if (VisibleItems < Options.ArrayVisibleDepth)
             {
                 VisibleItems = Options.ArrayVisibleDepth;

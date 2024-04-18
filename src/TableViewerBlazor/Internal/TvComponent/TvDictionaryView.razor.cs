@@ -16,7 +16,7 @@ public partial class TvDictionaryView : TvViewBase
     {
         if (Options != null)
         {
-            Open = Depth <= Options.GlobalOpenDepth;
+            Open = Depth <= OpenDepth;
         }
         if (Data != null)
         {

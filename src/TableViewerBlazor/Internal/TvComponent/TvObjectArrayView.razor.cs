@@ -38,7 +38,7 @@ public partial class TvObjectArrayView : TvViewBase
         }
         if (Options != null)
         {
-            Open = Depth <= Options.GlobalOpenDepth;
+            Open = Depth <= OpenDepth;
         }
     }
 
