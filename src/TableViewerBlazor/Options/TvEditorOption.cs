@@ -46,10 +46,30 @@ public class TvEditorOption<T> : ITvEditorOption
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
-        (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+        (data, depth, path) =>
+        {
+            if (data is T t)
+            {
+                return Condition?.Invoke(t, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 
     public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
+        (type, depth, path) =>
+        {
+            if (typeof(T) == type)
+            {
+                return Condition != null;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
 
 public class TvJsonEditorOption<T> : ITvEditorOption
@@ -69,10 +89,30 @@ public class TvJsonEditorOption<T> : ITvEditorOption
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
-        (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+        (data, depth, path) =>
+        {
+            if (data is T t)
+            {
+                return Condition?.Invoke(t, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 
     public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
+        (type, depth, path) =>
+        {
+            if (typeof(T) == type)
+            {
+                return Condition != null;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
 
 public class TvYamlEditorOption<T> : ITvEditorOption
@@ -91,8 +131,28 @@ public class TvYamlEditorOption<T> : ITvEditorOption
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
     ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
-        (data, depth, path) => data is T t && Condition != null ? Condition(t, depth, path) : false;
+        (data, depth, path) =>
+        {
+            if (data is T t)
+            {
+                return Condition?.Invoke(t, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 
     public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) => typeof(T) == type && Condition != null ? true : false;
+        (type, depth, path) =>
+        {
+            if (typeof(T) == type)
+            {
+                return Condition != null;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
