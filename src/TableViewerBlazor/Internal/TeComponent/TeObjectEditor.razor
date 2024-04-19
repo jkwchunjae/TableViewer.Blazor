@@ -1,0 +1,13 @@
+﻿@foreach (var keyData in GetKeys(Data!))
+{
+    if (keyData.MemberInfo is FieldInfo fieldInfo)
+    {
+        var data = fieldInfo.GetValue(Data);
+        <TeElementEditor Type="fieldInfo.FieldType" Data="data" />
+    }
+    else if (keyData.MemberInfo is PropertyInfo propertyInfo)
+    {
+        var data = propertyInfo.GetValue(Data);
+        <TeElementEditor Type="propertyInfo.PropertyType" Data="data" />
+    }
+}
