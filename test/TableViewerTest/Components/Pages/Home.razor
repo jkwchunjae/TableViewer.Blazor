@@ -60,12 +60,13 @@ Welcome to your new app.
         };
     TvOptions personOption = new TvOptions
     {
+        GlobalOpenDepth = 1,
         ColumnVisible = new []
         {
             new TvColumnVisibleOption
             {
                 Before = ["Id", "Name", "Attributes"],
-                After = ["Id", "Name"],
+                After = ["Id", "Name", "Attributes"],
             },
         },
     };
@@ -105,7 +106,21 @@ Welcome to your new app.
                         ["false"] = false,
                     }
                 ),
-            }
+            },
+            OpenTest = new OpenTest
+            {
+                Id = "123",
+                Numbers = new int[]
+                {
+                    1, 2, 3,
+                },
+                People = new PersonRecord[]
+                {
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                },
+            },
         },
         new Person
         {
@@ -116,6 +131,20 @@ Welcome to your new app.
             {
                 ["age"] = 12,
                 ["location"] = "France",
+            },
+            OpenTest = new OpenTest
+            {
+                Id = "123",
+                Numbers = new int[]
+                {
+                    1, 2, 3,
+                },
+                People = new PersonRecord[]
+                {
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                },
             },
         },
     };
@@ -155,7 +184,7 @@ Welcome to your new app.
     {
         optionForPeople = new TvOptions
         {
-            OpenDepth = 9,
+            GlobalOpenDepth = 1,
             Actions = new List<ITvAction>()
             {
                 new TvDoubleClickAction<Person>
@@ -185,13 +214,12 @@ Welcome to your new app.
                     Label = "Console log person record",
                 },
             },
-            ColumnVisible = new TvColumnVisibleOption[]
+            OpenDepth = new ITvOpenDepthOption[]
             {
-                // new TvColumnVisibleOption
-                // {
-                //     Before = ["Id", "Name", "Attributes", "People"],
-                //     After = ["Id", "Name"],
-                // },
+                new TvOpenDepthOption<OpenTest>
+                {
+                    OpenDepth = 3,
+                },
             },
             Editor = new ITvEditorOption[]
             {

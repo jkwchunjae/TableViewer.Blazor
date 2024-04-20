@@ -2,7 +2,7 @@
 
 public class TvOptions
 {
-    public int OpenDepth { get; set; } = 1;
+    public int GlobalOpenDepth { get; set; } = 1;
     public int ArrayVisibleDepth { get; set; } = 1;
     public bool ReadProperty { get; set; } = true;
     public bool ReadField { get; set; } = true;
@@ -11,4 +11,5 @@ public class TvOptions
     public IEnumerable<string>? DisableKeys { get; set; }
     public TvStyleOption Style { get; set; } = new();
     public IEnumerable<ITvEditorOption>? Editor { get; set; }
+    public IEnumerable<ITvOpenDepthOption>? OpenDepth { get; set; }
 }

@@ -8,6 +8,14 @@ public class Person
     public Dictionary<string, object>? Attributes { get; set; }
 
     public PersonRecord[]? People { get; set; }
+    public OpenTest? OpenTest { get; set; }
+}
+
+public class OpenTest
+{
+    public required string Id { get; set; }
+    public required int[] Numbers { get; set; }
+    public PersonRecord[]? People { get; set; }
 }
 
 public record PersonRecord(int Id, string? Name, Dictionary<string, object>? Attributes);

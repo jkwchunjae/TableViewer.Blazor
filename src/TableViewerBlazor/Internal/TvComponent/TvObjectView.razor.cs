@@ -9,17 +9,16 @@ public partial class TvObjectView : TvViewBase
     [Parameter] public object? Data { get; set; }
 
     bool Open = false;
+    int? ThisOpenDepth = null;
 
     private string[] Keys = Array.Empty<string>();
     private IEnumerable<(string Key, object? Value)> Items = Enumerable.Empty<(string, object?)>();
 
-
     protected override void OnInitialized()
     {
-        if (Options != null)
-        {
-            Open = Depth <= Options.OpenDepth;
-        }
+        Open = Depth <= OpenDepth;
+        ThisOpenDepth = ChildrenOpen();
+
         if (Data != null)
         {
             var keys = GetKeys(Data);
@@ -39,6 +38,20 @@ public partial class TvObjectView : TvViewBase
             Items = keys
                 .Select(keyInfo => (keyInfo.Key, GetValue(Data, keyInfo.MemberInfo)))
                 .ToArray();
+        }
+    }
+
+    private int? ChildrenOpen()
+    {
+        var openOption = Options.OpenDepth?
+            .FirstOrDefault(option => option.Condition != null ? option.Condition(Data, Depth, "path") : false);
+        if (openOption != null)
+        {
+            return openOption.OpenDepth + Depth - 1;
+        }
+        else
+        {
+            return null;
         }
     }
 
