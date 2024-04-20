@@ -1,5 +1,11 @@
 ﻿
-@if (Type == typeof(string) && Data is string str)
+@if (TryGetSelectBoxOption(out var selectBoxOption))
+{
+    <TeSelectBox Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        SelectBoxOption="@selectBoxOption"/>
+}
+else if (Type == typeof(string) && Data is string str)
 {
     <MudTextField T="string" Label="@Name" Value="str" />
 }
@@ -9,5 +15,7 @@ else if (Type == typeof(int) && Data is int intnum)
 }
 else
 {
-    <TeObjectEditor Type="Type" Data="Data" Name="Name" />
+    <TeObjectEditor Type="Type" Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Name="Name" Options="Options"/>
 }

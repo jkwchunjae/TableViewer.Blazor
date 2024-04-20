@@ -1,0 +1,13 @@
+<MudSelect
+    T="object"
+    Value="Data"
+    ValueChanged="@(async value => await OnValueChanged(value))"
+    Clearable
+>
+    @foreach (var item in SelectBoxOption.Items)
+    {
+        <MudSelectItem Value="@item.Value">@item.Text</MudSelectItem>
+    }
+</MudSelect>
+
+    @* ToStringFunc="@Converter1" *@

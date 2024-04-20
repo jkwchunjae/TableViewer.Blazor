@@ -1,3 +1,6 @@
 ﻿@typeparam T
 
-<TeElementEditor Type="@typeof(T)" Data="Data" />
+<TeElementEditor Type="@typeof(T)"
+    Data="Data"
+    DataChanged="@(async value => await OnDataChanged(value))"
+    Options="Options"/>

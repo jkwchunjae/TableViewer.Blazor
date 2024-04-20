@@ -7,15 +7,9 @@ public partial class TeObjectEditor : ComponentBase
     /// </summary>
     [Parameter] public Type Type { get; set; } = default!;
     [Parameter] public object? Data { get; set; }
+    [Parameter] public EventCallback<object?> DataChanged { get; set; }
     [Parameter] public string? Name { get; set; }
     [Parameter] public TeOptions Options { get; set; } = new TeOptions();
-
-    protected override void OnInitialized()
-    {
-        var keys = GetKeys(Data!);
-
-
-    }
 
     private IEnumerable<(string Key, MemberInfo MemberInfo)> GetKeys(object data)
     {
@@ -45,5 +39,11 @@ public partial class TeObjectEditor : ComponentBase
                 yield return (field.Name, field);
             }
         }
+    }
+
+    private async Task OnDataChanged_Property(PropertyInfo property, object? value)
+    {
+        property.SetValue(Data, value);
+        await DataChanged.InvokeAsync(Data);
     }
 }
