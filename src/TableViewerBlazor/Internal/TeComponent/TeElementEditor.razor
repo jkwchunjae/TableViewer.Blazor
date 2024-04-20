@@ -1,13 +1,13 @@
 ﻿
 @if (Type == typeof(string) && Data is string str)
 {
-    <MudTextField T="string" Label="@Name" Value="str" Placeholder="@Name"/>
+    <MudTextField T="string" Label="@Name" Value="str" />
 }
 else if (Type == typeof(int) && Data is int intnum)
 {
-    <MudTextField T="int" Label="@Name" Value="intnum"/>
+    <MudTextField T="int" Label="@Name" Value="intnum" />
 }
 else
 {
-    <TeObjectEditor Type="Type" Data="Data" Name="Name"/>
+    <TeObjectEditor Type="Type" Data="Data" Name="Name" />
 }

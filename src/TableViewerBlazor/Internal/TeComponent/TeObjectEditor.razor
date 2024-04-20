@@ -3,11 +3,11 @@
     if (keyData.MemberInfo is FieldInfo fieldInfo)
     {
         var data = fieldInfo.GetValue(Data);
-        <TeElementEditor Type="fieldInfo.FieldType" Data="data" />
+        <TeElementEditor Type="fieldInfo.FieldType" Data="data" Name="@fieldInfo.Name"/>
     }
     else if (keyData.MemberInfo is PropertyInfo propertyInfo)
     {
         var data = propertyInfo.GetValue(Data);
-        <TeElementEditor Type="propertyInfo.PropertyType" Data="data" />
+        <TeElementEditor Type="propertyInfo.PropertyType" Data="data" Name="@propertyInfo.Name"/>
     }
 }
