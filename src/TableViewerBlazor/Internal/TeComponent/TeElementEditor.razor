@@ -1,9 +1,14 @@
-﻿
-@if (TryGetSelectBoxOption(out var selectBoxOption))
+﻿@inherits TeEditorBase
+
+@if (Options.TryGetSelectBoxOption(MemberInfo, Data, out var selectBoxOption))
 {
-    <TeSelectBox Data="Data"
+    <TeSelectBox
+        Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        SelectBoxOption="@selectBoxOption"/>
+        Options="Options"
+        Depth="Depth"
+        SelectBoxOption="@selectBoxOption"
+    />
 }
 else if (Type == typeof(string) && Data is string str)
 {
@@ -15,7 +20,10 @@ else if (Type == typeof(int) && Data is int intnum)
 }
 else
 {
-    <TeObjectEditor Type="Type" Data="Data"
+    <TeObjectEditor Type="Type"
+        Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Name="Name" Options="Options"/>
+        Options="Options"
+        Depth="Depth"
+    />
 }

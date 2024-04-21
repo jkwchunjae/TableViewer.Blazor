@@ -1,20 +1,31 @@
-﻿@foreach (var keyData in GetKeys(Data!))
+﻿@inherits TeEditorBase
+
+@foreach (var keyData in GetKeys(Data!))
 {
     if (keyData.MemberInfo is FieldInfo fieldInfo)
     {
-        var data = fieldInfo.GetValue(Data);
-        <TeElementEditor MemberInfo="keyData.MemberInfo" Type="fieldInfo.FieldType" Data="data" Name="@fieldInfo.Name" Options="Options"/>
+        var value = fieldInfo.GetValue(Data);
+        <TeElementEditor
+            Data="value"
+            DataChanged="@(value => OnDataChanged_Field(fieldInfo, value))"
+            Options="Options"
+            Depth="@(Depth + 1)"
+            MemberInfo="keyData.MemberInfo"
+            Type="fieldInfo.FieldType"
+            Name="@keyData.MemberInfo.Name"
+        />
     }
     else if (keyData.MemberInfo is PropertyInfo propertyInfo)
     {
         var value = propertyInfo.GetValue(Data);
         <TeElementEditor
-            MemberInfo="keyData.MemberInfo"
-            Type="propertyInfo.PropertyType"
             Data="value"
             DataChanged="@(value => OnDataChanged_Property(propertyInfo, value))"
-            Name="@propertyInfo.Name"
             Options="Options"
+            Depth="@(Depth + 1)"
+            MemberInfo="keyData.MemberInfo"
+            Type="propertyInfo.PropertyType"
+            Name="@keyData.MemberInfo.Name"
         />
     }
 }

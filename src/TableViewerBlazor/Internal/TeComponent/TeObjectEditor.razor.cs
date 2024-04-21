@@ -1,15 +1,12 @@
 ﻿namespace TableViewerBlazor.Internal.TeComponent;
 
-public partial class TeObjectEditor : ComponentBase
+public partial class TeObjectEditor : TeEditorBase
 {
     /// <summary>
     /// FieldInfo, PropertyInfo
     /// </summary>
     [Parameter] public Type Type { get; set; } = default!;
-    [Parameter] public object? Data { get; set; }
-    [Parameter] public EventCallback<object?> DataChanged { get; set; }
     [Parameter] public string? Name { get; set; }
-    [Parameter] public TeOptions Options { get; set; } = new TeOptions();
 
     private IEnumerable<(string Key, MemberInfo MemberInfo)> GetKeys(object data)
     {
@@ -44,6 +41,12 @@ public partial class TeObjectEditor : ComponentBase
     private async Task OnDataChanged_Property(PropertyInfo property, object? value)
     {
         property.SetValue(Data, value);
+        await DataChanged.InvokeAsync(Data);
+    }
+
+    private async Task OnDataChanged_Field(FieldInfo field, object? value)
+    {
+        field.SetValue(Data, value);
         await DataChanged.InvokeAsync(Data);
     }
 }
