@@ -1,0 +1,11 @@
+﻿@inherits TeEditorBase
+
+@if (Data is string stringValue)
+{
+    <MudTextField
+        T="string"
+        Value="stringValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="label"
+    />
+}

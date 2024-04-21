@@ -12,7 +12,12 @@
 }
 else if (Type == typeof(string) && Data is string str)
 {
-    <MudTextField T="string" Label="@Name" Value="str" />
+    <TeTextEditor
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+    />
 }
 else if (Type == typeof(int) && Data is int intnum)
 {
