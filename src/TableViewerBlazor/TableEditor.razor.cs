@@ -5,10 +5,16 @@ public partial class TableEditor<T> : ComponentBase
     [Parameter] public T Data { get; set; } = default!;
     [Parameter] public EventCallback<T> DataChanged { get; set; }
     [Parameter] public TeOptions Options { get; set; } = new TeOptions();
+    [Parameter] public EventCallback<bool> IsValidChanged { get; set; }
 
-    private async Task TestClick()
+    MudForm form = default!;
+    bool success;
+    string[] errors = { };
+
+    private Task OnValidChanged(bool success)
     {
-        await DataChanged.InvokeAsync(Data);
+        this.success = success;
+        return IsValidChanged.InvokeAsync(success);
     }
 
     private Task OnDataChanged(object? data)

@@ -7,5 +7,6 @@
         Value="stringValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="label"
+        Validation="@(new Func<string, IEnumerable<string>>(StringFieldValidation))"
     />
 }

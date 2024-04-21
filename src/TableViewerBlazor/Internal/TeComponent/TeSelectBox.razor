@@ -4,6 +4,7 @@
     T="object"
     Value="Data"
     ValueChanged="@(async value => await OnValueChanged(value))"
+    Label="label"
     Clearable
 >
     @foreach (var item in SelectBoxOption.Items)

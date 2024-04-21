@@ -6,6 +6,7 @@ namespace TableViewerTest.Components.Pages;
 
 public class EditData
 {
+    [TeTextField("name")]
     public string Name { get; set; } = string.Empty;
     [TeSelectBox("gender")]
     public string Gender { get; set; } = string.Empty;
@@ -26,6 +27,26 @@ public partial class EditorPage : ComponentBase
     EditData? viewData;
     TeOptions options = new TeOptions
     {
+        TextFieldOptions = new ITeTextFieldOption[]
+        {
+            new TeTextFieldOption<string>
+            {
+                Id = "name",
+                Validations = new TeTextFieldValidation<string>[]
+                {
+                    new TeTextFieldValidation<string>
+                    {
+                        Func = value => !string.IsNullOrEmpty(value),
+                        Message = "이름을 입력해주세요.",
+                    },
+                    new TeTextFieldValidation<string>
+                    {
+                        Func = value => value.Length <= 10,
+                        Message = "이름은 10자 이하로 입력해주세요.",
+                    },
+                },
+            },
+        },
         SelectBoxOptions = new ITeSelectBoxOption[]
         {
             new TeSelectBoxOption<string>
@@ -55,5 +76,9 @@ public partial class EditorPage : ComponentBase
     {
         viewData = data;
         await Js.InvokeVoidAsync("console.log", data);
+    }
+    private async Task OnValidChanged(bool isValid)
+    {
+        await Js.InvokeVoidAsync("console.log", "OnValidChanged", isValid);
     }
 }

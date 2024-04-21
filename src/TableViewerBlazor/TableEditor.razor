@@ -1,8 +1,14 @@
 ﻿@typeparam T
 
-<TeElementEditor Type="@typeof(T)"
-    Data="Data"
-    DataChanged="@(async value => await OnDataChanged(value))"
-    Options="Options"
-    Depth="1"
+<MudForm @ref="form"
+    IsValid="@success"
+    IsValidChanged="OnValidChanged"
+    @bind-Errors="@errors"
+>
+    <TeElementEditor Type="@typeof(T)"
+        Data="Data"
+        DataChanged="@(async value => await OnDataChanged(value))"
+        Options="Options"
+        Depth="1"
     />
+</MudForm>

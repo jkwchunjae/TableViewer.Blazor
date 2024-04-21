@@ -10,13 +10,14 @@
         SelectBoxOption="@selectBoxOption"
     />
 }
-else if (Type == typeof(string) && Data is string str)
+else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption))
 {
     <TeTextEditor
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        TextFieldOption="textFieldOption"
     />
 }
 else if (Type == typeof(int) && Data is int intnum)
