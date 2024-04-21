@@ -1,0 +1,34 @@
+﻿@inherits TeEditorBase
+
+@if (Options.TryGetSelectBoxOption(MemberInfo, Data, out var selectBoxOption))
+{
+    <TeSelectBox
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Label="@Label"
+        SelectBoxOption="@selectBoxOption"
+    />
+}
+else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption))
+{
+    <TeTextEditor
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Label="@Label"
+        TextFieldOption="textFieldOption"
+    />
+}
+else
+{
+    <TeObjectEditor
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Label="@Label"
+    />
+}
