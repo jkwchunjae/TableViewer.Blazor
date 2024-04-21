@@ -10,7 +10,8 @@ public class EditData
     public string Name { get; set; } = string.Empty;
     [TeSelectBox("gender")]
     public string Gender { get; set; } = string.Empty;
-    [TeSelectBox("age")]
+    // [TeSelectBox("age")]
+    [TeTextField("age")]
     public int Age { get; set; }
 }
 
@@ -43,6 +44,23 @@ public partial class EditorPage : ComponentBase
                     {
                         Func = value => value.Length <= 10,
                         Message = "이름은 10자 이하로 입력해주세요.",
+                    },
+                },
+            },
+            new TeTextFieldOption<int>
+            {
+                Id = "age",
+                Validations = new TeTextFieldValidation<int>[]
+                {
+                    new TeTextFieldValidation<int>
+                    {
+                        Func = value => value >= 0,
+                        Message = "나이는 0세 이상으로 입력해주세요.",
+                    },
+                    new TeTextFieldValidation<int>
+                    {
+                        Func = value => value <= 100,
+                        Message = "나이는 100세 이하로 입력해주세요.",
                     },
                 },
             },

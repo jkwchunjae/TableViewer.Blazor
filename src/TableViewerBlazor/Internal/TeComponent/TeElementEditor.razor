@@ -20,10 +20,6 @@ else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
-else if (Type == typeof(int) && Data is int intnum)
-{
-    <MudTextField T="int" Label="@Name" Value="intnum" />
-}
 else
 {
     <TeObjectEditor Type="Type"

@@ -7,6 +7,46 @@
         Value="stringValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="label"
-        Validation="@(new Func<string, IEnumerable<string>>(StringFieldValidation))"
+        Validation="@(new Func<string, IEnumerable<string>>(TextFieldValidation))"
+    />
+}
+else if (Data is int intValue)
+{
+    <MudTextField
+        T="int"
+        Value="intValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="label"
+        Validation="@(new Func<int, IEnumerable<string>>(TextFieldValidation))"
+    />
+}
+else if (Data is long longValue)
+{
+    <MudTextField
+        T="long"
+        Value="longValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="label"
+        Validation="@(new Func<long, IEnumerable<string>>(TextFieldValidation))"
+    />
+}
+else if (Data is float floatValue)
+{
+    <MudTextField
+        T="float"
+        Value="floatValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="label"
+        Validation="@(new Func<float, IEnumerable<string>>(TextFieldValidation))"
+    />
+}
+else if (Data is double doubleValue)
+{
+    <MudTextField
+        T="double"
+        Value="doubleValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="label"
+        Validation="@(new Func<double, IEnumerable<string>>(TextFieldValidation))"
     />
 }

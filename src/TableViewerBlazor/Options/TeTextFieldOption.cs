@@ -16,9 +16,24 @@ public static class TeTextFieldOptionExtensions
                 return true;
             }
         }
+
         textFieldOption = options.TextFieldOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
             .FirstOrDefault(o => o.Condition?.Invoke(data, 0, "path") ?? true) ?? default;
+        if (textFieldOption != null)
+        {
+            return true;
+        }
+
+        textFieldOption = data switch
+        {
+            string => new TeTextFieldOption<string>(),
+            int => new TeTextFieldOption<int>(),
+            long => new TeTextFieldOption<long>(),
+            float => new TeTextFieldOption<float>(),
+            double => new TeTextFieldOption<double>(),
+            _ => null,
+        };
         return textFieldOption != null;
     }
 }
