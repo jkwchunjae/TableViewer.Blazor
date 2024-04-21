@@ -2,12 +2,6 @@
 
 public partial class TeObjectEditor : TeEditorBase
 {
-    /// <summary>
-    /// FieldInfo, PropertyInfo
-    /// </summary>
-    [Parameter] public Type Type { get; set; } = default!;
-    [Parameter] public string? Name { get; set; }
-
     private IEnumerable<(string Key, MemberInfo MemberInfo)> GetKeys(object data)
     {
         if (data == null)

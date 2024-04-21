@@ -5,7 +5,7 @@
     IsValidChanged="OnValidChanged"
     @bind-Errors="@errors"
 >
-    <TeElementEditor Type="@typeof(T)"
+    <TeElementEditor
         Data="Data"
         DataChanged="@(async value => await OnDataChanged(value))"
         Options="Options"

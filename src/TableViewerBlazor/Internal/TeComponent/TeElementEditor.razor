@@ -7,6 +7,7 @@
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Label="@Label"
         SelectBoxOption="@selectBoxOption"
     />
 }
@@ -17,15 +18,17 @@ else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Label="@Label"
         TextFieldOption="textFieldOption"
     />
 }
 else
 {
-    <TeObjectEditor Type="Type"
+    <TeObjectEditor
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Label="@Label"
     />
 }
