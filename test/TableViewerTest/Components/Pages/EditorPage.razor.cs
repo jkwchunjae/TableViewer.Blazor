@@ -4,6 +4,11 @@ using TableViewerBlazor.Options;
 
 namespace TableViewerTest.Components.Pages;
 
+public class InnerClass
+{
+    public string InnerName { get; set; } = string.Empty;
+    public int Inner2 { get; set; }
+}
 public class EditData
 {
     [TeTextField("name")]
@@ -13,6 +18,7 @@ public class EditData
     // [TeSelectBox("age")]
     [TeTextField("age")]
     public int Age { get; set; }
+    public InnerClass Inner { get; set; } = new InnerClass();
 }
 
 public partial class EditorPage : ComponentBase
