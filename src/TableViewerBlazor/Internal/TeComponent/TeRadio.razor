@@ -1,0 +1,14 @@
+﻿@inherits TeEditorBase
+
+<MudField Label="@Label" DisableUnderLine="true">
+    <MudRadioGroup
+        T="object"
+        Value="Data"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+    >
+        @foreach (var item in RadioOption.Items)
+        {
+            <MudRadio Value="@item.Value">@item.Text</MudRadio>
+        }
+    </MudRadioGroup>
+</MudField>

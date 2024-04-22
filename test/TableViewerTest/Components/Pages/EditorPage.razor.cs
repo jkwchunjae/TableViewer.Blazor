@@ -18,6 +18,8 @@ public class EditData
     // [TeSelectBox("age")]
     [TeTextField("age")]
     public int Age { get; set; }
+    [TeRadio("ostype")]
+    public string OsType { get; set; } = "windows";
     public InnerClass Inner { get; set; } = new InnerClass();
 }
 
@@ -92,6 +94,18 @@ public partial class EditorPage : ComponentBase
                     new TeSelectItem<int>(30, "30대"),
                     new TeSelectItem<int>(40, "40대"),
                     new TeSelectItem<int>(50, "50대"),
+                },
+            },
+        },
+        RadioOptions = new ITeRadioOption[]
+        {
+            new TeRadioOption<string>
+            {
+                Id = "ostype",
+                Items = new TeRadioItem<string>[]
+                {
+                    new TeRadioItem<string>("linux", "리눅스"),
+                    new TeRadioItem<string>("windows", "윈도우"),
                 },
             },
         },
