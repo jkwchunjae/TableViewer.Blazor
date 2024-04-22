@@ -41,14 +41,14 @@ public partial class EditorPage : ComponentBase
             new TeTextFieldOption<string>
             {
                 Id = "name",
-                Validations = new TeTextFieldValidation<string>[]
+                Validations = new TeValidation<string>[]
                 {
-                    new TeTextFieldValidation<string>
+                    new TeValidation<string>
                     {
                         Func = value => !string.IsNullOrEmpty(value),
                         Message = "이름을 입력해주세요.",
                     },
-                    new TeTextFieldValidation<string>
+                    new TeValidation<string>
                     {
                         Func = value => value.Length <= 10,
                         Message = "이름은 10자 이하로 입력해주세요.",
@@ -58,14 +58,14 @@ public partial class EditorPage : ComponentBase
             new TeTextFieldOption<int>
             {
                 Id = "age",
-                Validations = new TeTextFieldValidation<int>[]
+                Validations = new TeValidation<int>[]
                 {
-                    new TeTextFieldValidation<int>
+                    new TeValidation<int>
                     {
                         Func = value => value >= 0,
                         Message = "나이는 0세 이상으로 입력해주세요.",
                     },
-                    new TeTextFieldValidation<int>
+                    new TeValidation<int>
                     {
                         Func = value => value <= 100,
                         Message = "나이는 100세 이하로 입력해주세요.",

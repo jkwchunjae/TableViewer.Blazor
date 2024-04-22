@@ -51,17 +51,17 @@ public class TeNumericFieldAttribute : Attribute
 public interface ITeNumericFieldOption
 {
     string? Id { get; }
-    IEnumerable<ITeNumericFieldValidation>? Validations { get; }
+    IEnumerable<ITeValidation>? Validations { get; }
     public Func<object?, int, string, bool>? Condition { get; }
 }
 
 public class TeNumericFieldOption<T> : ITeNumericFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<TeNumericFieldValidation<T>>? Validations { get; set; }
+    public IEnumerable<TeValidation<T>>? Validations { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
 
-    IEnumerable<ITeNumericFieldValidation>? ITeNumericFieldOption.Validations
+    IEnumerable<ITeValidation>? ITeNumericFieldOption.Validations
         => Validations;
 
     Func<object?, int, string, bool>? ITeNumericFieldOption.Condition =>
@@ -77,28 +77,4 @@ public class TeNumericFieldOption<T> : ITeNumericFieldOption
             }
         };
 
-}
-
-public interface ITeNumericFieldValidation
-{
-    Func<object, bool> Func { get; }
-    string Message { get; }
-}
-
-public class TeNumericFieldValidation<T> : ITeNumericFieldValidation
-{
-    public required Func<T, bool> Func { get; set; }
-    public required string Message { get; set; }
-    Func<object, bool> ITeNumericFieldValidation.Func =>
-        value =>
-        {
-            if (value is T tValue)
-            {
-                return Func?.Invoke(tValue) ?? false;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }

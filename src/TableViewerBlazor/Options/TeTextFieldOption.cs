@@ -46,17 +46,17 @@ public class TeTextFieldAttribute : Attribute
 public interface ITeTextFieldOption
 {
     string? Id { get; }
-    IEnumerable<ITeTextFieldValidation>? Validations { get; }
+    IEnumerable<ITeValidation>? Validations { get; }
     public Func<object?, int, string, bool>? Condition { get; }
 }
 
 public class TeTextFieldOption<T> : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<TeTextFieldValidation<T>>? Validations { get; set; }
+    public IEnumerable<TeValidation<T>>? Validations { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
 
-    IEnumerable<ITeTextFieldValidation>? ITeTextFieldOption.Validations
+    IEnumerable<ITeValidation>? ITeTextFieldOption.Validations
         => Validations;
 
     Func<object?, int, string, bool>? ITeTextFieldOption.Condition =>
@@ -72,28 +72,4 @@ public class TeTextFieldOption<T> : ITeTextFieldOption
             }
         };
 
-}
-
-public interface ITeTextFieldValidation
-{
-    Func<object, bool> Func { get; }
-    string Message { get; }
-}
-
-public class TeTextFieldValidation<T> : ITeTextFieldValidation
-{
-    public required Func<T, bool> Func { get; set; }
-    public required string Message { get; set; }
-    Func<object, bool> ITeTextFieldValidation.Func =>
-        value =>
-        {
-            if (value is T tValue)
-            {
-                return Func?.Invoke(tValue) ?? false;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
