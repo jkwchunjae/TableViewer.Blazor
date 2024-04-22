@@ -22,6 +22,17 @@ else if (Options.TryGetRadioOption(MemberInfo, Data, out var radioOption))
         RadioOption="@radioOption"
     />
 }
+else if (Options.TryGetNumericFieldOption(MemberInfo, Data, out var numericFieldOption))
+{
+    <TeNumericField
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Label="@Label"
+        NumericFieldOption="numericFieldOption"
+    />
+}
 else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption))
 {
     <TeTextField

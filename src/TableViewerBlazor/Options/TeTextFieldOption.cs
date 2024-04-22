@@ -28,10 +28,6 @@ public static class TeTextFieldOptionExtensions
         textFieldOption = data switch
         {
             string => new TeTextFieldOption<string>(),
-            int => new TeTextFieldOption<int>(),
-            long => new TeTextFieldOption<long>(),
-            float => new TeTextFieldOption<float>(),
-            double => new TeTextFieldOption<double>(),
             _ => null,
         };
         return textFieldOption != null;

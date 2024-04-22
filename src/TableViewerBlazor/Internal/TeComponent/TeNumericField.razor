@@ -1,0 +1,52 @@
+﻿@inherits TeEditorBase
+
+@if (Data is int intValue)
+{
+    <MudNumericField
+        T="int"
+        Value="intValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="@Label"
+        Validation="@(new Func<long, IEnumerable<string>>(NumericFieldValidation))"
+    />
+}
+else if (Data is long longValue)
+{
+    <MudNumericField
+        T="long"
+        Value="longValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="@Label"
+        Validation="@(new Func<long, IEnumerable<string>>(NumericFieldValidation))"
+    />
+}
+else if (Data is float floatValue)
+{
+    <MudNumericField
+        T="float"
+        Value="floatValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="@Label"
+        Validation="@(new Func<float, IEnumerable<string>>(NumericFieldValidation))"
+    />
+}
+else if (Data is double doubleValue)
+{
+    <MudNumericField
+        T="double"
+        Value="doubleValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="@Label"
+        Validation="@(new Func<double, IEnumerable<string>>(NumericFieldValidation))"
+    />
+}
+else if (Data is decimal decimalValue)
+{
+    <MudNumericField
+        T="decimal"
+        Value="decimalValue"
+        ValueChanged="@(async value => await OnValueChanged(value))"
+        Label="@Label"
+        Validation="@(new Func<double, IEnumerable<string>>(NumericFieldValidation))"
+    />
+}
