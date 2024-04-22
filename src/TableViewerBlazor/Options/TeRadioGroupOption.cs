@@ -43,15 +43,15 @@ public class TeRadioOption<T> : ITeRadioOption
 {
     public required string Id { get; init; }
     public IEnumerable<TeRadioItem<T>> Items { get; set; } = new List<TeRadioItem<T>>();
-    public Func<T?, int, string, bool> Condition { get; set; } = (value, index, columnName) => true;
+    public Func<T?, int, string, bool> Condition { get; set; } = (value, index, path) => true;
 
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     Func<object?, int, string, bool> ITeRadioOption.Condition =>
-        (value, index, columnName) =>
+        (value, index, path) =>
         {
             if (value is T tValue)
             {
-                return Condition?.Invoke(tValue, index, columnName) ?? true;
+                return Condition?.Invoke(tValue, index, path) ?? true;
             }
             else
             {

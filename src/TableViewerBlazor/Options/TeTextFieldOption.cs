@@ -60,11 +60,11 @@ public class TeTextFieldOption<T> : ITeTextFieldOption
         => Validations;
 
     Func<object?, int, string, bool>? ITeTextFieldOption.Condition =>
-        (value, index, columnName) =>
+        (value, index, path) =>
         {
             if (value is T tValue)
             {
-                return Condition?.Invoke(tValue, index, columnName) ?? true;
+                return Condition?.Invoke(tValue, index, path) ?? true;
             }
             else
             {
