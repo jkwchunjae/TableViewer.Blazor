@@ -13,7 +13,7 @@
 }
 else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption))
 {
-    <TeTextEditor
+    <TeTextField
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"

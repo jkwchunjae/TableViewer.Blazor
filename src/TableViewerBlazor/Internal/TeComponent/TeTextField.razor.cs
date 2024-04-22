@@ -1,6 +1,6 @@
 ﻿namespace TableViewerBlazor.Internal.TeComponent;
 
-public partial class TeTextEditor : TeEditorBase
+public partial class TeTextField : TeEditorBase
 {
     [Parameter] public ITeTextFieldOption? TextFieldOption { get; set; }
 
