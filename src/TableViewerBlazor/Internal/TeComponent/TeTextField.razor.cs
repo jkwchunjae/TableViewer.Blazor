@@ -10,17 +10,27 @@ public partial class TeTextField : TeEditorBase
         await DataChanged.InvokeAsync(value);
     }
 
-    private IEnumerable<string> TextFieldValidation<T>(T value)
+    private async Task<IEnumerable<string>> TextFieldValidation<T>(T value)
     {
+        var errors = new List<string>();
         if (TextFieldOption?.Validations != null)
         {
+            // Do not use Task.WhenAll
             foreach (var validation in TextFieldOption.Validations)
             {
-                if (!validation.Func(value!))
+                try
                 {
-                    yield return validation.Message;
+                    if (!await validation.Func(value!))
+                    {
+                        errors.Add(validation.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex.Message);
                 }
             }
         }
+        return errors;
     }
 }

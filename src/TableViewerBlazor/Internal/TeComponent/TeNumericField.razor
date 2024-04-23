@@ -7,7 +7,8 @@
         Value="intValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
-        Validation="@(new Func<long, IEnumerable<string>>(NumericFieldValidation))"
+        Immediate="true"
+        Validation="@(new Func<int, Task<IEnumerable<string>>>(NumericFieldValidation))"
     />
 }
 else if (Data is long longValue)
@@ -17,7 +18,7 @@ else if (Data is long longValue)
         Value="longValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
-        Validation="@(new Func<long, IEnumerable<string>>(NumericFieldValidation))"
+        Validation="@(new Func<long, Task<IEnumerable<string>>>(NumericFieldValidation))"
     />
 }
 else if (Data is float floatValue)
@@ -27,7 +28,7 @@ else if (Data is float floatValue)
         Value="floatValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
-        Validation="@(new Func<float, IEnumerable<string>>(NumericFieldValidation))"
+        Validation="@(new Func<float, Task<IEnumerable<string>>>(NumericFieldValidation))"
     />
 }
 else if (Data is double doubleValue)
@@ -37,7 +38,7 @@ else if (Data is double doubleValue)
         Value="doubleValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
-        Validation="@(new Func<double, IEnumerable<string>>(NumericFieldValidation))"
+        Validation="@(new Func<double, Task<IEnumerable<string>>>(NumericFieldValidation))"
     />
 }
 else if (Data is decimal decimalValue)
@@ -47,6 +48,6 @@ else if (Data is decimal decimalValue)
         Value="decimalValue"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
-        Validation="@(new Func<double, IEnumerable<string>>(NumericFieldValidation))"
+        Validation="@(new Func<decimal, Task<IEnumerable<string>>>(NumericFieldValidation))"
     />
 }

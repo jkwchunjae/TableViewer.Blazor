@@ -12,17 +12,27 @@ public partial class TeNumericField : TeEditorBase
         await DataChanged.InvokeAsync(value);
     }
 
-    private IEnumerable<string> NumericFieldValidation<T>(T value)
+    private async Task<IEnumerable<string>> NumericFieldValidation<T>(T value)
     {
+        var errors = new List<string>();
         if (NumericFieldOption?.Validations != null)
         {
+            // Do not use Task.WhenAll
             foreach (var validation in NumericFieldOption.Validations)
             {
-                if (!validation.Func(value!))
+                try
                 {
-                    yield return validation.Message;
+                    if (!await validation.Func(value!))
+                    {
+                        errors.Add(validation.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex.Message);
                 }
             }
         }
+        return errors;
     }
 }

@@ -53,11 +53,8 @@ public interface ITeTextFieldOption
 public class TeTextFieldOption<T> : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<TeValidation<T>>? Validations { get; set; }
+    public IEnumerable<ITeValidation>? Validations { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-
-    IEnumerable<ITeValidation>? ITeTextFieldOption.Validations
-        => Validations;
 
     Func<object?, int, string, bool>? ITeTextFieldOption.Condition =>
         (value, index, path) =>

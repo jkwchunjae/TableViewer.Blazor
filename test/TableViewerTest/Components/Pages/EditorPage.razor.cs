@@ -15,8 +15,7 @@ public class EditData
     public string Name { get; set; } = string.Empty;
     [TeSelectBox("gender")]
     public string Gender { get; set; } = string.Empty;
-    // [TeSelectBox("age")]
-    [TeTextField("age")]
+    [TeNumericField("age")]
     public int Age { get; set; }
     [TeRadio("ostype")]
     public string OsType { get; set; } = "windows";
@@ -33,7 +32,6 @@ public partial class EditorPage : ComponentBase
         Gender = "M",
         Age = 30,
     };
-    EditData? viewData;
     TeOptions options = new TeOptions
     {
         TextFieldOptions = new ITeTextFieldOption[]
@@ -41,24 +39,31 @@ public partial class EditorPage : ComponentBase
             new TeTextFieldOption<string>
             {
                 Id = "name",
-                Validations = new TeValidation<string>[]
+                Validations = new ITeValidation[]
                 {
                     new TeValidation<string>
                     {
                         Func = value => !string.IsNullOrEmpty(value),
                         Message = "이름을 입력해주세요.",
                     },
-                    new TeValidation<string>
+                    new TeAsyncValidation<string>
                     {
-                        Func = value => value.Length <= 10,
+                        Func = async value =>
+                        {
+                            await Task.Delay(1000);
+                            return value.Length <= 3;
+                        },
                         Message = "이름은 10자 이하로 입력해주세요.",
                     },
                 },
             },
-            new TeTextFieldOption<int>
+        },
+        NumericFieldOptions = new ITeNumericFieldOption[]
+        {
+            new TeNumericFieldOption<int>
             {
                 Id = "age",
-                Validations = new TeValidation<int>[]
+                Validations = new ITeValidation[]
                 {
                     new TeValidation<int>
                     {
@@ -69,6 +74,16 @@ public partial class EditorPage : ComponentBase
                     {
                         Func = value => value <= 100,
                         Message = "나이는 100세 이하로 입력해주세요.",
+                    },
+                    new TeAsyncValidation<int>
+                    {
+                        Func = async value =>
+                        {
+                            await Task.Delay(1000);
+                            value = value / (value - 29);
+                            return value != 20;
+                        },
+                        Message = "사실 20세는 선택할 수 없어요.",
                     },
                 },
             },
@@ -112,7 +127,6 @@ public partial class EditorPage : ComponentBase
     };
     private async Task Changed(EditData data)
     {
-        viewData = data;
         await Js.InvokeVoidAsync("console.log", data);
     }
     private async Task OnValidChanged(bool isValid)

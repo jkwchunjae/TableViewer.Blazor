@@ -58,11 +58,8 @@ public interface ITeNumericFieldOption
 public class TeNumericFieldOption<T> : ITeNumericFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<TeValidation<T>>? Validations { get; set; }
+    public IEnumerable<ITeValidation>? Validations { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-
-    IEnumerable<ITeValidation>? ITeNumericFieldOption.Validations
-        => Validations;
 
     Func<object?, int, string, bool>? ITeNumericFieldOption.Condition =>
         (value, index, path) =>
