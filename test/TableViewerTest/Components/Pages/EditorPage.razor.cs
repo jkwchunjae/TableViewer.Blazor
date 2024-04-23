@@ -93,7 +93,7 @@ public partial class EditorPage : ComponentBase
             new TeSelectBoxOption<string>
             {
                 Id = "gender",
-                Items = new TeSelectItem<string>[]
+                Items = new ITeSelectItem[]
                 {
                     new TeSelectItem<string>("M", "남자"),
                     new TeSelectItem<string>("F", "여자"),
@@ -102,7 +102,7 @@ public partial class EditorPage : ComponentBase
             new TeSelectBoxOption<int>
             {
                 Id = "age",
-                Items = new TeSelectItem<int>[]
+                Items = new ITeSelectItem[]
                 {
                     new TeSelectItem<int>(10, "10대"),
                     new TeSelectItem<int>(20, "20대"),
@@ -117,7 +117,7 @@ public partial class EditorPage : ComponentBase
             new TeRadioOption<string>
             {
                 Id = "ostype",
-                Items = new TeRadioItem<string>[]
+                Items = new ITeRadioItem[]
                 {
                     new TeRadioItem<string>("linux", "리눅스"),
                     new TeRadioItem<string>("windows", "윈도우"),

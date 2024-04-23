@@ -32,32 +32,14 @@ public class TeRadioAttribute : Attribute
     }
 }
 
-public interface ITeRadioOption
+public interface ITeRadioOption : ITeFieldOption
 {
-    public string Id { get; init; }
     public IEnumerable<ITeRadioItem> Items { get; }
-    public Func<object?, int, string, bool> Condition { get; }
 }
 
-public class TeRadioOption<T> : ITeRadioOption
+public class TeRadioOption<T> : TeFieldOption<T>, ITeRadioOption
 {
-    public required string Id { get; init; }
-    public IEnumerable<TeRadioItem<T>> Items { get; set; } = new List<TeRadioItem<T>>();
-    public Func<T?, int, string, bool> Condition { get; set; } = (value, index, path) => true;
-
-    IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
-    Func<object?, int, string, bool> ITeRadioOption.Condition =>
-        (value, index, path) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
+    public IEnumerable<ITeRadioItem> Items { get; set; } = new List<TeRadioItem<T>>();
 }
 
 public interface ITeRadioItem

@@ -48,30 +48,12 @@ public class TeNumericFieldAttribute : Attribute
     }
 }
 
-public interface ITeNumericFieldOption
+public interface ITeNumericFieldOption : ITeFieldOption
 {
-    string? Id { get; }
     IEnumerable<ITeValidation>? Validations { get; }
-    public Func<object?, int, string, bool>? Condition { get; }
 }
 
-public class TeNumericFieldOption<T> : ITeNumericFieldOption
+public class TeNumericFieldOption<T> : TeFieldOption<T>, ITeNumericFieldOption
 {
-    public string? Id { get; set; }
     public IEnumerable<ITeValidation>? Validations { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
-
-    Func<object?, int, string, bool>? ITeNumericFieldOption.Condition =>
-        (value, index, path) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
-
 }

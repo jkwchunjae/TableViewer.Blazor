@@ -32,32 +32,14 @@ public class TeSelectBoxAttribute : Attribute
     }
 }
 
-public interface ITeSelectBoxOption
+public interface ITeSelectBoxOption : ITeFieldOption
 {
-    public string Id { get; init; }
-    public IEnumerable<ITeSelectItem> Items { get; }
-    public Func<object?, int, string, bool> Condition { get; }
+    IEnumerable<ITeSelectItem> Items { get; }
 }
 
-public class TeSelectBoxOption<T> : ITeSelectBoxOption
+public class TeSelectBoxOption<T> : TeFieldOption<T>, ITeSelectBoxOption
 {
-    public required string Id { get; init; }
-    public IEnumerable<TeSelectItem<T>> Items { get; set; } = new List<TeSelectItem<T>>();
-    public Func<T?, int, string, bool> Condition { get; set; } = (value, index, path) => true;
-
-    IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
-    Func<object?, int, string, bool> ITeSelectBoxOption.Condition =>
-        (value, index, path) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
+    public IEnumerable<ITeSelectItem> Items { get; set; } = new List<TeSelectItem<T>>();
 }
 
 public interface ITeSelectItem

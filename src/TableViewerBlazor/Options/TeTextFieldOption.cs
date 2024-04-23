@@ -43,30 +43,12 @@ public class TeTextFieldAttribute : Attribute
     }
 }
 
-public interface ITeTextFieldOption
+public interface ITeTextFieldOption : ITeFieldOption
 {
-    string? Id { get; }
     IEnumerable<ITeValidation>? Validations { get; }
-    public Func<object?, int, string, bool>? Condition { get; }
 }
 
-public class TeTextFieldOption<T> : ITeTextFieldOption
+public class TeTextFieldOption<T> : TeFieldOption<T>, ITeTextFieldOption
 {
-    public string? Id { get; set; }
     public IEnumerable<ITeValidation>? Validations { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
-
-    Func<object?, int, string, bool>? ITeTextFieldOption.Condition =>
-        (value, index, path) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
-
 }
