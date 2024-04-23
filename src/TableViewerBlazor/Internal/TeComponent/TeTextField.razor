@@ -9,6 +9,10 @@
         Label="@(TextFieldOption?.Property?.Label ?? Label)"
         Validation="@(new Func<string, Task<IEnumerable<string>>>(TextFieldValidation))"
 
+        InputType="@(TextFieldOption?.Property?.InputType ?? default)"
+        Clearable="@(TextFieldOption?.Property?.Clearable ?? default)"
+        Mask="@(TextFieldOption?.Property?.Mask ?? default)"
+        DebounceInterval="@(TextFieldOption?.Property?.DebounceInterval ?? default)"
         Disabled="@(TextFieldOption?.Property?.Disabled ?? default)"
         ReadOnly="@(TextFieldOption?.Property?.ReadOnly ?? default)"
         FullWidth="@(TextFieldOption?.Property?.FullWidth ?? default)"
