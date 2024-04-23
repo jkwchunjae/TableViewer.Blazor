@@ -47,6 +47,7 @@ public interface ITeTextFieldOption : ITeFieldOption
 {
     IEnumerable<ITeValidation>? Validations { get; }
     new TeTextFieldProperty? Property { get; }
+    ITeTextFieldEvent? Event { get; }
 }
 
 public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
@@ -55,8 +56,9 @@ public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
     public Func<T?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation>? Validations { get; set; }
     public TeTextFieldProperty? Property { get; set; }
+    public TeTextFieldEvent<T>? Event { get; set; }
 
-    ITeFieldProperty? ITeFieldOption.Property => Property;
+    ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
 }
 
 public class TeTextFieldProperty : ITeFieldProperty

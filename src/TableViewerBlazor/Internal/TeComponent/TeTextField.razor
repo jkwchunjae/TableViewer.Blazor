@@ -5,9 +5,10 @@
     <MudTextField
         T="string"
         Value="stringValue"
-        ValueChanged="@(async value => await OnValueChanged(value))"
+        ValueChanged="@(value => OnValueChanged(value))"
         Label="@(TextFieldOption?.Property?.Label ?? Label)"
         Validation="@(new Func<string, Task<IEnumerable<string>>>(TextFieldValidation))"
+
         Disabled="@(TextFieldOption?.Property?.Disabled ?? default)"
         ReadOnly="@(TextFieldOption?.Property?.ReadOnly ?? default)"
         FullWidth="@(TextFieldOption?.Property?.FullWidth ?? default)"
@@ -33,5 +34,13 @@
         InputMode="@(TextFieldOption?.Property?.InputMode ?? default)"
         Pattern="@(TextFieldOption?.Property?.Pattern ?? default)"
         ShrinkLabel="@(TextFieldOption?.Property?.ShrinkLabel ?? default)"
+
+        OnClearButtonClick="@(args => OnClearButtonClick(args))"
+        OnDebounceIntervalElapsed="@(args => OnDebounceIntervalElapsed(args))"
+        OnAdornmentClick="@(args => OnAdornmentClick(args))"
+        OnBlur="@(args => OnBlur(args))"
+        OnInternalInputChanged="@(args => OnInternalInputChanged(args))"
+        OnKeyDown="@(args => OnKeyDown(args))"
+        OnKeyUp="@(args => OnKeyUp(args))"
     />
 }
