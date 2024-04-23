@@ -38,8 +38,7 @@ public class TeAsyncValidation<T> : ITeValidation
             {
                 if (Func != null)
                 {
-                    var result = await Func.Invoke(tValue);
-                    return result;
+                    return await Func.Invoke(tValue);
                 }
                 else
                 {

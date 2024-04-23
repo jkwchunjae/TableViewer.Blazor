@@ -46,9 +46,20 @@ public class TeTextFieldAttribute : Attribute
 public interface ITeTextFieldOption : ITeFieldOption
 {
     IEnumerable<ITeValidation>? Validations { get; }
+    new ITeTextFieldProperty? Property { get; }
 }
 
-public class TeTextFieldOption<T> : TeFieldOption<T>, ITeTextFieldOption
+public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
 {
+    public string? Id { get; set; }
+    public Func<T?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation>? Validations { get; set; }
+    public ITeTextFieldProperty? Property { get; set; }
+
+    ITeFieldProperty? ITeFieldOption.Property => Property;
+}
+
+public interface ITeTextFieldProperty : ITeFieldProperty
+{
+    public bool FullWidth { get; set; }
 }

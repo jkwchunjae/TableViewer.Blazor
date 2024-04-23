@@ -4,13 +4,12 @@ public interface ITeFieldOption
 {
     string? Id { get; }
     Func<object?, int, string, bool>? Condition { get; }
+    ITeFieldProperty? Property { get; }
 }
 
-
-public class TeFieldOption<T> : ITeFieldOption
+public interface ITeFieldOption<T> : ITeFieldOption
 {
-    public string? Id { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
+    public new Func<T?, int, string, bool>? Condition { get; set; }
 
     Func<object?, int, string, bool>? ITeFieldOption.Condition =>
         (value, index, path) =>
@@ -24,5 +23,4 @@ public class TeFieldOption<T> : ITeFieldOption
                 return false;
             }
         };
-
 }

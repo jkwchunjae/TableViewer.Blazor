@@ -34,12 +34,18 @@ public class TeRadioAttribute : Attribute
 
 public interface ITeRadioOption : ITeFieldOption
 {
-    public IEnumerable<ITeRadioItem> Items { get; }
+    IEnumerable<ITeRadioItem> Items { get; }
+    new ITeRadioGroupProperty? Property { get; set; }
 }
 
-public class TeRadioOption<T> : TeFieldOption<T>, ITeRadioOption
+public class TeRadioOption<T> : ITeFieldOption<T>, ITeRadioOption
 {
+    public string? Id { get; set; }
+    public Func<T?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeRadioItem> Items { get; set; } = new List<TeRadioItem<T>>();
+    public ITeRadioGroupProperty? Property { get; set; }
+
+    ITeFieldProperty? ITeFieldOption.Property => Property;
 }
 
 public interface ITeRadioItem
@@ -68,3 +74,6 @@ public record TeRadioItem<T> : ITeRadioItem
     }
 }
 
+public interface ITeRadioGroupProperty : ITeFieldProperty
+{
+}
