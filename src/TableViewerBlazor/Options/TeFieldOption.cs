@@ -4,7 +4,6 @@ public interface ITeFieldOption
 {
     string? Id { get; }
     Func<object?, int, string, bool>? Condition { get; }
-    ITeFieldProperty? Property { get; }
 }
 
 public interface ITeFieldOption<T> : ITeFieldOption
