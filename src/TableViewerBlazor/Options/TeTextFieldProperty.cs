@@ -1,10 +1,14 @@
 ﻿namespace TableViewerBlazor.Options;
 
-public interface ITeTextFieldProperty
+public interface ITeBaseInputProperty
 {
     // https://github.com/MudBlazor/MudBlazor/blob/dev/src/MudBlazor/Base/MudBaseInput.cs
 
 
+}
+
+public interface ITeTextFieldProperty
+{
     /// <summary>
     /// Type of the input element. It should be a valid HTML5 input type.
     /// </summary>
