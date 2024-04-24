@@ -85,20 +85,4 @@ public partial class TeTextField : TeEditorBase
             await TextFieldOption.Event.OnInternalInputChanged.Invoke(args);
         }
     }
-
-    public async Task OnKeyDown(KeyboardEventArgs args)
-    {
-        if (TextFieldOption?.Event?.OnKeyDown != null)
-        {
-            await TextFieldOption.Event.OnKeyDown.Invoke(args);
-        }
-    }
-
-    public async Task OnKeyUp(KeyboardEventArgs args)
-    {
-        if (TextFieldOption?.Event?.OnKeyUp != null)
-        {
-            await TextFieldOption.Event.OnKeyUp.Invoke(args);
-        }
-    }
 }
