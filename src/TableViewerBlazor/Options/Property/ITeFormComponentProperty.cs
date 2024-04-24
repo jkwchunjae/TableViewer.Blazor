@@ -21,5 +21,5 @@ public interface ITeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="CultureInfo.InvariantCulture"/>.
     /// </remarks>
-    CultureInfo Culture { get; }
+    CultureInfo? Culture { get; }
 }

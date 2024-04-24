@@ -8,20 +8,20 @@ public interface ITeSelectBoxProperty : ITeBaseInputProperty
     /// <summary>
     /// The outer div's classnames, seperated by space.
     /// </summary>
-    string OuterClass { get; }
+    string? OuterClass { get; }
     /// <summary>
     /// Input's classnames, seperated by space.
     /// </summary>
-    string InputClass { get; }
+    string? InputClass { get; }
 
     /// <summary>
     /// User class names for the popover, separated by space
     /// </summary>
-    string PopoverClass { get; }
+    string? PopoverClass { get; }
     /// <summary>
     /// User class names for the internal list, separated by space
     /// </summary>
-    string ListClass { get; }
+    string? ListClass { get; }
     /// <summary>
     /// If true, compact vertical padding will be applied to all Select items.
     /// </summary>
@@ -29,12 +29,12 @@ public interface ITeSelectBoxProperty : ITeBaseInputProperty
     /// <summary>
     /// The Open Select Icon
     /// </summary>
-    string OpenIcon { get; }
+    string? OpenIcon { get; }
 
     /// <summary>
     /// The Close Select Icon
     /// </summary>
-    string CloseIcon { get; }
+    string? CloseIcon { get; }
 
     /// <summary>
     /// If set to true and the MultiSelection option is set to true, a "select all" checkbox is added at the top of the list of items.
@@ -43,31 +43,31 @@ public interface ITeSelectBoxProperty : ITeBaseInputProperty
     /// <summary>
     /// Define the text of the Select All option.
     /// </summary>
-    string SelectAllText { get; }
+    string? SelectAllText { get; }
 
     /// <summary>
     /// Function to define a customized multiselection text.
     /// </summary>
     Func<List<string>, string>? MultiSelectionTextFunc { get; }
     /// <summary>
-    /// Parameter to define the delimited string separator.
+    /// Parameter to define the delimited string? separator.
     /// </summary>
-    string Delimiter { get; }
+    string? Delimiter { get; }
 
 
     /// <summary>
     /// Set of selected values. If MultiSelection is false it will only ever contain a single value. This property is two-way bindable.
     /// </summary>
-    IEnumerable<object> SelectedValues { get; }
+    IEnumerable<object>? SelectedValues { get; }
     /// <summary>
     /// The Comparer to use for comparing selected values internally.
     /// </summary>
-    IEqualityComparer<object> Comparer { get; }
+    IEqualityComparer<object>? Comparer { get; }
 
     /// <summary>
     /// Defines how values are displayed in the drop-down list
     /// </summary>
-    Func<object, string> ToStringFunc { get; }
+    Func<object, string>? ToStringFunc { get; }
     /// <summary>
     /// If true, multiple values can be selected via checkboxes which are automatically shown in the dropdown
     /// </summary>
@@ -108,17 +108,17 @@ public interface ITeSelectBoxProperty : ITeBaseInputProperty
     /// <summary>
     /// Custom checked icon.
     /// </summary>
-    string CheckedIcon { get; }
+    string? CheckedIcon { get; }
 
     /// <summary>
     /// Custom unchecked icon.
     /// </summary>
-    string UncheckedIcon { get; }
+    string? UncheckedIcon { get; }
 
     /// <summary>
     /// Custom indeterminate icon.
     /// </summary>
-    string IndeterminateIcon { get; }
+    string? IndeterminateIcon { get; }
 
 
 

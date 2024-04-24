@@ -85,7 +85,7 @@ public interface ITeBaseInputProperty : ITeFormComponentProperty
     /// <remarks>
     /// Defaults to an empty string.  This property controls the value set for the <c>aria-label</c> attribute.
     /// </remarks>
-    string AdornmentAriaLabel { get; }
+    string? AdornmentAriaLabel { get; }
 
     /// <summary>
     /// Gets or sets the size of the icon.
