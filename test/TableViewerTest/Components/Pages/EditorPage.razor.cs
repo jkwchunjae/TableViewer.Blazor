@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerTest.Components.Pages;
 
@@ -97,6 +99,12 @@ public partial class EditorPage : ComponentBase
                 {
                     new TeSelectItem<string>("M", "남자"),
                     new TeSelectItem<string>("F", "여자"),
+                },
+                Property = new TeSelectBoxProperty<string>
+                {
+                    Dense = true,
+                    OpenIcon = Icons.Material.Filled.Abc,
+                    AnchorOrigin = Origin.TopCenter,
                 },
             },
             new TeSelectBoxOption<int>

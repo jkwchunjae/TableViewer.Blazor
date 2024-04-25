@@ -1,11 +1,5 @@
 ﻿namespace TableViewerBlazor.Options;
 
-public interface ITeBaseInputProperty
-{
-    // https://github.com/MudBlazor/MudBlazor/blob/dev/src/MudBlazor/Base/MudBaseInput.cs
-
-
-}
 
 public interface ITeTextFieldProperty
 {

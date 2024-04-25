@@ -18,7 +18,8 @@ public static class TeRadioOptionExtensions
         }
         radioOption = options.RadioOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition(data, 0, "path")) ?? default;
+            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? true)
+            .FirstOrDefault() ?? default;
         return radioOption != null;
     }
 }

@@ -1,3 +1,5 @@
+using TableViewerBlazor.Options.Property;
+
 namespace TableViewerBlazor.Options;
 
 public static class TeSelectBoxOptionExtensions
@@ -18,7 +20,8 @@ public static class TeSelectBoxOptionExtensions
         }
         selectBoxOption = options.SelectBoxOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition(data, 0, "path")) ?? default;
+            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? true)
+            .FirstOrDefault() ?? default;
         return selectBoxOption != null;
     }
 }
@@ -43,7 +46,9 @@ public class TeSelectBoxOption<T> : ITeFieldOption<T>, ITeSelectBoxOption
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeSelectItem> Items { get; set; } = new List<TeSelectItem<T>>();
-    public ITeSelectBoxProperty? Property { get; set; }
+    public TeSelectBoxProperty<T>? Property { get; set; }
+
+    ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
 }
 
 public interface ITeSelectItem
@@ -71,8 +76,3 @@ public record TeSelectItem<T> : ITeSelectItem
         Default = @default;
     }
 }
-
-public interface ITeSelectBoxProperty
-{
-}
-
