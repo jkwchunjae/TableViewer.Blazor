@@ -58,6 +58,17 @@ public partial class EditorPage : ComponentBase
                         Message = "이름은 10자 이하로 입력해주세요.",
                     },
                 },
+                Property = new TeTextFieldProperty
+                {
+                    FullWidth = true,
+                    Immediate = true,
+                    DisableUnderLine = false,
+                    HelperText = "이름을 입력해주세요.",
+                    HelperTextOnFocus = true,
+                    AdornmentIcon = Icons.Material.Filled.Person,
+                    AdornmentText = "Name",
+                    AutoFocus = true,
+                },
             },
         },
         NumericFieldOptions = new ITeNumericFieldOption[]

@@ -118,7 +118,7 @@ public interface ITeTextFieldProperty
     /// <summary>
     /// Maximum number of characters that the input will accept
     /// </summary>
-    int MaxLength { get; }
+    int? MaxLength { get; }
 
     /// <summary>
     /// If string has value the label text will be displayed in the input, and scaled down at the top if the input has value.
@@ -277,7 +277,7 @@ public class TeTextFieldProperty : ITeTextFieldProperty
     /// <summary>
     /// Maximum number of characters that the input will accept
     /// </summary>
-    public int MaxLength { get; set; } = 524288;
+    public int? MaxLength { get; set; } = 524288;
 
     /// <summary>
     /// If string has value the label text will be displayed in the input, and scaled down at the top if the input has value.
