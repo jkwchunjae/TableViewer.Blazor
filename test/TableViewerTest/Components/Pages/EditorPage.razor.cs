@@ -103,8 +103,10 @@ public partial class EditorPage : ComponentBase
                 Property = new TeSelectBoxProperty<string>
                 {
                     Dense = true,
-                    OpenIcon = Icons.Material.Filled.Abc,
-                    AnchorOrigin = Origin.TopCenter,
+                    // OpenIcon = Icons.Material.Filled.Abc,
+                    // AnchorOrigin = Origin.TopCenter,
+                    HelperText = "성별을 선택해주세요.",
+                    HelperTextOnFocus = true,
                 },
             },
             new TeSelectBoxOption<int>

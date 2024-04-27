@@ -32,7 +32,7 @@ public class TeSelectBoxProperty : ITeSelectBoxProperty
     public bool ReadOnly { get; set; }
     public bool FullWidth { get; set; }
     public bool Immediate { get; set; }
-    public bool Underline { get; set; }
+    public bool Underline { get; set; } = true;
     public string? HelperText { get; set; }
     public bool HelperTextOnFocus { get; set; }
     public string? AdornmentIcon { get; set; }
@@ -90,7 +90,7 @@ public class TeSelectBoxProperty<T> : ITeSelectBoxProperty
     public bool ReadOnly { get; set; }
     public bool FullWidth { get; set; }
     public bool Immediate { get; set; }
-    public bool Underline { get; set; }
+    public bool Underline { get; set; } = true;
     public string? HelperText { get; set; }
     public bool HelperTextOnFocus { get; set; }
     public string? AdornmentIcon { get; set; }
