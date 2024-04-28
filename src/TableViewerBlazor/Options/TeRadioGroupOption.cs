@@ -1,3 +1,5 @@
+using TableViewerBlazor.Options.Property;
+
 namespace TableViewerBlazor.Options;
 
 public static class TeRadioOptionExtensions
@@ -35,16 +37,20 @@ public class TeRadioAttribute : Attribute
 
 public interface ITeRadioOption : ITeFieldOption
 {
+    IEnumerable<ITeValidation>? Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
-    ITeRadioGroupProperty? Property { get; set; }
+    ITeRadioGroupProperty? Property { get; }
 }
 
 public class TeRadioOption<T> : ITeFieldOption<T>, ITeRadioOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
+    public IEnumerable<ITeValidation>? Validations { get; set; }
     public IEnumerable<ITeRadioItem> Items { get; set; } = new List<TeRadioItem<T>>();
-    public ITeRadioGroupProperty? Property { get; set; }
+    public TeRadioGroupProperty? Property { get; set; }
+
+    ITeRadioGroupProperty? ITeRadioOption.Property => Property;
 }
 
 public interface ITeRadioItem
@@ -52,6 +58,7 @@ public interface ITeRadioItem
     object? Value { get; }
     string Text { get; }
     bool Default { get; }
+    ITeRadioItemProperty? Property { get; }
 }
 
 public record TeRadioItem<T> : ITeRadioItem
@@ -59,8 +66,10 @@ public record TeRadioItem<T> : ITeRadioItem
     public T? Value { get; init; } = default!;
     public string Text { get; init; } = string.Empty;
     public bool Default { get; init; } = false;
+    public TeRadioItemProperty? Property { get; set; }
 
     object? ITeRadioItem.Value => Value;
+    ITeRadioItemProperty? ITeRadioItem.Property => Property;
 
     public TeRadioItem()
     {
@@ -71,8 +80,4 @@ public record TeRadioItem<T> : ITeRadioItem
         Text = text;
         Default = @default;
     }
-}
-
-public interface ITeRadioGroupProperty
-{
 }

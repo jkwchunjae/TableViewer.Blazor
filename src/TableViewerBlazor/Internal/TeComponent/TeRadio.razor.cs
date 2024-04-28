@@ -8,4 +8,28 @@ public partial class TeRadio : TeEditorBase
         Data = value;
         await DataChanged.InvokeAsync(value);
     }
+
+    private async Task<IEnumerable<string>> RadioGroupValidation<T>(T value)
+    {
+        var errors = new List<string>();
+        if (RadioOption.Validations != null)
+        {
+            // Do not use Task.WhenAll
+            foreach (var validation in RadioOption.Validations)
+            {
+                try
+                {
+                    if (!await validation.Func(value!))
+                    {
+                        errors.Add(validation.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex.Message);
+                }
+            }
+        }
+        return errors;
+    }
 }

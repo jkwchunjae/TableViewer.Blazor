@@ -61,7 +61,8 @@ public partial class EditorPage : ComponentBase
                 Property = new TeTextFieldProperty
                 {
                     FullWidth = true,
-                    Immediate = true,
+                    Immediate = false,
+                    DebounceInterval = 2000,
                     DisableUnderLine = false,
                     HelperText = "이름을 입력해주세요.",
                     HelperTextOnFocus = true,
@@ -138,10 +139,30 @@ public partial class EditorPage : ComponentBase
             new TeRadioOption<string>
             {
                 Id = "ostype",
+                Validations = new ITeValidation[]
+                {
+                    new TeValidation<string>
+                    {
+                        Func = value => value == "linux",
+                        Message = "리눅스를 선택해주세요.",
+                    },
+                },
                 Items = new ITeRadioItem[]
                 {
-                    new TeRadioItem<string>("linux", "리눅스"),
-                    new TeRadioItem<string>("windows", "윈도우"),
+                    new TeRadioItem<string>("linux", "리눅스")
+                    {
+                        Property = new TeRadioItemProperty
+                        {
+                            Color = Color.Secondary,
+                        },
+                    },
+                    new TeRadioItem<string>("windows", "윈도우")
+                    {
+                        Property = new TeRadioItemProperty
+                        {
+                            Color = Color.Primary,
+                        },
+                    },
                 },
             },
         },

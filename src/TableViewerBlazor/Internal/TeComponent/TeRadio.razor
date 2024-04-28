@@ -1,14 +1,33 @@
 ﻿@inherits TeEditorBase
 
-<MudField Label="@Label" DisableUnderLine="true">
+<MudField Label="@Label" DisableUnderLine="@(RadioOption.Property?.DisableUnderLine ?? false)">
     <MudRadioGroup
         T="object"
         Value="Data"
         ValueChanged="@(async value => await OnValueChanged(value))"
+        Validation="@(new Func<string, Task<IEnumerable<string>>>(RadioGroupValidation))"
+
+        Required="@(RadioOption.Property?.Required ?? false)"
+        Culture="@(RadioOption.Property?.Culture ?? default)"
+        Disabled="@(RadioOption.Property?.Disabled ?? false)"
+        ReadOnly="@(RadioOption.Property?.ReadOnly ?? false)"
+        InputClass="@(RadioOption.Property?.InputClass ?? string.Empty)"
+        InputStyle="@(RadioOption.Property?.InputStyle ?? string.Empty)"
     >
         @foreach (var item in RadioOption.Items)
         {
-            <MudRadio Value="@item.Value">@item.Text</MudRadio>
+            <MudRadio
+                Value="@item.Value"
+                Disabled="@(item.Property?.Disabled ?? false)"
+                Placement="@(item.Property?.Placement ?? Placement.End)"
+                Color="@(item.Property?.Color ?? Color.Default)"
+                Dense="@(item.Property?.Dense ?? true)"
+                DisableRipple="@(item.Property?.DisableRipple ?? false)"
+                Size="@(item.Property?.Size ?? Size.Medium)"
+                UnCheckedColor="@(item.Property?.UnCheckedColor ?? Color.Default)"
+            >
+                @item.Text
+            </MudRadio>
         }
     </MudRadioGroup>
 </MudField>
