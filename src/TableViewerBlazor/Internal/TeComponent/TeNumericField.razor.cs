@@ -1,4 +1,6 @@
-﻿using TableViewerBlazor.Options;
+﻿using System.Numerics;
+using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Internal.TeComponent;
 
@@ -34,5 +36,18 @@ public partial class TeNumericField : TeEditorBase
             }
         }
         return errors;
+    }
+
+    private TeNumericFieldProperty<T> GetNumberFieldProperty<T>()
+        where T : INumber<T>, IMinMaxValue<T>
+    {
+        if (NumericFieldOption.Property is TeNumericFieldProperty<T> property)
+        {
+            return property;
+        }
+        else
+        {
+            return new TeNumericFieldProperty<T>();
+        }
     }
 }

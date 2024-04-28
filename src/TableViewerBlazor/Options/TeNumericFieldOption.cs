@@ -1,4 +1,7 @@
-﻿namespace TableViewerBlazor.Options;
+﻿using System.Numerics;
+using TableViewerBlazor.Options.Property;
+
+namespace TableViewerBlazor.Options;
 
 public static class TeNumericFieldOptionExtensions
 {
@@ -55,21 +58,13 @@ public interface ITeNumericFieldOption : ITeFieldOption
 }
 
 public class TeNumericFieldOption<T> : ITeFieldOption<T>, ITeNumericFieldOption
+    where T: INumber<T>, IMinMaxValue<T>
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation>? Validations { get; set; }
-    public TeNumericFieldProperty? Property { get; set; }
+    public TeNumericFieldProperty<T>? Property { get; set; }
 
     ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
 }
 
-public interface ITeNumericFieldProperty
-{
-    bool FullWidth { get; set; }
-}
-
-public class TeNumericFieldProperty : ITeNumericFieldProperty
-{
-    public bool FullWidth { get; set; }
-}

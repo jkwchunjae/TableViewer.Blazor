@@ -100,6 +100,10 @@ public partial class EditorPage : ComponentBase
                         Message = "사실 20세는 선택할 수 없어요.",
                     },
                 },
+                Property = new TeNumericFieldProperty<int>
+                {
+                    Step = 3,
+                },
             },
         },
         SelectBoxOptions = new ITeSelectBoxOption[]
