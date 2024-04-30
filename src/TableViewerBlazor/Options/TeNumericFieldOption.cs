@@ -53,7 +53,7 @@ public class TeNumericFieldAttribute : Attribute
 
 public interface ITeNumericFieldOption : ITeFieldOption
 {
-    IEnumerable<ITeValidation>? Validations { get; }
+    IEnumerable<ITeValidation> Validations { get; }
     ITeNumericFieldProperty? Property { get; }
 }
 
@@ -62,9 +62,10 @@ public class TeNumericFieldOption<T> : ITeFieldOption<T>, ITeNumericFieldOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-    public IEnumerable<ITeValidation>? Validations { get; set; }
+    public List<ITeValidation> Validations { get; set; } = [];
     public TeNumericFieldProperty<T>? Property { get; set; }
 
+    IEnumerable<ITeValidation> ITeNumericFieldOption.Validations => Validations;
     ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
 }
 

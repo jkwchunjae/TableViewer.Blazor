@@ -1,4 +1,6 @@
-﻿namespace TableViewerBlazor.Options;
+﻿using TableViewerBlazor.Options.Property;
+
+namespace TableViewerBlazor.Options;
 
 public static class TeTextFieldOptionExtensions
 {
@@ -45,7 +47,7 @@ public class TeTextFieldAttribute : Attribute
 
 public interface ITeTextFieldOption : ITeFieldOption
 {
-    IEnumerable<ITeValidation>? Validations { get; }
+    IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
 }
@@ -54,10 +56,11 @@ public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-    public IEnumerable<ITeValidation>? Validations { get; set; }
+    public List<ITeValidation> Validations { get; set; } = [];
     public TeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<T>? Event { get; set; }
 
+    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
 }

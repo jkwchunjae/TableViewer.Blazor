@@ -36,12 +36,12 @@ public partial class EditorPage : ComponentBase
     };
     TeOptions options = new TeOptions
     {
-        TextFieldOptions = new ITeTextFieldOption[]
+        TextFieldOptions =
         {
             new TeTextFieldOption<string>
             {
                 Id = "name",
-                Validations = new ITeValidation[]
+                Validations =
                 {
                     new TeValidation<string>
                     {
@@ -72,12 +72,12 @@ public partial class EditorPage : ComponentBase
                 },
             },
         },
-        NumericFieldOptions = new ITeNumericFieldOption[]
+        NumericFieldOptions =
         {
             new TeNumericFieldOption<int>
             {
                 Id = "age",
-                Validations = new ITeValidation[]
+                Validations =
                 {
                     new TeValidation<int>
                     {
@@ -106,12 +106,12 @@ public partial class EditorPage : ComponentBase
                 },
             },
         },
-        SelectBoxOptions = new ITeSelectBoxOption[]
+        SelectBoxOptions =
         {
             new TeSelectBoxOption<string>
             {
                 Id = "gender",
-                Items = new ITeSelectItem[]
+                Items =
                 {
                     new TeSelectItem<string>("M", "남자"),
                     new TeSelectItem<string>("F", "여자"),
@@ -128,7 +128,7 @@ public partial class EditorPage : ComponentBase
             new TeSelectBoxOption<int>
             {
                 Id = "age",
-                Items = new ITeSelectItem[]
+                Items =
                 {
                     new TeSelectItem<int>(10, "10대"),
                     new TeSelectItem<int>(20, "20대"),
@@ -138,12 +138,12 @@ public partial class EditorPage : ComponentBase
                 },
             },
         },
-        RadioOptions = new ITeRadioOption[]
+        RadioOptions =
         {
             new TeRadioOption<string>
             {
                 Id = "ostype",
-                Validations = new ITeValidation[]
+                Validations =
                 {
                     new TeValidation<string>
                     {
@@ -151,7 +151,7 @@ public partial class EditorPage : ComponentBase
                         Message = "리눅스를 선택해주세요.",
                     },
                 },
-                Items = new ITeRadioItem[]
+                Items =
                 {
                     new TeRadioItem<string>("linux", "리눅스")
                     {

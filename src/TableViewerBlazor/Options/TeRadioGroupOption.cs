@@ -37,7 +37,7 @@ public class TeRadioAttribute : Attribute
 
 public interface ITeRadioOption : ITeFieldOption
 {
-    IEnumerable<ITeValidation>? Validations { get; }
+    IEnumerable<ITeValidation> Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
     ITeRadioGroupProperty? Property { get; }
 }
@@ -46,10 +46,12 @@ public class TeRadioOption<T> : ITeFieldOption<T>, ITeRadioOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-    public IEnumerable<ITeValidation>? Validations { get; set; }
-    public IEnumerable<ITeRadioItem> Items { get; set; } = new List<TeRadioItem<T>>();
+    public List<ITeValidation> Validations { get; set; } = [];
+    public List<TeRadioItem<T>> Items { get; set; } = [];
     public TeRadioGroupProperty? Property { get; set; }
 
+    IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
+    IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;
 }
 

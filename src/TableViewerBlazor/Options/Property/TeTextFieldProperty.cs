@@ -1,4 +1,4 @@
-﻿namespace TableViewerBlazor.Options;
+﻿namespace TableViewerBlazor.Options.Property;
 
 
 public interface ITeTextFieldProperty
