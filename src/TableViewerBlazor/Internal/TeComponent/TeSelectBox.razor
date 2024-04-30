@@ -5,7 +5,23 @@
     Value="Data"
     ValueChanged="@(async value => await OnValueChanged(value))"
     Label="@Label"
-    Clearable
+
+    Dense="@(SelectBoxOption.Property?.Dense ?? default)"
+    Clearable="@(SelectBoxOption.Property?.Clearable ?? default)"
+    Disabled="@(SelectBoxOption.Property?.Disabled ?? default)"
+    ReadOnly="@(SelectBoxOption.Property?.ReadOnly ?? default)"
+    Immediate="@(SelectBoxOption.Property?.Immediate ?? default)"
+    DisableUnderLine="@(!(SelectBoxOption.Property?.Underline ?? true))"
+    HelperText="@(SelectBoxOption.Property?.HelperText ?? default)"
+    HelperTextOnFocus="@(SelectBoxOption.Property?.HelperTextOnFocus ?? default)"
+    IconSize="@(SelectBoxOption.Property?.IconSize ?? default)"
+    Variant="@(SelectBoxOption.Property?.Variant ?? default)"
+    Margin="@(SelectBoxOption.Property?.Margin ?? default)"
+    Placeholder="@(SelectBoxOption.Property?.Placeholder ?? default)"
+    AutoFocus="@(SelectBoxOption.Property?.AutoFocus ?? default)"
+    ShrinkLabel="@(SelectBoxOption.Property?.ShrinkLabel ?? default)"
+    Required="@(SelectBoxOption.Property?.Required ?? default)"
+    Culture="@(SelectBoxOption.Property?.Culture ?? default)"
 >
     @foreach (var item in SelectBoxOption.Items)
     {

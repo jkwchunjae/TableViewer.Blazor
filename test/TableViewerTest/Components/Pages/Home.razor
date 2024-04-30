@@ -61,7 +61,7 @@
     TvOptions personOption = new TvOptions
     {
         GlobalOpenDepth = 1,
-        ColumnVisible = new []
+        ColumnVisible =
         {
             new TvColumnVisibleOption
             {
@@ -214,14 +214,14 @@
                     Label = "Console log person record",
                 },
             },
-            OpenDepth = new ITvOpenDepthOption[]
+            OpenDepth =
             {
                 new TvOpenDepthOption<OpenTest>
                 {
                     OpenDepth = 3,
                 },
             },
-            Editor = new ITvEditorOption[]
+            Editor =
             {
                 new TvYamlEditorOption<PersonRecord>()
                 {
@@ -236,7 +236,7 @@
 
         optionForPR = new TvOptions
         {
-            Actions = new ITvAction[]
+            Actions =
             {
                 new TvAction<PersonRecord>
                 {
@@ -246,7 +246,7 @@
                     },
                 },
             },
-            Editor = new ITvEditorOption[]
+            Editor =
             {
                 new TvJsonEditorOption<PersonRecord>(),
             },

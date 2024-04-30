@@ -1,4 +1,6 @@
-﻿namespace TableViewerBlazor.Options;
+﻿using TableViewerBlazor.Options.Property;
+
+namespace TableViewerBlazor.Options;
 
 public static class TeTextFieldOptionExtensions
 {
@@ -28,10 +30,6 @@ public static class TeTextFieldOptionExtensions
         textFieldOption = data switch
         {
             string => new TeTextFieldOption<string>(),
-            int => new TeTextFieldOption<int>(),
-            long => new TeTextFieldOption<long>(),
-            float => new TeTextFieldOption<float>(),
-            double => new TeTextFieldOption<double>(),
             _ => null,
         };
         return textFieldOption != null;
@@ -47,57 +45,22 @@ public class TeTextFieldAttribute : Attribute
     }
 }
 
-public interface ITeTextFieldOption
+public interface ITeTextFieldOption : ITeFieldOption
 {
-    string? Id { get; }
-    IEnumerable<ITeTextFieldValidation>? Validations { get; }
-    public Func<object?, int, string, bool>? Condition { get; }
+    IEnumerable<ITeValidation> Validations { get; }
+    ITeTextFieldProperty? Property { get; }
+    ITeTextFieldEvent? Event { get; }
 }
 
-public class TeTextFieldOption<T> : ITeTextFieldOption
+public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<TeTextFieldValidation<T>>? Validations { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
+    public List<ITeValidation> Validations { get; set; } = [];
+    public TeTextFieldProperty? Property { get; set; }
+    public TeTextFieldEvent<T>? Event { get; set; }
 
-    IEnumerable<ITeTextFieldValidation>? ITeTextFieldOption.Validations
-        => Validations;
-
-    Func<object?, int, string, bool>? ITeTextFieldOption.Condition =>
-        (value, index, columnName) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, columnName) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
-
-}
-
-public interface ITeTextFieldValidation
-{
-    Func<object, bool> Func { get; }
-    string Message { get; }
-}
-
-public class TeTextFieldValidation<T> : ITeTextFieldValidation
-{
-    public required Func<T, bool> Func { get; set; }
-    public required string Message { get; set; }
-    Func<object, bool> ITeTextFieldValidation.Func =>
-        value =>
-        {
-            if (value is T tValue)
-            {
-                return Func?.Invoke(tValue) ?? false;
-            }
-            else
-            {
-                return false;
-            }
-        };
+    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
+    ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
+    ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
 }

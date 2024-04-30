@@ -1,3 +1,5 @@
+using TableViewerBlazor.Options.Property;
+
 namespace TableViewerBlazor.Options;
 
 public static class TeSelectBoxOptionExtensions
@@ -18,7 +20,8 @@ public static class TeSelectBoxOptionExtensions
         }
         selectBoxOption = options.SelectBoxOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition(data, 0, "path")) ?? default;
+            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? true)
+            .FirstOrDefault() ?? default;
         return selectBoxOption != null;
     }
 }
@@ -32,32 +35,21 @@ public class TeSelectBoxAttribute : Attribute
     }
 }
 
-public interface ITeSelectBoxOption
+public interface ITeSelectBoxOption : ITeFieldOption
 {
-    public string Id { get; init; }
-    public IEnumerable<ITeSelectItem> Items { get; }
-    public Func<object?, int, string, bool> Condition { get; }
+    IEnumerable<ITeSelectItem> Items { get; }
+    ITeSelectBoxProperty? Property { get; }
 }
 
-public class TeSelectBoxOption<T> : ITeSelectBoxOption
+public class TeSelectBoxOption<T> : ITeFieldOption<T>, ITeSelectBoxOption
 {
-    public required string Id { get; init; }
-    public IEnumerable<TeSelectItem<T>> Items { get; set; } = new List<TeSelectItem<T>>();
-    public Func<T?, int, string, bool> Condition { get; set; } = (value, index, columnName) => true;
+    public string? Id { get; set; }
+    public Func<T?, int, string, bool>? Condition { get; set; }
+    public List<ITeSelectItem> Items { get; set; } = [];
+    public TeSelectBoxProperty<T>? Property { get; set; }
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
-    Func<object?, int, string, bool> ITeSelectBoxOption.Condition =>
-        (value, index, columnName) =>
-        {
-            if (value is T tValue)
-            {
-                return Condition?.Invoke(tValue, index, columnName) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
+    ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
 }
 
 public interface ITeSelectItem
@@ -85,4 +77,3 @@ public record TeSelectItem<T> : ITeSelectItem
         Default = @default;
     }
 }
-
