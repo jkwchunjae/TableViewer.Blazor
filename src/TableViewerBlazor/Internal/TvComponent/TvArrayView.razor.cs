@@ -17,7 +17,7 @@ public partial class TvArrayView : TvViewBase
 
     bool HasMoreItems => DataArray?.Count() < all?.Count();
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         if (Options != null)
         {

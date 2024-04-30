@@ -5,6 +5,7 @@
 <PageTitle>Home</PageTitle>
 
 <MudButton Href="/editor">Editor</MudButton>
+<MudButton Href="/update-test">Update test</MudButton>
 
 <div style="padding-left: 10vw;">
     @if (open)
@@ -24,8 +25,6 @@
 }
     }
 </div>
-
-<MudButton OnClick="Update">Update</MudButton>
 
 
 @code {
@@ -264,10 +263,4 @@
     }
 
     bool open = true;
-
-    private Task Update()
-    {
-        person.Name = "Updated name";
-        return Task.CompletedTask;
-    }
 }
