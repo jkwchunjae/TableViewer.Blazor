@@ -25,6 +25,8 @@
     }
 </div>
 
+<MudButton OnClick="Update">Update</MudButton>
+
 
 @code {
     object test = new object? [] {null, 2, null, 2, 3,};
@@ -262,4 +264,10 @@
     }
 
     bool open = true;
+
+    private Task Update()
+    {
+        person.Name = "Updated name";
+        return Task.CompletedTask;
+    }
 }
