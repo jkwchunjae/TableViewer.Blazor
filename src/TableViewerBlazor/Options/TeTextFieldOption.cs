@@ -32,6 +32,10 @@ public static class TeTextFieldOptionExtensions
             string => new TeTextFieldOption<string>(),
             _ => null,
         };
+        if (data == null && memberInfo?.MemberType() == typeof(string))
+        {
+            textFieldOption = new TeTextFieldOption<string>();
+        }
         return textFieldOption != null;
     }
 }

@@ -7,3 +7,4 @@ global using TableViewerBlazor.Internal;
 global using TableViewerBlazor.Options;
 global using TableViewerBlazor.Provider;
 global using TableViewerBlazor.Service;
+global using TableViewerBlazor.Extension;

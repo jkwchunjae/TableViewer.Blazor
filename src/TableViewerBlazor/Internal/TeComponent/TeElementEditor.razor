@@ -44,6 +44,18 @@ else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
+else if (Data is DateTime)
+{
+
+}
+else if (Data is Array || Data is IEnumerable)
+{
+
+}
+else if (Data is Enum)
+{
+
+}
 else
 {
     <TeObjectEditor

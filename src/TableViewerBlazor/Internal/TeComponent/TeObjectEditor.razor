@@ -2,28 +2,12 @@
 
 @foreach (var keyData in GetKeys(Data!))
 {
-    if (keyData.MemberInfo is FieldInfo fieldInfo)
-    {
-        var value = fieldInfo.GetValue(Data);
-        <TeElementEditor
-            Data="value"
-            DataChanged="@(value => OnDataChanged_Field(fieldInfo, value))"
-            Options="Options"
-            Depth="@(Depth + 1)"
-            MemberInfo="keyData.MemberInfo"
-            Label="@keyData.MemberInfo.Name"
-        />
-    }
-    else if (keyData.MemberInfo is PropertyInfo propertyInfo)
-    {
-        var value = propertyInfo.GetValue(Data);
-        <TeElementEditor
-            Data="value"
-            DataChanged="@(value => OnDataChanged_Property(propertyInfo, value))"
-            Options="Options"
-            Depth="@(Depth + 1)"
-            MemberInfo="keyData.MemberInfo"
-            Label="@keyData.MemberInfo.Name"
-        />
-    }
+    <TeElementEditor
+        Data="keyData.Value"
+        DataChanged="@(value => OnDataChanged(keyData.MemberInfo, value))"
+        Options="Options"
+        Depth="@(Depth + 1)"
+        MemberInfo="keyData.MemberInfo"
+        Label="@keyData.MemberInfo.Name"
+    />
 }

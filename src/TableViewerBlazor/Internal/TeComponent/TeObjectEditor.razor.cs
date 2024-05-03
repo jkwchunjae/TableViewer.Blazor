@@ -2,7 +2,7 @@
 
 public partial class TeObjectEditor : TeEditorBase
 {
-    private IEnumerable<(string Key, MemberInfo MemberInfo)> GetKeys(object data)
+    private IEnumerable<(string Key, MemberInfo MemberInfo, object? Value)> GetKeys(object data)
     {
         if (data == null)
             yield break;
@@ -13,10 +13,11 @@ public partial class TeObjectEditor : TeEditorBase
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
+                .Where(p => p.CanWrite)
                 .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
-                yield return (property.Name, property);
+                yield return (property.Name, property, property.GetValue(data));
             }
         }
 
@@ -27,9 +28,19 @@ public partial class TeObjectEditor : TeEditorBase
                 .Where(f => f.FieldType != typeof(Type));
             foreach (var field in fields)
             {
-                yield return (field.Name, field);
+                yield return (field.Name, field, field.GetValue(data));
             }
         }
+    }
+
+    private Task OnDataChanged(MemberInfo memberInfo, object? value)
+    {
+        return memberInfo switch
+        {
+            PropertyInfo propertyInfo => OnDataChanged_Property(propertyInfo, value),
+            FieldInfo fieldInfo => OnDataChanged_Field(fieldInfo, value),
+            _ => Task.CompletedTask,
+        };
     }
 
     private async Task OnDataChanged_Property(PropertyInfo property, object? value)
