@@ -11,6 +11,12 @@ else if (IsNumber)
         <TvNumberView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
+else if (Data is Enum)
+{
+    <div class="table-cell">
+        <TvEnumView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+    </div>
+}
 else if (Data is bool boolData)
 {
     <div class="table-cell">

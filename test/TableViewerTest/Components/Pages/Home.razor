@@ -58,18 +58,11 @@
             {
                 ["age"] = 12,
             },
+            EnumValue = TestEnum.A,
         };
     TvOptions personOption = new TvOptions
     {
         GlobalOpenDepth = 1,
-        ColumnVisible =
-        {
-            new TvColumnVisibleOption
-            {
-                Before = ["Id", "Name", "Attributes"],
-                After = ["Id", "Name", "Attributes"],
-            },
-        },
     };
 
     Person[] people = new Person[]

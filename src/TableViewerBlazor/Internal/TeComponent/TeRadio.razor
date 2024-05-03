@@ -5,7 +5,7 @@
         T="object"
         Value="Data"
         ValueChanged="@(async value => await OnValueChanged(value))"
-        Validation="@(new Func<string, Task<IEnumerable<string>>>(RadioGroupValidation))"
+        Validation="@(new Func<object, Task<IEnumerable<string>>>(RadioGroupValidation))"
 
         Required="@(RadioOption.Property?.Required ?? false)"
         Culture="@(RadioOption.Property?.Culture ?? default)"

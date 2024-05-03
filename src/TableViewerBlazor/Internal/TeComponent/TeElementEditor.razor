@@ -54,7 +54,13 @@ else if (Data is Array || Data is IEnumerable)
 }
 else if (Data is Enum)
 {
-
+    <TeEnumEditor
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Label="@Label"
+    />
 }
 else
 {
