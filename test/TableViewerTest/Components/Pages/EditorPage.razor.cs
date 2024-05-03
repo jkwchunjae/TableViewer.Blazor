@@ -22,6 +22,7 @@ public class EditData
     [TeRadio("ostype")]
     public string OsType { get; set; } = "windows";
     public InnerClass Inner { get; set; } = new InnerClass();
+    [TeRadio("enum")]
     public TestEnum EnumValue { get; set; }
 }
 
@@ -166,6 +167,34 @@ public partial class EditorPage : ComponentBase
                         Property = new TeRadioItemProperty
                         {
                             Color = Color.Primary,
+                        },
+                    },
+                },
+            },
+            new TeRadioOption<TestEnum>
+            {
+                Id = "enum",
+                Items =
+                {
+                    new TeRadioItem<TestEnum>(TestEnum.A, "A값입니다.")
+                    {
+                        Property = new TeRadioItemProperty
+                        {
+                            Color = Color.Secondary,
+                        },
+                    },
+                    new TeRadioItem<TestEnum>(TestEnum.B, "B급입니다")
+                    {
+                        Property = new TeRadioItemProperty
+                        {
+                            Color = Color.Primary,
+                        },
+                    },
+                    new TeRadioItem<TestEnum>(TestEnum.C, "이건 좀 아닙니다")
+                    {
+                        Property = new TeRadioItemProperty
+                        {
+                            Color = Color.Error,
                         },
                     },
                 },
