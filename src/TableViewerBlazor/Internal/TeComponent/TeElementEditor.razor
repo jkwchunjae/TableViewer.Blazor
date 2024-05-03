@@ -1,6 +1,9 @@
 ﻿@inherits TeEditorBase
 
-@if (Options.TryGetSelectBoxOption(MemberInfo, Data, out var selectBoxOption))
+@if (Options.TryGetIgnoreOption(MemberInfo, Data, out var ignoreOption))
+{
+}
+else if (Options.TryGetSelectBoxOption(MemberInfo, Data, out var selectBoxOption))
 {
     <TeSelectBox
         Data="Data"

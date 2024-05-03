@@ -14,7 +14,9 @@ public partial class TeObjectEditor : TeEditorBase
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
                 .Where(p => p.CanWrite)
-                .Where(p => p.PropertyType != typeof(Type));
+                .Where(p => p.PropertyType != typeof(Type))
+                .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
+                .ToArray();
             foreach (var property in properties)
             {
                 yield return (property.Name, property, property.GetValue(data));
@@ -25,7 +27,9 @@ public partial class TeObjectEditor : TeEditorBase
         {
             var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type));
+                .Where(f => f.FieldType != typeof(Type))
+                .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
+                .ToArray();
             foreach (var field in fields)
             {
                 yield return (field.Name, field, field.GetValue(data));
