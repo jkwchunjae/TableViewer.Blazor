@@ -1,0 +1,9 @@
+﻿@inherits TvViewBase
+
+<span>
+    @(Data.ToString())
+</span>
+
+@code {
+    [Parameter] public object Data { get; set; } = null!;
+}

@@ -6,6 +6,7 @@ public class Person
     public string? Name { get; set; }
     public DateTime? Birth { get; set; }
     public Dictionary<string, object>? Attributes { get; set; }
+    public TestEnum EnumValue { get; set; }
 
     public PersonRecord[]? People { get; set; }
     public OpenTest? OpenTest { get; set; }
@@ -19,3 +20,10 @@ public class OpenTest
 }
 
 public record PersonRecord(int Id, string? Name, Dictionary<string, object>? Attributes);
+
+public enum TestEnum
+{
+    A,
+    B,
+    C,
+}
