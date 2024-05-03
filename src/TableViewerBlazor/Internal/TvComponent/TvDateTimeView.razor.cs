@@ -10,7 +10,7 @@ public partial class TvDateTimeView : TvViewBase
 
     DateTime dateTime;
 
-    protected override Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
         dateTime = Data.ToUniversalTime();
         var options = DateTimeService.Options;
@@ -18,6 +18,5 @@ public partial class TvDateTimeView : TvViewBase
         {
             dateTime = dateTime.AddHours(- (options.Offset / 60));
         }
-        return base.OnInitializedAsync();
     }
 }

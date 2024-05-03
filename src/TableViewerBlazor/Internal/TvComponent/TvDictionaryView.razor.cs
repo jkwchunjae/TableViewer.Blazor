@@ -12,7 +12,7 @@ public partial class TvDictionaryView : TvViewBase
 
     private IEnumerable<(object? Key, object? Value)> Items = Enumerable.Empty<(object?, object?)>();
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         if (Options != null)
         {

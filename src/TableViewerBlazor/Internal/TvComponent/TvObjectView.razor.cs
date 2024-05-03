@@ -14,31 +14,36 @@ public partial class TvObjectView : TvViewBase
     private string[] Keys = Array.Empty<string>();
     private IEnumerable<(string Key, object? Value)> Items = Enumerable.Empty<(string, object?)>();
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         Open = Depth <= OpenDepth;
         ThisOpenDepth = ChildrenOpen();
-
         if (Data != null)
         {
-            var keys = GetKeys(Data);
-
-            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys, keyInfo => keyInfo.Key));
-            if (columnOption != null)
-            {
-                keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
-            }
-
-            if (Options?.DisableKeys?.Any() ?? false)
-            {
-                keys = keys
-                    .Where(key => Options!.DisableKeys!.All(disable => disable != key.Key));
-            }
-
-            Items = keys
-                .Select(keyInfo => (keyInfo.Key, GetValue(Data, keyInfo.MemberInfo)))
-                .ToArray();
+            UpdateData(Data);
         }
+        StateHasChanged();
+    }
+
+    private void UpdateData(object data)
+    {
+        var keys = GetKeys(data);
+
+        var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys, keyInfo => keyInfo.Key));
+        if (columnOption != null)
+        {
+            keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
+        }
+
+        if (Options?.DisableKeys?.Any() ?? false)
+        {
+            keys = keys
+                .Where(key => Options!.DisableKeys!.All(disable => disable != key.Key));
+        }
+
+        Items = keys
+            .Select(keyInfo => (keyInfo.Key, GetValue(data, keyInfo.MemberInfo)))
+            .ToArray();
     }
 
     private int? ChildrenOpen()
