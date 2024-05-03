@@ -200,6 +200,17 @@ public partial class EditorPage : ComponentBase
                 },
             },
         },
+        IgnoreOptions =
+        {
+            new TeIgnoreOption
+            {
+                Condition = (data, index, path) => data is string str && str == "John",
+            },
+            new TeIgnoreOption
+            {
+                Condition = (data, index, path) => data is int,
+            },
+        }
     };
     private async Task Changed(EditData data)
     {

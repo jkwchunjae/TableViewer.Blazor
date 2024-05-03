@@ -8,5 +8,6 @@ public class TeOptions
     public List<ITeNumericFieldOption> NumericFieldOptions { get; set; } = [];
     public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
     public List<ITeRadioOption> RadioOptions { get; set; } = [];
+    public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
 }
 
