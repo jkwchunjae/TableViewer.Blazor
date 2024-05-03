@@ -22,6 +22,7 @@ public class EditData
     [TeRadio("ostype")]
     public string OsType { get; set; } = "windows";
     public InnerClass Inner { get; set; } = new InnerClass();
+    public TestEnum EnumValue { get; set; }
 }
 
 public partial class EditorPage : ComponentBase

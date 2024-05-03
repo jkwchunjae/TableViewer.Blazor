@@ -45,7 +45,7 @@ public class TeSelectBoxOption<T> : ITeFieldOption<T>, ITeSelectBoxOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-    public List<ITeSelectItem> Items { get; set; } = [];
+    public List<TeSelectItem<T>> Items { get; set; } = [];
     public TeSelectBoxProperty<T>? Property { get; set; }
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
