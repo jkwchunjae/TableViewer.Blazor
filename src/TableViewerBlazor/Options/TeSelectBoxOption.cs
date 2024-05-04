@@ -1,3 +1,4 @@
+using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
@@ -5,7 +6,7 @@ namespace TableViewerBlazor.Options;
 public static class TeSelectBoxOptionExtensions
 {
     public static bool TryGetSelectBoxOption(this TeOptions options,
-        MemberInfo? memberInfo, object? data,
+        MemberInfo? memberInfo, TeEditorBase teBase,
         out ITeSelectBoxOption? selectBoxOption)
     {
         var selectAttribute = memberInfo?.GetCustomAttribute<TeSelectBoxAttribute>();
@@ -20,7 +21,7 @@ public static class TeSelectBoxOptionExtensions
         }
         selectBoxOption = options.SelectBoxOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? true)
+            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
             .FirstOrDefault() ?? default;
         return selectBoxOption != null;
     }

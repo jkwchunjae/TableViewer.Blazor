@@ -1,3 +1,4 @@
+using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
@@ -5,7 +6,7 @@ namespace TableViewerBlazor.Options;
 public static class TeRadioOptionExtensions
 {
     public static bool TryGetRadioOption(this TeOptions options,
-        MemberInfo? memberInfo, object? data,
+        MemberInfo? memberInfo, TeEditorBase teBase,
         out ITeRadioOption? radioOption)
     {
         var selectAttribute = memberInfo?.GetCustomAttribute<TeRadioAttribute>();
@@ -20,7 +21,7 @@ public static class TeRadioOptionExtensions
         }
         radioOption = options.RadioOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? true)
+            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
             .FirstOrDefault() ?? default;
         return radioOption != null;
     }

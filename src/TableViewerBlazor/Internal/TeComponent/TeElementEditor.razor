@@ -1,48 +1,52 @@
 ﻿@inherits TeEditorBase
 
-@if (Options.TryGetIgnoreOption(MemberInfo, Data, out var ignoreOption))
+@if (Options.TryGetIgnoreOption(MemberInfo, this, out var ignoreOption))
 {
 }
-else if (Options.TryGetSelectBoxOption(MemberInfo, Data, out var selectBoxOption))
+else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))
 {
     <TeSelectBox
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
         SelectBoxOption="@selectBoxOption"
     />
 }
-else if (Options.TryGetRadioOption(MemberInfo, Data, out var radioOption))
+else if (Options.TryGetRadioOption(MemberInfo, this, out var radioOption))
 {
     <TeRadio
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
         RadioOption="@radioOption"
     />
 }
-else if (Options.TryGetNumericFieldOption(MemberInfo, Data, out var numericFieldOption))
+else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption))
 {
     <TeNumericField
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
         NumericFieldOption="numericFieldOption"
     />
 }
-else if (Options.TryGetTextFieldOption(MemberInfo, Data, out var textFieldOption))
+else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
 {
     <TeTextField
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
         TextFieldOption="textFieldOption"
     />
@@ -62,6 +66,7 @@ else if (Data is Enum)
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
     />
 }
@@ -72,6 +77,7 @@ else
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
+        Path="@Path"
         Label="@Label"
     />
 }

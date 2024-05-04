@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
@@ -6,7 +7,7 @@ namespace TableViewerBlazor.Options;
 public static class TeNumericFieldOptionExtensions
 {
     public static bool TryGetNumericFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, object? data,
+        MemberInfo? memberInfo, TeEditorBase teBase,
         out ITeNumericFieldOption? NumericFieldOption)
     {
         var NumericFieldAttribute = memberInfo?.GetCustomAttribute<TeNumericFieldAttribute>();
@@ -22,13 +23,13 @@ public static class TeNumericFieldOptionExtensions
 
         NumericFieldOption = options.NumericFieldOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition?.Invoke(data, 0, "path") ?? true) ?? default;
+            .FirstOrDefault(o => o.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true) ?? default;
         if (NumericFieldOption != null)
         {
             return true;
         }
 
-        NumericFieldOption = data switch
+        NumericFieldOption = teBase.Data switch
         {
             int => new TeNumericFieldOption<int>(),
             long => new TeNumericFieldOption<long>(),
