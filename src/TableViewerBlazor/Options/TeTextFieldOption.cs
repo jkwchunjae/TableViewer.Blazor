@@ -1,11 +1,12 @@
-﻿using TableViewerBlazor.Options.Property;
+﻿using TableViewerBlazor.Internal.TeComponent;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
 
 public static class TeTextFieldOptionExtensions
 {
     public static bool TryGetTextFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, object? data,
+        MemberInfo? memberInfo, TeEditorBase teBase,
         out ITeTextFieldOption? textFieldOption)
     {
         var textFieldAttribute = memberInfo?.GetCustomAttribute<TeTextFieldAttribute>();
@@ -21,18 +22,18 @@ public static class TeTextFieldOptionExtensions
 
         textFieldOption = options.TextFieldOptions?
             .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition?.Invoke(data, 0, "path") ?? true) ?? default;
+            .FirstOrDefault(o => o.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true) ?? default;
         if (textFieldOption != null)
         {
             return true;
         }
 
-        textFieldOption = data switch
+        textFieldOption = teBase.Data switch
         {
             string => new TeTextFieldOption<string>(),
             _ => null,
         };
-        if (data == null && memberInfo?.MemberType() == typeof(string))
+        if (teBase.Data == null && memberInfo?.MemberType() == typeof(string))
         {
             textFieldOption = new TeTextFieldOption<string>();
         }

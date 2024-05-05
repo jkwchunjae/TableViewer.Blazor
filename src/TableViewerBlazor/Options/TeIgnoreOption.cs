@@ -1,13 +1,15 @@
-﻿namespace TableViewerBlazor.Options;
+﻿using TableViewerBlazor.Internal.TeComponent;
+
+namespace TableViewerBlazor.Options;
 
 public static class TeIgnoreOptionExtensions
 {
     public static bool TryGetIgnoreOption(this TeOptions options,
-        MemberInfo? memberInfo, object? data,
+        MemberInfo? memberInfo, TeEditorBase teBase,
         out TeIgnoreOption? ignoreOption)
     {
         ignoreOption = options.IgnoreOptions?
-            .Where(option => option.Condition?.Invoke(data, 0, "path") ?? false)
+            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? false)
             .FirstOrDefault() ?? default;
         return ignoreOption != null;
     }
