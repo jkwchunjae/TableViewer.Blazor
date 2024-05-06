@@ -13,6 +13,7 @@ public class InnerClass
 }
 public class EditData
 {
+    public DateTime Birth { get; set; }
     [TeTextField("name")]
     public string Name { get; set; } = string.Empty;
     [TeSelectBox("gender")]
@@ -35,6 +36,7 @@ public partial class EditorPage : ComponentBase
         Name = "John",
         Gender = "M",
         Age = 30,
+        Birth = new DateTime(1989, 2, 1),
     };
     TeOptions options = new TeOptions
     {

@@ -51,9 +51,17 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
-else if (Data is DateTime)
+else if (Data is DateTime dateTimeValue)
 {
-
+    <TeDateTimeEditor
+        Data="dateTimeValue"
+        DateTimeValue="dateTimeValue"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+    />
 }
 else if (Data is Array || Data is IEnumerable)
 {
