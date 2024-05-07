@@ -11,5 +11,8 @@
         // await Js.InvokeVoidAsync("console.log", timezoneOptions);
 
         DateTimeService.Options = timezoneOptions;
+
+        var language = await module.InvokeAsync<string>("getLanguage");
+        DateTimeService.Language = language;
     }
 }

@@ -13,6 +13,7 @@ public class InnerClass
 }
 public class EditData
 {
+    [TeDateTime("birth")]
     public DateTime Birth { get; set; }
     [TeTextField("name")]
     public string Name { get; set; } = string.Empty;
@@ -212,6 +213,15 @@ public partial class EditorPage : ComponentBase
             //{
             //    Condition = (data, index, path) => data is int,
             //},
+        },
+        DateTimeOptions =
+        {
+            new TeDateTimeOption
+            {
+                Id = "birth",
+                UseDate = true,
+                UseTime = true,
+            }
         }
     };
     private async Task Changed(EditData data)

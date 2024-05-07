@@ -4,3 +4,8 @@ export function getTimezoneOptions() {
     options.offset = new Date().getTimezoneOffset();
     return options;
 }
+
+export function getLanguage() {
+    const language = navigator.language;
+    return language;
+}

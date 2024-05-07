@@ -1,8 +1,50 @@
 @using System.Globalization
 @inherits TeEditorBase
 
-<MudDatePicker
-    Date="DateTimeValue"
-    DateChanged="OnDateTimeChanged"
-    Culture="@CultureInfo.GetCultureInfo("ko-KR")"
-/>
+@if (UseDate && UseTime)
+{
+    <MudField Label="@Label">
+        <div class="d-flex">
+            @if (UseDate)
+            {
+                <MudDatePicker
+                    Date="dateForVisible"
+                    DateChanged="OnDateChanged"
+                    Validation="@(new Func<int, Task<IEnumerable<string>>>(DateTimeValidation))"
+                    Culture="@DateTimeService.CultureInfo"
+                    DisableUnderLine="true"
+                />
+            }
+
+            @if (UseTime)
+            {
+                <MudTimePicker
+                    Time="timeForVisible"
+                    TimeChanged="OnTimeChanged"
+                    Validation="@(new Func<int, Task<IEnumerable<string>>>(DateTimeValidation))"
+                    Culture="@DateTimeService.CultureInfo"
+                    DisableUnderLine="true"
+                />
+            }
+        </div>
+    </MudField>
+}
+else if (UseDate)
+{
+    <MudDatePicker
+        Date="dateForVisible"
+        DateChanged="OnDateChanged"
+        Validation="@(new Func<int, Task<IEnumerable<string>>>(DateTimeValidation))"
+        Culture="@DateTimeService.CultureInfo"
+        Label="@Label"
+    />
+}
+else if (UseTime)
+{
+    <MudTimePicker
+        Time="timeForVisible"
+        TimeChanged="OnTimeChanged"
+        Validation="@(new Func<int, Task<IEnumerable<string>>>(DateTimeValidation))"
+        Culture="@DateTimeService.CultureInfo"
+    />
+}
