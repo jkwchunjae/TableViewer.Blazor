@@ -1,4 +1,5 @@
-﻿using TableViewerBlazor.Internal.TeComponent;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using TableViewerBlazor.Internal.TeComponent;
 
 namespace TableViewerBlazor.Options;
 
@@ -49,7 +50,7 @@ public interface ITeImageUploaderOption : ITeFieldOption
     TvButtonStyle ButtonStyle { get; }
 }
 
-public class TeImageUploaderOption : ITeImageUploaderOption
+public abstract class TeImageUploaderOption : ITeImageUploaderOption
 {
     public string? Id { get; set; }
     public Func<object?, int, string, bool>? Condition { get; set; }
@@ -59,4 +60,27 @@ public class TeImageUploaderOption : ITeImageUploaderOption
     public List<ITeValidation> Validations = [];
 
     IEnumerable<ITeValidation> ITeImageUploaderOption.Validations => Validations;
+}
+
+public class TeBase64ImageUploaderOption : TeImageUploaderOption
+{
+}
+
+public class TeFilePathImageUploaderOption : TeImageUploaderOption
+{
+    public Func<IBrowserFile, Task<string>> SaveFileAsync { get; set; } = default!;
+}
+
+public enum TeImageType
+{
+    /// <summary>
+    /// Base64 encoded string
+    /// 별도의 파일을 저장하지 않고 Base64로 저장
+    /// </summary>
+    Base64,
+    /// <summary>
+    /// 사용자가 선택한 파일을 저장하는 방식
+    /// 저장한 파일의 경로를 반환해 저장해야 한다.
+    /// </summary>
+    FilePath,
 }

@@ -7,14 +7,21 @@ public partial class TeImageUploader : TeEditorBase
 {
     [Parameter] public ITeImageUploaderOption ImageUploaderOption { get; set; } = default!;
     private TvButtonStyle Style => ImageUploaderOption.ButtonStyle;
-    IList<IBrowserFile> files = new List<IBrowserFile>();
     private async Task LoadImage(IBrowserFile file)
     {
-        using var stream = file.OpenReadStream(ImageUploaderOption.MaxAllowedSize);
-        var bytes = new byte[stream.Length];
-        await stream.ReadAsync(bytes, 0, bytes.Length);
-        var base64 = Convert.ToBase64String(bytes);
-        await DataChanged.InvokeAsync(base64);
+        if (ImageUploaderOption is TeBase64ImageUploaderOption option64)
+        {
+            using var stream = file.OpenReadStream(ImageUploaderOption.MaxAllowedSize);
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes, 0, bytes.Length);
+            var base64 = Convert.ToBase64String(bytes);
+            await DataChanged.InvokeAsync(base64);
+        }
+        else if (ImageUploaderOption is TeFilePathImageUploaderOption optionFile)
+        {
+            var filePath = await optionFile.SaveFileAsync(file);
+            await DataChanged.InvokeAsync(filePath);
+        }
     }
 
     private async Task<IEnumerable<string>> ImageValidation(object value)

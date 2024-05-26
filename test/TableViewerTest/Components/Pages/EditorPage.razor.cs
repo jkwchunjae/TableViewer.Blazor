@@ -204,7 +204,7 @@ public partial class EditorPage : ComponentBase
         },
         ImageUploaderOptions =
         {
-            new TeImageUploaderOption
+            new TeBase64ImageUploaderOption
             {
                 Id = "picture",
                 MaxAllowedSize = 512_0000L,
