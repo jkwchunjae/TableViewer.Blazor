@@ -6,6 +6,7 @@ namespace TableViewerBlazor.Internal.TeComponent;
 public partial class TeImageUploader : TeEditorBase
 {
     [Parameter] public ITeImageUploaderOption ImageUploaderOption { get; set; } = default!;
+    private TvButtonStyle Style => ImageUploaderOption.ButtonStyle;
     IList<IBrowserFile> files = new List<IBrowserFile>();
     private async Task LoadImage(IBrowserFile file)
     {

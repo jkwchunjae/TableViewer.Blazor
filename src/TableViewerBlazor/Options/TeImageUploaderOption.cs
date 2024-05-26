@@ -46,6 +46,7 @@ public interface ITeImageUploaderOption : ITeFieldOption
     IEnumerable<ITeValidation> Validations { get; }
     long MaxAllowedSize { get; }
     string Accept { get; }
+    TvButtonStyle ButtonStyle { get; }
 }
 
 public class TeImageUploaderOption : ITeImageUploaderOption
@@ -54,6 +55,7 @@ public class TeImageUploaderOption : ITeImageUploaderOption
     public Func<object?, int, string, bool>? Condition { get; set; }
     public long MaxAllowedSize { get; set; } = 512_000L;
     public string Accept { get; set; } = ".png, .jpg";
+    public TvButtonStyle ButtonStyle { get; set; } = new();
     public List<ITeValidation> Validations = [];
 
     IEnumerable<ITeValidation> ITeImageUploaderOption.Validations => Validations;
