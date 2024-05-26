@@ -21,6 +21,8 @@ public class EditData
     public int Age { get; set; }
     [TeRadio("ostype")]
     public string OsType { get; set; } = "windows";
+    [TeImageUploader("picture")]
+    public string Picture { get; set; } = string.Empty;
     public InnerClass Inner { get; set; } = new InnerClass();
     [TeRadio("enum")]
     public TestEnum EnumValue { get; set; }
@@ -196,6 +198,22 @@ public partial class EditorPage : ComponentBase
                         {
                             Color = Color.Error,
                         },
+                    },
+                },
+            },
+        },
+        ImageUploaderOptions =
+        {
+            new TeImageUploaderOption
+            {
+                Id = "picture",
+                MaxAllowedSize = 512_0000L,
+                Validations =
+                {
+                    new TeValidation<string>
+                    {
+                        Func = value => string.IsNullOrEmpty(value),
+                        Message = "사진을 선택해주세요.",
                     },
                 },
             },

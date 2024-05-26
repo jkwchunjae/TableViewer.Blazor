@@ -1,2 +1,18 @@
-﻿@inherits TeEditorBase
+﻿@using Microsoft.AspNetCore.Components.Forms
+@inherits TeEditorBase
 
+<MudFileUpload T="IBrowserFile"
+    Accept="@ImageUploaderOption.Accept"
+    FilesChanged="LoadImage"
+    Validation="@(new Func<object, Task<IEnumerable<string>>>(ImageValidation))"
+>
+    <ButtonTemplate>
+        <MudButton HtmlTag="label"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.CloudUpload"
+                   for="@context.Id">
+            Only image files
+        </MudButton>
+    </ButtonTemplate>
+</MudFileUpload>
