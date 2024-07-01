@@ -32,7 +32,7 @@ public interface ITeNumericFieldProperty
     // Appearance
     string? AdornmentAriaLabel { get; }
     Color AdornmentColor { get; }
-    bool DisableUnderLine { get; }
+    bool Underline { get; }
     bool FullWidth { get; }
     bool HideSpinButtons { get; }
     Size IconSize { get; }
@@ -70,7 +70,7 @@ public class TeNumericFieldProperty<T> : ITeNumericFieldProperty
     public T Step { get; set; } = T.One;
     public string? AdornmentAriaLabel { get; set; }
     public Color AdornmentColor { get; set; } = Color.Default;
-    public bool DisableUnderLine { get; set; }
+    public bool Underline { get; set; } = true;
     public bool FullWidth { get; set; }
     public bool HideSpinButtons { get; set; }
     public Size IconSize { get; set; } = Size.Medium;

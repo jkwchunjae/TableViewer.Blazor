@@ -17,10 +17,20 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.70.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
-    <PackageReference Include="MudBlazor" Version="6.19.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.6" />
+    <PackageReference Include="MudBlazor" Version="7.0.0" />
     <PackageReference Include="BlazorMonaco" Version="3.2.0" />
     <PackageReference Include="YamlDotNet" Version="15.1.4" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MudAllowedAttributePattern>LowerCase</MudAllowedAttributePattern>
+    <MudIllegalParameters>V7CaseSensitive</MudIllegalParameters>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="MudAllowedAttributePattern" />
+    <CompilerVisibleProperty Include="MudIllegalParameters" />
   </ItemGroup>
 
   <ItemGroup>

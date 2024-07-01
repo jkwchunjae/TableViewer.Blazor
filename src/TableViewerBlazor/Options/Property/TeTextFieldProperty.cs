@@ -46,9 +46,9 @@ public interface ITeTextFieldProperty
     bool Immediate { get; }
 
     /// <summary>
-    /// If true, the input will not have an underline.
+    /// Displays an underline for the input.
     /// </summary>
-    bool DisableUnderLine { get; }
+    bool Underline { get; }
 
     /// <summary>
     /// The HelperText will be displayed below the text field.
@@ -205,9 +205,9 @@ public class TeTextFieldProperty : ITeTextFieldProperty
     public bool Immediate { get; set; }
 
     /// <summary>
-    /// If true, the input will not have an underline.
+    /// Displays an underline for the input.
     /// </summary>
-    public bool DisableUnderLine { get; set; }
+    public bool Underline { get; set; } = true;
 
     /// <summary>
     /// The HelperText will be displayed below the text field.

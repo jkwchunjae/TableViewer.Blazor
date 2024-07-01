@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="6.19.1" />
+    <PackageReference Include="MudBlazor" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TableViewerBlazor\TableViewerBlazor.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MudAllowedAttributePattern>LowerCase</MudAllowedAttributePattern>
+    <MudIllegalParameters>V7CaseSensitive</MudIllegalParameters>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="MudAllowedAttributePattern" />
+    <CompilerVisibleProperty Include="MudIllegalParameters" />
   </ItemGroup>
 
 </Project>

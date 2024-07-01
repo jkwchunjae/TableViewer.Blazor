@@ -54,10 +54,10 @@ public partial class EditorPage : ComponentBase
                     {
                         Func = async value =>
                         {
-                            await Task.Delay(1000);
-                            return value.Length <= 3;
+                            await Task.Delay(100);
+                            return value.Length <= 5;
                         },
-                        Message = "이름은 10자 이하로 입력해주세요.",
+                        Message = "이름은 5자 이하로 입력해주세요.",
                     },
                 },
                 Property = new TeTextFieldProperty
@@ -65,7 +65,7 @@ public partial class EditorPage : ComponentBase
                     FullWidth = true,
                     Immediate = false,
                     DebounceInterval = 2000,
-                    DisableUnderLine = false,
+                    Underline = true,
                     HelperText = "이름을 입력해주세요.",
                     HelperTextOnFocus = true,
                     AdornmentIcon = Icons.Material.Filled.Person,
@@ -91,12 +91,20 @@ public partial class EditorPage : ComponentBase
                         Func = value => value <= 100,
                         Message = "나이는 100세 이하로 입력해주세요.",
                     },
+                    new TeValidation<int>
+                    {
+                        Func = value =>
+                        {
+                            value = value / (value - 29);
+                            return value != 20;
+                        },
+                        Message = "런타임 에러 테스트",
+                    },
                     new TeAsyncValidation<int>
                     {
                         Func = async value =>
                         {
-                            await Task.Delay(1000);
-                            value = value / (value - 29);
+                            await Task.Delay(2000);
                             return value != 20;
                         },
                         Message = "사실 20세는 선택할 수 없어요.",
