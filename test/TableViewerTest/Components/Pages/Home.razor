@@ -5,18 +5,10 @@
 <MudButton Href="/editor">Editor</MudButton>
 <MudButton Href="/update-test">Update test</MudButton>
 
-<div style="padding-left: 10vw;">
-<TableViewer Data="test" Options="optionForTest"/>
+<TableViewer Data="arrayTestData" Options="arrayDataOption"/>
 
 <TableViewer Data="person" Options="personOption"/>
 
-@if (optionForPeople != null)
-{
-    <TableViewer Data="people" Options="optionForPeople"/>
-}
+<TableViewer Data="people" Options="optionForPeople"/>
 
-@if (optionForPR != null)
-{
-    <TableViewer Data="peopleRecord" Options="optionForPR"/>
-}
-</div>
+<TableViewer Data="peopleRecord" Options="optionForPR"/>

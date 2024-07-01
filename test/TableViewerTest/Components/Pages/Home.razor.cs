@@ -10,29 +10,17 @@ public partial class Home : ComponentBase
 {
     [Inject] IJSRuntime Js { get; set; } = default!;
 
-
-    object test = new object?[] { null, 2, null, 2, 3, };
-    TvOptions optionForTest = new TvOptions
-    {
-        Actions = new List<ITvAction>()
-        {
-            new TvDoubleClickAction<int>
-            {
-                Label = "Console log",
-                Condition = (number, depth) => true,
-                Action = number =>
-                {
-                    Console.WriteLine(number);
-                    return Task.CompletedTask;
-                },
-                SecondStyle = new TvSecondButtonStyle
-                {
-                    Variant = Variant.Filled,
-                },
-            },
-        },
-    };
+    TvOptions? arrayDataOption = null;
     TvOptions? optionForPeople = null;
+    TvOptions? personOption = new TvOptions
+    {
+        GlobalOpenDepth = 1,
+    };
+    TvOptions? optionForPR = null;
+
+    #region Test data
+    object arrayTestData = new object?[] { null, 2, null, 2, 3, };
+
     Person person = new Person
     {
         Id = 213,
@@ -42,10 +30,6 @@ public partial class Home : ComponentBase
             ["age"] = 12,
         },
         EnumValue = TestEnum.A,
-    };
-    TvOptions personOption = new TvOptions
-    {
-        GlobalOpenDepth = 1,
     };
 
     Person[] people = new Person[]
@@ -154,11 +138,31 @@ public partial class Home : ComponentBase
             }
         ),
     };
-
-    TvOptions optionForPR = null;
+    #endregion
 
     protected override Task OnInitializedAsync()
     {
+        #region Options
+        arrayDataOption = new TvOptions
+        {
+            Actions = new List<ITvAction>()
+            {
+                new TvDoubleClickAction<int>
+                {
+                    Label = "Console log",
+                    Condition = (number, depth) => true,
+                    Action = number =>
+                    {
+                        Console.WriteLine(number);
+                        return Task.CompletedTask;
+                    },
+                    SecondStyle = new TvSecondButtonStyle
+                    {
+                        Variant = Variant.Filled,
+                    },
+                },
+            },
+        };
         optionForPeople = new TvOptions
         {
             GlobalOpenDepth = 1,
@@ -228,6 +232,7 @@ public partial class Home : ComponentBase
                 new TvJsonEditorOption<PersonRecord>(),
             },
         };
+        #endregion
 
         return Task.CompletedTask;
     }
