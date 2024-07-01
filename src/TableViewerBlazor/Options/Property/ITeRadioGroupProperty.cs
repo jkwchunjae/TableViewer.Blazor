@@ -11,7 +11,7 @@ public interface ITeRadioGroupProperty
     bool ReadOnly { get; }
     string? InputClass { get; }
     string? InputStyle { get; }
-    bool DisableUnderLine { get; }
+    bool Underline { get; }
 }
 
 public class TeRadioGroupProperty : ITeRadioGroupProperty
@@ -22,5 +22,5 @@ public class TeRadioGroupProperty : ITeRadioGroupProperty
     public bool ReadOnly { get; set; } = false;
     public string? InputClass { get; set; }
     public string? InputStyle { get; set; }
-    public bool DisableUnderLine { get; set; } = false;
+    public bool Underline { get; set; } = true;
 }

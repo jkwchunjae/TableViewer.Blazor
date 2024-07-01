@@ -65,7 +65,7 @@ public partial class EditorPage : ComponentBase
                     FullWidth = true,
                     Immediate = false,
                     DebounceInterval = 2000,
-                    DisableUnderLine = false,
+                    Underline = true,
                     HelperText = "이름을 입력해주세요.",
                     HelperTextOnFocus = true,
                     AdornmentIcon = Icons.Material.Filled.Person,
