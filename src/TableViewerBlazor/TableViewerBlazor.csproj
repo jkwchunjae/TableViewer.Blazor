@@ -23,6 +23,16 @@
     <PackageReference Include="YamlDotNet" Version="15.1.4" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <MudAllowedAttributePattern>LowerCase</MudAllowedAttributePattern>
+    <MudIllegalParameters>V7CaseSensitive</MudIllegalParameters>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="MudAllowedAttributePattern" />
+    <CompilerVisibleProperty Include="MudIllegalParameters" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="../../README.md">
       <Pack>True</Pack>
