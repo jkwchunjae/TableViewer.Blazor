@@ -39,6 +39,7 @@ public partial class Home : ComponentBase
             Id = 213,
             Name = "User name",
             Birth = DateTime.UtcNow,
+            Death = new DateTime(2000, 1, 11, 5, 12, 1, DateTimeKind.Utc),
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -193,6 +194,11 @@ public partial class Home : ComponentBase
                 new TvAction<PersonRecord>
                 {
                     Label = "Console log person record",
+                    Action = async (person) =>
+                    {
+                        await ConsoleWrite(person);
+                    },
+                    Condition = (person, depth) => person.Name == "User 2",
                 },
             },
             OpenDepth =
@@ -212,6 +218,20 @@ public partial class Home : ComponentBase
                     },
                 },
                 // new TvYamlEditorOption<Dictionary<string, object>>(),
+            },
+            DateTime = new List<TvDateTimeOption>()
+            {
+
+                new TvDateTimeOption
+                {
+                    Condition = (name) => name == "Birth",
+                    RelativeTime = true,
+                },
+                new TvDateTimeOption
+                {
+                    Condition = (name) => name == "Death",
+                    Format = "MM-dd-yyyy HH:mm:ss",
+                },
             },
         };
 

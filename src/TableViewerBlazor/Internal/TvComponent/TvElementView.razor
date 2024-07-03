@@ -26,7 +26,7 @@ else if (Data is bool boolData)
 else if (Data is DateTime datetimeData)
 {
     <div class="table-cell">
-        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" DateTimeOption="GetDateTimeOption()" />
     </div>
 }
 else if (Data is string stringData)

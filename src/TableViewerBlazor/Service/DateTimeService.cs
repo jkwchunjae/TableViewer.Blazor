@@ -4,5 +4,5 @@ namespace TableViewerBlazor.Service;
 
 internal class DateTimeService
 {
-    public TvDateTimeOptions? Options { get; set; }
+    public TvDateTimeOption? Options { get; set; }
 }
