@@ -39,7 +39,7 @@ public partial class Home : ComponentBase
             Id = 213,
             Name = "User name",
             Birth = DateTime.UtcNow,
-            Death = new DateTime(2000, 1, 11, 5, 12, 1, DateTimeKind.Utc),
+            Death = new DateTime(2300, 1, 11, 5, 12, 1, DateTimeKind.Utc),
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
