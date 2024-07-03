@@ -7,14 +7,14 @@ public partial class TvDateTimeView : TvViewBase
 {
     [Inject] DateTimeService DateTimeService { get; set; } = null!;
     [Parameter] public DateTime Data { get; set; }
-    [Parameter] public TvDateTimeOption? DateTimeOption { get; set; }
 
-    string dateTime = "";
+    private string dateTime = "";
 
     protected override void OnParametersSet()
     {
         var dateTime = Data.ToUniversalTime();
         var options = DateTimeService.Options;
+        // NOTE: 타이밍 이슈로 항상 options == null인 상황
         if (options != null)
         {
             dateTime = dateTime.AddHours(-(options.Offset / 60));
@@ -24,16 +24,17 @@ public partial class TvDateTimeView : TvViewBase
 
     private void SetOption(DateTime dateTime)
     {
-        if (DateTimeOption != null)
+        var dateTimeOption = Options?.DateTime;
+        if (dateTimeOption != null)
         {
-            if (DateTimeOption.RelativeTime)
+            if (dateTimeOption.RelativeTime)
             {
-                var min = (dateTime - System.DateTime.Now).TotalMinutes;
-                this.dateTime = GetRelativeTimeInStr(min);
+                var relativeTimeInMin = (dateTime - System.DateTime.Now).TotalMinutes;
+                this.dateTime = GetRelativeTimeInStr(relativeTimeInMin);
             }
             else
             {
-                this.dateTime = dateTime.ToString(DateTimeOption.Format);
+                this.dateTime = dateTime.ToString(dateTimeOption.Format);
             }
         }
     }

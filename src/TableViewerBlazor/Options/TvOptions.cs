@@ -12,5 +12,5 @@ public class TvOptions
     public TvStyleOption Style { get; set; } = new();
     public List<ITvEditorOption> Editor { get; set; } = [];
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
-    public List<TvDateTimeOption> DateTime { get; set; } = [];
+    public TvDateTimeOption? DateTime { get; set; }
 }

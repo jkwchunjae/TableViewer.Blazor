@@ -11,6 +11,5 @@ public class TvDateTimeOption
     public string Timezone { get; set; } = "auto";
     public int Offset { get; set; } = 0;
     public string Format { get; set; } = "yyyy-MM-dd HH:mm:ss";
-    public Func<string?, bool> Condition { get; set; } = _ => true;
     public bool RelativeTime { get; set; } = false;
 }

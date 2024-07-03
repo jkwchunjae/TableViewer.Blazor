@@ -63,22 +63,4 @@ public partial class TvElementView : TvViewBase
             return null;
         }
     }
-
-    private TvDateTimeOption? GetDateTimeOption()
-    {
-        if (Data is DateTime dateTimeData && Parent != null)
-        {
-            var propertyName = Parent.GetType()
-                .GetProperties()
-                .Where(p => p.PropertyType == typeof(DateTime?))
-                .Where(p => p.GetValue(Parent) is DateTime dateTime && dateTime == dateTimeData)
-                .Select(p => p.Name)
-                .FirstOrDefault();
-
-            return Options.DateTime
-                .Where(option => option.Condition(propertyName))
-                .FirstOrDefault();
-        }
-        return null;
-    }
 }

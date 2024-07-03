@@ -219,19 +219,10 @@ public partial class Home : ComponentBase
                 },
                 // new TvYamlEditorOption<Dictionary<string, object>>(),
             },
-            DateTime = new List<TvDateTimeOption>()
+            DateTime = new TvDateTimeOption
             {
-
-                new TvDateTimeOption
-                {
-                    Condition = (name) => name == "Birth",
-                    RelativeTime = true,
-                },
-                new TvDateTimeOption
-                {
-                    Condition = (name) => name == "Death",
-                    Format = "MM-dd-yyyy HH:mm:ss",
-                },
+                RelativeTime = true,
+                //Format = "MM-dd-yyyy HH:mm:ss",
             },
         };
 
