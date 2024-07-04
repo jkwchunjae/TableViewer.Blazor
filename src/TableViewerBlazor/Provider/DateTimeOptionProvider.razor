@@ -10,6 +10,6 @@
         var timezoneOptions = await module.InvokeAsync<TvDateTimeOption>("getTimezoneOptions");
         // await Js.InvokeVoidAsync("console.log", timezoneOptions);
 
-        DateTimeService.GlobalOption = timezoneOptions;
+        DateTimeService.Options = timezoneOptions;
     }
 }
