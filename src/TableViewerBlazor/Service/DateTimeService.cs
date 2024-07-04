@@ -4,7 +4,7 @@ namespace TableViewerBlazor.Service;
 
 internal class DateTimeService
 {
-    public TvDateTimeGlobalOption? GlobalOption { get; set; }
+    public TvDateTimeOption? GlobalOption { get; set; }
 
     public static string ConvertDateTimeFormat(DateTime dateTime, TvDateTimeOption option)
     {

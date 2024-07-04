@@ -6,7 +6,7 @@ public static class TableViewerExtensions
 {
     public static IServiceCollection AddTableViewer(this IServiceCollection services)
     {
-        services.AddSingleton<DateTimeService>();
+        services.AddScoped<DateTimeService>();
         return services;
     }
 }
