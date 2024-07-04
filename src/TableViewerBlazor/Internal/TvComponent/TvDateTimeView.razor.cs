@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using moment.net;
+﻿using moment.net;
 
 namespace TableViewerBlazor.Internal.TvComponent;
 
@@ -13,39 +12,44 @@ public partial class TvDateTimeView : TvViewBase
     protected override void OnParametersSet()
     {
         var targetDateTime = Data.ToUniversalTime();
-        var options = DateTimeService.Options;
-        // NOTE: 타이밍 이슈로 항상 options == null인 상황
-        if (options != null)
+        var globalOptions = DateTimeService.Options;
+        if (globalOptions != null)
         {
-            targetDateTime = targetDateTime.AddHours(-(options.Offset / 60));
+            // NOTE: 타이밍 이슈로 Offset update 안됨
+            targetDateTime = targetDateTime.AddHours(-(globalOptions.Offset / 60));
         }
-        dateTime = ConvertDateTime(targetDateTime);
+        dateTime = ConvertDateTimeFormat(targetDateTime);
     }
 
-    private string ConvertDateTime(DateTime targetDateTime)
+    public string ConvertDateTimeFormat(DateTime dateTime)
     {
-        var dateTimeOption = Options?.DateTime;
-        if (dateTimeOption != null)
+        var options = Options.DateTime;
+        if (options != null)
         {
-            if (dateTimeOption.RelativeTime)
+            if (options.RelativeTime)
             {
-                if (targetDateTime > DateTime.Now)
-                {
-                    return targetDateTime.ToNow();
-                }
-                else
-                {
-                    return targetDateTime.FromNow();
-                }
+                return ConvertToRelativeTime(dateTime);
             }
             else
             {
-                return targetDateTime.ToString(dateTimeOption.Format);
+                return dateTime.ToString(options.Format);
             }
         }
         else
         {
-            return "";
+            return dateTime.ToString();
+        }
+    }
+
+    private static string ConvertToRelativeTime(DateTime dateTime)
+    {
+        if (dateTime > DateTime.Now)
+        {
+            return dateTime.ToNow();
+        }
+        else
+        {
+            return dateTime.FromNow();
         }
     }
 }
