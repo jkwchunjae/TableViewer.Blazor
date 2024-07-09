@@ -39,6 +39,20 @@ public static class TeTextFieldOptionExtensions
         }
         return textFieldOption != null;
     }
+
+    public static bool TryGetTextConvertableFieldOption(this TeOptions options,
+        MemberInfo? memberInfo, TeEditorBase teBase,
+        out ITeTextFieldOption? textFieldOption)
+    {
+        if (options.TryGetTextFieldOption(memberInfo, teBase, out textFieldOption))
+        {
+            if (textFieldOption?.Converter != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 public class TeTextFieldAttribute : Attribute
@@ -55,6 +69,7 @@ public interface ITeTextFieldOption : ITeFieldOption
     IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
+    ITeTextFieldConverter? Converter { get; }
 }
 
 public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
@@ -64,8 +79,25 @@ public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
     public List<ITeValidation> Validations { get; set; } = [];
     public TeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<T>? Event { get; set; }
+    public TeTextFieldConverter<T>? Converter { get; set; }
 
     IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
+    ITeTextFieldConverter? ITeTextFieldOption.Converter => Converter;
+}
+
+public interface ITeTextFieldConverter
+{
+    Func<object, string> StringValue { get; }
+    Func<string, object> FromString { get; }
+}
+
+public class TeTextFieldConverter<T> : ITeTextFieldConverter
+{
+    public required Func<T, string> StringValue { get; init; }
+    public required Func<string, T> FromString { get; init; }
+
+    Func<object, string> ITeTextFieldConverter.StringValue => o => o is T t ? StringValue(t) : throw new Exception();
+    Func<string, object> ITeTextFieldConverter.FromString => value => FromString(value)!;
 }
