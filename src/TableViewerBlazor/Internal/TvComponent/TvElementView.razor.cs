@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using TableViewerBlazor.Helper;
+using TableViewerBlazor.Public;
 
 namespace TableViewerBlazor.Internal.TvComponent;
 
@@ -9,6 +10,7 @@ public partial class TvElementView : TvViewBase
 {
     [Parameter] public object? Parent { get; set; }
     [Parameter] public object? Data { get; set; }
+    [Parameter] public MemberInfo? MemberInfo { get; set; }
 
     private bool IsNumber => Data switch
     {
@@ -61,6 +63,23 @@ public partial class TvElementView : TvViewBase
                 }
             }
             return null;
+        }
+    }
+
+    private bool DataHasStringViewerAttribute()
+    {
+        if (MemberInfo == null)
+            return false;
+
+        var attr = MemberInfo.GetCustomAttribute<TvStringViewerAttribute>();
+
+        if (attr != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
