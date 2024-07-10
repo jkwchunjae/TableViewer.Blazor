@@ -11,9 +11,9 @@ public partial class TvObjectArrayView : TvViewBase
 
     IEnumerable<object?> array => Data ?? Enumerable.Empty<object?>();
 
-    private string[] Keys = Array.Empty<string>();
+    private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
     private bool HasAnyAction;
-    private int TableColumns => Keys.Length + (HasAnyAction ? 1 : 0);
+    private int TableColumns => MemberInfos.Length + (HasAnyAction ? 1 : 0);
 
     protected override void OnInitialized()
     {
@@ -21,20 +21,24 @@ public partial class TvObjectArrayView : TvViewBase
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
-            var keys = GetKeys(firstData);
+            var memberInfos = GetKeys(firstData);
+            var filteredKeys = memberInfos.Select(x => x.Name).ToArray();
 
-            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys));
+            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(filteredKeys));
             if (columnOption != null)
             {
-                keys = columnOption.NewKeys(keys).ToArray();
+                filteredKeys = columnOption.NewKeys(filteredKeys).ToArray();
             }
             if (Options?.DisableKeys?.Any() ?? false)
             {
-                keys = keys
-                    .Where(key => Options!.DisableKeys!.All(disable => disable != key));
+                filteredKeys = filteredKeys
+                    .Where(key => Options!.DisableKeys!.All(disable => disable != key))
+                    .ToArray();
             }
 
-            Keys = keys.ToArray();
+            MemberInfos = memberInfos
+                .Where(m => filteredKeys.Contains(m.Name))
+                .ToArray();
         }
         if (Options != null)
         {
@@ -63,7 +67,7 @@ public partial class TvObjectArrayView : TvViewBase
         Open = !Open;
     }
 
-    private IEnumerable<string> GetKeys(object? data)
+    private IEnumerable<MemberInfo> GetKeys(object? data)
     {
         if (data == null)
             yield break;
@@ -77,7 +81,7 @@ public partial class TvObjectArrayView : TvViewBase
                 .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
-                yield return property.Name;
+                yield return property;
             }
         }
 
@@ -88,7 +92,7 @@ public partial class TvObjectArrayView : TvViewBase
                 .Where(f => f.FieldType != typeof(Type));
             foreach (var field in fields)
             {
-                yield return field.Name;
+                yield return field;
             }
         }
     }

@@ -25,9 +25,9 @@
           </th>
         </tr>
         <tr>
-          @foreach (var key in Keys)
+          @foreach (var memberInfo in MemberInfos)
           {
-            <th class="tv-type-header">@key</th>
+            <th class="tv-type-header">@memberInfo.Name</th>
           }
           @if (HasAnyAction)
           {
@@ -41,19 +41,20 @@
           <tr>
             @if (item == null)
             {
-              <td colspan="@(Keys.Count() + (HasAnyAction ? 1 : 0))">
+              <td colspan="@(MemberInfos.Count() + (HasAnyAction ? 1 : 0))">
                 <TvNullView Options="Options" Depth="Depth + 1" />
               </td>
             }
             else
             {
-              @foreach (var key in Keys)
+              @foreach (var memberInfo in MemberInfos)
               {
-                var value = GetValue(item, key);
+                var value = GetValue(item, memberInfo.Name);
                 <td class="value">
                   <TvElementView
                     Parent="item"
                     Data="value"
+                    MemberInfo="memberInfo"
                     Options="Options"
                     Depth="Depth + 1"
                     OpenDepth="OpenDepth"
