@@ -12,7 +12,7 @@ public partial class TvObjectView : TvViewBase
     int? ThisOpenDepth = null;
 
     private string[] Keys = Array.Empty<string>();
-    private IEnumerable<(string Key, object? Value)> Items = Enumerable.Empty<(string, object?)>();
+    private IEnumerable<(string Key, object? Value, MemberInfo MemberInfo)> Items = Enumerable.Empty<(string, object?, MemberInfo)>();
 
     protected override void OnParametersSet()
     {
@@ -42,7 +42,7 @@ public partial class TvObjectView : TvViewBase
         }
 
         Items = keys
-            .Select(keyInfo => (keyInfo.Key, GetValue(data, keyInfo.MemberInfo)))
+            .Select(keyInfo => (keyInfo.Key, GetValue(data, keyInfo.MemberInfo), keyInfo.MemberInfo))
             .ToArray();
     }
 
