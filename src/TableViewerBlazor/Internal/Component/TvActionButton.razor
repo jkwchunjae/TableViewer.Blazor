@@ -41,6 +41,24 @@
             IconSize="action.Style.IconSize"
             IconColor="action.Style.IconColor"
         />
+     }
+    else if (action.Link?.Href != null)
+    {
+        <MudButton
+            Href="@action.Link!.Href"
+            Target="@action.Link!.Target"
+            Class="@classText"
+            Variant="action.Style.Variant"
+            Size="action.Style.Size"
+            Color="action.Style.Color"
+            Style="@action.Style.Style"
+            StartIcon="@action.Style.StartIcon"
+            EndIcon="@action.Style.EndIcon"
+            IconSize="action.Style.IconSize"
+            IconColor="action.Style.IconColor"
+        >
+            @action.Label
+        </MudButton>
     }
     else
     {

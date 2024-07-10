@@ -225,6 +225,11 @@ public partial class Home : ComponentBase
                     {
                         await Js.InvokeVoidAsync("console.log", person);
                     },
+                    Link = new Link
+                    {
+                        Href = "update-test",
+                        //Target = "_blank",
+                    }
                 },
             },
             Editor =
