@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using TableViewerBlazor.Internal.TvComponent;
-using TableViewerBlazor.Options;
+﻿using TableViewerBlazor.Internal.TvComponent;
 
 namespace TableViewerBlazor.Internal.Component;
 

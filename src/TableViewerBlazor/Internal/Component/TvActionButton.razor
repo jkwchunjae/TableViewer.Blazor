@@ -42,10 +42,10 @@
             IconColor="action.Style.IconColor"
         />
      }
-    else if (action.Link?.Href != null)
+    else if (action.Link?.Href(item) != null)
     {
         <MudButton
-            Href="@action.Link!.Href"
+            Href="@action.Link!.Href(item)"
             Target="@action.Link!.Target"
             Class="@classText"
             Variant="action.Style.Variant"
