@@ -30,12 +30,12 @@ public static class TeTextFieldOptionExtensions
 
         textFieldOption = teBase.Data switch
         {
-            string => new TeTextFieldOption<string>(),
+            string => new TeTextFieldOption(),
             _ => null,
         };
         if (teBase.Data == null && memberInfo?.MemberType() == typeof(string))
         {
-            textFieldOption = new TeTextFieldOption<string>();
+            textFieldOption = new TeTextFieldOption();
         }
         return textFieldOption != null;
     }
@@ -79,7 +79,26 @@ public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
     public List<ITeValidation> Validations { get; set; } = [];
     public TeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<T>? Event { get; set; }
-    public TeTextFieldConverter<T>? Converter { get; set; }
+    public required TeTextFieldConverter<T>? Converter { get; set; }
+
+    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
+    ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
+    ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
+    ITeTextFieldConverter? ITeTextFieldOption.Converter => Converter;
+}
+
+public class TeTextFieldOption : ITeFieldOption<string>, ITeTextFieldOption
+{
+    public string? Id { get; set; }
+    public Func<string?, int, string, bool>? Condition { get; set; }
+    public List<ITeValidation> Validations { get; set; } = [];
+    public TeTextFieldProperty? Property { get; set; }
+    public TeTextFieldEvent<string>? Event { get; set; }
+    private static TeTextFieldConverter<string> Converter = new TeTextFieldConverter<string>
+    {
+        FromString = s => s,
+        StringValue = s => s,
+    };
 
     IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeTextFieldProperty? ITeTextFieldOption.Property => Property;

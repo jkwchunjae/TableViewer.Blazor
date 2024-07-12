@@ -40,7 +40,7 @@ public partial class EditorPage : ComponentBase
     {
         TextFieldOptions =
         {
-            new TeTextFieldOption<string>
+            new TeTextFieldOption
             {
                 Id = "name",
                 Validations =
