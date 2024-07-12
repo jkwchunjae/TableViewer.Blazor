@@ -241,6 +241,10 @@ public partial class Home : ComponentBase
                         Href = "update-test",
                         //Target = "_blank",
                     }
+                    //Link = new Link<PersonRecord>
+                    //{
+                    //    Href = p => $"update-{p.Name ?? "hihi"}",
+                    //}
                 },
             },
             Editor =
