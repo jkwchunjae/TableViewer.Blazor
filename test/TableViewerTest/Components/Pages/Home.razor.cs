@@ -236,11 +236,15 @@ public partial class Home : ComponentBase
                     {
                         await Js.InvokeVoidAsync("console.log", person);
                     },
-                    Link = new Link<PersonRecord>
+                    Link = new Link
                     {
-                        Href = (record) => "update-test",
+                        Href = "update-test",
                         //Target = "_blank",
                     }
+                    //Link = new Link<PersonRecord>
+                    //{
+                    //    Href = p => $"update-{p.Name ?? "hihi"}",
+                    //}
                 },
             },
             Editor =

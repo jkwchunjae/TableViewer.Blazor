@@ -1,5 +1,3 @@
-using MudBlazor;
-
 namespace TableViewerBlazor.Options;
 
 public interface ITvAction
@@ -9,7 +7,7 @@ public interface ITvAction
     public string Label { get; }
     public string LabelAfterClick { get; }
     public TvButtonStyle Style { get; }
-    public Link<object?> Link { get; }
+    public ILink? Link { get; }
 }
 
 public class TvAction<T> : ITvAction
@@ -19,20 +17,10 @@ public class TvAction<T> : ITvAction
     public string Label { get; set; } = "ACTION";
     public string LabelAfterClick { get; set; } = "DONE";
     public TvButtonStyle Style { get; set; } = new();
-    public Link<T> Link { get; set; } = new()
-    {
-        Href = _ => string.Empty,
-        Target = "_self",
-    };
+    public ILink? Link { get; set; }
 
     Func<object?, int, bool> ITvAction.Condition => (o, i) => o is T t && Condition(t, i);
     Func<object?, Task> ITvAction.Action => (o) => o is T t ? Action(t) : Task.CompletedTask;
-    Link<object?> ITvAction.Link => new()
-    {
-        Href = (o) => o is T t ? Link.Href(t) : string.Empty,
-        Target = Link.Target,
-    };
-    
 }
 
 public class TvButtonStyle
@@ -49,8 +37,23 @@ public class TvButtonStyle
     public bool SuperDense { get; set; } = false;
 }
 
-public class Link<T>
+public interface ILink
+{
+    string Target { get; }
+    public Func<object?, string> Href { get; }
+}
+
+public class Link<T> : ILink
 {
     public string Target { get; set; } = "_self";
-    public Func<T, string> Href { get; set; } = _ => string.Empty;
+    public required Func<T, string> Href { get; set; }
+    Func<object?, string> ILink.Href => o => o is T t ? Href(t) : string.Empty;
+}
+
+public class Link : ILink
+{
+    public string Target { get; set; } = "_self";
+    public required string Href { get; set; }
+
+    Func<object?, string> ILink.Href => _ => Href;
 }
