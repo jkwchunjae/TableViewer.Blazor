@@ -76,15 +76,18 @@ public partial class TvElementView : TvViewBase
         if (MemberInfo == null)
             return false;
 
-        var attr = MemberInfo.GetCustomAttribute<TvStringViewerAttribute>();
+        var memberAttr = MemberInfo.GetCustomAttribute<TvStringAttribute>();
 
-        if (attr != null)
+        if (memberAttr != null)
         {
             return true;
         }
-        else
+
+        return MemberInfo switch
         {
-            return false;
-        }
+            PropertyInfo propertyInfo => propertyInfo.PropertyType.GetCustomAttribute<TvStringAttribute>() != null,
+            FieldInfo fieldInfo => fieldInfo.FieldType.GetCustomAttribute<TvStringAttribute>() != null,
+            _ => false,
+        };
     }
 }

@@ -24,7 +24,7 @@ public partial class Home : ComponentBase
     Person person = new Person
     {
         Id = 213,
-        Name = "User name",
+        Name = new PersonName("User name"),
         Attributes = new Dictionary<string, object>
         {
             ["age"] = 12,
@@ -37,7 +37,7 @@ public partial class Home : ComponentBase
         new Person
         {
             Id = 213,
-            Name = "User name",
+            Name = new PersonName("User name"),
             Birth = DateTime.UtcNow,
             Death = new DateTime(2300, 1, 11, 5, 12, 1, DateTimeKind.Utc),
             Attributes = new Dictionary<string, object>
@@ -87,7 +87,7 @@ public partial class Home : ComponentBase
         new Person
         {
             Id = 999,
-            Name = "second name",
+            Name = new PersonName("second name"),
             Birth = new DateTime(1989, 2, 1, 5, 12, 1, DateTimeKind.Utc),
             Attributes = new Dictionary<string, object>
             {
