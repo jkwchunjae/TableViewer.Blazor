@@ -146,6 +146,7 @@ public partial class Home : ComponentBase
         #region Options
         arrayDataOption = new TvOptions
         {
+            Title = "배열 테스트",
             Actions = new List<ITvAction>()
             {
                 new TvDoubleClickAction<int>
@@ -166,6 +167,7 @@ public partial class Home : ComponentBase
         };
         optionForPeople = new TvOptions
         {
+            Title = "테이블 테스트",
             GlobalOpenDepth = 1,
             Actions = new List<ITvAction>()
             {
@@ -228,6 +230,7 @@ public partial class Home : ComponentBase
 
         optionForPR = new TvOptions
         {
+            Title = "PersonRecord 테스트",
             Actions =
             {
                 new TvAction<PersonRecord>
