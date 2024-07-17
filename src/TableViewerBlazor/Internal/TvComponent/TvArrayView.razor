@@ -22,6 +22,12 @@
     <thead>
       <tr>
         <th class="tv-title-counter" colspan="@(HasAnyAction ? 3 : 2)" @onclick="ToggleOpen">
+          @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
+          {
+            <span class="tv-title">
+              @Options.Title
+            </span>
+          }
           <span>
             (@all.Count() items)
           </span>

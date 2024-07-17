@@ -19,6 +19,12 @@
       <thead>
         <tr>
           <th class="tv-title-counter" colspan="@TableColumns" @onclick="ToggleOpen">
+            @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
+            {
+            <span class="tv-title">
+              @Options.Title
+            </span>
+            }
             <span>
                 (@array.Count() items)
             </span>
