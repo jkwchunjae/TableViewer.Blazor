@@ -15,6 +15,10 @@ public partial class Home : ComponentBase
     TvOptions? personOption = new TvOptions
     {
         GlobalOpenDepth = 1,
+        StringTypes =
+        {
+            typeof(PersonName),
+        },
     };
     TvOptions? optionForPR = null;
 
@@ -50,7 +54,7 @@ public partial class Home : ComponentBase
             {
                 new PersonRecord(
                     Id: 213,
-                    Name: "User name",
+                    Name: new PersonName("User name"),
                     Attributes: new Dictionary<string, object>
                     {
                         ["age"] = 12,
@@ -60,7 +64,7 @@ public partial class Home : ComponentBase
                 ),
                 new PersonRecord(
                     Id: 213,
-                    Name: "User 2",
+                    Name: new PersonName("User 2"),
                     Attributes: new Dictionary<string, object>
                     {
                         ["age"] = 12,
@@ -78,9 +82,9 @@ public partial class Home : ComponentBase
                 },
                 People = new PersonRecord[]
                 {
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
                 },
             },
         },
@@ -103,9 +107,9 @@ public partial class Home : ComponentBase
                 },
                 People = new PersonRecord[]
                 {
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
-                    new PersonRecord(1, "a", new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
+                    new PersonRecord(1, new PersonName("a"), new Dictionary<string, object>{ ["a"] = 1 }),
                 },
             },
         },
@@ -121,7 +125,7 @@ public partial class Home : ComponentBase
         ),
         new PersonRecord(
             Id: 213,
-            Name: "User name",
+            Name: new PersonName("User name"),
             Attributes: new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -131,7 +135,7 @@ public partial class Home : ComponentBase
         ),
         new PersonRecord(
             Id: 999,
-            Name: "second name",
+            Name: new PersonName("second name"),
             Attributes: new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -200,7 +204,7 @@ public partial class Home : ComponentBase
                     {
                         await ConsoleWrite(person);
                     },
-                    Condition = (person, depth) => person.Name == "User 2",
+                    Condition = (person, depth) => person.Name == new PersonName("User 2"),
                 },
             },
             OpenDepth =
@@ -216,7 +220,7 @@ public partial class Home : ComponentBase
                 {
                     Condition = (data, depth, path) =>
                     {
-                        return data?.Name == "User name";
+                        return data?.Name == new PersonName("User name");
                     },
                 },
                 // new TvYamlEditorOption<Dictionary<string, object>>(),

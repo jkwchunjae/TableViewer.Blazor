@@ -83,11 +83,33 @@ public partial class TvElementView : TvViewBase
             return true;
         }
 
-        return MemberInfo switch
+        var memberType = GetMemberType(MemberInfo);
+
+        var isMemberTypeString = memberType?.GetCustomAttribute<TvStringAttribute>() != null;
+
+        if (isMemberTypeString)
         {
-            PropertyInfo propertyInfo => propertyInfo.PropertyType.GetCustomAttribute<TvStringAttribute>() != null,
-            FieldInfo fieldInfo => fieldInfo.FieldType.GetCustomAttribute<TvStringAttribute>() != null,
-            _ => false,
-        };
+            return true;
+        }
+
+        var checkOptionStringType = Options.StringTypes.Any(type => type == GetMemberType(MemberInfo));
+        if (checkOptionStringType)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+        Type? GetMemberType(MemberInfo memberInfo)
+        {
+            return memberInfo switch
+            {
+                PropertyInfo propertyInfo => propertyInfo.PropertyType,
+                FieldInfo fieldInfo => fieldInfo.FieldType,
+                _ => null,
+            };
+        }
     }
 }

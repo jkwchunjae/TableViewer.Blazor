@@ -22,7 +22,7 @@ public class OpenTest
     public PersonRecord[]? People { get; set; }
 }
 
-public record PersonRecord(int Id, string? Name, Dictionary<string, object>? Attributes);
+public record PersonRecord(int Id, PersonName? Name, Dictionary<string, object>? Attributes);
 
 public enum TestEnum
 {
