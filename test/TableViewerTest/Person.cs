@@ -32,4 +32,7 @@ public enum TestEnum
 }
 
 [TvString]
-public record PersonName(string Name);
+public record PersonName(string Name)
+{
+    public override string ToString() => Name;
+}
