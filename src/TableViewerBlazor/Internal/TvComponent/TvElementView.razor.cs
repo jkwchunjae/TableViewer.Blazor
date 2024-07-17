@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
-using TableViewerBlazor.Helper;
-using TableViewerBlazor.Public;
+﻿using TableViewerBlazor.Public;
 
 namespace TableViewerBlazor.Internal.TvComponent;
 
@@ -14,9 +10,18 @@ public partial class TvElementView : TvViewBase
 
     private bool IsNumber => Data switch
     {
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+        sbyte => true,
         byte => true,
+        short => true,
+        ushort => true,
         int => true,
+        uint => true,
         long => true,
+        ulong => true,
+        nint => true,
+        nuint => true,
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types
         float => true,
         double => true,
         decimal => true,
