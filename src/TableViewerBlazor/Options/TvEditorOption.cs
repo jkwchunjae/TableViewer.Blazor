@@ -118,6 +118,7 @@ public class TvJsonEditorOption<T> : ITvEditorOption
 public class TvYamlEditorOption<T> : ITvEditorOption
 {
     private static readonly YamlDotNet.Serialization.ISerializer defaultSerializer = new YamlDotNet.Serialization.SerializerBuilder()
+        .WithTypeConverter(new TvStringYamlConverter())
         .Build();
 
     public string Language { get; } = "json";

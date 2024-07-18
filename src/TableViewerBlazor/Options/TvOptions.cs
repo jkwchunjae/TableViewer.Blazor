@@ -14,4 +14,5 @@ public class TvOptions
     public List<ITvEditorOption> Editor { get; set; } = [];
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
     public TvDateTimeOption? DateTime { get; set; }
+    public List<Type> StringTypes { get; set; } = [];
 }

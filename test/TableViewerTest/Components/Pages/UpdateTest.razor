@@ -10,7 +10,7 @@
     Person person = new Person
     {
         Id = 213,
-        Name = "User name",
+        Name = new PersonName("User name"),
         Attributes = new Dictionary<string, object>
         {
             ["age"] = 12,
@@ -31,7 +31,7 @@
 
     private Task Update()
     {
-        person.Name = "Updated name";
+        person.Name = new PersonName("Updated name");
         return Task.CompletedTask;
     }
 }
