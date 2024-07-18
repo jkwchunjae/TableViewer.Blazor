@@ -1,4 +1,6 @@
-﻿using TableViewerBlazor.Public;
+﻿using System.Text.Json.Serialization;
+using TableViewerBlazor.Helper;
+using TableViewerBlazor.Public;
 
 namespace TableViewerTest;
 
@@ -31,6 +33,7 @@ public enum TestEnum
     C,
 }
 
+[JsonConverter(typeof(TvStringJsonConverter<PersonName>))]
 [TvString]
 public record PersonName(string Name)
 {
