@@ -7,5 +7,5 @@ public class TvStyleOption
     public bool Hover { get; set; } = false;
     public bool Striped { get; set; } = false;
     public bool Bordered { get; set; } = true;
-    public string[] RootClass { get; set; } = [];
+    public List<string> RootClass { get; set; } = [];
 }
