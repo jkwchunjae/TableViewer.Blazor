@@ -3,18 +3,22 @@
 <div class="table-object">
   @if (Open)
   {
-    string classText = string.Empty;
-    if (Options.Style.SuperDense)
+    List<string> classList = new()
     {
-      classText += " mud-table-super-dense";
+      "d-inline-block",
+      (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
+    };
+    if (Depth == 1)
+    {
+      classList.AddRange(Options.Style.RootClass);
     }
+    var classText = string.Join(" ", classList.Where(x => !string.IsNullOrWhiteSpace(x)));
     <MudSimpleTable
       Class="@classText"
       Dense="Options.Style.Dense"
       Hover="Options.Style.Hover"
       Striped="Options.Style.Striped"
       Bordered="Options.Style.Bordered"
-      Style="display: inline-block;"
     >
       <thead>
         <tr>
