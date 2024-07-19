@@ -3,18 +3,24 @@
 <div class="table-object-array">
   @if (Open)
   {
-    List<string> classList = new()
+    List<string> tableClassList = new()
     {
       "d-inline-block",
       (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
     };
     if (Depth == 1)
     {
-      classList.AddRange(Options.Style.RootClass);
+      tableClassList.AddRange(Options.Style.RootClass);
     }
-    var classText = string.Join(" ", classList.Where(x => !string.IsNullOrWhiteSpace(x)));
+    var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+    List<string> tdthClassList = new()
+    {
+      (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+    };
+    string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
   <MudTable
-    Class="@classText"
+    Class="@tableClassText"
     Items="@array"
     Hover="true"
     Dense="Options.Style.Dense"
@@ -23,7 +29,7 @@
   >
     <HeaderContent>
       <MudTHeadRow>
-        <MudTh colspan="@TableColumns">
+        <MudTh colspan="@TableColumns" Class="@tdthClassText">
           @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
           {
             <span class="tv-title">
@@ -38,11 +44,13 @@
       <MudTHeadRow>
         @foreach (var memberInfo in MemberInfos)
         {
-          <MudTh>@memberInfo.Name</MudTh>
+          <MudTh Class="@tdthClassText">
+            @memberInfo.Name
+          </MudTh>
         }
         @if (HasAnyAction)
         {
-          <MudTh>...</MudTh>
+          <MudTh Class="@tdthClassText">...</MudTh>
         }
       </MudTHeadRow>
     </HeaderContent>
@@ -50,7 +58,7 @@
       @foreach (var memberInfo in MemberInfos)
       {
         var value = GetValue(context, memberInfo.Name);
-        <MudTd Class="value" Style="padding: 0;">
+        <MudTd Class="@tdthClassText">
           <TvElementView
             Parent="context"
             Data="value"
@@ -64,7 +72,7 @@
 
       @if (HasAnyAction)
       {
-        <MudTd Class="value">
+        <MudTd Class="@tdthClassText">
           @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
           {
             <TvActionButton
@@ -79,84 +87,6 @@
 
     </RowTemplate>
   </MudTable>
-  <MudSimpleTable
-    Class="@classText"
-    Dense="Options.Style.Dense"
-    Hover="Options.Style.Hover"
-    Striped="Options.Style.Striped"
-    Bordered="Options.Style.Bordered"
-  >
-      <thead>
-        <tr>
-          <th class="tv-title-counter" colspan="@TableColumns" @onclick="ToggleOpen">
-            @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
-            {
-            <span class="tv-title">
-              @Options.Title
-            </span>
-            }
-            <span>
-                (@array.Count() items)
-            </span>
-          </th>
-        </tr>
-        <tr>
-          @foreach (var memberInfo in MemberInfos)
-          {
-            <th class="tv-type-header">@memberInfo.Name</th>
-          }
-          @if (HasAnyAction)
-          {
-            <th class="tv-type-header">...</th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @foreach (var item in array)
-        {
-          <tr>
-            @if (item == null)
-            {
-              <td colspan="@(MemberInfos.Count() + (HasAnyAction ? 1 : 0))">
-                <TvNullView Options="Options" Depth="Depth + 1" />
-              </td>
-            }
-            else
-            {
-              @foreach (var memberInfo in MemberInfos)
-              {
-                var value = GetValue(item, memberInfo.Name);
-                <td class="value">
-                  <TvElementView
-                    Parent="item"
-                    Data="value"
-                    MemberInfo="memberInfo"
-                    Options="Options"
-                    Depth="Depth + 1"
-                    OpenDepth="OpenDepth"
-                  />
-                </td>
-              }
-
-              @if (HasAnyAction)
-              {
-                  <td class="value">
-                    @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
-                    {
-                      <TvActionButton
-                        Options="Options"
-                        Depth="Depth"
-                        Item="item"
-                        Action="action"
-                      />
-                    }
-                  </td>
-              }
-            }
-          </tr>
-        }
-      </tbody>
-    </MudSimpleTable>
   }
   else
   {
