@@ -1,6 +1,5 @@
 @inherits TvViewBase
 
-<div class="table-array">
   @if ((Open ?? false) && DataArray != null && all != null)
   {
     List<string> tableClassList = new()
@@ -110,4 +109,3 @@
         array (@(all?.Count() ?? 0) items)
     </MudButton>
   }
-</div>

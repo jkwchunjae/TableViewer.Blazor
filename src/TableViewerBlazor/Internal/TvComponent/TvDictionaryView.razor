@@ -1,6 +1,5 @@
 ﻿@inherits TvViewBase
 
-<div class="table-object">
   @if (Open ?? false)
   {
     List<string> tableClassList = new()
@@ -91,4 +90,3 @@
         object (@Items.Count() keys)
     </MudButton>
   }
-</div>
