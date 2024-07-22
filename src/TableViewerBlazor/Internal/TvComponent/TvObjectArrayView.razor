@@ -22,8 +22,9 @@
   <MudTable
     Class="@tableClassText"
     Items="@array"
-    Hover="true"
     Dense="Options.Style.Dense"
+    Hover="Options.Style.Hover"
+    Striped="Options.Style.Striped"
     Bordered="Options.Style.Bordered"
     CustomHeader="true"
   >
@@ -36,9 +37,13 @@
               @Options.Title
             </span>
           }
-          <span>
-            (@array.Count() items)
-          </span>
+          <MudButton OnClick="ToggleOpen"
+            Class="mud-button-super-dense"
+            Variant="Variant.Text"
+            Style="text-transform: none;"
+          >
+            (@array.Count() Items)
+          </MudButton>
         </MudTh>
       </MudTHeadRow>
       <MudTHeadRow>

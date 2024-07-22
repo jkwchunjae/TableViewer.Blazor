@@ -37,9 +37,13 @@
                 @Options.Title
                 </span>
             }
-            <span>
-                (@Items.Count() keys)
-            </span>
+            <MudButton OnClick="ToggleOpen"
+              Class="mud-button-super-dense"
+              Variant="Variant.Text"
+              Style="text-transform: none;"
+            >
+              (@Items.Count() Keys)
+            </MudButton>
         </MudTh>
       </MudTHeadRow>
     </HeaderContent>
