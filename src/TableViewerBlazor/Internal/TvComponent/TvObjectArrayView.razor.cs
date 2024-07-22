@@ -7,6 +7,7 @@ public partial class TvObjectArrayView : TvViewBase
 {
     [Parameter] public IEnumerable<object?> Data { get; set; } = null!;
     [Parameter] public bool Loading { get; set; }
+    [Parameter] public RenderFragment? LoadingContent { get; set; }
 
     bool? Open = null;
 

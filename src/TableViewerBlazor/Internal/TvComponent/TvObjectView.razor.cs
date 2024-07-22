@@ -8,6 +8,7 @@ public partial class TvObjectView : TvViewBase
 {
     [Parameter] public object? Data { get; set; }
     [Parameter] public bool Loading { get; set; }
+    [Parameter] public RenderFragment? LoadingContent { get; set; }
 
     bool? Open = null;
     int? ThisOpenDepth = null;
