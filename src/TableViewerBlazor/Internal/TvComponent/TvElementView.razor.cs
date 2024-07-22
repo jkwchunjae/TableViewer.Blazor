@@ -9,6 +9,7 @@ public partial class TvElementView : TvViewBase
     [Parameter] public MemberInfo? MemberInfo { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public RenderFragment? LoadingContent { get; set; }
+    [Parameter] public RenderFragment? NoRecordsContent { get; set; }
 
     private bool IsNumber => Data switch
     {

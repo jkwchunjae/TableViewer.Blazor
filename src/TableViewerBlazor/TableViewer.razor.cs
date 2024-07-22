@@ -11,4 +11,5 @@ public partial class TableViewer : TvViewBase
     [Parameter] public object? Data { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public RenderFragment? LoadingContent { get; set; }
+    [Parameter] public RenderFragment? NoRecordsContent { get; set; }
 }
