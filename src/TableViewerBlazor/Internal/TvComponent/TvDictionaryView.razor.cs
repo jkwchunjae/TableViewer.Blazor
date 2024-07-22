@@ -8,7 +8,7 @@ public partial class TvDictionaryView : TvViewBase
 {
     [Parameter] public IDictionary Data { get; set; } = null!;
 
-    bool Open = false;
+    bool? Open = null;
 
     private IEnumerable<(object? Key, object? Value)> Items = Enumerable.Empty<(object?, object?)>();
 
@@ -16,7 +16,7 @@ public partial class TvDictionaryView : TvViewBase
     {
         if (Options != null)
         {
-            Open = Depth <= OpenDepth;
+            Open ??= Depth <= OpenDepth;
         }
         if (Data != null)
         {

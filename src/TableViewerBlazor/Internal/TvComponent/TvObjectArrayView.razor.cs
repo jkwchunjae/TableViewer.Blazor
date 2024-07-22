@@ -7,7 +7,7 @@ public partial class TvObjectArrayView : TvViewBase
 {
     [Parameter] public IEnumerable<object?> Data { get; set; } = null!;
 
-    bool Open = false;
+    bool? Open = null;
 
     IEnumerable<object?> array => Data ?? Enumerable.Empty<object?>();
 
@@ -42,7 +42,7 @@ public partial class TvObjectArrayView : TvViewBase
         }
         if (Options != null)
         {
-            Open = Depth <= OpenDepth;
+            Open ??= Depth <= OpenDepth;
         }
     }
 
