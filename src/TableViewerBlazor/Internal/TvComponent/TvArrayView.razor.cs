@@ -13,7 +13,7 @@ public partial class TvArrayView : TvViewBase
     private bool HasAnyAction;
     private IEnumerable<(int Index, object? Item)>? DataArray;
     int VisibleItems = 2;
-    bool Open = false;
+    bool? Open = null;
 
     bool HasMoreItems => DataArray?.Count() < all?.Count();
 
@@ -21,7 +21,7 @@ public partial class TvArrayView : TvViewBase
     {
         if (Options != null)
         {
-            Open = Depth <= OpenDepth;
+            Open ??= Depth <= OpenDepth;
             if (VisibleItems < Options.ArrayVisibleDepth)
             {
                 VisibleItems = Options.ArrayVisibleDepth;

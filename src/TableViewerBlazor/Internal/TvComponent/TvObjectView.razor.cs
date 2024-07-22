@@ -8,7 +8,7 @@ public partial class TvObjectView : TvViewBase
 {
     [Parameter] public object? Data { get; set; }
 
-    bool Open = false;
+    bool? Open = null;
     int? ThisOpenDepth = null;
 
     private string[] Keys = Array.Empty<string>();
@@ -16,7 +16,7 @@ public partial class TvObjectView : TvViewBase
 
     protected override void OnParametersSet()
     {
-        Open = Depth <= OpenDepth;
+        Open ??= Depth <= OpenDepth;
         ThisOpenDepth = ChildrenOpen();
         if (Data != null)
         {

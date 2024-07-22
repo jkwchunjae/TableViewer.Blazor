@@ -1,7 +1,7 @@
 @inherits TvViewBase
 
 <div class="table-array">
-  @if (Open && DataArray != null && all != null)
+  @if ((Open ?? false) && DataArray != null && all != null)
   {
     List<string> classList = new()
     {
