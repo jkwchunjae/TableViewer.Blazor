@@ -7,6 +7,7 @@ namespace TableViewerBlazor.Internal.TvComponent;
 public partial class TvDictionaryView : TvViewBase
 {
     [Parameter] public IDictionary Data { get; set; } = null!;
+    [Parameter] public bool Loading { get; set; }
 
     bool? Open = null;
 

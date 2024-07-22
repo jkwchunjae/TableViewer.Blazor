@@ -8,4 +8,5 @@ public class TvStyleOption
     public bool Striped { get; set; } = false;
     public bool Bordered { get; set; } = true;
     public List<string> RootClass { get; set; } = [];
+    public Color LoadingProgressColor { get; set; } = Color.Default;
 }

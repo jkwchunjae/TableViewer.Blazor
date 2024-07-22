@@ -7,6 +7,7 @@ public partial class TvElementView : TvViewBase
     [Parameter] public object? Parent { get; set; }
     [Parameter] public object? Data { get; set; }
     [Parameter] public MemberInfo? MemberInfo { get; set; }
+    [Parameter] public bool Loading { get; set; }
 
     private bool IsNumber => Data switch
     {

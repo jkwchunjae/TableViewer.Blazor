@@ -49,25 +49,25 @@ else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITv
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
-        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else if (IsObjectArray && UseObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
     <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else if (Data is IEnumerable enumerableData)
 {
     <div class="table-cell">
-        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else
 {
     <div class="table-cell">
-        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
