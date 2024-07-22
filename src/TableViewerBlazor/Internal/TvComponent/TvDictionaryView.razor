@@ -3,58 +3,70 @@
 <div class="table-object">
   @if (Open ?? false)
   {
-    List<string> classList = new()
+    List<string> tableClassList = new()
     {
       "d-inline-block",
       (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
     };
     if (Depth == 1)
     {
-      classList.AddRange(Options.Style.RootClass);
+      tableClassList.AddRange(Options.Style.RootClass);
     }
-    var classText = string.Join(" ", classList.Where(x => !string.IsNullOrWhiteSpace(x)));
-    <MudSimpleTable
-      Class="@classText"
-      Dense="Options.Style.Dense"
-      Hover="Options.Style.Hover"
-      Striped="Options.Style.Striped"
-      Bordered="Options.Style.Bordered"
-    >
-      <thead>
-        <tr>
-          <th class="tv-title-counter" colspan="2" @onclick="ToggleOpen">
-            <span>
-              @Items.Count() keys
+    var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+    List<string> tdthClassList = new()
+    {
+      (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+    };
+    string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+  <MudTable
+    Items="Items"
+    Class="@tableClassText"
+    Dense="Options.Style.Dense"
+    Hover="Options.Style.Hover"
+    Striped="Options.Style.Striped"
+    Bordered="Options.Style.Bordered"
+    CustomHeader="true"
+  >
+    <HeaderContent>
+      <MudTHeadRow>
+        <MudTh colspan="2" Class="@tdthClassText">
+          @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
+          {
+            <span class="tv-title">
+              @Options.Title
             </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach (var (key, value) in Items)
-        {
-          <tr>
-            <td class="name">
-              <TvElementView
-                Parent="@this"
-                Data="key"
-                Options="Options"
-                Depth="Depth + 1"
-                OpenDepth="OpenDepth"
-              />
-            </td>
-            <td class="value">
-              <TvElementView
-                Parent="@this"
-                Data="value"
-                Options="Options"
-                Depth="Depth + 1"
-                OpenDepth="OpenDepth"
-              />
-            </td>
-          </tr>
-        }
-      </tbody>
-    </MudSimpleTable>
+          }
+          <span>
+            @Items.Count() keys
+          </span>
+        </MudTh>
+      </MudTHeadRow>
+    </HeaderContent>
+    <RowTemplate>
+      @{
+        var (key, value) = context;
+      }
+      <MudTd Class="@tdthClassText">
+        <TvElementView
+          Parent="@this"
+          Data="key"
+          Options="Options"
+          Depth="Depth + 1"
+          OpenDepth="OpenDepth"
+        />
+      </MudTd>
+      <MudTd Class="@tdthClassText">
+        <TvElementView
+          Parent="@this"
+          Data="value"
+          Options="Options"
+          Depth="Depth + 1"
+          OpenDepth="OpenDepth"
+        />
+      </MudTd>
+    </RowTemplate>
+  </MudTable>
   }
   else
   {
