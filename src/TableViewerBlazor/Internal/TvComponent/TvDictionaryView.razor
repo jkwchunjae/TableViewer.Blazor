@@ -25,6 +25,8 @@
     Hover="Options.Style.Hover"
     Striped="Options.Style.Striped"
     Bordered="Options.Style.Bordered"
+    Loading="Loading"
+    LoadingProgressColor="Options.Style.LoadingProgressColor"
     CustomHeader="true"
   >
     <HeaderContent>
@@ -69,6 +71,12 @@
         />
       </MudTd>
     </RowTemplate>
+    <LoadingContent>
+      @Options.Contents.LoadingContent
+    </LoadingContent>
+    <NoRecordsContent>
+      @Options.Contents.NoRecordsContent
+    </NoRecordsContent>
   </MudTable>
   }
   else

@@ -15,4 +15,5 @@ public class TvOptions
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
     public TvDateTimeOption? DateTime { get; set; }
     public List<Type> StringTypes { get; set; } = [];
+    public TvContents Contents { get; set; } = new();
 }

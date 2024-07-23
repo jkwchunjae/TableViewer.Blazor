@@ -147,6 +147,7 @@ public partial class Home : ComponentBase
 
     protected override Task OnInitializedAsync()
     {
+        // people = [];
         #region Options
         arrayDataOption = new TvOptions
         {
