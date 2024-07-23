@@ -8,7 +8,7 @@ namespace TableViewerTest.Components.Pages;
 
 public class InnerClass
 {
-    public string InnerName { get; set; } = string.Empty;
+    public PersonName InnerName { get; set; }
     public int Inner2 { get; set; }
 }
 public class EditData
@@ -72,6 +72,10 @@ public partial class EditorPage : ComponentBase
                     AdornmentText = "Name",
                     AutoFocus = true,
                 },
+            },
+            new TeTextFieldOption<PersonName>
+            {
+                Converter
             },
         },
         NumericFieldOptions =
