@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Title>TableViewer.MudBlazor</Title>
     <PackageId>TableViewer.MudBlazor</PackageId>
-    <Version>0.0.12</Version>
+    <Version>0.0.13</Version>
     <PackageProjectUrl>https://github.com/jkwchunjae/TableViewer.Blazor</PackageProjectUrl>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
