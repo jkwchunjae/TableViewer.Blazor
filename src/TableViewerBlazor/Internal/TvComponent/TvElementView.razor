@@ -49,25 +49,25 @@ else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITv
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
-        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" LoadingContent="LoadingContent" NoRecordsContent="NoRecordsContent" />
+        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else if (IsObjectArray && UseObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
     <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" LoadingContent="LoadingContent" NoRecordsContent="NoRecordsContent" />
+        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else if (Data is IEnumerable enumerableData)
 {
     <div class="table-cell">
-        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" LoadingContent="LoadingContent" NoRecordsContent="NoRecordsContent" />
+        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else
 {
     <div class="table-cell">
-        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" LoadingContent="LoadingContent" NoRecordsContent="NoRecordsContent" />
+        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }

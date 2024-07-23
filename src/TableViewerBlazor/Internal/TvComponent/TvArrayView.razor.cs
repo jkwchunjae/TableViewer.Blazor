@@ -9,8 +9,6 @@ public partial class TvArrayView : TvViewBase
 {
     [Parameter] public IEnumerable Data { get; set; } = null!;
     [Parameter] public bool Loading { get; set; }
-    [Parameter] public RenderFragment? LoadingContent { get; set; }
-    [Parameter] public RenderFragment? NoRecordsContent { get; set; }
 
     private IEnumerable<object?>? all;
     private bool HasAnyAction;
