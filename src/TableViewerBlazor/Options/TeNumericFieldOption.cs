@@ -31,12 +31,21 @@ public static class TeNumericFieldOptionExtensions
 
         NumericFieldOption = teBase.Data switch
         {
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            sbyte => new TeNumericFieldOption<sbyte>(),
+            byte => new TeNumericFieldOption<byte>(),
+            short => new TeNumericFieldOption<short>(),
+            ushort => new TeNumericFieldOption<ushort>(),
             int => new TeNumericFieldOption<int>(),
+            uint => new TeNumericFieldOption<uint>(),
             long => new TeNumericFieldOption<long>(),
+            ulong => new TeNumericFieldOption<ulong>(),
+            nint => new TeNumericFieldOption<nint>(),
+            nuint => new TeNumericFieldOption<nuint>(),
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types
             float => new TeNumericFieldOption<float>(),
             double => new TeNumericFieldOption<double>(),
             decimal => new TeNumericFieldOption<decimal>(),
-            byte => new TeNumericFieldOption<byte>(),
             _ => null,
         };
         return NumericFieldOption != null;
