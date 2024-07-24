@@ -73,10 +73,6 @@ public partial class EditorPage : ComponentBase
                     AutoFocus = true,
                 },
             },
-            new TeTextFieldOption<PersonName>
-            {
-                Converter
-            },
         },
         NumericFieldOptions =
         {
