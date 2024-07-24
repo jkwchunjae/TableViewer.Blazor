@@ -3,7 +3,8 @@
 <MudForm @ref="form"
     IsValid="@success"
     IsValidChanged="OnValidChanged"
-    @bind-Errors="@errors"
+    Errors="@errors"
+    ErrorsChanged="OnErrorsChanged"
 >
     <TeElementEditor
         Data="Data"
