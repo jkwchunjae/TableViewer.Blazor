@@ -1,6 +1,6 @@
 ﻿@inherits TeEditorBase
 
-<MudField Label="@Label" Underline="@(RadioOption.Property?.Underline ?? false)">
+<MudField Label="@Label" Underline="@(RadioOption.Property?.Underline ?? true)">
     <MudRadioGroup
         T="object"
         Value="Data"
@@ -24,7 +24,7 @@
                 Dense="@(item.Property?.Dense ?? true)"
                 Ripple="@(item.Property?.Ripple ?? true)"
                 Size="@(item.Property?.Size ?? Size.Medium)"
-                UnCheckedColor="@(item.Property?.UnCheckedColor ?? Color.Default)"
+                UncheckedColor="@(item.Property?.UnCheckedColor ?? Color.Default)"
             >
                 @item.Text
             </MudRadio>
