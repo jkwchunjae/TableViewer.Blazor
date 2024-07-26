@@ -19,8 +19,8 @@
     };
     string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
   <MudTable
-    Class="@tableClassText"
     Items="@array"
+    Class="@tableClassText"
     Dense="Options.Style.Dense"
     Hover="Options.Style.Hover"
     Striped="Options.Style.Striped"
@@ -31,6 +31,8 @@
   >
     <HeaderContent>
       <MudTHeadRow>
+        @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
+        {
         <MudTh colspan="@TableColumns" Class="@tdthClassText">
           @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
           {
@@ -46,6 +48,7 @@
             (@array.Count() Items)
           </MudButton>
         </MudTh>
+        }
       </MudTHeadRow>
       <MudTHeadRow>
         @foreach (var memberInfo in MemberInfos)

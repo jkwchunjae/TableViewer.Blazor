@@ -31,6 +31,8 @@
   >
     <HeaderContent>
       <MudTHeadRow>
+        @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
+        {
         <MudTh colspan="2" Class="@tdthClassText">
           @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
           {
@@ -46,6 +48,7 @@
             (@Items.Count() Keys)
           </MudButton>
         </MudTh>
+        }
       </MudTHeadRow>
     </HeaderContent>
     <RowTemplate>

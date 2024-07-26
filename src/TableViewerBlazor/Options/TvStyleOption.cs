@@ -9,4 +9,5 @@ public class TvStyleOption
     public bool Bordered { get; set; } = true;
     public List<string> RootClass { get; set; } = [];
     public Color LoadingProgressColor { get; set; } = Color.Default;
+    public bool VisibleInnerToolbar { get; set; } = true;
 }

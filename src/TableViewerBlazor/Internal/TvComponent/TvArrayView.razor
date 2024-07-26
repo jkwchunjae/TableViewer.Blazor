@@ -35,10 +35,9 @@
     </ColGroup>
     <HeaderContent>
       <MudTHeadRow>
-        <MudTh
-          Class="@tdthClassText"
-          colspan="@(HasAnyAction ? 3 : 2)"
-        >
+        @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
+        {
+        <MudTh colspan="@(HasAnyAction ? 3 : 2)" Class="@tdthClassText">
           @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
           {
             <span class="tv-title">
@@ -53,6 +52,7 @@
             (@all.Count() Items)
           </MudButton>
         </MudTh>
+        }
       </MudTHeadRow>
     </HeaderContent>
     <RowTemplate>
