@@ -28,7 +28,7 @@ public partial class TvArrayView : TvViewBase
                 VisibleItems = Options.ArrayVisibleDepth;
             }
             all = Data.Cast<object>();
-            HasAnyAction = all.Any(HasAction);
+            HasAnyAction = all.Any(x => HasAction(x) || HasLink(x));
             DataArray = all
                 .Select((item, index) => (index, item))
                 .Take(VisibleItems);
@@ -47,6 +47,11 @@ public partial class TvArrayView : TvViewBase
     private bool HasAction(object? item)
     {
         return Options?.Actions?.Any(action => action.Condition(item, Depth)) ?? false;
+    }
+
+    private bool HasLink(object? item)
+    {
+        return Options?.Links?.Any(link => link.Condition(item, Depth)) ?? false;
     }
 
     private void ToggleOpen()
