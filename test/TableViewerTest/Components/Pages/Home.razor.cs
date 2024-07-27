@@ -152,21 +152,36 @@ public partial class Home : ComponentBase
         arrayDataOption = new TvOptions
         {
             Title = "배열 테스트",
-            Actions = new List<ITvAction>()
+            Actions =
             {
                 new TvDoubleClickAction<int>
                 {
                     Label = "Console log",
                     Condition = (number, depth) => true,
-                    Action = number =>
+                    Action = async number =>
                     {
-                        Console.WriteLine(number);
-                        return Task.CompletedTask;
+                        await Js.InvokeVoidAsync("console.log", number);
                     },
                     SecondStyle = new TvSecondButtonStyle
                     {
                         Variant = Variant.Filled,
                     },
+                },
+                new TvAction<int>
+                {
+                    Label = "Console log 2",
+                    Action = async number =>
+                    {
+                        await Js.InvokeVoidAsync("console.log", number);
+                    },
+                },
+            },
+            Links =
+            {
+                new TvLink<int>
+                {
+                    Href = number => $"/update-{number}",
+                    Label = "Update",
                 },
             },
         };
@@ -244,21 +259,20 @@ public partial class Home : ComponentBase
                     {
                         await Js.InvokeVoidAsync("console.log", person);
                     },
-                    Link = new Link
-                    {
-                        Href = "update-test",
-                        //Target = "_blank",
-                    }
-                    //Link = new Link<PersonRecord>
-                    //{
-                    //    Href = p => $"update-{p.Name ?? "hihi"}",
-                    //}
                 },
             },
-            Editor =
+            Links =
             {
-                new TvJsonEditorOption<PersonRecord>(),
+                new TvLink<PersonRecord>
+                {
+                    Href = p => $"/update-{p.Name}",
+                    Label = "Update",
+                },
             },
+            // Editor =
+            // {
+            //     new TvJsonEditorOption<PersonRecord>(),
+            // },
         };
         #endregion
 
