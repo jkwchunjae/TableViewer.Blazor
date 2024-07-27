@@ -12,7 +12,7 @@ public interface ITvAction
 public class TvAction<T> : ITvAction
 {
     public Func<T , int, bool> Condition { get; set; } = (_, _) => true;
-    public Func<T, Task> Action { get; set; } = _ => Task.CompletedTask;
+    public required Func<T, Task> Action { get; set; }
     public string Label { get; set; } = "ACTION";
     public string LabelAfterClick { get; set; } = "DONE";
     public TvButtonStyle Style { get; set; } = new();
