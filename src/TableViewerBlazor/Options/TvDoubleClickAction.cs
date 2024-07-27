@@ -10,7 +10,6 @@ public interface ITvDoubleClickAction : ITvAction
 public class TvDoubleClickAction<T> : TvAction<T>, ITvDoubleClickAction
 {
     public TvSecondButtonStyle SecondStyle { get; set; } = new();
-
     public TimeSpan ResetDelay { get; set; } = TimeSpan.FromSeconds(2);
 }
 

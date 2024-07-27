@@ -1,0 +1,34 @@
+@inherits TvViewBase
+
+@{
+    var item = Item;
+    var link = Link;
+}
+
+@if (link.Condition(item, Depth))
+{
+    string classText = string.Empty;
+    if (link.Style.SuperDense)
+    {
+        classText += " mud-button-super-dense";
+    }
+    else if (link.Style.Dense)
+    {
+        classText += " mud-button-dense";
+    }
+    <MudButton
+        Href="@link.Href(item)"
+        Target="@link.Target"
+        Class="@classText"
+        Variant="link.Style.Variant"
+        Size="link.Style.Size"
+        Color="link.Style.Color"
+        Style="@link.Style.Style"
+        StartIcon="@link.Style.StartIcon"
+        EndIcon="@link.Style.EndIcon"
+        IconSize="link.Style.IconSize"
+        IconColor="link.Style.IconColor"
+    >
+        @link.Label
+    </MudButton>
+}

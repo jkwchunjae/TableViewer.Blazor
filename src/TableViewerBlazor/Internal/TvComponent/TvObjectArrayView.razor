@@ -91,9 +91,17 @@
               Action="action"
             />
           }
+          @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
+          {
+            <TvLinkButton
+              Options="Options"
+              Depth="Depth"
+              Item="context"
+              Link="link"
+            />
+          }
         </MudTd>
       }
-
     </RowTemplate>
     <LoadingContent>
       @Options.Contents.LoadingContent

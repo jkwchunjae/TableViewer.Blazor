@@ -70,6 +70,29 @@
             OpenDepth="OpenDepth"
         />
       </MudTd>
+      @if (HasAnyAction)
+      {
+        <MudTd Class="@tdthClassText">
+          @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+          {
+            <TvActionButton
+              Options="Options"
+              Depth="Depth"
+              Item="item"
+              Action="action"
+            />
+          }
+          @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
+          {
+            <TvLinkButton
+              Options="Options"
+              Depth="Depth"
+              Item="item"
+              Link="link"
+            />
+          }
+        </MudTd>
+      }
     </RowTemplate>
     <FooterContent>
       @if (HasMoreItems)
