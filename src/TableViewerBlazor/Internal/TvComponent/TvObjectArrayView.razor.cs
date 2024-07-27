@@ -18,7 +18,7 @@ public partial class TvObjectArrayView : TvViewBase
 
     protected override void OnInitialized()
     {
-        HasAnyAction = Data.Any(HasAction);
+        HasAnyAction = Data.Any(x => HasAction(x) || HasLink(x));
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
@@ -98,13 +98,13 @@ public partial class TvObjectArrayView : TvViewBase
         }
     }
 
-    private async Task ButtonAction(object? item, ITvAction action)
-    {
-        await action.Action(item);
-    }
-
     private bool HasAction(object? item)
     {
         return Options?.Actions?.Any(action => action.Condition(item, Depth)) ?? false;
+    }
+
+    private bool HasLink(object? item)
+    {
+        return Options?.Links?.Any(link => link.Condition(item, Depth)) ?? false;
     }
 }
