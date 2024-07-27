@@ -8,6 +8,7 @@ public class TvOptions
     public bool ReadProperty { get; set; } = true;
     public bool ReadField { get; set; } = true;
     public List<ITvAction> Actions { get; set; } = [];
+    public List<ITvLink> Links { get; set; } = [];
     public List<TvColumnVisibleOption> ColumnVisible { get; set; } = [];
     public List<string> DisableKeys { get; set; } = [];
     public TvStyleOption Style { get; set; } = new();
