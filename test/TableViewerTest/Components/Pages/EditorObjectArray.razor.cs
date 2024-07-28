@@ -10,6 +10,7 @@ class EditItem
     public PersonName? Name { get; set; }
     public int Age { get; set; }
     public DateTime Birth { get; set; }
+    public float Height { get; set; }
 }
 
 public partial class EditorObjectArray : ComponentBase
@@ -26,12 +27,23 @@ public partial class EditorObjectArray : ComponentBase
             {
                 Name = new PersonName("jkw"),
                 Age = 30,
-                Birth = new DateTime(1990, 1, 1)
+                Birth = new DateTime(1990, 1, 1),
+                Height = 172.7f,
             },
         };
         options = new TeOptions
         {
-            
+            TextFieldOptions =
+            {
+                new TeTextFieldOption<PersonName>
+                {
+                    Converter = new TeTextFieldConverter<PersonName>
+                    {
+                        FromString = (s) => new PersonName(s),
+                        StringValue = (p) => p.ToString(),
+                    },
+                },
+            },
         };
         return base.OnInitializedAsync();
     }

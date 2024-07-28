@@ -4,13 +4,19 @@
   List<string> tableClassList = new()
   {
     "d-inline-block",
-    @* (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty), *@
+    (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
   };
   if (Depth == 1)
   {
-    @* tableClassList.AddRange(Options.Style.RootClass); *@
+    tableClassList.AddRange(Options.Style.RootClass);
   }
   var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+  List<string> tdthClassList = new()
+  {
+    (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+  };
+  string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
 }
 <MudTable
   Items="@Items"
@@ -19,7 +25,9 @@
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
     {
-      <MudTh>
+      <MudTh
+        Class="@tdthClassText"
+      >
         @memberInfo.Name
       </MudTh>
     }
@@ -28,13 +36,16 @@
     @foreach (var memberInfo in MemberInfos)
     {
       var value = GetValue(context, memberInfo);
-      <MudTd>
+      <MudTd
+        Class="@tdthClassText"
+      >
         <TeElementEditor
           Data="value"
           DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
           Options="Options"
           Depth="Depth + 1"
           Path="@memberInfo.Name"
+          Label="@string.Empty"
         />
       </MudTd>
     }
