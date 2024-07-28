@@ -67,9 +67,17 @@ else if (Data is DateTime)
 {
 
 }
-else if (Data is Array || Data is IEnumerable)
+else if (Data is IEnumerable<object> items)
 {
-
+    <TeObjectArrayEditor
+        Items="items"
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+    />
 }
 else if (Data is Enum)
 {

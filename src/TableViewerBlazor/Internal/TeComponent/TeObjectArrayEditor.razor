@@ -1,0 +1,30 @@
+@inherits TeEditorBase
+
+@{
+    List<string> tableClassList = new()
+    {
+      "d-inline-block",
+      @* (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty), *@
+    };
+    if (Depth == 1)
+    {
+      @* tableClassList.AddRange(Options.Style.RootClass); *@
+    }
+    var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+}
+<MudTable
+    Items="@Items"
+    Class="@tableClassText"
+>
+    <HeaderContent>
+        @foreach (var memberInfo in MemberInfos)
+        {
+            <MudTh>
+                @memberInfo.Name
+            </MudTh>
+        }
+    </HeaderContent>
+    <RowTemplate>
+
+    </RowTemplate>
+</MudTable>
