@@ -1,30 +1,42 @@
 @inherits TeEditorBase
 
 @{
-    List<string> tableClassList = new()
-    {
-      "d-inline-block",
-      @* (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty), *@
-    };
-    if (Depth == 1)
-    {
-      @* tableClassList.AddRange(Options.Style.RootClass); *@
-    }
-    var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+  List<string> tableClassList = new()
+  {
+    "d-inline-block",
+    @* (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty), *@
+  };
+  if (Depth == 1)
+  {
+    @* tableClassList.AddRange(Options.Style.RootClass); *@
+  }
+  var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
 }
 <MudTable
-    Items="@Items"
-    Class="@tableClassText"
+  Items="@Items"
+  Class="@tableClassText"
 >
-    <HeaderContent>
-        @foreach (var memberInfo in MemberInfos)
-        {
-            <MudTh>
-                @memberInfo.Name
-            </MudTh>
-        }
-    </HeaderContent>
-    <RowTemplate>
-
-    </RowTemplate>
+  <HeaderContent>
+    @foreach (var memberInfo in MemberInfos)
+    {
+      <MudTh>
+        @memberInfo.Name
+      </MudTh>
+    }
+  </HeaderContent>
+  <RowTemplate>
+    @foreach (var memberInfo in MemberInfos)
+    {
+      var value = GetValue(context, memberInfo);
+      <MudTd>
+        <TeElementEditor
+          Data="value"
+          DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
+          Options="Options"
+          Depth="Depth + 1"
+          Path="@memberInfo.Name"
+        />
+      </MudTd>
+    }
+  </RowTemplate>
 </MudTable>

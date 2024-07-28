@@ -1,6 +1,7 @@
 ﻿namespace TableViewerBlazor;
 
 public partial class TableEditor<T> : ComponentBase
+    where T : class
 {
     [Parameter] public T Data { get; set; } = default!;
     [Parameter] public EventCallback<T> DataChanged { get; set; }

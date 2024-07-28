@@ -6,5 +6,9 @@
 
 @if (items != null && options != null)
 {
-    <TableEditor T="List<EditItem>" Data="items" Options="options" />
+    <TableEditor T="List<EditItem>"
+        Data="items"
+        Options="options"
+        DataChanged="OnDataChanged"
+    />
 }

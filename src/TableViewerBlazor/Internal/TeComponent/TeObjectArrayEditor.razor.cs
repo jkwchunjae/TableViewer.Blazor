@@ -1,3 +1,5 @@
+using Microsoft.JSInterop;
+
 namespace TableViewerBlazor.Internal.TeComponent;
 
 public partial class TeObjectArrayEditor : TeEditorBase
@@ -18,5 +20,35 @@ public partial class TeObjectArrayEditor : TeEditorBase
         members.AddRange(itemType.GetProperties());
         members.AddRange(itemType.GetFields());
         return members.ToArray();
+    }
+
+    private object? GetValue(object? item, MemberInfo memberInfo)
+    {
+        if (memberInfo is PropertyInfo property)
+        {
+            return property.GetValue(item);
+        }
+        if (memberInfo is FieldInfo field)
+        {
+            return field.GetValue(item);
+        }
+        return null;
+    }
+
+    private async Task OnDataChanged(object? item, MemberInfo memberInfo, object? value)
+    {
+        if (item == null)
+        {
+            return;
+        }
+        if (memberInfo is PropertyInfo property)
+        {
+            property.SetValue(item, value);
+        }
+        if (memberInfo is FieldInfo field)
+        {
+            field.SetValue(item, value);
+        }
+        await DataChanged.InvokeAsync(Items);
     }
 }
