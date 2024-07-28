@@ -19,7 +19,7 @@
   string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
 }
 <MudTable
-  Items="@Items"
+  Items="@ItemsEnumerable"
   Class="@tableClassText"
   Dense="Options.Style.Dense"
   Hover="Options.Style.Hover"
@@ -28,14 +28,15 @@
   CustomHeader="true"
 >
   <HeaderContent>
-    @foreach (var memberInfo in MemberInfos)
-    {
-      <MudTh
-        Class="@tdthClassText"
-      >
-        @memberInfo.Name
-      </MudTh>
-    }
+    <MudTHeadRow>
+      @foreach (var memberInfo in MemberInfos)
+      {
+        <MudTh Class="@tdthClassText">
+          @memberInfo.Name
+        </MudTh>
+      }
+      <MudTh Class="@tdthClassText">...</MudTh>
+    </MudTHeadRow>
   </HeaderContent>
   <RowTemplate>
     @foreach (var memberInfo in MemberInfos)
@@ -54,5 +55,15 @@
         />
       </MudTd>
     }
+    <MudTd>
+      <MudButton
+        Variant="Variant.Outlined"
+        Size="Size.Small"
+        Color="Color.Error"
+        OnClick="@(async () => await RemoveItem(context))"
+      >
+        remove
+      </MudButton>
+    </MudTd>
   </RowTemplate>
 </MudTable>

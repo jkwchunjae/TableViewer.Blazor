@@ -1,11 +1,9 @@
-using Microsoft.JSInterop;
-
 namespace TableViewerBlazor.Internal.TeComponent;
 
 public partial class TeObjectArrayEditor : TeEditorBase
 {
-    [Parameter] public IEnumerable<object> Items { get; set; } = default!;
-    private bool Addable { get; } = true;
+    [Parameter] public IList Items { get; set; } = default!;
+    private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
 
@@ -49,6 +47,12 @@ public partial class TeObjectArrayEditor : TeEditorBase
         {
             field.SetValue(item, value);
         }
+        await DataChanged.InvokeAsync(Items);
+    }
+
+    private async Task RemoveItem(object item)
+    {
+        Items.Remove(item);
         await DataChanged.InvokeAsync(Items);
     }
 }
