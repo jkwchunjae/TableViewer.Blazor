@@ -21,6 +21,11 @@
 <MudTable
   Items="@Items"
   Class="@tableClassText"
+  Dense="Options.Style.Dense"
+  Hover="Options.Style.Hover"
+  Striped="Options.Style.Striped"
+  Bordered="Options.Style.Bordered"
+  CustomHeader="true"
 >
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
