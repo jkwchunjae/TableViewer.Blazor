@@ -11,7 +11,7 @@
     Disabled="@(SelectBoxOption.Property?.Disabled ?? default)"
     ReadOnly="@(SelectBoxOption.Property?.ReadOnly ?? default)"
     Immediate="@(SelectBoxOption.Property?.Immediate ?? default)"
-    Underline="@(SelectBoxOption.Property?.Underline ?? default)"
+    Underline="@(SelectBoxOption.Property?.Underline ?? true)"
     HelperText="@(SelectBoxOption.Property?.HelperText ?? default)"
     HelperTextOnFocus="@(SelectBoxOption.Property?.HelperTextOnFocus ?? default)"
     IconSize="@(SelectBoxOption.Property?.IconSize ?? default)"
@@ -28,5 +28,3 @@
         <MudSelectItem Value="@item.Value">@item.Text</MudSelectItem>
     }
 </MudSelect>
-
-    @* ToStringFunc="@Converter1" *@

@@ -7,7 +7,7 @@ namespace TableViewerTest.Components.Pages;
 
 class EditItem
 {
-    [TeRadio("IsSelected")]
+    [TeSelectBox("IsSelected")]
     public bool IsSelected { get; set; }
     public PersonName? Name { get; set; }
     public string Address { get; set; } = string.Empty;
@@ -55,15 +55,15 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
-            RadioOptions =
+            SelectBoxOptions =
             {
-                new TeRadioOption<bool>
+                new TeSelectBoxOption<bool>
                 {
                     Id = "IsSelected",
                     Items =
                     {
-                        new TeRadioItem<bool>(true, "true"),
-                        new TeRadioItem<bool>(false, "false"),
+                        new TeSelectItem<bool>(true, "true"),
+                        new TeSelectItem<bool>(false, "false"),
                     },
                 },
             },
