@@ -25,7 +25,7 @@ public partial class EditorObjectArray : ComponentBase
         {
             new EditItem
             {
-                Name = new PersonName("jkw"),
+                Name = null,
                 Age = 30,
                 Birth = new DateTime(1990, 1, 1),
                 Address = "Seoul",
@@ -41,7 +41,7 @@ public partial class EditorObjectArray : ComponentBase
                     Converter = new TeTextFieldConverter<PersonName>
                     {
                         FromString = (s) => new PersonName(s),
-                        StringValue = (p) => p.ToString(),
+                        StringValue = (p) => p?.ToString() ?? string.Empty,
                     },
                 },
             },

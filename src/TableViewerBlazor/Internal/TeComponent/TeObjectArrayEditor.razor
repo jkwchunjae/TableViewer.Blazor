@@ -59,6 +59,7 @@
           DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
           Options="Options"
           Depth="Depth + 1"
+          MemberInfo="memberInfo"
           Path="@memberInfo.Name"
           Label="@string.Empty"
         />

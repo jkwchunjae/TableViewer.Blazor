@@ -51,7 +51,31 @@ public static class TeTextFieldOptionExtensions
                 return true;
             }
         }
+        if (memberInfo != null)
+        {
+            var memberType = MemberType(memberInfo);
+            textFieldOption = options.TextFieldOptions?
+                .Where(option => option.GetType().GenericTypeArguments.Any())
+                .FirstOrDefault(option => option.TypeName == memberType.Name);
+            if (textFieldOption != null)
+            {
+                return true;
+            }
+        }
         return false;
+
+        Type MemberType(MemberInfo memberInfo)
+        {
+            if (memberInfo is PropertyInfo property)
+            {
+                return property.PropertyType;
+            }
+            if (memberInfo is FieldInfo field)
+            {
+                return field.FieldType;
+            }
+            throw new Exception();
+        }
     }
 }
 
@@ -70,6 +94,7 @@ public interface ITeTextFieldOption : ITeFieldOption
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
     ITeTextFieldConverter? Converter { get; }
+    string TypeName { get; }
 }
 
 public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
@@ -80,6 +105,7 @@ public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
     public TeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<T>? Event { get; set; }
     public required TeTextFieldConverter<T>? Converter { get; set; }
+    public string TypeName => typeof(T).Name;
 
     IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
@@ -97,8 +123,9 @@ public class TeTextFieldOption : ITeFieldOption<string>, ITeTextFieldOption
     private static TeTextFieldConverter<string> Converter = new TeTextFieldConverter<string>
     {
         FromString = s => s,
-        StringValue = s => s,
+        StringValue = s => s ?? string.Empty,
     };
+    public string TypeName => typeof(string).Name;
 
     IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
@@ -114,9 +141,12 @@ public interface ITeTextFieldConverter
 
 public class TeTextFieldConverter<T> : ITeTextFieldConverter
 {
-    public required Func<T, string> StringValue { get; init; }
+    public required Func<T?, string> StringValue { get; init; }
     public required Func<string, T> FromString { get; init; }
 
-    Func<object, string> ITeTextFieldConverter.StringValue => o => o is T t ? StringValue(t) : throw new Exception();
+    Func<object, string> ITeTextFieldConverter.StringValue =>
+        o => o == null ? StringValue(default) :
+            o is T t ? StringValue(t) :
+            throw new Exception();
     Func<string, object> ITeTextFieldConverter.FromString => value => FromString(value)!;
 }
