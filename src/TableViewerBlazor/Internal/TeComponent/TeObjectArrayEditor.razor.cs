@@ -50,6 +50,14 @@ public partial class TeObjectArrayEditor : TeEditorBase
         await DataChanged.InvokeAsync(Items);
     }
 
+    private async Task AddItem()
+    {
+        var itemType = Items.GetType().GenericTypeArguments[0];
+        var item = Activator.CreateInstance(itemType);
+        Items.Add(item);
+        await DataChanged.InvokeAsync(Items);
+    }
+
     private async Task RemoveItem(object item)
     {
         Items.Remove(item);

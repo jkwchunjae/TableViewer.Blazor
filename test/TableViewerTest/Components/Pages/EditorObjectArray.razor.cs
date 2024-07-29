@@ -10,7 +10,7 @@ class EditItem
     public PersonName? Name { get; set; }
     public int Age { get; set; }
     public DateTime Birth { get; set; }
-    public float Height { get; set; }
+    public string Address { get; set; } = string.Empty;
 }
 
 public partial class EditorObjectArray : ComponentBase
@@ -28,11 +28,12 @@ public partial class EditorObjectArray : ComponentBase
                 Name = new PersonName("jkw"),
                 Age = 30,
                 Birth = new DateTime(1990, 1, 1),
-                Height = 172.7f,
+                Address = "Seoul",
             },
         };
         options = new TeOptions
         {
+            Title = "User table",
             TextFieldOptions =
             {
                 new TeTextFieldOption<PersonName>
