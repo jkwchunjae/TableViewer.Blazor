@@ -216,6 +216,12 @@ public partial class EditorPage : ComponentBase
             new TeCheckBoxOption<string>
             {
                 Id = "region",
+                Property = new TeCheckBoxProperty
+                {
+                    Color = Color.Info,
+                    TriState = false,
+                    //HideText = true,
+                }
             }
         },
         IgnoreOptions =

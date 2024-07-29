@@ -1,8 +1,9 @@
 ﻿using TableViewerBlazor.Internal.TeComponent;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
 
-public static class TeCheckBoxGroupOptionExtensions
+public static class TeCheckBoxOptionExtensions
 {
     public static bool TryGetCheckBoxOption(
         this TeOptions options,
@@ -40,10 +41,12 @@ public class TeCheckBoxAttribute : Attribute
 
 public interface ITeCheckBoxOption : ITeFieldOption
 {
+    public ITeCheckBoxProperty? Property { get; set; } 
 }
 
 public class TeCheckBoxOption<T> : ITeFieldOption<T>, ITeCheckBoxOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
+    public ITeCheckBoxProperty? Property { get; set; }
 }

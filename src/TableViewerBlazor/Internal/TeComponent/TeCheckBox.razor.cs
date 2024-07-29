@@ -19,4 +19,21 @@ public partial class TeCheckBox : TeEditorBase
         }
         await DataChanged.InvokeAsync(copyData);
     }
+
+    private string GetLabel()
+    {
+        if (CheckBoxOption.Property?.HideText ?? false)
+        {
+            return string.Empty;
+        }
+
+        if (CheckBoxOption.Property?.Label != null)
+        {
+            return CheckBoxOption.Property.Label;
+        }
+        else
+        {
+            return CheckBoxLabel.ToString() ?? string.Empty;
+        }
+    }
 }
