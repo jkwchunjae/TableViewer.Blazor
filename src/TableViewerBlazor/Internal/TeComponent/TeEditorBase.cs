@@ -1,7 +1,10 @@
+using Microsoft.JSInterop;
+
 namespace TableViewerBlazor.Internal.TeComponent;
 
 public class TeEditorBase : ComponentBase
 {
+    [Inject] public IJSRuntime Js { get; set; } = default!;
     [Parameter] public object? Data { get; set; }
     [Parameter] public EventCallback<object?> DataChanged { get; set; }
     [Parameter] public TeOptions Options { get; set; } = default!;

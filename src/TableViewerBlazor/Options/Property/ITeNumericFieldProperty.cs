@@ -14,6 +14,7 @@ public interface ITeNumericFieldProperty
     Adornment Adornment { get; }
     string? AdornmentIcon { get; }
     string? AdornmentText { get; }
+    string? Label { get; }
     bool AutoFocus { get; }
     bool Clearable { get; }
     CultureInfo? Culture { get; }
@@ -54,6 +55,7 @@ public class TeNumericFieldProperty<T> : ITeNumericFieldProperty
     public Adornment Adornment { get; set; } = Adornment.None;
     public string? AdornmentIcon { get; set; } = null;
     public string? AdornmentText { get; set; } = null;
+    public string? Label { get; set; }
     public bool AutoFocus { get; set; }
     public bool Clearable { get; set; }
     public CultureInfo? Culture { get; set; }

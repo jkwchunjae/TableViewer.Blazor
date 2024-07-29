@@ -3,7 +3,7 @@
 <MudField Label="@Label" Underline="@(RadioOption.Property?.Underline ?? true)">
     <MudRadioGroup
         T="object"
-        Value="Data"
+        Value="CopiedData"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Validation="@(new Func<object, Task<IEnumerable<string>>>(RadioGroupValidation))"
 

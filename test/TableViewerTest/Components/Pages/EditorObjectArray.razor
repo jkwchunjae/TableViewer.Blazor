@@ -1,0 +1,14 @@
+@page "/editor-object-array"
+
+<PageTitle>Editor Object Array</PageTitle>
+
+<MudText>Edit object array</MudText>
+
+@if (items != null && options != null)
+{
+    <TableEditor T="List<EditItem>"
+        Data="items"
+        Options="options"
+        DataChanged="OnDataChanged"
+    />
+}

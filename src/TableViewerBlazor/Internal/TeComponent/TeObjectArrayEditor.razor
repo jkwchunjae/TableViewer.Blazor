@@ -1,0 +1,79 @@
+@inherits TeEditorBase
+
+@{
+  List<string> tableClassList = new()
+  {
+    "d-inline-block",
+    (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
+  };
+  if (Depth == 1)
+  {
+    tableClassList.AddRange(Options.Style.RootClass);
+  }
+  var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+  List<string> tdthClassList = new()
+  {
+    (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+  };
+  string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+}
+<MudTable
+  Items="@ItemsEnumerable"
+  Class="@tableClassText"
+  Dense="Options.Style.Dense"
+  Hover="Options.Style.Hover"
+  Striped="Options.Style.Striped"
+  Bordered="Options.Style.Bordered"
+>
+  <ToolBarContent>
+    <MudText Typo="Typo.h6">
+      @(Options.Title ?? string.Empty)
+    </MudText>
+    <MudSpacer/>
+    <MudButton
+      OnClick="@(async () => await AddItem())"
+      Variant="Variant.Outlined" Size="Size.Small"
+    >
+      Add Item
+    </MudButton>
+  </ToolBarContent>
+  <HeaderContent>
+    @foreach (var memberInfo in MemberInfos)
+    {
+    <MudTh Class="@tdthClassText">
+        @memberInfo.Name
+    </MudTh>
+    }
+    <MudTh Class="@tdthClassText">...</MudTh>
+  </HeaderContent>
+  <RowTemplate>
+    @foreach (var memberInfo in MemberInfos)
+    {
+      var value = GetValue(context, memberInfo);
+      <MudTd
+        Class="@tdthClassText"
+      >
+        <TeElementEditor
+          Data="value"
+          DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
+          Options="Options"
+          Depth="Depth + 1"
+          MemberInfo="memberInfo"
+          Path="@memberInfo.Name"
+          Label="@string.Empty"
+        />
+      </MudTd>
+    }
+    <MudTd>
+      <MudButton
+        Variant="Variant.Outlined"
+        Size="Size.Small"
+        Color="Color.Error"
+        OnClick="@(async () => await RemoveItem(context))"
+      >
+        remove
+      </MudButton>
+    </MudTd>
+  </RowTemplate>
+</MudTable>

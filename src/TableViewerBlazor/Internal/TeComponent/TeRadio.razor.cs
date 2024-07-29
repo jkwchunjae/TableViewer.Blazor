@@ -3,9 +3,16 @@
 public partial class TeRadio : TeEditorBase
 {
     [Parameter] public ITeRadioOption RadioOption { get; set; } = default!;
+
+    object? CopiedData;
+
+    protected override void OnInitialized()
+    {
+        CopiedData = Data;
+    }
     private async Task OnValueChanged(object? value)
     {
-        Data = value;
+        CopiedData = value;
         await DataChanged.InvokeAsync(value);
     }
 
