@@ -7,10 +7,17 @@ namespace TableViewerTest.Components.Pages;
 
 class EditItem
 {
+    [TeRadio("IsSelected")]
+    public bool IsSelected { get; set; }
     public PersonName? Name { get; set; }
-    public int Age { get; set; }
-    public DateTime Birth { get; set; }
     public string Address { get; set; } = string.Empty;
+    public EditInner Inner { get; set; } = new EditInner();
+}
+
+class EditInner
+{
+    public string Birth { get; set; } = string.Empty;
+    public int Age { get; set; }
 }
 
 public partial class EditorObjectArray : ComponentBase
@@ -25,10 +32,13 @@ public partial class EditorObjectArray : ComponentBase
         {
             new EditItem
             {
-                Name = null,
-                Age = 30,
-                Birth = new DateTime(1990, 1, 1),
+                Name = new PersonName("jkw"),
                 Address = "Seoul",
+                Inner = new EditInner
+                {
+                    Birth = DateTime.Now.ToString(),
+                    Age = 20,
+                },
             },
         };
         options = new TeOptions
@@ -45,13 +55,27 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
+            RadioOptions =
+            {
+                new TeRadioOption<bool>
+                {
+                    Id = "IsSelected",
+                    Items =
+                    {
+                        new TeRadioItem<bool>(true, "true"),
+                        new TeRadioItem<bool>(false, "false"),
+                    },
+                },
+            },
         };
         return base.OnInitializedAsync();
     }
 
     private async Task OnDataChanged(List<EditItem>? item)
     {
-        await Js.InvokeVoidAsync("console.log", item);
-        await Js.InvokeVoidAsync("console.log", this.items);
+        if (item != null)
+        {
+            await Js.InvokeVoidAsync("console.log", item);
+        }
     }
 }
