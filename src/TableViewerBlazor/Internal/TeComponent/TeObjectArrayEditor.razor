@@ -54,6 +54,10 @@
       <MudTd
         Class="@tdthClassText"
       >
+        @if (Options.TryGetCustomEditor1(memberInfo))
+        {
+          
+        }
         <TeElementEditor
           Data="value"
           DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"

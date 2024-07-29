@@ -67,6 +67,13 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
+            CustomEditorOptions =
+            {
+                new TeCustomEditorOption<EditInner>
+                {
+                    Editor = "CustomEditor1",
+                },
+            },
         };
         return base.OnInitializedAsync();
     }

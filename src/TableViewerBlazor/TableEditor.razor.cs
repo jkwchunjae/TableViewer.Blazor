@@ -9,6 +9,8 @@ public partial class TableEditor<T> : ComponentBase
     [Parameter] public EventCallback<bool> IsValidChanged { get; set; }
     [Parameter] public EventCallback<string[]> ErrorsChanged { get; set; }
 
+    [Parameter] public RenderFragment? CustomEditor { get; set; }
+
     MudForm form = default!;
     bool success;
     string[] errors = { };
