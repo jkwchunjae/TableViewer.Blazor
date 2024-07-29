@@ -1,0 +1,7 @@
+﻿@inherits TeEditorBase
+
+<MudCheckBox
+    T="bool"
+    Label="@CheckBoxLabel.ToString()"
+    ValueChanged="@(async isChecked => await OnValueChanged(isChecked))"
+/>

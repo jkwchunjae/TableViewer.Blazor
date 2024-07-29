@@ -24,6 +24,8 @@ public class EditData
     public InnerClass Inner { get; set; } = new InnerClass();
     [TeRadio("enum")]
     public TestEnum EnumValue { get; set; }
+    [TeCheckBox("region")]
+    public string Region { get; set; } = string.Empty;
 }
 
 public partial class EditorPage : ComponentBase
@@ -35,6 +37,7 @@ public partial class EditorPage : ComponentBase
         Name = "John",
         Gender = "M",
         Age = 30,
+        Region = "ko"
     };
     TeOptions options = new TeOptions
     {
@@ -207,6 +210,13 @@ public partial class EditorPage : ComponentBase
                     },
                 },
             },
+        },
+        CheckBoxOptions =
+        {
+            new TeCheckBoxOption<string>
+            {
+                Id = "region",
+            }
         },
         IgnoreOptions =
         {
