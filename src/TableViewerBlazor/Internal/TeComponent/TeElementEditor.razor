@@ -15,6 +15,15 @@ else if (MemberInfo?.Name == "Inner")
         });
     }
 }
+// else if (Options.TryGetCustomEditor(..., out var customEditor))
+// {
+//     customEditor(new CustomEditorArgument
+//     {
+//         Value = Data,
+//         Parent = Parent,
+//         DataChanged = async value => await DataChanged.InvokeAsync(value),
+//     });
+// }
 else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))
 {
     <TeSelectBox
