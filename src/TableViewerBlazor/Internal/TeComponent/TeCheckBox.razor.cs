@@ -3,41 +3,33 @@
 public partial class TeCheckBox : TeEditorBase
 {
     [Parameter] public ITeCheckBoxOption CheckBoxOption { get; set; } = default!;
+    [Parameter] public object? Parent { get; set; }
 
-    public object copyData = default!;
-    protected override void OnInitialized()
-    {
-        copyData = Data!;
-    }
+    private bool selected = false;
 
-    public async Task OnValueChanged(bool isChecked)
+    public async Task OnValueChanged(bool value)
     {
-        object? valueChanged = default;
-        if (isChecked)
-        {
-            valueChanged = copyData;
-        }
-        await DataChanged.InvokeAsync(valueChanged);
+        selected = value;
+        await DataChanged.InvokeAsync(value);
     }
 
     private string GetLabel()
     {
-        var option = CheckBoxOption.Property?.LabelOptions;
-        if (option != null)
+        var labelOption = CheckBoxOption.Property?.LabelOptions;
+        if (labelOption != null)
         {
-            if (option.Condition(copyData))
+            if (Parent != null && labelOption.Condition(Parent))
             {
-                return option.Label(copyData);
+                return labelOption.Label(selected, Parent);
             }
             else
             {
                 return string.Empty;
             }
-            
         }
         else
         {
-            return copyData.ToString() ?? string.Empty;
+            return selected ? "Selected" : "Not Selected";
         }
     }
 }

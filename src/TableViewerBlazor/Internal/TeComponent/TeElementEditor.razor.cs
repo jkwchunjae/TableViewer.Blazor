@@ -6,4 +6,5 @@ public partial class TeElementEditor : TeEditorBase
     /// FieldInfo, PropertyInfo
     /// </summary>
     [Parameter] public MemberInfo? MemberInfo { get; set; }
+    [Parameter] public object? Parent { get; set; }
 }

@@ -98,7 +98,7 @@ public class TeCheckBoxProperty : ITeCheckBoxProperty
 public interface ITeLabelOptions
 {
     public Func<object, bool> Condition { get; }
-    public Func<object, string> Label { get; }
+    public Func<bool, object, string> Label { get; }
     /// <summary>
     /// The position of the Label text. Defaults to End.
     /// </summary>
@@ -107,17 +107,17 @@ public interface ITeLabelOptions
 
 public class TeLabelOptions<T> : ITeLabelOptions
 {
-    public Func<T, bool> Condition { get; init; } = _ => false;
-    public Func<T, string>? Label { get; init; }
+    public Func<T, bool> Condition { get; init; } = _ => true;
+    public Func<bool, T, string>? Label { get; init; }
     public LabelPosition LabelPosition { get; init; } = LabelPosition.End;
 
     Func<object, bool> ITeLabelOptions.Condition => o => o is T value ? Condition(value) : false;
 
-    Func<object, string> ITeLabelOptions.Label => o =>
+    Func<bool, object, string> ITeLabelOptions.Label => (b, o) =>
     {
         if (o is T value && Label != null)
         {
-            return Label(value);
+            return Label(b, value);
         }
         else
         {

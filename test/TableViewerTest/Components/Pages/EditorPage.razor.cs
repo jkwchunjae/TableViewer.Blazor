@@ -24,8 +24,9 @@ public class EditData
     public InnerClass Inner { get; set; } = new InnerClass();
     [TeRadio("enum")]
     public TestEnum EnumValue { get; set; }
-    [TeCheckBox("region")]
     public string Region { get; set; } = string.Empty;
+    [TeCheckBox("region")]
+    public bool Selected { get; set; } = false;
 }
 
 public partial class EditorPage : ComponentBase
@@ -37,7 +38,8 @@ public partial class EditorPage : ComponentBase
         Name = "John",
         Gender = "M",
         Age = 30,
-        Region = "ko"
+        Region = "ko",
+        Selected = false,
     };
     TeOptions options = new TeOptions
     {
@@ -220,13 +222,13 @@ public partial class EditorPage : ComponentBase
                 {
                     Color = Color.Info,
                     TriState = false,
-                    LabelOptions = new TeLabelOptions<string>
+                    LabelOptions = new TeLabelOptions<EditData>
                     {
-                        Condition = (_) => true,
-                        Label = (value) => $"{value} label option added",
+                        Condition = (parent) => true,
+                        Label = (_, parent) => $"edited label - {parent.Region}",
                         //LabelPosition = LabelPosition.Start
                     }
-                }
+                },
             }
         },
         IgnoreOptions =
