@@ -25,7 +25,7 @@ public class EditData
     [TeRadio("enum")]
     public TestEnum EnumValue { get; set; }
     public string Region { get; set; } = string.Empty;
-    [TeCheckBox("region")]
+    [TeCheckBox("selected")]
     public bool Selected { get; set; } = false;
 }
 
@@ -217,7 +217,7 @@ public partial class EditorPage : ComponentBase
         {
             new TeCheckBoxOption<string>
             {
-                Id = "region",
+                Id = "selected",
                 Property = new TeCheckBoxProperty
                 {
                     Color = Color.Info,

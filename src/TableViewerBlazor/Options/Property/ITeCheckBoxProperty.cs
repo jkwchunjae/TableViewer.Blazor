@@ -74,6 +74,11 @@ public interface ITeCheckBoxProperty
     /// The icon to display for an unchecked state. 
     /// </summary>
     public string UncheckedIcon { get; }
+    
+    /// <summary>
+    /// Underline
+    /// </summary>
+    public bool Underline { get; }
 }
 
 public class TeCheckBoxProperty : ITeCheckBoxProperty
@@ -92,6 +97,7 @@ public class TeCheckBoxProperty : ITeCheckBoxProperty
     public Size Size { get; init; } = Size.Medium;
     public Color? UncheckedColor { get; init; }
     public string UncheckedIcon { get; init; } = Icons.Material.Filled.CheckBoxOutlineBlank;
+    public bool Underline { get; init; } = true;
 }
 
 
