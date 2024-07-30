@@ -20,7 +20,14 @@ public partial class TeCheckBox : TeEditorBase
         {
             if (Parent != null && labelOption.Condition(Parent))
             {
-                return labelOption.Label(selected, Parent);
+                if (selected)
+                {
+                    return labelOption.SelectedLabel(selected, Parent);
+                }
+                else
+                {
+                    return labelOption.NotSelectedLabel(selected, Parent);
+                }
             }
             else
             {

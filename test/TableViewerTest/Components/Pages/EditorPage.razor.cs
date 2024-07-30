@@ -225,7 +225,8 @@ public partial class EditorPage : ComponentBase
                     LabelOptions = new TeLabelOptions<EditData>
                     {
                         Condition = (parent) => true,
-                        Label = (_, parent) => $"edited label - {parent.Region}",
+                        SelectedLabel = (_, parent) => $"selected - {parent.Region}",
+                        NotSelectedLabel = (_, parent) => $"not selected - {parent.Region}",
                         //LabelPosition = LabelPosition.Start
                     }
                 },
