@@ -10,5 +10,9 @@
         Data="items"
         Options="options"
         DataChanged="OnDataChanged"
-    />
+    >
+        <CustomEditor>
+            <InnerEditorComponent Argument="context"/>
+        </CustomEditor>
+    </TableEditor>
 }

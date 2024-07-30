@@ -20,6 +20,12 @@ class EditInner
     public int Age { get; set; }
 }
 
+class GsmValue2
+{
+    public int IntValue { get; set; }
+    public string StringValue { get; set; } = string.Empty;
+}
+
 public partial class EditorObjectArray : ComponentBase
 {
     [Inject] public IJSRuntime Js { get; set; } = default!;
@@ -65,13 +71,6 @@ public partial class EditorObjectArray : ComponentBase
                         new TeSelectItem<bool>(true, "true"),
                         new TeSelectItem<bool>(false, "false"),
                     },
-                },
-            },
-            CustomEditorOptions =
-            {
-                new TeCustomEditorOption<EditInner>
-                {
-                    Editor = "CustomEditor1",
                 },
             },
         };
