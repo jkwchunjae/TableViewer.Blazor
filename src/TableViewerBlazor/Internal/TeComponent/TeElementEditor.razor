@@ -3,6 +3,18 @@
 @if (Options.TryGetIgnoreOption(MemberInfo, this, out var ignoreOption))
 {
 }
+else if (MemberInfo?.Name == "Inner")
+{
+    if (Options?.CustomEditor != null)
+    {
+        @Options?.CustomEditor!(new CustomEditorArguemnt
+        {
+            Value = Data,
+            Parent = Parent,
+            DataChanged = async value => await DataChanged.InvokeAsync(value),
+        });
+    }
+}
 else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))
 {
     <TeSelectBox

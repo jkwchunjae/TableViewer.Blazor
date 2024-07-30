@@ -54,17 +54,6 @@
       <MudTd
         Class="@tdthClassText"
       >
-        @if (memberInfo.Name == "Inner")
-        {
-          @Options.CustomEditor!(new CustomEditorArguemnt
-          {
-            Value = value,
-            Parent = context,
-            DataChanged = async value => await OnDataChanged(context, memberInfo, value),
-          })
-        }
-        else
-        {
         <TeElementEditor
           Data="value"
           DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
@@ -74,7 +63,6 @@
           Path="@memberInfo.Name"
           Label="@string.Empty"
         />
-        }
       </MudTd>
     }
     <MudTd>
