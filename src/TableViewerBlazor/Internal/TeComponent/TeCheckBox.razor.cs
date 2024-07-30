@@ -4,36 +4,40 @@ public partial class TeCheckBox : TeEditorBase
 {
     [Parameter] public ITeCheckBoxOption CheckBoxOption { get; set; } = default!;
 
-    public object CheckBoxLabel { get; set; } = default!;
+    public object copyData = default!;
     protected override void OnInitialized()
     {
-        CheckBoxLabel = Data!;
+        copyData = Data!;
     }
 
     public async Task OnValueChanged(bool isChecked)
     {
-        object? copyData = default;
+        object? valueChanged = default;
         if (isChecked)
         {
-            copyData = CheckBoxLabel;
+            valueChanged = copyData;
         }
-        await DataChanged.InvokeAsync(copyData);
+        await DataChanged.InvokeAsync(valueChanged);
     }
 
     private string GetLabel()
     {
-        if (CheckBoxOption.Property?.HideText ?? false)
+        var option = CheckBoxOption.Property?.LabelOptions;
+        if (option != null)
         {
-            return string.Empty;
-        }
-
-        if (CheckBoxOption.Property?.Label != null)
-        {
-            return CheckBoxOption.Property.Label;
+            if (option.Condition(copyData))
+            {
+                return option.Label(copyData);
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
         }
         else
         {
-            return CheckBoxLabel.ToString() ?? string.Empty;
+            return copyData.ToString() ?? string.Empty;
         }
     }
 }

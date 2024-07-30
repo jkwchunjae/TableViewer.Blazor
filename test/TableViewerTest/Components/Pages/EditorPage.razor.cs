@@ -220,7 +220,12 @@ public partial class EditorPage : ComponentBase
                 {
                     Color = Color.Info,
                     TriState = false,
-                    //HideText = true,
+                    LabelOptions = new TeLabelOptions<string>
+                    {
+                        Condition = (_) => true,
+                        Label = (value) => $"{value} label option added",
+                        //LabelPosition = LabelPosition.Start
+                    }
                 }
             }
         },

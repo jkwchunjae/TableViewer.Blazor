@@ -21,14 +21,9 @@ public interface ITeCheckBoxProperty
     public bool KeyboardEnabled { get; }
     
     /// <summary>
-    /// The text to display next to the checkbox. Defaults to null.
+    /// The text to display next to the checkbox.
     /// </summary>
-    public string? Label { get; }
-    
-    /// <summary>
-    /// The position of the Label text. Defaults to End.
-    /// </summary>
-    public LabelPosition LabelPosition { get; }
+    public ITeLabelOptions? LabelOptions { get; }
     
     /// <summary>
     /// Prevents the user from changing the input. Defaults to false. When true, the user can copy the input but cannot change it.
@@ -79,8 +74,6 @@ public interface ITeCheckBoxProperty
     /// The icon to display for an unchecked state. 
     /// </summary>
     public string UncheckedIcon { get; }
-
-    public bool HideText { get; }
 }
 
 public class TeCheckBoxProperty : ITeCheckBoxProperty
@@ -88,8 +81,7 @@ public class TeCheckBoxProperty : ITeCheckBoxProperty
     public bool TriState { get; init; }
     public bool Disabled { get; init; }
     public bool KeyboardEnabled { get; init; } = true;
-    public string? Label { get; init; }
-    public LabelPosition LabelPosition { get; init;} = LabelPosition.End;
+    public ITeLabelOptions? LabelOptions { get; init; }
     public bool ReadOnly { get; init; }
     public CultureInfo Culture { get; init; } = System.Globalization.CultureInfo.InvariantCulture;
     public string CheckedIcon { get; init; } = Icons.Material.Filled.CheckBox;
@@ -100,5 +92,36 @@ public class TeCheckBoxProperty : ITeCheckBoxProperty
     public Size Size { get; init; } = Size.Medium;
     public Color? UncheckedColor { get; init; }
     public string UncheckedIcon { get; init; } = Icons.Material.Filled.CheckBoxOutlineBlank;
-    public bool HideText { get; init; } = false;
+}
+
+
+public interface ITeLabelOptions
+{
+    public Func<object, bool> Condition { get; }
+    public Func<object, string> Label { get; }
+    /// <summary>
+    /// The position of the Label text. Defaults to End.
+    /// </summary>
+    public LabelPosition LabelPosition { get; }
+}
+
+public class TeLabelOptions<T> : ITeLabelOptions
+{
+    public Func<T, bool> Condition { get; init; } = _ => false;
+    public Func<T, string>? Label { get; init; }
+    public LabelPosition LabelPosition { get; init; } = LabelPosition.End;
+
+    Func<object, bool> ITeLabelOptions.Condition => o => o is T value ? Condition(value) : false;
+
+    Func<object, string> ITeLabelOptions.Label => o =>
+    {
+        if (o is T value && Label != null)
+        {
+            return Label(value);
+        }
+        else
+        {
+            return string.Empty;
+        }
+    };
 }
