@@ -3,7 +3,7 @@
 public partial class TeCheckBox : TeEditorBase
 {
     [Parameter] public ITeCheckBoxOption CheckBoxOption { get; set; } = default!;
-    [Parameter] public object? Parent { get; set; }
+    [Parameter] public object Parent { get; set; } = default!;
 
     private bool selected = false;
 
@@ -16,27 +16,17 @@ public partial class TeCheckBox : TeEditorBase
     private string GetLabel()
     {
         var labelOption = CheckBoxOption.Property?.LabelOptions;
-        if (labelOption != null)
+        if (labelOption?.Condition(Parent) ?? false)
         {
-            if (Parent != null && labelOption.Condition(Parent))
+            if (selected)
             {
-                if (selected)
-                {
-                    return labelOption.SelectedLabel(selected, Parent);
-                }
-                else
-                {
-                    return labelOption.NotSelectedLabel(selected, Parent);
-                }
+                return labelOption.SelectedLabel(selected, Parent);
             }
             else
             {
-                return string.Empty;
+                return labelOption.NotSelectedLabel(selected, Parent);
             }
         }
-        else
-        {
-            return selected ? "Selected" : "Not Selected";
-        }
+        return string.Empty;
     }
 }
