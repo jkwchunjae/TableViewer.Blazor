@@ -31,19 +31,14 @@
       @(Options.Title ?? string.Empty)
     </MudText>
     <MudSpacer/>
-    <MudButton
-      OnClick="@(async () => await AddItem())"
-      Variant="Variant.Outlined" Size="Size.Small"
-    >
-      Add Item
-    </MudButton>
+    <TvActionButton Item="@(new object())" Action="AddItemAction" />
   </ToolBarContent>
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
     {
-    <MudTh Class="@tdthClassText">
+      <MudTh Class="@tdthClassText">
         @memberInfo.Name
-    </MudTh>
+      </MudTh>
     }
     <MudTh Class="@tdthClassText">...</MudTh>
   </HeaderContent>
@@ -74,14 +69,7 @@
       </MudTd>
     }
     <MudTd>
-      <MudButton
-        Variant="Variant.Outlined"
-        Size="Size.Small"
-        Color="Color.Error"
-        OnClick="@(async () => await RemoveItem(context))"
-      >
-        remove
-      </MudButton>
+      <TvActionButton Item="context" Action="RemoveItemAction" />
     </MudTd>
   </RowTemplate>
 </MudTable>

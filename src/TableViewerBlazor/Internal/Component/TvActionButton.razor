@@ -42,6 +42,18 @@
             IconColor="action.Style.IconColor"
         />
     }
+    else if (string.IsNullOrWhiteSpace(action.Label) && !string.IsNullOrEmpty(action.Style.StartIcon))
+    {
+        <MudIconButton
+            OnClick="@(() => action.Action(item))"
+            Class="@classText"
+            Icon="@action.Style.StartIcon"
+            Size="action.Style.IconSize"
+            Color="action.Style.IconColor"
+            Ripple="action.Style.Ripple"
+            DropShadow="action.Style.DropShadow"
+        />
+    }
     else
     {
         <MudButton

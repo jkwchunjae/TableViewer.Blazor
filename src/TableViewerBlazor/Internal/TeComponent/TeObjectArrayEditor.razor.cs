@@ -3,10 +3,24 @@ namespace TableViewerBlazor.Internal.TeComponent;
 public partial class TeObjectArrayEditor : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
+    [Parameter] public TeObjectArrayEditorOption ObjectArrayOption { get; set; } = new TeObjectArrayEditorOption();
     private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
+    private ITvAction AddItemAction => new TvAction<object>
+    {
+        Action = _ => AddItem(),
+        Label = ObjectArrayOption.AddItemAction.Label,
+        Style = ObjectArrayOption.AddItemAction.Style,
+        LabelAfterClick = ObjectArrayOption.AddItemAction.LabelAfterClick,
+    };
+    private ITvAction RemoveItemAction => new TvAction<object>
+    {
+        Action = item => RemoveItem(item),
+        Label = ObjectArrayOption.RemoveItemAction.Label,
+        Style = ObjectArrayOption.RemoveItemAction.Style,
+        LabelAfterClick = ObjectArrayOption.RemoveItemAction.LabelAfterClick,
+    };
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
-
     private List<ICustomEditorArgument> CustomEditorArguments = new List<ICustomEditorArgument>();
 
     protected override void OnInitialized()
@@ -75,7 +89,7 @@ public partial class TeObjectArrayEditor : TeEditorBase
 
     private ICustomEditorArgument GetCustomEditorArgument(object? value, object parent, MemberInfo memberInfo)
     {
-        var argument = CustomEditorArguments.FirstOrDefault(x => x.Parent == parent);
+        var argument = CustomEditorArguments.FirstOrDefault(x => x.Value == value && x.Parent == parent);
 
         if (argument != default)
         {
