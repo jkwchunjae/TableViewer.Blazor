@@ -41,12 +41,12 @@ public class TeCheckBoxAttribute : Attribute
 
 public interface ITeCheckBoxOption : ITeFieldOption
 {
-    public ITeCheckBoxProperty? Property { get; set; } 
+    public ITeCheckBoxProperty Property { get; set; } 
 }
 
 public class TeCheckBoxOption<T> : ITeFieldOption<T>, ITeCheckBoxOption
 {
     public string? Id { get; set; }
     public Func<T?, int, string, bool>? Condition { get; set; }
-    public ITeCheckBoxProperty? Property { get; set; }
+    public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
 }
