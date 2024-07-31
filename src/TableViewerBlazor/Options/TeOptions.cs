@@ -12,7 +12,6 @@ public class TeOptions
     public List<ITeRadioOption> RadioOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
     public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
-
-    public RenderFragment<ICustomEditorArgument>? CustomEditor { get; set; } = default;
+    public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
 }
 

@@ -54,13 +54,9 @@
       <MudTd
         Class="@tdthClassText"
       >
-        @* @if (Options.TryGetCustomEditor(..., out var customEditor))
+        @if (Options.TryGetCustomEditor(memberInfo, value?.GetType(), out var customEditor))
         {
-          @customEditor(GetCustomEditorArgument(value, context, memberInfo))
-        } *@
-        @if (memberInfo.Name == "Inner" && Options.CustomEditor != null)
-        {
-          @Options.CustomEditor!(GetCustomEditorArgument(value, context, memberInfo))
+          @customEditor!.RenderFragment!(GetCustomEditorArgument(value, context, memberInfo))
         }
         else
         {
@@ -72,6 +68,7 @@
           MemberInfo="memberInfo"
           Path="@memberInfo.Name"
           Label="@string.Empty"
+          Parent="context"
         />
         }
       </MudTd>

@@ -73,6 +73,13 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
+            CustomEditorOptions = new TeCustomEditorOptionGroup
+            {
+                CustomEditor1 = new TeCustomEditorOption
+                {
+                    Condition = (memberInfo, type) => memberInfo?.Name == "Inner" && type == typeof(EditInner),
+                },
+            },
         };
         return base.OnInitializedAsync();
     }

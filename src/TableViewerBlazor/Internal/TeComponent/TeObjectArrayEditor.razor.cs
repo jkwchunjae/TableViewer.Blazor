@@ -19,7 +19,9 @@ public partial class TeObjectArrayEditor : TeEditorBase
         var members = new List<MemberInfo>();
         members.AddRange(itemType.GetProperties());
         members.AddRange(itemType.GetFields());
-        return members.ToArray();
+        return members
+            .Where(member => member.GetCustomAttribute<TeIgnoreAttribute>() == null)
+            .ToArray();
     }
 
     private object? GetValue(object? item, MemberInfo memberInfo)
