@@ -7,10 +7,11 @@ namespace TableViewerTest.Components.Pages;
 
 class EditItem
 {
-    [TeSelectBox("IsSelected")]
+    [TeCheckBox("IsSelected")]
     public bool IsSelected { get; set; }
     public PersonName? Name { get; set; }
     public string Address { get; set; } = string.Empty;
+    [TeCustomEditor("Inner")]
     public EditInner Inner { get; set; } = new EditInner();
 }
 
@@ -61,23 +62,19 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
-            SelectBoxOptions =
+            CheckBoxOptions =
             {
-                new TeSelectBoxOption<bool>
+                new TeCheckBoxOption<EditItem>
                 {
                     Id = "IsSelected",
-                    Items =
-                    {
-                        new TeSelectItem<bool>(true, "true"),
-                        new TeSelectItem<bool>(false, "false"),
-                    },
                 },
             },
             CustomEditorOptions = new TeCustomEditorOptionGroup
             {
                 CustomEditor1 = new TeCustomEditorOption
                 {
-                    Condition = (memberInfo, type) => memberInfo?.Name == "Inner" && type == typeof(EditInner),
+                    Id = "Inner",
+                    Condition = (memberInfo, type) => type == typeof(EditInner),
                 },
             },
         };

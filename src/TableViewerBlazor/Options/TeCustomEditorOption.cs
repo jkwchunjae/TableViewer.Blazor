@@ -10,6 +10,19 @@ public static class TeCustomEditorOptionExtensions
         out TeCustomEditorOption? customEditorOption
         )
     {
+        var customEditorAttribute = memberInfo?.GetCustomAttribute<TeCustomEditorAttribute>();
+        if (customEditorAttribute != null)
+        {
+            var id = customEditorAttribute.Id;
+            customEditorOption = options.CustomEditorOptions.CustomEditors
+                .FirstOrDefault(option => option?.Id == id);
+
+            if (customEditorOption != default)
+            {
+                return true;
+            }
+        }
+
         customEditorOption = options.CustomEditorOptions?.CustomEditors
             .Where(option => option?.Condition?.Invoke(memberInfo, type) ?? false)
             .FirstOrDefault();
@@ -36,7 +49,17 @@ public class TeCustomEditorOptionGroup
 
 public class TeCustomEditorOption
 {
+    public string? Id { get; set; }
     public Func<MemberInfo?, Type?, bool> Condition { get; set; } = default!;
     public RenderFragment<ICustomEditorArgument>? RenderFragment { get; set; } = default;
+}
+
+public class TeCustomEditorAttribute : Attribute
+{
+    public string Id { get; init; }
+    public TeCustomEditorAttribute(string id)
+    {
+        Id = id;
+    }
 }
 
