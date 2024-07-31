@@ -84,6 +84,7 @@ else if (Data is IList items)
 {
     <TeObjectArrayEditor
         Items="items"
+        ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"

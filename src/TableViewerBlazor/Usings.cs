@@ -5,6 +5,7 @@ global using MudBlazor;
 
 global using TableViewerBlazor.Helper;
 global using TableViewerBlazor.Internal;
+global using TableViewerBlazor.Internal.Component;
 global using TableViewerBlazor.Options;
 global using TableViewerBlazor.Service;
 global using TableViewerBlazor.Extension;

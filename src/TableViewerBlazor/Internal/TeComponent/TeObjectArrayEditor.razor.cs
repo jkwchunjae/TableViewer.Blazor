@@ -3,9 +3,25 @@ namespace TableViewerBlazor.Internal.TeComponent;
 public partial class TeObjectArrayEditor : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
+    [Parameter] public TeObjectArrayEditorOption ObjectArrayOption { get; set; } = new TeObjectArrayEditorOption();
     private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
+    private ITvAction AddItemAction => new TvAction<object>
+    {
+        Action = _ => AddItem(),
+        Label = ObjectArrayOption.AddItemAction.Label,
+        Style = ObjectArrayOption.AddItemAction.Style,
+        LabelAfterClick = ObjectArrayOption.AddItemAction.LabelAfterClick,
+    };
+    private ITvAction RemoveItemAction => new TvAction<object>
+    {
+        Action = item => RemoveItem(item),
+        Label = ObjectArrayOption.RemoveItemAction.Label,
+        Style = ObjectArrayOption.RemoveItemAction.Style,
+        LabelAfterClick = ObjectArrayOption.RemoveItemAction.LabelAfterClick,
+    };
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
+    private List<ICustomEditorArgument> CustomEditorArguments = new List<ICustomEditorArgument>();
 
     protected override void OnInitialized()
     {
@@ -17,7 +33,9 @@ public partial class TeObjectArrayEditor : TeEditorBase
         var members = new List<MemberInfo>();
         members.AddRange(itemType.GetProperties());
         members.AddRange(itemType.GetFields());
-        return members.ToArray();
+        return members
+            .Where(member => member.GetCustomAttribute<TeIgnoreAttribute>() == null)
+            .ToArray();
     }
 
     private object? GetValue(object? item, MemberInfo memberInfo)
@@ -48,6 +66,11 @@ public partial class TeObjectArrayEditor : TeEditorBase
             field.SetValue(item, value);
         }
         await DataChanged.InvokeAsync(Items);
+
+        foreach (var argument in CustomEditorArguments.Where(x => x.Parent == item))
+        {
+            argument.Update(item);
+        }
     }
 
     private async Task AddItem()
@@ -62,5 +85,27 @@ public partial class TeObjectArrayEditor : TeEditorBase
     {
         Items.Remove(item);
         await DataChanged.InvokeAsync(Items);
+    }
+
+    private ICustomEditorArgument GetCustomEditorArgument(object? value, object parent, MemberInfo memberInfo)
+    {
+        var argument = CustomEditorArguments.FirstOrDefault(x => x.Value == value && x.Parent == parent);
+
+        if (argument != default)
+        {
+            return argument;
+        }
+        else
+        {
+            argument = new CustomEditorArguemnt
+            {
+                Value = value,
+                Parent = parent,
+                DataChanged = value => OnDataChanged(parent, memberInfo, value),
+            };
+            CustomEditorArguments.Add(argument);
+
+            return argument;
+        }
     }
 }

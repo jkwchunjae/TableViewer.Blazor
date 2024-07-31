@@ -31,19 +31,14 @@
       @(Options.Title ?? string.Empty)
     </MudText>
     <MudSpacer/>
-    <MudButton
-      OnClick="@(async () => await AddItem())"
-      Variant="Variant.Outlined" Size="Size.Small"
-    >
-      Add Item
-    </MudButton>
+    <TvActionButton Item="@(new object())" Action="AddItemAction" />
   </ToolBarContent>
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
     {
-    <MudTh Class="@tdthClassText">
+      <MudTh Class="@tdthClassText">
         @memberInfo.Name
-    </MudTh>
+      </MudTh>
     }
     <MudTh Class="@tdthClassText">...</MudTh>
   </HeaderContent>
@@ -54,26 +49,27 @@
       <MudTd
         Class="@tdthClassText"
       >
-        <TeElementEditor
-          Data="value"
-          DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
-          Options="Options"
-          Depth="Depth + 1"
-          MemberInfo="memberInfo"
-          Path="@memberInfo.Name"
-          Label="@string.Empty"
-        />
+        @if (Options.TryGetCustomEditor(memberInfo, value?.GetType(), out var customEditor))
+        {
+          @customEditor!.RenderFragment!(GetCustomEditorArgument(value, context, memberInfo))
+        }
+        else
+        {
+          <TeElementEditor
+            Data="value"
+            DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
+            Options="Options"
+            Depth="Depth + 1"
+            MemberInfo="memberInfo"
+            Path="@memberInfo.Name"
+            Label="@string.Empty"
+            Parent="context"
+          />
+        }
       </MudTd>
     }
     <MudTd>
-      <MudButton
-        Variant="Variant.Outlined"
-        Size="Size.Small"
-        Color="Color.Error"
-        OnClick="@(async () => await RemoveItem(context))"
-      >
-        remove
-      </MudButton>
+      <TvActionButton Item="context" Action="RemoveItemAction" />
     </MudTd>
   </RowTemplate>
 </MudTable>
