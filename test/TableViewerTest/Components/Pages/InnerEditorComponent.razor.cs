@@ -3,40 +3,62 @@ using TableViewerBlazor.Internal.Component;
 
 namespace TableViewerTest.Components.Pages;
 
-public static class Rnd
-{
-    static Random rnd = new Random((int)DateTime.Now.Ticks);
-
-    public static string Next() => rnd?.Next(1, 100).ToString() ?? "test";
-}
-
 public partial class InnerEditorComponent : ComponentBase
 {
-    [Parameter] public ICustomEditorArgument Argument { get; set; } = default!;
+    [Parameter] public ICustomEditorArgument BaseArgument { get; set; } = default!;
+    private CustomEditorTypedArgument<EditItem, EditInner>? Argument;
     string Value = string.Empty;
 
     protected override void OnInitialized()
     {
-        if (Argument.Value is EditInner inner)
+        Argument = BaseArgument.Convert<EditItem, EditInner>();
+        Value = GetValue(Argument.Parent!);
+        Argument.ParentChanged += Argument_ParentChanged;
+    }
+
+    private void Argument_ParentChanged(object? sender, EditItem parent)
+    {
+        Argument!.Parent = parent;
+        Argument!.Value = parent.Inner;
+
+        Value = GetValue(parent!);
+        StateHasChanged();
+    }
+
+    private string GetValue(EditItem parent)
+    {
+        if (parent.IsSelected)
         {
-            Value = inner.Birth;
+            return parent.Inner.Birth;
         }
         else
         {
-            Value = string.Empty;
+            return parent.Inner.Age.ToString();
         }
     }
 
     private async Task OnValueChanged(string v)
     {
         Value = v;
-        if (Argument.DataChanged != null)
+        if (Argument!.DataChanged != null)
         {
-            await Argument.DataChanged(new EditInner
+            if (Argument!.Parent?.IsSelected ?? false)
             {
-                Age = Argument.Value is EditInner inner ? inner.Age : 0,
-                Birth = v,
-            });
+                await Argument.DataChanged(new EditInner
+                {
+                    Age = Argument.Value?.Age ?? 0,
+                    Birth = v,
+                });
+            }
+            else
+            {
+                await Argument.DataChanged(new EditInner
+                {
+                    Age = int.TryParse(v, out var age) ? age : 0,
+                    Birth = Argument.Value?.Birth ?? string.Empty,
+                });
+            }
         }
     }
 }
+

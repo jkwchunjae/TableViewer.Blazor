@@ -7,6 +7,8 @@ public partial class TeObjectArrayEditor : TeEditorBase
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
 
+    private List<ICustomEditorArgument> CustomEditorArguments = new List<ICustomEditorArgument>();
+
     protected override void OnInitialized()
     {
         MemberInfos = GetMembers(Items.GetType().GenericTypeArguments[0]);
@@ -48,6 +50,11 @@ public partial class TeObjectArrayEditor : TeEditorBase
             field.SetValue(item, value);
         }
         await DataChanged.InvokeAsync(Items);
+
+        foreach (var argument in CustomEditorArguments.Where(x => x.Parent == item))
+        {
+            argument.Update(item);
+        }
     }
 
     private async Task AddItem()
@@ -62,5 +69,27 @@ public partial class TeObjectArrayEditor : TeEditorBase
     {
         Items.Remove(item);
         await DataChanged.InvokeAsync(Items);
+    }
+
+    private ICustomEditorArgument GetCustomEditorArgument(object? value, object parent, MemberInfo memberInfo)
+    {
+        var argument = CustomEditorArguments.FirstOrDefault(x => x.Parent == parent);
+
+        if (argument != default)
+        {
+            return argument;
+        }
+        else
+        {
+            argument = new CustomEditorArguemnt
+            {
+                Value = value,
+                Parent = parent,
+                DataChanged = value => OnDataChanged(parent, memberInfo, value),
+            };
+            CustomEditorArguments.Add(argument);
+
+            return argument;
+        }
     }
 }

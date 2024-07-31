@@ -54,6 +54,16 @@
       <MudTd
         Class="@tdthClassText"
       >
+        @* @if (Options.TryGetCustomEditor(..., out var customEditor))
+        {
+          @customEditor(GetCustomEditorArgument(value, context, memberInfo))
+        } *@
+        @if (memberInfo.Name == "Inner" && Options.CustomEditor != null)
+        {
+          @Options.CustomEditor!(GetCustomEditorArgument(value, context, memberInfo))
+        }
+        else
+        {
         <TeElementEditor
           Data="value"
           DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
@@ -63,6 +73,7 @@
           Path="@memberInfo.Name"
           Label="@string.Empty"
         />
+        }
       </MudTd>
     }
     <MudTd>
