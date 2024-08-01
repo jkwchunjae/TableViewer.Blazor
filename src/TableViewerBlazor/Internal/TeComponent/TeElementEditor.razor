@@ -82,16 +82,30 @@ else if (Data is DateTime)
 }
 else if (Data is IList items)
 {
-    <TeObjectArrayEditor
-        Items="items"
-        ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
+    if (HasOnlyPrimitiveElements(items))
+    {
+        <TePrimitiveList
+            Items="items"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+        />
+    }
+    else
+    {
+        <TeObjectArrayEditor
+            Items="items"
+            ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+        />
+    }
 }
 else if (Data is Enum)
 {

@@ -1,0 +1,30 @@
+﻿@inherits TeEditorBase
+
+@if (ItemsEnumerable != null)
+{
+    <MudTable
+        T="object"
+        Items="@ItemsEnumerable"
+        Dense="Options.Style.Dense"
+        Hover="Options.Style.Hover"
+        Striped="Options.Style.Striped"
+        Bordered="Options.Style.Bordered"
+    >
+         <ToolBarContent>
+            <MudText Typo="Typo.h6">
+                @(Options.Title ?? string.Empty)
+            </MudText>
+            <MudSpacer />
+        </ToolBarContent>
+         <RowTemplate>
+             <MudTd>
+                 <TeElementEditor
+                    Data="context"
+                    DataChanged="OnDataChanged"
+                    Options="Options"
+                    Parent="ItemsEnumerable"
+                />
+             </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
