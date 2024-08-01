@@ -76,36 +76,35 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
+else if (Data is IList itemList && Options.TryGetArrayOption(this, out var arrayOption))
+{
+    <TePrimitiveList
+        Data="Data"
+        Items="itemList"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        ArrayOption="arrayOption"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+    />
+}
 else if (Data is DateTime)
 {
 
 }
 else if (Data is IList items)
 {
-    if (HasOnlyPrimitiveElements(items))
-    {
-        <TePrimitiveList
-            Items="items"
-            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-            Options="Options"
-            Depth="Depth"
-            Path="@Path"
-            Label="@Label"
-        />
-    }
-    else
-    {
-        <TeObjectArrayEditor
-            Items="items"
-            ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
-            Data="Data"
-            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-            Options="Options"
-            Depth="Depth"
-            Path="@Path"
-            Label="@Label"
-        />
-    }
+    <TeObjectArrayEditor
+        Items="items"
+        ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+    />
 }
 else if (Data is Enum)
 {

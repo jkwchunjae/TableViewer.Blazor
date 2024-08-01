@@ -14,6 +14,7 @@ public class TeOptions
     public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
     public List<TeObjectArrayEditorOption> ObjectArrayEditorOptions { get; set; } = [new()];
+    public List<TeArrayOption> ArrayOptions { get; set; } = []; 
     public List<ITvButton> ToolbarButtons { get; set; } = [];
 }
 
