@@ -77,6 +77,15 @@ public partial class EditorObjectArray : ComponentBase
                     Condition = (memberInfo, type) => type == typeof(EditInner),
                 },
             },
+            ToolbarButtons =
+            {
+                new TvLink<object>
+                {
+                    Href = x => "https://www.google.com",
+                    Label = "Google",
+                    Condition = (x, i) => true,
+                },
+            },
         };
         return base.OnInitializedAsync();
     }
