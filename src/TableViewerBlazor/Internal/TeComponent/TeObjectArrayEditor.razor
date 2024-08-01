@@ -31,6 +31,13 @@
       @(Options.Title ?? string.Empty)
     </MudText>
     <MudSpacer/>
+    @if (Depth == 1)
+    {
+        @foreach (var button in Options.ToolbarButtons)
+        {
+            <TvButton Item="ItemsEnumerable" Button="button" />
+        }
+    }
     <TvActionButton Item="@(new object())" Action="AddItemAction" />
   </ToolBarContent>
   <HeaderContent>

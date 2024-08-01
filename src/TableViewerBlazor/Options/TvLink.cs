@@ -1,12 +1,9 @@
 namespace TableViewerBlazor.Options;
 
-public interface ITvLink
+public interface ITvLink : ITvButton
 {
-    public Func<object?, int, bool> Condition { get; }
     public string Target { get; }
     public Func<object?, string> Href { get; }
-    public string Label { get; }
-    public TvButtonStyle Style { get; }
 }
 
 public class TvLink<T> : ITvLink
@@ -17,6 +14,6 @@ public class TvLink<T> : ITvLink
     public string Label { get; set; } = "LINK";
     public TvButtonStyle Style { get; set; } = new();
 
-    Func<object?, int, bool> ITvLink.Condition => (o, i) => o is T t && Condition(t, i);
+    Func<object?, int, bool> ITvButton.Condition => (o, i) => o is T t && Condition(t, i);
     Func<object?, string> ITvLink.Href => o => o is T t ? Href(t) : string.Empty;
 }
