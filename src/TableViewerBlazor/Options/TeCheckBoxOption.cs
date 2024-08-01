@@ -50,3 +50,10 @@ public class TeCheckBoxOption<T> : ITeFieldOption<T>, ITeCheckBoxOption
     public Func<T?, int, string, bool>? Condition { get; set; }
     public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
 }
+
+public class TeCheckBoxOption : ITeCheckBoxOption
+{
+    public string? Id { get; set; }
+    public Func<object?, int, string, bool>? Condition { get; set; }
+    public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
+}

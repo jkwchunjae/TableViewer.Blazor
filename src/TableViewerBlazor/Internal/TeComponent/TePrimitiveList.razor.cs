@@ -16,7 +16,7 @@ public partial class TePrimitiveList : TeEditorBase
 
     private async Task OnDataChanged(object context)
     {
-        Data = context;
-        await DataChanged.InvokeAsync(context);
+        await Js.InvokeVoidAsyncWithErrorHandling("console.log", context);
+        await DataChanged.InvokeAsync(Data);
     }
 }

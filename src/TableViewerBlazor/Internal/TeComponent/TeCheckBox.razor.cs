@@ -10,7 +10,7 @@ public partial class TeCheckBox : TeEditorBase
     public async Task OnValueChanged(bool value)
     {
         selected = value;
-        await DataChanged.InvokeAsync(value);
+        await DataChanged.InvokeAsync(new { BoolValue = value });
     }
 
     private string GetLabel()

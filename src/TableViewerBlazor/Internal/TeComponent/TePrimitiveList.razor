@@ -20,7 +20,7 @@
              <MudTd>
                  <TeElementEditor
                     Data="context"
-                    DataChanged="OnDataChanged"
+                    DataChanged="@(obj => OnDataChanged(obj))"
                     Options="Options"
                     Parent="ItemsEnumerable"
                 />
