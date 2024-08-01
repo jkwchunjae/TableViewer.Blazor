@@ -3,7 +3,7 @@
 @if (ItemsEnumerable != null)
 {
     <MudTable
-        T="object"
+        T="(int index, object item)"
         Items="@ItemsEnumerable"
         Dense="Options.Style.Dense"
         Hover="Options.Style.Hover"
@@ -17,12 +17,18 @@
             <MudSpacer />
         </ToolBarContent>
          <RowTemplate>
-             <MudTd>
+            @if (ArrayOption.ShowNumber)
+            {
+                <MudTd>
+                    @(context.index + 1)
+                </MudTd>
+            }
+            <MudTd>
                  <TeElementEditor
-                    Data="context"
+                    Data="context.item"
                     DataChanged="@(obj => OnDataChanged(obj))"
                     Options="Options"
-                    Parent="ItemsEnumerable"
+                    Parent="@ItemsEnumerable.Select(a => a.item)"
                 />
              </MudTd>
         </RowTemplate>

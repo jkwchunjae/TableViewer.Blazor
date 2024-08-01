@@ -3,14 +3,16 @@
 public partial class TePrimitiveList : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
+    [Parameter] public TeArrayOption ArrayOption { get; set; } = default!;
 
-    private IEnumerable<object> ItemsEnumerable = null!;
+    private IEnumerable<(int index, object item)> ItemsEnumerable = null!;
 
     protected override void OnParametersSet()
     {
         if (Items != null)
         {
-            ItemsEnumerable = Items.Cast<object>();
+            ItemsEnumerable = Items.Cast<object>()
+                .Select((item, index )=> (index, item));
         }
     }
 
