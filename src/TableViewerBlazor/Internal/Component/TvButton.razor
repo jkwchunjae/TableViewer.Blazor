@@ -1,0 +1,15 @@
+﻿@inherits TvViewBase
+
+@{
+    var item = Item;
+    var button = Button;
+}
+
+@if (button is ITvAction action)
+{
+    <TvActionButton Item="item" Action="action" />
+}
+else if (button is ITvLink link)
+{
+    <TvLinkButton Item="item" Link="link" />
+}
