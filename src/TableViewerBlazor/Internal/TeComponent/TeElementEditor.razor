@@ -52,18 +52,6 @@ else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericField
         NumericFieldOption="numericFieldOption"
     />
 }
-else if (Options.TryGetTextConvertableFieldOption(MemberInfo, this, out var textConvertableOption))
-{
-    <TeTextConvertableField
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        TextFieldOption="textConvertableOption"
-    />
-}
 else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
 {
     <TeTextField
