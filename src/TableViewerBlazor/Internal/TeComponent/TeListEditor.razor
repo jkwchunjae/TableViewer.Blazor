@@ -1,0 +1,72 @@
+﻿@inherits TeEditorBase
+
+@{
+  List<string> tableClassList = new()
+  {
+    "d-inline-block",
+    (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
+  };
+  if (Depth == 1)
+  {
+    tableClassList.AddRange(Options.Style.RootClass);
+  }
+  var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+  List<string> tdthClassList = new()
+  {
+    (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+  };
+  string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+}
+
+<MudTable
+  Items="@ItemsEnumerable"
+  Class="@tableClassText"
+  Dense="Options.Style.Dense"
+  Hover="Options.Style.Hover"
+  Striped="Options.Style.Striped"
+  Bordered="Options.Style.Bordered"
+>
+   <ToolBarContent>
+    <MudText Typo="Typo.h6">
+      @(Options.Title ?? string.Empty)
+    </MudText>
+    <MudSpacer />
+    <TvActionButton Item="@DefaultValue" Action="AddItemAction" />
+  </ToolBarContent>
+  <HeaderContent>
+    @if (ArrayOption.ShowNumber)
+    {
+      <MudTh Class="@tdthClassText">
+        No.
+      </MudTh>
+    }
+    <MudTh Class="@tdthClassText">
+      Value
+    </MudTh>
+    <MudTh Class="@tdthClassText">
+      ...
+    </MudTh>
+  </HeaderContent>
+  <RowTemplate>
+    @if (ArrayOption.ShowNumber)
+    {
+      <MudTd Class="@tdthClassText">
+        @(context.Index + 1)
+      </MudTd>
+    }
+    <MudTd Class="@tdthClassText">
+      <TeElementEditor
+        Data="context.Item"
+        DataChanged="@(item => OnDataChanged(item, context.Index))"
+        Options="Options"
+        Depth="Depth + 1"
+        Label="@string.Empty"
+        Parent="@Data"
+      />
+    </MudTd>
+    <MudTd Class="@tdthClassText">
+      <TvActionButton Item="context.Index" Action="RemoveItemAction" />
+    </MudTd>
+  </RowTemplate>
+</MudTable>

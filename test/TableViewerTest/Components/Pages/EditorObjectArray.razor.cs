@@ -86,6 +86,14 @@ public partial class EditorObjectArray : ComponentBase
                     Condition = (x, i) => true,
                 },
             },
+            ListEditorOptions =
+            {
+                new TeListEditorOption<EditItem>
+                {
+                    CreateNew = () => new EditItem(),
+                    ShowNumber = true,
+                },
+            },
         };
         return base.OnInitializedAsync();
     }
