@@ -71,10 +71,10 @@ public interface ITeListEditorOption : ITeFieldOption
     ITvAction RemoveItemAction { get; }
 }
 
-public class TeListEditorOption<T> : ITeFieldOption<T>, ITeListEditorOption
+public class TeListEditorOption<T> : ITeFieldOption<IList<T>>, ITeListEditorOption
 {
     public string? Id { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
+    public Func<IList<T>?, int, string, bool>? Condition { get; set; }
     public bool ShowNumber { get; set; } = false;
     public Func<T> CreateNew { get; set; } = () => Activator.CreateInstance<T>();
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
