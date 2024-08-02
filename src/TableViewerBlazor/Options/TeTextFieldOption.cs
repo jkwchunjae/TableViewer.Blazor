@@ -20,14 +20,6 @@ public static class TeTextFieldOptionExtensions
             }
         }
 
-        textFieldOption = options.TextFieldOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true) ?? default;
-        if (textFieldOption != null)
-        {
-            return true;
-        }
-
         textFieldOption = teBase.Data switch
         {
             string => new TeTextFieldOption(),
