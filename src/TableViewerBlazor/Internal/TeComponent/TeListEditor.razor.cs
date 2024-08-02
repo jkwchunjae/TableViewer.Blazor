@@ -8,6 +8,13 @@ public partial class TeListEditor : TeEditorBase
     private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items.Cast<object>()
                 .Select((item, index) => (index, item));
 
+    private object? DefaultValue;
+
+    protected override void OnInitialized()
+    {
+        DefaultValue = ArrayOption.CreateNew();
+    }
+
     private async Task OnDataChanged(object item, int index)
     {
         Items[index] = item;
@@ -16,28 +23,27 @@ public partial class TeListEditor : TeEditorBase
 
     private ITvAction AddItemAction => new TvAction<object>
     {
-        Action = _ => AddItem(),
+        Action = AddItem,
         Label = ArrayOption.AddItemAction.Label,
         Style = ArrayOption.AddItemAction.Style,
     };
 
-    private ITvAction RemoveItemAction => new TvAction<object>
+    private ITvAction RemoveItemAction => new TvAction<int>
     {
         Action = RemoveItem,
         Label = ArrayOption.RemoveItemAction.Label,
         Style = ArrayOption.RemoveItemAction.Style,
     };
 
-    private async Task AddItem()
+    private async Task AddItem(object? defaultValue)
     {
-        var item = ArrayOption.CreateNew();
-        Items.Add(item);
+        Items.Add(defaultValue);
         await DataChanged.InvokeAsync(Items);
     }
 
-    private async Task RemoveItem(object item)
+    private async Task RemoveItem(int index)
     {
-        Items.Remove(item);
+        Items.RemoveAt(index);
         await DataChanged.InvokeAsync(Items);
     }
 }
