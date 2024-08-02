@@ -1,18 +1,15 @@
 ﻿namespace TableViewerBlazor.Internal.TeComponent;
 
-public partial class TePrimitiveList : TeEditorBase
+public partial class TeListEditor : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
     [Parameter] public TeArrayOption ArrayOption { get; set; } = default!;
 
-    private IEnumerable<(int index, object item)> ItemsEnumerable => Items?.Cast<object>()
+    private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items?.Cast<object>()
                 .Select((item, index) => (index, item)) ?? default!;
-
-    private string addType = "string";
 
     private async Task OnDataChanged(object item, int index)
     {
-
         await Js.InvokeVoidAsyncWithErrorHandling("console.log", item);
         Items[index] = item;
         await DataChanged.InvokeAsync(Items);
@@ -34,8 +31,9 @@ public partial class TePrimitiveList : TeEditorBase
 
     private async Task AddItem()
     {
-        var instance = CreateInstance();
-        Items.Add(instance);
+        var itemType = Items.GetType().GenericTypeArguments[0];
+        var item = CreateInstance(itemType);
+        Items.Add(item);
         await DataChanged.InvokeAsync(Items);
     }
 
@@ -45,15 +43,15 @@ public partial class TePrimitiveList : TeEditorBase
         await DataChanged.InvokeAsync(Items);
     }
 
-    private object CreateInstance()
+    private object? CreateInstance(Type itemType)
     {
-        return addType switch
+        if (itemType == typeof(string))
         {
-            "string" => string.Empty,
-            "int" => default(int),
-            "float" => default(float),
-            "bool" => default(bool),
-            _ => string.Empty,
-        };
+            return string.Empty;
+        }
+        else
+        {
+            return Activator.CreateInstance(itemType);
+        }
     }
 }

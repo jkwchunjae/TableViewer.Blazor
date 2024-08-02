@@ -78,7 +78,7 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
 }
 else if (Data is IList itemList && Options.TryGetArrayOption(this, out var arrayOption))
 {
-    <TePrimitiveList
+    <TeListEditor
         Data="Data"
         Items="itemList"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"

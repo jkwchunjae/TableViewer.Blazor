@@ -2,4 +2,6 @@
 
 <h3>EditorArray</h3>
 
-<TableEditor T="List<object>" Data="arrayData" Options="teOptions" DataChanged="OnDataChanged" />
+<TableEditor T="List<string>" Data="arrayData" Options="teOptions" DataChanged="@(data => OnDataChanged<List<string>>(data))" />
+
+<TableEditor T="List<int>" Data="intList" Options="intOptions" DataChanged="@(data => OnDataChanged<List<int>>(data))" />

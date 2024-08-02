@@ -22,7 +22,6 @@ public static class TeArrayOptionExtensions
 public class TeArrayOption
 {
     public bool ShowNumber { get; set; } = false;
-    public bool EnableAddItem { get; set; } = false;
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
     public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
 

@@ -8,6 +8,7 @@ public partial class EditorArray : ComponentBase
 {
     [Inject] private IJSRuntime Js { get; set; } = default!;
     private readonly List<string> arrayData = ["1", "2", "배그", "bitter"];
+    private List<int> intList = new() { 123, 4567, };
     //private readonly List<bool> arrayData = [false];
     //private readonly List<object> arrayData = ["1", 2, "배그", "bitter", false];
     //private readonly List<object> arrayData = ["1", 2, "배그", "bitter", false, new TeOptions()];
@@ -19,8 +20,7 @@ public partial class EditorArray : ComponentBase
             new TeArrayOption
             {
                 ShowNumber = true,
-                EnableAddItem = true,
-            }
+            },
         ],
         TextFieldOptions =
         {
@@ -49,8 +49,16 @@ public partial class EditorArray : ComponentBase
         //    }
         //]
     };
+    private TeOptions intOptions = new()
+    {
+        Title = "int list",
+        ArrayOptions =
+        {
+            new TeArrayOption(),
+        },
+    };
 
-    private async Task OnDataChanged(List<string> data)
+    private async Task OnDataChanged<T>(T data)
     {
         await Js.InvokeVoidAsync("console.log", data);
     }
