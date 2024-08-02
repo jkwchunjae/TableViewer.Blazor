@@ -4,26 +4,34 @@ namespace TableViewerBlazor.Internal.TeComponent;
 
 public partial class TeTextField : TeEditorBase
 {
-    [Parameter] public ITeTextFieldOption? TextFieldOption { get; set; }
+    [Parameter] public ITeTextFieldOption TextFieldOption { get; set; } = default!;
 
-    private async Task OnValueChanged(object? value)
+    string stringValue = string.Empty;
+
+    protected override void OnParametersSet()
     {
-        Data = value;
+        stringValue = TextFieldOption.Converter.StringValue(Data!);
+    }
+
+    private async Task OnValueChanged(string value)
+    {
+        Data = TextFieldOption.Converter.FromString(value);
         if (TextFieldOption?.Event?.ValueChanged != null)
         {
             try
             {
-                await TextFieldOption.Event.ValueChanged.Invoke(value);
+                await TextFieldOption.Event.ValueChanged.Invoke(Data);
             }
             catch
             {
             }
         }
-        await DataChanged.InvokeAsync(value);
+        await DataChanged.InvokeAsync(Data);
     }
 
-    private async Task<IEnumerable<string>> TextFieldValidation<T>(T value)
+    private async Task<IEnumerable<string>> TextFieldValidation(string value)
     {
+        var data = TextFieldOption.Converter.FromString(value);
         var errors = new List<string>();
         if (TextFieldOption?.Validations != null)
         {
@@ -32,7 +40,7 @@ public partial class TeTextField : TeEditorBase
             {
                 try
                 {
-                    if (!await validation.Func(value!))
+                    if (!await validation.Func(data!))
                     {
                         errors.Add(validation.Message);
                     }
