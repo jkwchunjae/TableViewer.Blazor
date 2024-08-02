@@ -37,19 +37,9 @@ public static class TeTextFieldOptionExtensions
         {
             textFieldOption = new TeTextFieldOption();
         }
-        return textFieldOption != null;
-    }
-
-    public static bool TryGetTextConvertableFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeTextFieldOption? textFieldOption)
-    {
-        if (options.TryGetTextFieldOption(memberInfo, teBase, out textFieldOption))
+        if (textFieldOption != null)
         {
-            if (textFieldOption?.Converter != null)
-            {
-                return true;
-            }
+            return true;
         }
         if (memberInfo != null)
         {
