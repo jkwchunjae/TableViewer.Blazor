@@ -18,9 +18,10 @@ public partial class EditorArray : ComponentBase
         [
             new TeArrayOption
             {
-                ShowNumber = true
+                ShowNumber = true,
+                EnableAddItem = true,
             }
-        ]
+        ],
         //CheckBoxOptions =
         //[
         //    new TeCheckBoxOption

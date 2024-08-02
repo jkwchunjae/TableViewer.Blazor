@@ -15,18 +15,41 @@
                 @(Options.Title ?? string.Empty)
             </MudText>
             <MudSpacer />
-            <MudSelect
-                @bind-Value="addType"
-                Label="Type"
-                Placeholder="selected the type to add"
-            >
-                <MudSelectItem Value="@("string")">string</MudSelectItem>
-                <MudSelectItem Value="@("int")">int</MudSelectItem>
-                <MudSelectItem Value="@("float")">float</MudSelectItem>
-                <MudSelectItem Value="@("bool")">bool</MudSelectItem>
-            </MudSelect>
-            <TvActionButton Item="@(new object())" Action="AddItemAction" />
+            @if (ArrayOption.EnableAddItem)
+            {
+                <div style="width:200px;">
+                    <MudSelect
+                        @bind-Value="addType"
+                        Label="Type"
+                        Variant="Variant.Outlined"
+                        Placeholder="Selected the type to add"
+                    >
+                        <MudSelectItem Value="@("string")">string</MudSelectItem>
+                        <MudSelectItem Value="@("int")">int</MudSelectItem>
+                        <MudSelectItem Value="@("float")">float</MudSelectItem>
+                        <MudSelectItem Value="@("bool")">bool</MudSelectItem>
+                    </MudSelect>
+                </div>
+                <TvActionButton Item="@(new object())" Action="AddItemAction" />
+            }
         </ToolBarContent>
+        <HeaderContent>
+            @if (ArrayOption.ShowNumber)
+            {
+                <MudTh>
+                    Number
+                </MudTh>
+            }
+            <MudTh>
+                Content
+            </MudTh>
+            @if (ArrayOption.EnableAddItem)
+            {
+                <MudTh>
+                    ...
+                </MudTh>
+            }
+        </HeaderContent>
          <RowTemplate>
             @if (ArrayOption.ShowNumber)
             {
@@ -42,9 +65,12 @@
                     Parent="@ItemsEnumerable.Select(a => a.item)"
                 />
              </MudTd>
-             <MudTd>
-                <TvActionButton Item="context.item" Action="RemoveItemAction" />
-             </MudTd>
+            @if(ArrayOption.EnableAddItem)
+            {
+                <MudTd>
+                    <TvActionButton Item="context.item" Action="RemoveItemAction" />
+                </MudTd>
+            }
         </RowTemplate>
     </MudTable>
 }
