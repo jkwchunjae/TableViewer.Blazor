@@ -10,7 +10,6 @@ public partial class TeListEditor : TeEditorBase
 
     private async Task OnDataChanged(object item, int index)
     {
-        await Js.InvokeVoidAsyncWithErrorHandling("console.log", item);
         Items[index] = item;
         await DataChanged.InvokeAsync(Items);
     }
@@ -31,8 +30,7 @@ public partial class TeListEditor : TeEditorBase
 
     private async Task AddItem()
     {
-        var itemType = Items.GetType().GenericTypeArguments[0];
-        var item = CreateInstance(itemType);
+        var item = ArrayOption.CreateNew();
         Items.Add(item);
         await DataChanged.InvokeAsync(Items);
     }
@@ -41,17 +39,5 @@ public partial class TeListEditor : TeEditorBase
     {
         Items.Remove(item);
         await DataChanged.InvokeAsync(Items);
-    }
-
-    private object? CreateInstance(Type itemType)
-    {
-        if (itemType == typeof(string))
-        {
-            return string.Empty;
-        }
-        else
-        {
-            return Activator.CreateInstance(itemType);
-        }
     }
 }
