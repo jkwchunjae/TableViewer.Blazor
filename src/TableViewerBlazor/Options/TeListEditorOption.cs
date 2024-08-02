@@ -98,10 +98,8 @@ public class TeListEditorOption<T> : ITeFieldOption<IList<T>>, ITeListEditorOpti
             Label = "Add Item",
             Style = new TvButtonStyle
             {
-                StartIcon = Icons.Material.Outlined.PlusOne,
-                IconSize = Size.Medium,
                 Size = Size.Medium,
-                Dense = false,
+                Dense = true,
                 SuperDense = false,
             },
         };
