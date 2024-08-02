@@ -18,6 +18,7 @@ class EditItem
 class EditInner
 {
     public string Birth { get; set; } = string.Empty;
+    [TeTextField(nameof(Age))]
     public int Age { get; set; }
 }
 
@@ -59,6 +60,15 @@ public partial class EditorObjectArray : ComponentBase
                     {
                         FromString = (s) => new PersonName(s),
                         StringValue = (p) => p?.ToString() ?? string.Empty,
+                    },
+                },
+                new TeTextFieldOption<int>
+                {
+                    Id = nameof(EditInner.Age),
+                    Converter = new TeTextFieldConverter<int>
+                    {
+                        FromString = (s) => int.TryParse(s, out var number) ? number : default,
+                        StringValue = (i) => i.ToString(),
                     },
                 },
             },
