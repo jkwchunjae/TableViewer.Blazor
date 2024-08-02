@@ -3,7 +3,8 @@
 <MudField Label="@Label" Underline="@(CheckBoxOption.Property.Underline)">
     <MudCheckBox
         T="bool"
-        Label="@(GetLabel())"
+        Label="@CheckBoxLabel"
+        Value="isChecked"
         ValueChanged="@(async isChecked => await OnValueChanged(isChecked))"
 
         TriState="@(CheckBoxOption.Property.TriState)"

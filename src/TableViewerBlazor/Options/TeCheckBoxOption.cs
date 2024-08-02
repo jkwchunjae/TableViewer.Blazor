@@ -26,6 +26,17 @@ public static class TeCheckBoxOptionExtensions
             .Where(option => string.IsNullOrEmpty(option.Id))
             .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
             .FirstOrDefault() ?? default!;
+
+        if (checkBoxOption != null)
+        {
+            return true;
+        }
+
+        checkBoxOption = teBase.Data switch
+        {
+            bool _ => new TeCheckBoxOption<object>(),
+            _ => null
+        };
         return checkBoxOption != null;
     }
 }
