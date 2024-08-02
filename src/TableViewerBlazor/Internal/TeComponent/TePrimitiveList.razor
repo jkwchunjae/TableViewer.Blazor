@@ -26,7 +26,7 @@
             <MudTd>
                  <TeElementEditor
                     Data="context.item"
-                    DataChanged="@(obj => OnDataChanged(obj))"
+                    DataChanged="@(item => OnDataChanged(item, context.index))"
                     Options="Options"
                     Parent="@ItemsEnumerable.Select(a => a.item)"
                 />

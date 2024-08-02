@@ -5,20 +5,14 @@ public partial class TePrimitiveList : TeEditorBase
     [Parameter] public IList Items { get; set; } = default!;
     [Parameter] public TeArrayOption ArrayOption { get; set; } = default!;
 
-    private IEnumerable<(int index, object item)> ItemsEnumerable = null!;
+    private IEnumerable<(int index, object item)> ItemsEnumerable => Items?.Cast<object>()
+                .Select((item, index) => (index, item)) ?? default!;
 
-    protected override void OnParametersSet()
+    private async Task OnDataChanged(object item, int index)
     {
-        if (Items != null)
-        {
-            ItemsEnumerable = Items.Cast<object>()
-                .Select((item, index )=> (index, item));
-        }
-    }
 
-    private async Task OnDataChanged(object context)
-    {
-        await Js.InvokeVoidAsyncWithErrorHandling("console.log", context);
-        await DataChanged.InvokeAsync(Data);
+        await Js.InvokeVoidAsyncWithErrorHandling("console.log", item);
+        Items[index] = item;
+        await DataChanged.InvokeAsync(Items);
     }
 }
