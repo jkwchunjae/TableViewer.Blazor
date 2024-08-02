@@ -25,10 +25,23 @@ public partial class TePrimitiveList : TeEditorBase
         Style = ArrayOption.AddItemAction.Style,
     };
 
+    private ITvAction RemoveItemAction => new TvAction<object>
+    {
+        Action = RemoveItem,
+        Label = ArrayOption.RemoveItemAction.Label,
+        Style = ArrayOption.RemoveItemAction.Style,
+    };
+
     private async Task AddItem()
     {
         var instance = CreateInstance();
         Items.Add(instance);
+        await DataChanged.InvokeAsync(Items);
+    }
+
+    private async Task RemoveItem(object item)
+    {
+        Items.Remove(item);
         await DataChanged.InvokeAsync(Items);
     }
 

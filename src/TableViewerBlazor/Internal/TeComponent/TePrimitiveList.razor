@@ -42,6 +42,9 @@
                     Parent="@ItemsEnumerable.Select(a => a.item)"
                 />
              </MudTd>
+             <MudTd>
+                <TvActionButton Item="context.item" Action="RemoveItemAction" />
+             </MudTd>
         </RowTemplate>
     </MudTable>
 }

@@ -23,6 +23,7 @@ public class TeArrayOption
 {
     public bool ShowNumber { get; set; } = false;
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
+    public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
 
     private static TvAction<object> CreateDefaultAddAction()
     {
@@ -38,6 +39,22 @@ public class TeArrayOption
                 Dense = false,
                 SuperDense = false,
             },
+        };
+    }
+
+    private static TvAction<object> CreateDefaultRemoveAction()
+    {
+        return new TvAction<object>
+        {
+            Action = _ => Task.CompletedTask,
+            Label = string.Empty,
+            Style = new TvButtonStyle
+            {
+                StartIcon = Icons.Material.Outlined.Cancel,
+                IconColor = Color.Error,
+                Dense = false,
+                SuperDense = false,
+            }
         };
     }
 }
