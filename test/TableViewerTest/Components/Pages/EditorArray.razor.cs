@@ -14,26 +14,7 @@ public partial class EditorArray : ComponentBase
     //private readonly List<object> arrayData = ["1", 2, "배그", "bitter", false, new TeOptions()];
     private readonly TeOptions teOptions = new()
     {
-        Title = "array test",
-        ArrayOptions = 
-        [
-            new TeArrayOption
-            {
-                ShowNumber = true,
-            },
-        ],
-        TextFieldOptions =
-        {
-            new TeTextFieldOption<object>
-            {
-                Condition = (obj, _, _) => obj is bool,
-                Converter = new TeTextFieldConverter<object>
-                {
-                    FromString = s => bool.TryParse(s, out var boolValue) ? boolValue : false,
-                    StringValue = p =>  p?.ToString() ?? string.Empty,
-                }
-            },
-        }
+        Title = "string list",
         //CheckBoxOptions =
         //[
         //    new TeCheckBoxOption
@@ -52,10 +33,6 @@ public partial class EditorArray : ComponentBase
     private TeOptions intOptions = new()
     {
         Title = "int list",
-        ArrayOptions =
-        {
-            new TeArrayOption(),
-        },
     };
 
     private async Task OnDataChanged<T>(T data)

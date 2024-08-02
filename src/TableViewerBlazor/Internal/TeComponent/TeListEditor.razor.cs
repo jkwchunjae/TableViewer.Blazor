@@ -3,7 +3,7 @@
 public partial class TeListEditor : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
-    [Parameter] public TeArrayOption ArrayOption { get; set; } = default!;
+    [Parameter] public ITeListEditorOption ArrayOption { get; set; } = default!;
 
     private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items?.Cast<object>()
                 .Select((item, index) => (index, item)) ?? default!;
