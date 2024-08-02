@@ -15,6 +15,17 @@
                 @(Options.Title ?? string.Empty)
             </MudText>
             <MudSpacer />
+            <MudSelect
+                @bind-Value="addType"
+                Label="Type"
+                Placeholder="selected the type to add"
+            >
+                <MudSelectItem Value="@("string")">string</MudSelectItem>
+                <MudSelectItem Value="@("int")">int</MudSelectItem>
+                <MudSelectItem Value="@("float")">float</MudSelectItem>
+                <MudSelectItem Value="@("bool")">bool</MudSelectItem>
+            </MudSelect>
+            <TvActionButton Item="@(new object())" Action="AddItemAction" />
         </ToolBarContent>
          <RowTemplate>
             @if (ArrayOption.ShowNumber)

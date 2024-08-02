@@ -22,4 +22,22 @@ public static class TeArrayOptionExtensions
 public class TeArrayOption
 {
     public bool ShowNumber { get; set; } = false;
+    public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
+
+    private static TvAction<object> CreateDefaultAddAction()
+    {
+        return new TvAction<object>
+        {
+            Action = _ => Task.CompletedTask,
+            Label = "Add Item",
+            Style = new TvButtonStyle
+            {
+                StartIcon = Icons.Material.Outlined.PlusOne,
+                IconSize = Size.Medium,
+                Size = Size.Medium,
+                Dense = false,
+                SuperDense = false,
+            },
+        };
+    }
 }
