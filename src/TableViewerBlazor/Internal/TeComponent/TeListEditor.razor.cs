@@ -5,8 +5,8 @@ public partial class TeListEditor : TeEditorBase
     [Parameter] public IList Items { get; set; } = default!;
     [Parameter] public ITeListEditorOption ArrayOption { get; set; } = default!;
 
-    private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items?.Cast<object>()
-                .Select((item, index) => (index, item)) ?? default!;
+    private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items.Cast<object>()
+                .Select((item, index) => (index, item));
 
     private async Task OnDataChanged(object item, int index)
     {
