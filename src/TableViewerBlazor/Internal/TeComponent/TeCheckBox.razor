@@ -1,0 +1,25 @@
+﻿@inherits TeEditorBase
+
+<MudField Label="@Label" Underline="@(CheckBoxOption.Property.Underline)">
+    <MudCheckBox
+        T="bool"
+        Label="@CheckBoxLabel"
+        Value="isChecked"
+        ValueChanged="@(async isChecked => await OnValueChanged(isChecked))"
+
+        TriState="@(CheckBoxOption.Property.TriState)"
+        Disabled="@(CheckBoxOption.Property.Disabled)"
+        KeyboardEnabled="@(CheckBoxOption.Property.KeyboardEnabled)"
+        LabelPosition="@(CheckBoxOption.Property.LabelOptions?.LabelPosition ?? LabelPosition.End)"
+        ReadOnly="@(CheckBoxOption.Property.ReadOnly)"
+        Culture="@(CheckBoxOption.Property.Culture)"
+        CheckedIcon="@(CheckBoxOption.Property.CheckedIcon)"
+        Color="@(CheckBoxOption.Property.Color)"
+        Dense="@(CheckBoxOption.Property.Dense)"
+        IndeterminateIcon="@(CheckBoxOption.Property.IndeterminateIcon)"
+        Ripple="@(CheckBoxOption.Property.Ripple)"
+        Size="@(CheckBoxOption.Property.Size)"
+        UncheckedColor="@(CheckBoxOption.Property.UncheckedColor)"
+        UncheckedIcon="@(CheckBoxOption.Property.UncheckedIcon )"
+    />
+</MudField>
