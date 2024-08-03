@@ -80,7 +80,7 @@ public class TeCheckBoxOption<TValue> : ITeCheckBoxOption
                 return false;
             }
         };
-    }
+}
 
 public class TeCheckBoxOption : ITeCheckBoxOption
 {
