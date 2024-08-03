@@ -10,12 +10,12 @@ public partial class TeTextField : TeEditorBase
 
     protected override void OnParametersSet()
     {
-        stringValue = TextFieldOption.Converter.StringValue(Data!);
+        stringValue = TextFieldOption.Converter.ToField(Data!)!;
     }
 
     private async Task OnValueChanged(string value)
     {
-        Data = TextFieldOption.Converter.FromString(value);
+        Data = TextFieldOption.Converter.FromField(value);
         if (TextFieldOption?.Event?.ValueChanged != null)
         {
             try
@@ -31,7 +31,7 @@ public partial class TeTextField : TeEditorBase
 
     private async Task<IEnumerable<string>> TextFieldValidation(string value)
     {
-        var data = TextFieldOption.Converter.FromString(value);
+        var data = TextFieldOption.Converter.FromField(value);
         var errors = new List<string>();
         if (TextFieldOption?.Validations != null)
         {
