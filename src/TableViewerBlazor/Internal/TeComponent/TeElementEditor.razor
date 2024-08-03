@@ -3,55 +3,6 @@
 @if (Options.TryGetIgnoreOption(MemberInfo, this, out var ignoreOption))
 {
 }
-else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))
-{
-    <TeSelectBox
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        SelectBoxOption="@selectBoxOption"
-    />
-}
-else if (Options.TryGetRadioOption(MemberInfo, this, out var radioOption))
-{
-    <TeRadio
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        RadioOption="@radioOption"
-    />
-}
-else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
-{
-    <TeCheckBox
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Parent="Parent"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        CheckBoxOption="@checkBoxOption"
-    />
-}
-else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption))
-{
-    <TeNumericField
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        NumericFieldOption="numericFieldOption"
-    />
-}
 else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
 {
     <TeTextField
@@ -64,19 +15,6 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
-else if (Data is IList itemList && Options.TryGetListEditorOption(MemberInfo, this, out var listEditorOption))
-{
-    <TeListEditor
-        Data="Data"
-        Items="itemList"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        ArrayOption="listEditorOption"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
-}
 else if (Data is DateTime)
 {
 
@@ -86,17 +24,6 @@ else if (Data is IList items)
     <TeObjectArrayEditor
         Items="items"
         ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
-}
-else if (Data is Enum)
-{
-    <TeEnumEditor
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
