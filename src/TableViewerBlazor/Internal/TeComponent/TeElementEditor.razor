@@ -3,6 +3,19 @@
 @if (Options.TryGetIgnoreOption(MemberInfo, this, out var ignoreOption))
 {
 }
+else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
+{
+    <TeCheckBox
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+        Parent="Parent"
+        CheckBoxOption="checkBoxOption"
+    />
+}
 else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
 {
     <TeTextField
