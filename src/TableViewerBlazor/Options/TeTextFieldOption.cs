@@ -1,6 +1,5 @@
 ﻿using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
-using YamlDotNet.Core.Tokens;
 
 namespace TableViewerBlazor.Options;
 
