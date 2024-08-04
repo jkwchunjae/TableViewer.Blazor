@@ -9,6 +9,7 @@ public class TeOptions
     public List<ITeTextFieldOption> TextFieldOptions { get; set; } = [];
     public List<ITeNumericFieldOption> NumericFieldOptions { get; set; } = [];
     public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
+    public List<ITeRadioOption> RadioOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
     public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();

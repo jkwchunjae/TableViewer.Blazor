@@ -15,6 +15,18 @@ else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption
         SelectBoxOption="@selectBoxOption"
     />
 }
+else if (Options.TryGetRadioOption(MemberInfo, this, out var radioOption))
+{
+    <TeRadio
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+        RadioOption="@radioOption"
+    />
+}
 else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
 {
     <TeCheckBox

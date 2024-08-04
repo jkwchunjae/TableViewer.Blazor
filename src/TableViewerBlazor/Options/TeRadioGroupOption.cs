@@ -36,24 +36,41 @@ public class TeRadioAttribute : Attribute
     }
 }
 
-public interface ITeRadioOption : ITeFieldOption
+public interface ITeRadioOption : ITeFieldOption<object, object>
 {
     IEnumerable<ITeValidation> Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
     ITeRadioGroupProperty? Property { get; }
 }
 
-public class TeRadioOption<T> : ITeFieldOption<T>, ITeRadioOption
+public class TeRadioOption<TValue> : ITeRadioOption
 {
     public string? Id { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
+    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
-    public List<TeRadioItem<T>> Items { get; set; } = [];
+    public required List<TeRadioItem<TValue>> Items { get; set; }
     public TeRadioGroupProperty? Property { get; set; }
-
+    public ITeConverter<object, object> Converter => new TeConverter<object, object>
+    {
+        ToField = value => value,
+        FromField = value => value,
+    };
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;
+    ITeConverter ITeFieldOption.Converter => Converter;
+    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
+        (obj, depth, path) =>
+        {
+            if (obj is TValue value)
+            {
+                return Condition?.Invoke(value, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
 
 public interface ITeRadioItem
@@ -64,9 +81,9 @@ public interface ITeRadioItem
     ITeRadioItemProperty? Property { get; }
 }
 
-public record TeRadioItem<T> : ITeRadioItem
+public record TeRadioItem<TValue> : ITeRadioItem
 {
-    public T? Value { get; init; } = default!;
+    public TValue? Value { get; init; } = default!;
     public string Text { get; init; } = string.Empty;
     public bool Default { get; init; } = false;
     public TeRadioItemProperty? Property { get; set; }
@@ -77,7 +94,7 @@ public record TeRadioItem<T> : ITeRadioItem
     public TeRadioItem()
     {
     }
-    public TeRadioItem(T value, string text, bool @default = false)
+    public TeRadioItem(TValue value, string text, bool @default = false)
     {
         Value = value;
         Text = text;
