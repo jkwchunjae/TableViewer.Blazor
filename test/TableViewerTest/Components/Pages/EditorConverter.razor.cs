@@ -6,17 +6,17 @@ namespace TableViewerTest.Components.Pages;
 
 public class StringTestData
 {
-    [TeSelectBox(nameof(String))]
+    [TeNumericField(nameof(String))]
     public string String { get; set; } = string.Empty;
-    [TeSelectBox(nameof(Number))]
+    [TeNumericField(nameof(Number))]
     public int Number { get; set; }
-    [TeSelectBox(nameof(DateTime))]
+    [TeNumericField(nameof(DateTime))]
     public DateTime DateTime { get; set; }
-    [TeSelectBox(nameof(Bool))]
+    [TeNumericField(nameof(Bool))]
     public bool Bool { get; set; } = true;
-    [TeSelectBox(nameof(Enum))]
+    [TeNumericField(nameof(Enum))]
     public TestEnum Enum { get; set; }
-    [TeSelectBox(nameof(IntList))]
+    [TeNumericField(nameof(IntList))]
     public List<int> IntList { get; set; } = new List<int> { 1, 2, 3, 4, 5 };
 }
 
@@ -27,90 +27,95 @@ public partial class EditorConverter : ComponentBase
     StringTestData data = new StringTestData();
     TeOptions options = new TeOptions
     {
-        SelectBoxOptions =
+        NumericFieldOptions =
         {
-            new TeSelectBoxOption<string>
+            new TeNumericFieldOption<string, int>
             {
                 Id = nameof(StringTestData.String),
-                Items = new List<TeSelectItem<string>>
-                {
-                    new TeSelectItem<string> { Value = "A", Text = "A" },
-                    new TeSelectItem<string> { Value = "B", Text = "B" },
-                    new TeSelectItem<string> { Value = "C", Text = "C" },
-                },
-                // Converter = new TeCheckBoxConverter<string>
+                // Items = new List<TeSelectItem<string>>
                 // {
-                //     FromBoolean = (b) => b.ToString(),
-                //     ToBoolean = (s) => bool.TryParse(s, out var boolean) ? boolean : default,
+                //     new TeSelectItem<string> { Value = "A", Text = "A" },
+                //     new TeSelectItem<string> { Value = "B", Text = "B" },
+                //     new TeSelectItem<string> { Value = "C", Text = "C" },
                 // },
+                Converter = new TeNumericFieldConverter<string, int>
+                {
+                    FromNumber = (b) => b.ToString(),
+                    ToNumber = (s) => int.TryParse(s, out var number) ? number : default,
+                },
             },
-            new TeSelectBoxOption<int>
+            new TeNumericFieldOption<int>
             {
                 Id = nameof(StringTestData.Number),
-                Items = new List<TeSelectItem<int>>
-                {
-                    new TeSelectItem<int> { Value = 1, Text = "1" },
-                    new TeSelectItem<int> { Value = 2, Text = "2" },
-                    new TeSelectItem<int> { Value = 3, Text = "3" },
-                },
-                // Converter = new TeCheckBoxConverter<int>
+                // Items = new List<TeSelectItem<int>>
                 // {
-                //     FromBoolean = b => b ? 1 : 0,
-                //     ToBoolean = (i) => i == 0 ? false : true,
+                //     new TeSelectItem<int> { Value = 1, Text = "1" },
+                //     new TeSelectItem<int> { Value = 2, Text = "2" },
+                //     new TeSelectItem<int> { Value = 3, Text = "3" },
+                // },
+                // Converter = new TeNumericFieldConverter<int>
+                // {
+                //     FromNumber = b => b ? 1 : 0,
+                //     ToNumber = (i) => i == 0 ? false : true,
                 // },
             },
-            new TeSelectBoxOption<DateTime>
+            new TeNumericFieldOption<DateTime, double>
             {
                 Id = nameof(StringTestData.DateTime),
-                Items = new List<TeSelectItem<DateTime>>
-                {
-                    new TeSelectItem<DateTime> { Value = DateTime.MinValue, Text = "Min" },
-                    new TeSelectItem<DateTime> { Value = DateTime.MaxValue, Text = "Max" },
-                    new TeSelectItem<DateTime> { Value = DateTime.Now, Text = "Now" },
-                },
-                // Converter = new TeCheckBoxConverter<DateTime>
+                // Items = new List<TeSelectItem<DateTime>>
                 // {
-                //     FromBoolean = b => b ? DateTime.MaxValue : DateTime.MinValue,
-                //     ToBoolean = (d) => d == DateTime.MinValue ? false : true,
+                //     new TeSelectItem<DateTime> { Value = DateTime.MinValue, Text = "Min" },
+                //     new TeSelectItem<DateTime> { Value = DateTime.MaxValue, Text = "Max" },
+                //     new TeSelectItem<DateTime> { Value = DateTime.Now, Text = "Now" },
                 // },
+                Converter = new TeNumericFieldConverter<DateTime, double>
+                {
+                    FromNumber = b => DateTime.FromOADate(b),
+                    ToNumber = (d) => d.ToOADate(),
+                },
             },
-            new TeSelectBoxOption<bool>
+            new TeNumericFieldOption<bool, long>
             {
                 Id = nameof(StringTestData.Bool),
-                Items = new List<TeSelectItem<bool>>
+                // Items = new List<TeSelectItem<bool>>
+                // {
+                //     new TeSelectItem<bool> { Value = true, Text = "True" },
+                //     new TeSelectItem<bool> { Value = false, Text = "False" },
+                // },
+                Converter = new TeNumericFieldConverter<bool, long>
                 {
-                    new TeSelectItem<bool> { Value = true, Text = "True" },
-                    new TeSelectItem<bool> { Value = false, Text = "False" },
+                    FromNumber = (l) => l == 0 ? false : true,
+                    ToNumber = b => b ? 1 : 0,
                 },
             },
-            new TeSelectBoxOption<TestEnum>
+            new TeNumericFieldOption<TestEnum, byte>
             {
                 Id = nameof(StringTestData.Enum),
-                Items = new List<TeSelectItem<TestEnum>>
-                {
-                    new TeSelectItem<TestEnum> { Value = TestEnum.A, Text = "A" },
-                    new TeSelectItem<TestEnum> { Value = TestEnum.B, Text = "B" },
-                    new TeSelectItem<TestEnum> { Value = TestEnum.C, Text = "C" },
-                },
-                // Converter = new TeCheckBoxConverter<TestEnum>
+                // Items = new List<TeSelectItem<TestEnum>>
                 // {
-                //     FromBoolean = (b) => b ? TestEnum.B : TestEnum.C,
-                //     ToBoolean = (e) => e == TestEnum.B ? true : false,
+                //     new TeSelectItem<TestEnum> { Value = TestEnum.A, Text = "A" },
+                //     new TeSelectItem<TestEnum> { Value = TestEnum.B, Text = "B" },
+                //     new TeSelectItem<TestEnum> { Value = TestEnum.C, Text = "C" },
                 // },
+                Converter = new TeNumericFieldConverter<TestEnum, byte>
+                {
+                    FromNumber = (b) => (TestEnum)b,
+                    ToNumber = (e) => (byte)e,
+                },
             },
-            new TeSelectBoxOption<List<int>>
+            new TeNumericFieldOption<List<int>, ulong>
             {
                 Id = nameof(StringTestData.IntList),
-                Items = new List<TeSelectItem<List<int>>>
-                {
-                    new TeSelectItem<List<int>> { Value = new List<int> { 1, 2, 3, 4, 5 }, Text = "1, 2, 3, 4, 5" },
-                    new TeSelectItem<List<int>> { Value = new List<int> { 6, 7, 8, 9, 10 }, Text = "6, 7, 8, 9, 10" },
-                },
-                // Converter = new TeCheckBoxConverter<List<int>>
+                // Items = new List<TeSelectItem<List<int>>>
                 // {
-                //     FromBoolean = b => b ? new List<int> { 1, 2, 3, 4, 5 } : new List<int>(),
-                //     ToBoolean = list => list.Any(),
+                //     new TeSelectItem<List<int>> { Value = new List<int> { 1, 2, 3, 4, 5 }, Text = "1, 2, 3, 4, 5" },
+                //     new TeSelectItem<List<int>> { Value = new List<int> { 6, 7, 8, 9, 10 }, Text = "6, 7, 8, 9, 10" },
                 // },
+                Converter = new TeNumericFieldConverter<List<int>, ulong>
+                {
+                    FromNumber = number => number.ToString().Select(x => int.Parse($"{x}")).ToList(),
+                    ToNumber = list => ulong.Parse(string.Join("", list)),
+                },
             },
         },
     };
