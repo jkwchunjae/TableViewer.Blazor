@@ -13,10 +13,13 @@ public partial class TeNumericField<TNumber> : TeEditorBase
     TNumber numberValue = TNumber.Zero;
     protected override void OnInitialized()
     {
-        var converted = NumericFieldOption.Converter.ToField(Data!);
-        if (converted is TNumber numberValue)
+        if (Data != null)
         {
-            this.numberValue = numberValue;
+            var converted = NumericFieldOption.Converter.ToField(Data);
+            if (converted is TNumber numberValue)
+            {
+                this.numberValue = numberValue;
+            }
         }
 
         property = GetNumberFieldProperty();
@@ -24,8 +27,9 @@ public partial class TeNumericField<TNumber> : TeEditorBase
 
     private async Task OnValueChanged(TNumber value)
     {
+        numberValue = value;
         Data = NumericFieldOption.Converter.FromField(value);
-        await DataChanged.InvokeAsync(value);
+        await DataChanged.InvokeAsync(Data);
     }
 
     private async Task<IEnumerable<string>> NumericFieldValidation(TNumber value)
