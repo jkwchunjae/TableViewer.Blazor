@@ -28,6 +28,19 @@ else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
         CheckBoxOption="checkBoxOption"
     />
 }
+else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption, out var numericDefaultValue))
+{
+    <TeNumericFieldSwitch
+        Data="Data"
+        NumericDefaultValue="numericDefaultValue"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+        NumericFieldOption="numericFieldOption"
+    />
+}
 else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
 {
     <TeTextField
