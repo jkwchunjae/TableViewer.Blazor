@@ -7,6 +7,7 @@ public class TeOptions
     public bool ReadField { get; set; } = true;
     public TeStyleOption Style { get; set; } = new();
     public List<ITeTextFieldOption> TextFieldOptions { get; set; } = [];
+    public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
     public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
