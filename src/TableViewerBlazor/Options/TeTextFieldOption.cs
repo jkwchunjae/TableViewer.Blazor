@@ -70,65 +70,91 @@ public class TeTextFieldAttribute : Attribute
     }
 }
 
-public interface ITeTextFieldOption : ITeFieldOption
+public interface ITeTextFieldOption : ITeFieldOption<object, string>
 {
     IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
-    ITeTextFieldConverter Converter { get; }
     string TypeName { get; }
 }
 
-public class TeTextFieldOption<T> : ITeFieldOption<T>, ITeTextFieldOption
+public class TeTextFieldOption<TValue> : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
-    public List<ITeValidation> Validations { get; set; } = [];
-    public TeTextFieldProperty? Property { get; set; }
-    public TeTextFieldEvent<T>? Event { get; set; }
-    public required TeTextFieldConverter<T> Converter { get; set; }
-    public string TypeName => typeof(T).Name;
+    public Func<TValue?, int, string, bool>? Condition { get; set; }
+    public IEnumerable<ITeValidation> Validations { get; set; } = [];
+    public ITeTextFieldProperty? Property { get; set; }
+    public TeTextFieldEvent<TValue>? Event { get; set; }
+    public required TeTextFieldConverter<TValue> Converter { get; set; }
 
-    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
-    ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
+    public string TypeName => typeof(TValue).Name;
+    ITeConverter ITeFieldOption.Converter => Converter;
+    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    {
+        ToField = value => value is TValue tValue ? Converter.ToField(tValue) : string.Empty,
+        FromField = value => Converter.FromField(value) ?? default,
+    };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    ITeTextFieldConverter ITeTextFieldOption.Converter => Converter;
+    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
+        (obj, depth, path) =>
+        {
+            if (obj is TValue value)
+            {
+                return Condition?.Invoke(value, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
 
-public class TeTextFieldOption : ITeFieldOption<string>, ITeTextFieldOption
+public class TeTextFieldOption : ITeTextFieldOption
 {
     public string? Id { get; set; }
     public Func<string?, int, string, bool>? Condition { get; set; }
-    public List<ITeValidation> Validations { get; set; } = [];
-    public TeTextFieldProperty? Property { get; set; }
+    public IEnumerable<ITeValidation> Validations { get; set; } = [];
+    public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<string>? Event { get; set; }
-    private static TeTextFieldConverter<string> Converter = new TeTextFieldConverter<string>
-    {
-        FromString = s => s,
-        StringValue = s => s ?? string.Empty,
-    };
+
     public string TypeName => typeof(string).Name;
-
-    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
-    ITeTextFieldProperty? ITeTextFieldOption.Property => Property;
+    ITeConverter ITeFieldOption.Converter => new TeTextFieldConverter();
+    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    {
+        ToField = value => value is string stringValue ? stringValue : string.Empty,
+        FromField = value => value is string ? value : string.Empty,
+    };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    ITeTextFieldConverter ITeTextFieldOption.Converter => Converter;
+    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
+    (obj, depth, path) =>
+    {
+        if (obj is string value)
+        {
+            return Condition?.Invoke(value, depth, path) ?? true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+
 }
 
-public interface ITeTextFieldConverter
+public class TeTextFieldConverter<TValue> : ITeConverter<TValue, string>
 {
-    Func<object, string> StringValue { get; }
-    Func<string, object> FromString { get; }
+    public required Func<TValue, string?> StringValue { get; set; }
+    public required Func<string, TValue?> FromString { get; set; }
+
+    public Func<TValue, string?> ToField => userValue => StringValue(userValue);
+    public Func<string, TValue?> FromField => fieldValue => FromString(fieldValue);
+    Func<object, object?> ITeConverter.ToField => userValue => userValue is TValue value ? StringValue(value) : string.Empty;
+    Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue is string value ? FromString(value) : default;
 }
 
-public class TeTextFieldConverter<T> : ITeTextFieldConverter
+public class TeTextFieldConverter : ITeConverter<string, string>
 {
-    public required Func<T?, string> StringValue { get; init; }
-    public required Func<string, T> FromString { get; init; }
-
-    Func<object, string> ITeTextFieldConverter.StringValue =>
-        o => o == null ? StringValue(default) :
-            o is T t ? StringValue(t) :
-            throw new Exception();
-    Func<string, object> ITeTextFieldConverter.FromString => value => FromString(value)!;
+    public Func<string, string?> ToField => userValue => userValue;
+    public Func<string, string?> FromField => fieldValue => fieldValue;
+    Func<object, object?> ITeConverter.ToField => userValue => userValue is string stringValue ? ToField(stringValue) : string.Empty;
+    Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue is string stringValue ? FromField(stringValue) : string.Empty;
 }

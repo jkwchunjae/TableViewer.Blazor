@@ -2,48 +2,70 @@
 
 public partial class TeListEditor : TeEditorBase
 {
-    [Parameter] public IList Items { get; set; } = default!;
-    [Parameter] public ITeListEditorOption ArrayOption { get; set; } = default!;
+    [Parameter] public ITeListEditorOption ListEditorOption { get; set; } = default!;
 
-    private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items.Cast<object>()
+    IList<object> Items = default!;
+
+    private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items
                 .Select((item, index) => (index, item));
 
-    private object? DefaultValue;
+    private object DefaultValue = default!;
 
     protected override void OnInitialized()
     {
-        DefaultValue = ArrayOption.CreateNew();
+        DefaultValue = ListEditorOption.CreateNew();
+        if (Data != null)
+        {
+            var items = ListEditorOption.Converter.ToField(Data);
+            Items = items?.Cast<object>().ToList() ?? new List<object>();
+        }
+        else
+        {
+            Items = new List<object>();
+        }
     }
 
     private async Task OnDataChanged(object item, int index)
     {
         Items[index] = item;
-        await DataChanged.InvokeAsync(Items);
+        if (Items is IList listData)
+        {
+            Data = ListEditorOption.Converter.FromField(listData);
+            await DataChanged.InvokeAsync(Data);
+        }
     }
 
     private ITvAction AddItemAction => new TvAction<object>
     {
         Action = AddItem,
-        Label = ArrayOption.AddItemAction.Label,
-        Style = ArrayOption.AddItemAction.Style,
+        Label = ListEditorOption.AddItemAction.Label,
+        Style = ListEditorOption.AddItemAction.Style,
     };
 
     private ITvAction RemoveItemAction => new TvAction<int>
     {
         Action = RemoveItem,
-        Label = ArrayOption.RemoveItemAction.Label,
-        Style = ArrayOption.RemoveItemAction.Style,
+        Label = ListEditorOption.RemoveItemAction.Label,
+        Style = ListEditorOption.RemoveItemAction.Style,
     };
 
-    private async Task AddItem(object? defaultValue)
+    private async Task AddItem(object defaultValue)
     {
         Items.Add(defaultValue);
-        await DataChanged.InvokeAsync(Items);
+        if (Items is IList listData)
+        {
+            Data = ListEditorOption.Converter.FromField(listData);
+            await DataChanged.InvokeAsync(Data);
+        }
     }
 
     private async Task RemoveItem(int index)
     {
         Items.RemoveAt(index);
-        await DataChanged.InvokeAsync(Items);
+        if (Items is IList listData)
+        {
+            Data = ListEditorOption.Converter.FromField(listData);
+            await DataChanged.InvokeAsync(Data);
+        }
     }
 }

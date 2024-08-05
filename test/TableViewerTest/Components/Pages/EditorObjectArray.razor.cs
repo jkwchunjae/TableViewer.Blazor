@@ -7,7 +7,6 @@ namespace TableViewerTest.Components.Pages;
 
 class EditItem
 {
-    [TeCheckBox("IsSelected")]
     public bool IsSelected { get; set; }
     public PersonName? Name { get; set; }
     public string Address { get; set; } = string.Empty;
@@ -72,13 +71,6 @@ public partial class EditorObjectArray : ComponentBase
                     },
                 },
             },
-            CheckBoxOptions =
-            {
-                new TeCheckBoxOption<EditItem>
-                {
-                    Id = "IsSelected",
-                },
-            },
             CustomEditorOptions = new TeCustomEditorOptionGroup
             {
                 CustomEditor1 = new TeCustomEditorOption
@@ -94,14 +86,6 @@ public partial class EditorObjectArray : ComponentBase
                     Href = x => "https://www.google.com",
                     Label = "Google",
                     Condition = (x, i) => true,
-                },
-            },
-            ListEditorOptions =
-            {
-                new TeListEditorOption<EditItem>
-                {
-                    CreateNew = () => new EditItem(),
-                    ShowNumber = true,
                 },
             },
         };

@@ -36,21 +36,39 @@ public class TeSelectBoxAttribute : Attribute
     }
 }
 
-public interface ITeSelectBoxOption : ITeFieldOption
+public interface ITeSelectBoxOption : ITeFieldOption<object, object>
 {
     IEnumerable<ITeSelectItem> Items { get; }
     ITeSelectBoxProperty? Property { get; }
 }
 
-public class TeSelectBoxOption<T> : ITeFieldOption<T>, ITeSelectBoxOption
+public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
 {
     public string? Id { get; set; }
-    public Func<T?, int, string, bool>? Condition { get; set; }
-    public List<TeSelectItem<T>> Items { get; set; } = [];
-    public TeSelectBoxProperty<T>? Property { get; set; }
+    public Func<TValue?, int, string, bool>? Condition { get; set; }
+    public List<TeSelectItem<TValue>> Items { get; set; } = [];
+    public TeSelectBoxProperty<TValue>? Property { get; set; }
+    public ITeConverter<object, object> Converter => new TeConverter<object, object>
+    {
+        ToField = value => value,
+        FromField = value => value,
+    };
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
+    ITeConverter ITeFieldOption.Converter => Converter;
+    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
+        (obj, depth, path) =>
+        {
+            if (obj is TValue value)
+            {
+                return Condition?.Invoke(value, depth, path) ?? true;
+            }
+            else
+            {
+                return false;
+            }
+        };
 }
 
 public interface ITeSelectItem

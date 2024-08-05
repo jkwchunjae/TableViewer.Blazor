@@ -35,7 +35,7 @@
     <TvActionButton Item="@DefaultValue" Action="AddItemAction" />
   </ToolBarContent>
   <HeaderContent>
-    @if (ArrayOption.ShowNumber)
+    @if (ListEditorOption.ShowNumber)
     {
       <MudTh Class="@tdthClassText">
         No.
@@ -49,7 +49,7 @@
     </MudTh>
   </HeaderContent>
   <RowTemplate>
-    @if (ArrayOption.ShowNumber)
+    @if (ListEditorOption.ShowNumber)
     {
       <MudTd Class="@tdthClassText">
         @(context.Index + 1)

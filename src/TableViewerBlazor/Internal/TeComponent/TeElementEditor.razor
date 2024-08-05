@@ -32,18 +32,19 @@ else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
     <TeCheckBox
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Parent="Parent"
         Options="Options"
         Depth="Depth"
         Path="@Path"
         Label="@Label"
-        CheckBoxOption="@checkBoxOption"
+        Parent="Parent"
+        CheckBoxOption="checkBoxOption"
     />
 }
-else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption))
+else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption, out var numericDefaultValue))
 {
-    <TeNumericField
+    <TeNumericFieldSwitch
         Data="Data"
+        NumericDefaultValue="numericDefaultValue"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
         Depth="Depth"
@@ -64,14 +65,13 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
-else if (Data is IList itemList && Options.TryGetListEditorOption(MemberInfo, this, out var listEditorOption))
+else if (Options.TryGetListEditorOption(MemberInfo, this, out var listEditorOption))
 {
     <TeListEditor
         Data="Data"
-        Items="itemList"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"
-        ArrayOption="listEditorOption"
+        ListEditorOption="listEditorOption"
         Depth="Depth"
         Path="@Path"
         Label="@Label"
@@ -86,17 +86,6 @@ else if (Data is IList items)
     <TeObjectArrayEditor
         Items="items"
         ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
-}
-else if (Data is Enum)
-{
-    <TeEnumEditor
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"

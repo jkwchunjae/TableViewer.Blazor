@@ -10,18 +10,16 @@ public partial class TeCheckBox : TeEditorBase
 
     protected override void OnInitialized()
     {
-        if (Data is bool boolValue)
-        {
-            isChecked = boolValue;
-            CheckBoxLabel = GetLabel(isChecked);
-        }
+        isChecked = CheckBoxOption.Converter.ToField(Data!);
+        CheckBoxLabel = GetLabel(isChecked);
     }
 
     public async Task OnValueChanged(bool value)
     {
         isChecked = value;
         CheckBoxLabel = GetLabel(isChecked);
-        await DataChanged.InvokeAsync(value);
+        Data = CheckBoxOption.Converter.FromField(value);
+        await DataChanged.InvokeAsync(Data);
     }
 
     private string GetLabel(bool isChecked)
