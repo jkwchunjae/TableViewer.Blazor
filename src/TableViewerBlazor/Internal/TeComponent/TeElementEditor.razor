@@ -65,6 +65,18 @@ else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption
         TextFieldOption="textFieldOption"
     />
 }
+else if (Options.TryGetListEditorOption(MemberInfo, this, out var listEditorOption))
+{
+    <TeListEditor
+        Data="Data"
+        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+        Options="Options"
+        ListEditorOption="listEditorOption"
+        Depth="Depth"
+        Path="@Path"
+        Label="@Label"
+    />
+}
 else if (Data is DateTime)
 {
 
