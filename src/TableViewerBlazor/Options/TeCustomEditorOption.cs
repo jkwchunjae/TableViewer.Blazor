@@ -47,19 +47,18 @@ public class TeCustomEditorOptionGroup
     ];
 }
 
-public class TeCustomEditorOption
+public class TeCustomEditorOption : ITeFieldOption
 {
     public string? Id { get; set; }
     public Func<MemberInfo?, Type?, bool> Condition { get; set; } = default!;
     public RenderFragment<ICustomEditorArgument>? RenderFragment { get; set; } = default;
 }
 
-public class TeCustomEditorAttribute : Attribute
+public class TeCustomEditorAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeCustomEditorAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

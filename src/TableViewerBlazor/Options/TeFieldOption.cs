@@ -9,6 +9,15 @@ public interface ITeFieldOption<TValue> : ITeFieldOption
 {
 }
 
+public abstract class TeFieldAttribute : Attribute
+{
+    public string Id { get; init; }
+    public TeFieldAttribute(string id)
+    {
+        Id = id;
+    }
+}
+
 public interface ITeConvertable : ITeFieldOption
 {
     ITeConverter Converter { get; }

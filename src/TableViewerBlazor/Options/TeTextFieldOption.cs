@@ -61,12 +61,11 @@ public static class TeTextFieldOptionExtensions
     }
 }
 
-public class TeTextFieldAttribute : Attribute
+public class TeTextFieldAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeTextFieldAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

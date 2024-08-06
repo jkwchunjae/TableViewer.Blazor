@@ -24,12 +24,11 @@ public static class TeSelectBoxOptionExtensions
     }
 }
 
-public class TeSelectBoxAttribute : Attribute
+public class TeSelectBoxAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeSelectBoxAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

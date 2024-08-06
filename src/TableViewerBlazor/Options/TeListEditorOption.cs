@@ -46,12 +46,11 @@ public static class TeArrayOptionExtensions
     }
 }
 
-public class TeListEditorAttribute : Attribute
+public class TeListEditorAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeListEditorAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

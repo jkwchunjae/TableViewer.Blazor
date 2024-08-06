@@ -56,12 +56,11 @@ public static class TeNumericFieldOptionExtensions
     }
 }
 
-public class TeNumericFieldAttribute : Attribute
+public class TeNumericFieldAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeNumericFieldAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

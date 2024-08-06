@@ -24,12 +24,11 @@ public static class TeRadioOptionExtensions
     }
 }
 
-public class TeRadioAttribute : Attribute
+public class TeRadioAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeRadioAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 

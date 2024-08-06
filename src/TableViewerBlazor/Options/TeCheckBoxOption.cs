@@ -32,12 +32,11 @@ public static class TeCheckBoxOptionExtensions
     }
 }
 
-public class TeCheckBoxAttribute : Attribute
+public class TeCheckBoxAttribute : TeFieldAttribute
 {
-    public string Id { get; init; }
     public TeCheckBoxAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 
