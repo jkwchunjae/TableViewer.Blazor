@@ -166,6 +166,22 @@ public static class TeOptionsExtension
             }
         }
 
+        // 3. Option의 generic type이 일치하는 경우 (primitive type이 아닌 경우)
+        if (memberInfo != null)
+        {
+            var memberType = MemberType(memberInfo);
+            var genericTypeOption = fieldOptions
+                .Where(option => option is ITeGenericTypeOption)
+                .Select(option => option as ITeGenericTypeOption)
+                .Where(option => option!.GetType().GenericTypeArguments.Any())
+                .FirstOrDefault(option => option!.TypeName == memberType.Name);
+            fieldOption = genericTypeOption as ITeFieldOption;
+            if (fieldOption != default)
+            {
+                return true;
+            }
+        }
+
         fieldOption = default;
         return false;
     }
