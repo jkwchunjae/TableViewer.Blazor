@@ -2,8 +2,8 @@ namespace TableViewerBlazor.Internal.TeComponent;
 
 public partial class TeObjectListEditor : TeEditorBase
 {
-    [Parameter] public IList Items { get; set; } = default!;
     [Parameter] public TeObjectListEditorOption ObjectListOption { get; set; } = new TeObjectListEditorOption();
+    private IList Items { get; set; } = default!;
     private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
     private ITvAction AddItemAction => new TvAction<object>
     {
@@ -25,6 +25,10 @@ public partial class TeObjectListEditor : TeEditorBase
 
     protected override void OnInitialized()
     {
+        if (Data is IList listData)
+        {
+            Items = listData;
+        }
         MemberInfos = GetMembers(Items.GetType().GenericTypeArguments[0]);
     }
 
