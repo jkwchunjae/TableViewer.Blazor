@@ -4,12 +4,18 @@ namespace TableViewerBlazor.Options;
 
 public static class TeIgnoreOptionExtensions
 {
-    public static bool TryGetIgnoreOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out TeIgnoreOption? ignoreOption)
+    public static bool IsIgnored(this TeOptions options,
+        MemberInfo? memberInfo, TeEditorBase teBase)
     {
-        ignoreOption = default;
-        return ignoreOption != null;
+        if (memberInfo != null)
+        {
+            var ignored = memberInfo.GetCustomAttribute<TeIgnoreAttribute>() != null;
+            return ignored;
+        }
+        else
+        {
+           return false;
+        }
     }
 }
 
@@ -17,6 +23,3 @@ public class TeIgnoreAttribute : Attribute
 {
 }
 
-public class TeIgnoreOption
-{
-}

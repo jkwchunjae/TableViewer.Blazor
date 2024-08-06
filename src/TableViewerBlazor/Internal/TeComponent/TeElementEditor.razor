@@ -1,6 +1,6 @@
 ﻿@inherits TeEditorBase
 
-@if (Options.TryGetIgnoreOption(MemberInfo, this, out var ignoreOption))
+@if (Options.IsIgnored(MemberInfo, this))
 {
 }
 else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))

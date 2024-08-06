@@ -11,7 +11,6 @@ public class TeOptions
     public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
     public List<ITeRadioOption> RadioOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
-    public List<TeIgnoreOption> IgnoreOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
     public List<TeObjectListEditorOption> ObjectListEditorOptions { get; set; } = [new()];
     public List<ITeListEditorOption> ListEditorOptions { get; set; } = [];
