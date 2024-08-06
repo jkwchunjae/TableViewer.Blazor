@@ -24,7 +24,7 @@ public partial class TeCheckBox : TeEditorBase
 
     private string GetLabel(bool isChecked)
     {
-        var labelOption = CheckBoxOption.Property?.LabelOptions;
+        var labelOption = CheckBoxOption.Property.LabelOptions;
         if (labelOption?.Condition(Parent) ?? false)
         {
             if (isChecked)

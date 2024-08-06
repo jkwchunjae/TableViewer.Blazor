@@ -14,7 +14,7 @@ public class TeNumericFieldAttribute : TeFieldAttribute
 public interface ITeNumericFieldOption : ITeConvertableFieldOption<object, object>
 {
     IEnumerable<ITeValidation> Validations { get; }
-    ITeNumericFieldProperty? Property { get; }
+    ITeNumericFieldProperty Property { get; }
     object DefaultValue { get; }
 }
 
@@ -23,7 +23,7 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption, ITeG
 {
     public string? Id { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
-    public TeNumericFieldProperty<TNumber>? Property { get; set; }
+    public TeNumericFieldProperty<TNumber> Property { get; set; } = new TeNumericFieldProperty<TNumber>();
     public required TeNumericFieldConverter<TValue, TNumber> Converter { get; set; }
     public string TypeName => typeof(TValue).Name;
 
@@ -35,7 +35,7 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption, ITeG
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : DefaultValue,
         FromField = value => value is TNumber number ? Converter.FromField(number) : DefaultValue,
     };
-    ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
+    ITeNumericFieldProperty ITeNumericFieldOption.Property => Property;
 }
 
 public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
@@ -43,7 +43,7 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
 {
     public string? Id { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
-    public TeNumericFieldProperty<TNumber>? Property { get; set; }
+    public TeNumericFieldProperty<TNumber> Property { get; set; } = new TeNumericFieldProperty<TNumber>();
 
     public object DefaultValue => TNumber.Zero;
     ITeConverter ITeConvertable.Converter => new TeNumericFieldConverter<TNumber>();
@@ -53,7 +53,7 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
         ToField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
         FromField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
     };
-    ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
+    ITeNumericFieldProperty ITeNumericFieldOption.Property => Property;
 }
 
 public class TeNumericFieldConverter<TValue, TNumber> : ITeConverter<TValue, TNumber>

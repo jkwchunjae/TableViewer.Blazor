@@ -1,30 +1,30 @@
 ﻿@inherits TeEditorBase
 
-<MudField Label="@Label" Underline="@(RadioOption.Property?.Underline ?? true)">
+<MudField Label="@Label" Underline="@RadioOption.Property.Underline">
     <MudRadioGroup
         T="object"
         Value="CopiedData"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Validation="@(new Func<object, Task<IEnumerable<string>>>(RadioGroupValidation))"
 
-        Required="@(RadioOption.Property?.Required ?? false)"
-        Culture="@(RadioOption.Property?.Culture ?? default)"
-        Disabled="@(RadioOption.Property?.Disabled ?? false)"
-        ReadOnly="@(RadioOption.Property?.ReadOnly ?? false)"
-        InputClass="@(RadioOption.Property?.InputClass ?? string.Empty)"
-        InputStyle="@(RadioOption.Property?.InputStyle ?? string.Empty)"
+        Required="@RadioOption.Property.Required"
+        Culture="@RadioOption.Property.Culture"
+        Disabled="@RadioOption.Property.Disabled"
+        ReadOnly="@RadioOption.Property.ReadOnly"
+        InputClass="@RadioOption.Property.InputClass"
+        InputStyle="@RadioOption.Property.InputStyle"
     >
         @foreach (var item in RadioOption.Items)
         {
             <MudRadio
                 Value="@item.Value"
-                Disabled="@(item.Property?.Disabled ?? false)"
-                Placement="@(item.Property?.Placement ?? Placement.End)"
-                Color="@(item.Property?.Color ?? Color.Default)"
-                Dense="@(item.Property?.Dense ?? true)"
-                Ripple="@(item.Property?.Ripple ?? true)"
-                Size="@(item.Property?.Size ?? Size.Medium)"
-                UncheckedColor="@(item.Property?.UnCheckedColor ?? Color.Default)"
+                Disabled="@item.Property.Disabled"
+                Placement="@item.Property.Placement"
+                Color="@item.Property.Color"
+                Dense="@item.Property.Dense"
+                Ripple="@item.Property.Ripple"
+                Size="@item.Property.Size"
+                UncheckedColor="@item.Property.UnCheckedColor"
             >
                 @item.Text
             </MudRadio>
