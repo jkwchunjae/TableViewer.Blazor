@@ -23,7 +23,7 @@ public static class TeCustomEditorOptionExtensions
             }
         }
 
-        customEditorOption = options.CustomEditorOptions?.CustomEditors
+        customEditorOption = options.CustomEditorOptions.CustomEditors
             .Where(option => option?.Condition?.Invoke(memberInfo, type) ?? false)
             .FirstOrDefault();
         return customEditorOption != default;
@@ -37,14 +37,16 @@ public class TeCustomEditorOptionGroup
     public TeCustomEditorOption? CustomEditor4 { get; set; }
     public TeCustomEditorOption? CustomEditor5 { get; set; }
 
-    public IEnumerable<TeCustomEditorOption?> CustomEditors =>
-    [
-        CustomEditor1,
-        CustomEditor2,
-        CustomEditor3,
-        CustomEditor4,
-        CustomEditor5,
-    ];
+    public IEnumerable<TeCustomEditorOption> CustomEditors => new[]
+        {
+            CustomEditor1,
+            CustomEditor2,
+            CustomEditor3,
+            CustomEditor4,
+            CustomEditor5,
+        }
+        .Where(x => x != null)
+        .Select(x => x!);
 }
 
 public class TeCustomEditorOption : ITeFieldOption
