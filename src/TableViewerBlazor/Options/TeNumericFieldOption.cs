@@ -1,60 +1,7 @@
 ﻿using System.Numerics;
-using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
-
-public static class TeNumericFieldOptionExtensions
-{
-    public static bool TryGetNumericFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeNumericFieldOption? NumericFieldOption,
-        out object numericValue)
-    {
-        var NumericFieldAttribute = memberInfo?.GetCustomAttribute<TeNumericFieldAttribute>();
-        if (NumericFieldAttribute != null)
-        {
-            NumericFieldOption = options.NumericFieldOptions?
-                .FirstOrDefault(o => o.Id == NumericFieldAttribute.Id) ?? default;
-            if (NumericFieldOption != null)
-            {
-                numericValue = NumericFieldOption.DefaultValue;
-                return true;
-            }
-        }
-
-        NumericFieldOption = teBase.Data switch
-        {
-            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
-            sbyte => new TeNumericFieldOption<sbyte>(),
-            byte => new TeNumericFieldOption<byte>(),
-            short => new TeNumericFieldOption<short>(),
-            ushort => new TeNumericFieldOption<ushort>(),
-            int => new TeNumericFieldOption<int>(),
-            uint => new TeNumericFieldOption<uint>(),
-            long => new TeNumericFieldOption<long>(),
-            ulong => new TeNumericFieldOption<ulong>(),
-            nint => new TeNumericFieldOption<nint>(),
-            nuint => new TeNumericFieldOption<nuint>(),
-            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types
-            float => new TeNumericFieldOption<float>(),
-            double => new TeNumericFieldOption<double>(),
-            decimal => new TeNumericFieldOption<decimal>(),
-            _ => null,
-        };
-
-        if (NumericFieldOption != null)
-        {
-            numericValue = NumericFieldOption.DefaultValue;
-            return true;
-        }
-        else
-        {
-            numericValue = new();
-            return false;
-        }
-    }
-}
 
 public class TeNumericFieldAttribute : TeFieldAttribute
 {

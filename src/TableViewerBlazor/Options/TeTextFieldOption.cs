@@ -1,57 +1,6 @@
-﻿using TableViewerBlazor.Internal.TeComponent;
-using TableViewerBlazor.Options.Property;
+﻿using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
-
-public static class TeTextFieldOptionExtensions
-{
-    public static bool TryGetTextFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeTextFieldOption? textFieldOption)
-    {
-        var textFieldAttribute = memberInfo?.GetCustomAttribute<TeTextFieldAttribute>();
-        if (textFieldAttribute != null)
-        {
-            textFieldOption = options.TextFieldOptions?
-                .FirstOrDefault(o => o.Id == textFieldAttribute.Id) ?? default;
-            if (textFieldOption != null)
-            {
-                return true;
-            }
-        }
-
-        textFieldOption = teBase.Data switch
-        {
-            string => new TeTextFieldOption(),
-            _ => null,
-        };
-        if (teBase.Data == null && memberInfo?.MemberType() == typeof(string))
-        {
-            textFieldOption = new TeTextFieldOption();
-        }
-        if (textFieldOption != null)
-        {
-            return true;
-        }
-        if (memberInfo != null)
-        {
-        }
-        return false;
-
-        Type MemberType(MemberInfo memberInfo)
-        {
-            if (memberInfo is PropertyInfo property)
-            {
-                return property.PropertyType;
-            }
-            if (memberInfo is FieldInfo field)
-            {
-                return field.FieldType;
-            }
-            throw new Exception();
-        }
-    }
-}
 
 public class TeTextFieldAttribute : TeFieldAttribute
 {

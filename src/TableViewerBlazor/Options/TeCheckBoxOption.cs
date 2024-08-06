@@ -1,36 +1,6 @@
-﻿using TableViewerBlazor.Internal.TeComponent;
-using TableViewerBlazor.Options.Property;
+﻿using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
-
-public static class TeCheckBoxOptionExtensions
-{
-    public static bool TryGetCheckBoxOption(
-        this TeOptions options,
-        MemberInfo? memberInfo,
-        TeEditorBase teBase,
-        out ITeCheckBoxOption? checkBoxOption
-        )
-    {
-        var selectedAttribute = memberInfo?.GetCustomAttribute<TeCheckBoxAttribute>();
-        if (selectedAttribute != null)
-        {
-            checkBoxOption = options.CheckBoxOptions?
-                .FirstOrDefault(o => o.Id == selectedAttribute.Id) ?? default;
-            if (checkBoxOption != null)
-            {
-                return true;
-            }
-        }
-
-        checkBoxOption = teBase.Data switch
-        {
-            bool _ => new TeCheckBoxOption(),
-            _ => null
-        };
-        return checkBoxOption != null;
-    }
-}
 
 public class TeCheckBoxAttribute : TeFieldAttribute
 {

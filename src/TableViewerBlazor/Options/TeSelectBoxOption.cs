@@ -1,28 +1,6 @@
-using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
-
-public static class TeSelectBoxOptionExtensions
-{
-    public static bool TryGetSelectBoxOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeSelectBoxOption? selectBoxOption)
-    {
-        var selectAttribute = memberInfo?.GetCustomAttribute<TeSelectBoxAttribute>();
-        if (selectAttribute != null)
-        {
-            selectBoxOption = options.SelectBoxOptions?
-                .FirstOrDefault(o => o.Id == selectAttribute.Id) ?? default;
-            if (selectBoxOption != null)
-            {
-                return true;
-            }
-        }
-        selectBoxOption = default;
-        return selectBoxOption != null;
-    }
-}
 
 public class TeSelectBoxAttribute : TeFieldAttribute
 {

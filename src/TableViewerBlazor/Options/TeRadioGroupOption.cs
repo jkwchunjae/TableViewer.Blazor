@@ -1,28 +1,6 @@
-using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
-
-public static class TeRadioOptionExtensions
-{
-    public static bool TryGetRadioOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeRadioOption? radioOption)
-    {
-        var selectAttribute = memberInfo?.GetCustomAttribute<TeRadioAttribute>();
-        if (selectAttribute != null)
-        {
-            radioOption = options.RadioOptions?
-                .FirstOrDefault(o => o.Id == selectAttribute.Id) ?? default;
-            if (radioOption != null)
-            {
-                return true;
-            }
-        }
-        radioOption = default;
-        return radioOption != null;
-    }
-}
 
 public class TeRadioAttribute : TeFieldAttribute
 {
