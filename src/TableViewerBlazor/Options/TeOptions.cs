@@ -170,12 +170,10 @@ public static class TeOptionsExtension
         if (memberInfo != null)
         {
             var memberType = MemberType(memberInfo);
-            var genericTypeOption = fieldOptions
+            fieldOption = fieldOptions
                 .Where(option => option is ITeGenericTypeOption)
                 .Select(option => option as ITeGenericTypeOption)
-                .Where(option => option!.GetType().GenericTypeArguments.Any())
                 .FirstOrDefault(option => option!.TypeName == memberType.Name);
-            fieldOption = genericTypeOption as ITeFieldOption;
             if (fieldOption != default)
             {
                 return true;

@@ -18,7 +18,7 @@ public abstract class TeFieldAttribute : Attribute
     }
 }
 
-public interface ITeGenericTypeOption
+public interface ITeGenericTypeOption : ITeFieldOption
 {
     string TypeName { get; }
 }
