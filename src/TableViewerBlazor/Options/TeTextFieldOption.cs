@@ -13,7 +13,7 @@ public class TeTextFieldAttribute : TeFieldAttribute
 public interface ITeTextFieldOption : ITeConvertableFieldOption<object, string>
 {
     IEnumerable<ITeValidation> Validations { get; }
-    ITeTextFieldProperty? Property { get; }
+    ITeTextFieldProperty Property { get; }
     ITeTextFieldEvent? Event { get; }
 }
 
@@ -21,7 +21,7 @@ public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOptio
 {
     public string? Id { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
-    public ITeTextFieldProperty? Property { get; set; }
+    public ITeTextFieldProperty Property { get; set; } = new TeTextFieldProperty();
     public TeTextFieldEvent<TValue>? Event { get; set; }
     public required TeTextFieldConverter<TValue> Converter { get; set; }
 
@@ -39,7 +39,7 @@ public class TeTextFieldOption : ITeTextFieldOption
 {
     public string? Id { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
-    public ITeTextFieldProperty? Property { get; set; }
+    public ITeTextFieldProperty Property { get; set; } = new TeTextFieldProperty();
     public TeTextFieldEvent<string>? Event { get; set; }
 
     ITeConverter ITeConvertable.Converter => new TeTextFieldConverter();

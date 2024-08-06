@@ -13,18 +13,18 @@ public class TeSelectBoxAttribute : TeFieldAttribute
 public interface ITeSelectBoxOption : ITeFieldOption
 {
     IEnumerable<ITeSelectItem> Items { get; }
-    ITeSelectBoxProperty? Property { get; }
+    ITeSelectBoxProperty Property { get; }
 }
 
 public class TeSelectBoxOption<TValue> : ITeSelectBoxOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public List<TeSelectItem<TValue>> Items { get; set; } = [];
-    public TeSelectBoxProperty<TValue>? Property { get; set; }
+    public TeSelectBoxProperty<TValue> Property { get; set; } = new TeSelectBoxProperty<TValue>();
     public string TypeName => typeof(TValue).Name;
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
-    ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
+    ITeSelectBoxProperty ITeSelectBoxOption.Property => Property;
 }
 
 public interface ITeSelectItem
