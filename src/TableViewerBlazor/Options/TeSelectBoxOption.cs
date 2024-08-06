@@ -33,7 +33,7 @@ public class TeSelectBoxAttribute : Attribute
     }
 }
 
-public interface ITeSelectBoxOption : ITeConvertableFieldOption<object, object>
+public interface ITeSelectBoxOption : ITeFieldOption
 {
     IEnumerable<ITeSelectItem> Items { get; }
     ITeSelectBoxProperty? Property { get; }
@@ -44,15 +44,9 @@ public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
     public string? Id { get; set; }
     public List<TeSelectItem<TValue>> Items { get; set; } = [];
     public TeSelectBoxProperty<TValue>? Property { get; set; }
-    public ITeConverter<object, object> Converter => new TeConverter<object, object>
-    {
-        ToField = value => value,
-        FromField = value => value,
-    };
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
-    ITeConverter ITeConvertable.Converter => Converter;
 }
 
 public interface ITeSelectItem
