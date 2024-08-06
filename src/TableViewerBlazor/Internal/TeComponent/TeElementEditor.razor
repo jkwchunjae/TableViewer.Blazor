@@ -3,96 +3,94 @@
 @if (Options.IsIgnored(MemberInfo, this))
 {
 }
-else if (Options.TryGetSelectBoxOption(MemberInfo, this, out var selectBoxOption))
+else if (Options.TryGetFieldOption(MemberInfo, this, out var fieldOption))
 {
-    <TeSelectBox
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        SelectBoxOption="@selectBoxOption"
-    />
-}
-else if (Options.TryGetRadioOption(MemberInfo, this, out var radioOption))
-{
-    <TeRadio
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        RadioOption="@radioOption"
-    />
-}
-else if (Options.TryGetCheckBoxOption(MemberInfo, this, out var checkBoxOption))
-{
-    <TeCheckBox
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        Parent="Parent"
-        CheckBoxOption="checkBoxOption"
-    />
-}
-else if (Options.TryGetNumericFieldOption(MemberInfo, this, out var numericFieldOption, out var numericDefaultValue))
-{
-    <TeNumericFieldSwitch
-        Data="Data"
-        NumericDefaultValue="numericDefaultValue"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        NumericFieldOption="numericFieldOption"
-    />
-}
-else if (Options.TryGetTextFieldOption(MemberInfo, this, out var textFieldOption))
-{
-    <TeTextField
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-        TextFieldOption="textFieldOption"
-    />
-}
-else if (Options.TryGetListEditorOption(MemberInfo, this, out var listEditorOption))
-{
-    <TeListEditor
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        ListEditorOption="listEditorOption"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
-}
-else if (Data is DateTime)
-{
-
-}
-else if (Data is IList items)
-{
-    <TeObjectListEditor
-        Items="items"
-        ObjectListOption="Options.ObjectListEditorOptions.First()"
-        Data="Data"
-        DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
-        Options="Options"
-        Depth="Depth"
-        Path="@Path"
-        Label="@Label"
-    />
+    if (fieldOption is ITeTextFieldOption textFieldOption)
+    {
+        <TeTextField
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            TextFieldOption="textFieldOption"
+        />
+    }
+    else if (fieldOption is ITeNumericFieldOption numericFieldOption)
+    {
+        <TeNumericFieldSwitch
+            Data="Data"
+            NumericDefaultValue="numericFieldOption.DefaultValue"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            NumericFieldOption="numericFieldOption"
+        />
+    }
+    else if (fieldOption is ITeSelectBoxOption selectBoxOption)
+    {
+        <TeSelectBox
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            SelectBoxOption="@selectBoxOption"
+        />
+    }
+    else if (fieldOption is ITeRadioOption radioOption)
+    {
+        <TeRadio
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            RadioOption="@radioOption"
+        />
+    }
+    else if (fieldOption is ITeCheckBoxOption checkBoxOption)
+    {
+        <TeCheckBox
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            Parent="Parent"
+            CheckBoxOption="checkBoxOption"
+        />
+    }
+    else if (fieldOption is ITeListEditorOption listEditorOption)
+    {
+        <TeListEditor
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            ListEditorOption="listEditorOption"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+        />
+    }
+    else if (fieldOption is TeObjectListEditorOption objectListEditorOption)
+    {
+        <TeObjectListEditor
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            ObjectListOption="objectListEditorOption"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+        />
+    }
 }
 else
 {
