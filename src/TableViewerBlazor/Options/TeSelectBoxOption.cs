@@ -1,74 +1,30 @@
-using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
 
-public static class TeSelectBoxOptionExtensions
+public class TeSelectBoxAttribute : TeFieldAttribute
 {
-    public static bool TryGetSelectBoxOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeSelectBoxOption? selectBoxOption)
-    {
-        var selectAttribute = memberInfo?.GetCustomAttribute<TeSelectBoxAttribute>();
-        if (selectAttribute != null)
-        {
-            selectBoxOption = options.SelectBoxOptions?
-                .FirstOrDefault(o => o.Id == selectAttribute.Id) ?? default;
-            if (selectBoxOption != null)
-            {
-                return true;
-            }
-        }
-        selectBoxOption = options.SelectBoxOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
-            .FirstOrDefault() ?? default;
-        return selectBoxOption != null;
-    }
-}
-
-public class TeSelectBoxAttribute : Attribute
-{
-    public string Id { get; init; }
     public TeSelectBoxAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 
-public interface ITeSelectBoxOption : ITeFieldOption<object, object>
+public interface ITeSelectBoxOption : ITeFieldOption
 {
     IEnumerable<ITeSelectItem> Items { get; }
     ITeSelectBoxProperty? Property { get; }
 }
 
-public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
+public class TeSelectBoxOption<TValue> : ITeSelectBoxOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<TeSelectItem<TValue>> Items { get; set; } = [];
     public TeSelectBoxProperty<TValue>? Property { get; set; }
-    public ITeConverter<object, object> Converter => new TeConverter<object, object>
-    {
-        ToField = value => value,
-        FromField = value => value,
-    };
+    public string TypeName => typeof(TValue).Name;
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
-    ITeConverter ITeFieldOption.Converter => Converter;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public interface ITeSelectItem

@@ -1,143 +1,54 @@
-﻿using TableViewerBlazor.Internal.TeComponent;
-using TableViewerBlazor.Options.Property;
+﻿using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
 
-public static class TeTextFieldOptionExtensions
+public class TeTextFieldAttribute : TeFieldAttribute
 {
-    public static bool TryGetTextFieldOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeTextFieldOption? textFieldOption)
-    {
-        var textFieldAttribute = memberInfo?.GetCustomAttribute<TeTextFieldAttribute>();
-        if (textFieldAttribute != null)
-        {
-            textFieldOption = options.TextFieldOptions?
-                .FirstOrDefault(o => o.Id == textFieldAttribute.Id) ?? default;
-            if (textFieldOption != null)
-            {
-                return true;
-            }
-        }
-
-        textFieldOption = teBase.Data switch
-        {
-            string => new TeTextFieldOption(),
-            _ => null,
-        };
-        if (teBase.Data == null && memberInfo?.MemberType() == typeof(string))
-        {
-            textFieldOption = new TeTextFieldOption();
-        }
-        if (textFieldOption != null)
-        {
-            return true;
-        }
-        if (memberInfo != null)
-        {
-            var memberType = MemberType(memberInfo);
-            textFieldOption = options.TextFieldOptions?
-                .Where(option => option.GetType().GenericTypeArguments.Any())
-                .FirstOrDefault(option => option.TypeName == memberType.Name);
-            if (textFieldOption != null)
-            {
-                return true;
-            }
-        }
-        return false;
-
-        Type MemberType(MemberInfo memberInfo)
-        {
-            if (memberInfo is PropertyInfo property)
-            {
-                return property.PropertyType;
-            }
-            if (memberInfo is FieldInfo field)
-            {
-                return field.FieldType;
-            }
-            throw new Exception();
-        }
-    }
-}
-
-public class TeTextFieldAttribute : Attribute
-{
-    public string Id { get; init; }
     public TeTextFieldAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 
-public interface ITeTextFieldOption : ITeFieldOption<object, string>
+public interface ITeTextFieldOption : ITeConvertableFieldOption<object, string>
 {
     IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
-    string TypeName { get; }
 }
 
-public class TeTextFieldOption<TValue> : ITeTextFieldOption
+public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<TValue>? Event { get; set; }
     public required TeTextFieldConverter<TValue> Converter { get; set; }
 
     public string TypeName => typeof(TValue).Name;
-    ITeConverter ITeFieldOption.Converter => Converter;
-    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    ITeConverter ITeConvertable.Converter => Converter;
+    ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : string.Empty,
         FromField = value => Converter.FromField(value) ?? default,
     };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public class TeTextFieldOption : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public Func<string?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<string>? Event { get; set; }
 
-    public string TypeName => typeof(string).Name;
-    ITeConverter ITeFieldOption.Converter => new TeTextFieldConverter();
-    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    ITeConverter ITeConvertable.Converter => new TeTextFieldConverter();
+    ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
         ToField = value => value is string stringValue ? stringValue : string.Empty,
         FromField = value => value is string ? value : string.Empty,
     };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-    (obj, depth, path) =>
-    {
-        if (obj is string value)
-        {
-            return Condition?.Invoke(value, depth, path) ?? true;
-        }
-        else
-        {
-            return false;
-        }
-    };
-
 }
 
 public class TeTextFieldConverter<TValue> : ITeConverter<TValue, string>

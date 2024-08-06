@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Public;
 
 namespace TableViewerTest.Components.Pages;
 

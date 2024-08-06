@@ -1,76 +1,33 @@
-using TableViewerBlazor.Internal.TeComponent;
 using TableViewerBlazor.Options.Property;
 
 namespace TableViewerBlazor.Options;
 
-public static class TeRadioOptionExtensions
+public class TeRadioAttribute : TeFieldAttribute
 {
-    public static bool TryGetRadioOption(this TeOptions options,
-        MemberInfo? memberInfo, TeEditorBase teBase,
-        out ITeRadioOption? radioOption)
-    {
-        var selectAttribute = memberInfo?.GetCustomAttribute<TeRadioAttribute>();
-        if (selectAttribute != null)
-        {
-            radioOption = options.RadioOptions?
-                .FirstOrDefault(o => o.Id == selectAttribute.Id) ?? default;
-            if (radioOption != null)
-            {
-                return true;
-            }
-        }
-        radioOption = options.RadioOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
-            .FirstOrDefault() ?? default;
-        return radioOption != null;
-    }
-}
-
-public class TeRadioAttribute : Attribute
-{
-    public string Id { get; init; }
     public TeRadioAttribute(string id)
+        : base(id)
     {
-        Id = id;
     }
 }
 
-public interface ITeRadioOption : ITeFieldOption<object, object>
+public interface ITeRadioOption : ITeFieldOption
 {
     IEnumerable<ITeValidation> Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
     ITeRadioGroupProperty? Property { get; }
 }
 
-public class TeRadioOption<TValue> : ITeRadioOption
+public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public required List<TeRadioItem<TValue>> Items { get; set; }
     public TeRadioGroupProperty? Property { get; set; }
-    public ITeConverter<object, object> Converter => new TeConverter<object, object>
-    {
-        ToField = value => value,
-        FromField = value => value,
-    };
+    public string TypeName => typeof(TValue).Name;
+
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;
-    ITeConverter ITeFieldOption.Converter => Converter;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public interface ITeRadioItem

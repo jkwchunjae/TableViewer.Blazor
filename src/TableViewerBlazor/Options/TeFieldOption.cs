@@ -3,29 +3,32 @@
 public interface ITeFieldOption
 {
     string? Id { get; }
-    Func<object?, int, string, bool>? Condition { get; }
-    ITeConverter Converter { get; }
 }
 
 public interface ITeFieldOption<TValue> : ITeFieldOption
 {
-    new Func<TValue?, int, string, bool>? Condition { get; }
-    new ITeConverter<TValue, object> Converter { get; }
-
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (value, index, path) =>
-        {
-            if (value is TValue tValue)
-            {
-                return Condition?.Invoke(tValue, index, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
-public interface ITeFieldOption<TValue, TField> : ITeFieldOption
+
+public abstract class TeFieldAttribute : Attribute
+{
+    public string Id { get; init; }
+    public TeFieldAttribute(string id)
+    {
+        Id = id;
+    }
+}
+
+public interface ITeGenericTypeOption : ITeFieldOption
+{
+    string TypeName { get; }
+}
+
+public interface ITeConvertable : ITeFieldOption
+{
+    ITeConverter Converter { get; }
+}
+
+public interface ITeConvertableFieldOption<TValue, TField> : ITeConvertable
 {
     new ITeConverter<TValue, TField> Converter { get; }
 }
