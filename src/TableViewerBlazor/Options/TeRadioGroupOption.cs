@@ -39,12 +39,14 @@ public interface ITeRadioOption : ITeFieldOption
     ITeRadioGroupProperty? Property { get; }
 }
 
-public class TeRadioOption<TValue> : ITeRadioOption
+public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public required List<TeRadioItem<TValue>> Items { get; set; }
     public TeRadioGroupProperty? Property { get; set; }
+    public string TypeName => typeof(TValue).Name;
+
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;

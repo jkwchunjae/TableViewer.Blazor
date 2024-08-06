@@ -71,13 +71,14 @@ public interface ITeNumericFieldOption : ITeConvertableFieldOption<object, objec
     object DefaultValue { get; }
 }
 
-public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption
+public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption, ITeGenericTypeOption
     where TNumber: INumber<TNumber>, IMinMaxValue<TNumber>
 {
     public string? Id { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public TeNumericFieldProperty<TNumber>? Property { get; set; }
     public required TeNumericFieldConverter<TValue, TNumber> Converter { get; set; }
+    public string TypeName => typeof(TValue).Name;
 
     public object DefaultValue => TNumber.Zero;
     ITeConverter ITeConvertable.Converter => Converter;

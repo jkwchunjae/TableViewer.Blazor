@@ -62,7 +62,7 @@ public interface ITeListEditorOption : ITeConvertableFieldOption<object, IList>
     ITvAction RemoveItemAction { get; }
 }
 
-public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOption
+public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOption, ITeGenericTypeOption
     where TListField : IList<TListItem>
 {
     public string? Id { get; set; }
@@ -71,6 +71,7 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
     public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
     public required TeListEditorConverter<TValue, TListField, TListItem> Converter { get; set; }
+    public string TypeName => typeof(TValue).Name;
 
     Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
     ITeConverter ITeConvertable.Converter => Converter;
@@ -123,13 +124,14 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
     }
 }
 
-public class TeListEditorOption<TListItem> : ITeListEditorOption
+public class TeListEditorOption<TListItem> : ITeListEditorOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public bool ShowNumber { get; set; } = false;
     public required Func<TListItem> CreateNew { get; init; }
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
     public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
+    public string TypeName => typeof(TListItem).Name;
 
     Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
     ITeConverter ITeConvertable.Converter => new TeListEditorConverter<List<TListItem>>();

@@ -18,6 +18,11 @@ public abstract class TeFieldAttribute : Attribute
     }
 }
 
+public interface ITeGenericTypeOption
+{
+    string TypeName { get; }
+}
+
 public interface ITeConvertable : ITeFieldOption
 {
     ITeConverter Converter { get; }

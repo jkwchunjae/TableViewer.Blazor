@@ -45,11 +45,12 @@ public interface ITeCheckBoxOption : ITeConvertableFieldOption<object, bool>
     public ITeCheckBoxProperty Property { get; } 
 }
 
-public class TeCheckBoxOption<TValue> : ITeCheckBoxOption
+public class TeCheckBoxOption<TValue> : ITeCheckBoxOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
     public required TeCheckBoxConverter<TValue> Converter { get; set; }
+    public string TypeName => typeof(TValue).Name;
 
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>

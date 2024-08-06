@@ -35,14 +35,6 @@ public static class TeTextFieldOptionExtensions
         }
         if (memberInfo != null)
         {
-            var memberType = MemberType(memberInfo);
-            textFieldOption = options.TextFieldOptions?
-                .Where(option => option.GetType().GenericTypeArguments.Any())
-                .FirstOrDefault(option => option.TypeName == memberType.Name);
-            if (textFieldOption != null)
-            {
-                return true;
-            }
         }
         return false;
 
@@ -74,10 +66,9 @@ public interface ITeTextFieldOption : ITeConvertableFieldOption<object, string>
     IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
     ITeTextFieldEvent? Event { get; }
-    string TypeName { get; }
 }
 
-public class TeTextFieldOption<TValue> : ITeTextFieldOption
+public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
@@ -102,7 +93,6 @@ public class TeTextFieldOption : ITeTextFieldOption
     public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<string>? Event { get; set; }
 
-    public string TypeName => typeof(string).Name;
     ITeConverter ITeConvertable.Converter => new TeTextFieldConverter();
     ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
