@@ -83,9 +83,9 @@ else if (Data is DateTime)
 }
 else if (Data is IList items)
 {
-    <TeObjectArrayEditor
+    <TeObjectListEditor
         Items="items"
-        ObjectArrayOption="Options.ObjectArrayEditorOptions.First()"
+        ObjectListOption="Options.ObjectListEditorOptions.First()"
         Data="Data"
         DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
         Options="Options"

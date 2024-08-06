@@ -1,23 +1,23 @@
 namespace TableViewerBlazor.Internal.TeComponent;
 
-public partial class TeObjectArrayEditor : TeEditorBase
+public partial class TeObjectListEditor : TeEditorBase
 {
     [Parameter] public IList Items { get; set; } = default!;
-    [Parameter] public TeObjectArrayEditorOption ObjectArrayOption { get; set; } = new TeObjectArrayEditorOption();
+    [Parameter] public TeObjectListEditorOption ObjectListOption { get; set; } = new TeObjectListEditorOption();
     private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
     private ITvAction AddItemAction => new TvAction<object>
     {
         Action = _ => AddItem(),
-        Label = ObjectArrayOption.AddItemAction.Label,
-        Style = ObjectArrayOption.AddItemAction.Style,
-        LabelAfterClick = ObjectArrayOption.AddItemAction.LabelAfterClick,
+        Label = ObjectListOption.AddItemAction.Label,
+        Style = ObjectListOption.AddItemAction.Style,
+        LabelAfterClick = ObjectListOption.AddItemAction.LabelAfterClick,
     };
     private ITvAction RemoveItemAction => new TvAction<object>
     {
         Action = item => RemoveItem(item),
-        Label = ObjectArrayOption.RemoveItemAction.Label,
-        Style = ObjectArrayOption.RemoveItemAction.Style,
-        LabelAfterClick = ObjectArrayOption.RemoveItemAction.LabelAfterClick,
+        Label = ObjectListOption.RemoveItemAction.Label,
+        Style = ObjectListOption.RemoveItemAction.Style,
+        LabelAfterClick = ObjectListOption.RemoveItemAction.LabelAfterClick,
     };
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();

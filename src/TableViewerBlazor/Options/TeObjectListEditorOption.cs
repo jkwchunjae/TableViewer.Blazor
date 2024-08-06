@@ -1,7 +1,8 @@
 ﻿namespace TableViewerBlazor.Options;
 
-public class TeObjectArrayEditorOption
+public class TeObjectListEditorOption : ITeFieldOption
 {
+    public string? Id { get; set; }
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
     public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
 
@@ -13,8 +14,6 @@ public class TeObjectArrayEditorOption
             Label = "Add Item",
             Style = new TvButtonStyle
             {
-                StartIcon = Icons.Material.Outlined.PlusOne,
-                IconSize = Size.Medium,
                 Size = Size.Medium,
                 Dense = false,
                 SuperDense = false,
