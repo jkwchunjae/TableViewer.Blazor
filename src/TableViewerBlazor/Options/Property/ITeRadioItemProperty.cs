@@ -8,7 +8,7 @@ public interface ITeRadioItemProperty
     Color Color { get; }
     bool Dense { get; }
     bool Ripple { get; }
-    Size? Size { get; }
+    Size Size { get; }
     Color? UnCheckedColor { get; }
 }
 
@@ -19,6 +19,6 @@ public class TeRadioItemProperty : ITeRadioItemProperty
     public Color Color { get; set; } = Color.Default;
     public bool Dense { get; set; } = true;
     public bool Ripple { get; set; } = true;
-    public Size? Size { get; set; } = MudBlazor.Size.Medium;
+    public Size Size { get; set; } = MudBlazor.Size.Medium;
     public Color? UnCheckedColor { get; set; }
 }
