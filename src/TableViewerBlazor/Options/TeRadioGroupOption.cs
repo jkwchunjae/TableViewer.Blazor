@@ -33,7 +33,7 @@ public class TeRadioAttribute : Attribute
     }
 }
 
-public interface ITeRadioOption : ITeFieldOption<object, object>
+public interface ITeRadioOption : ITeConvertableFieldOption<object, object>
 {
     IEnumerable<ITeValidation> Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
@@ -54,7 +54,7 @@ public class TeRadioOption<TValue> : ITeRadioOption
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;
-    ITeConverter ITeFieldOption.Converter => Converter;
+    ITeConverter ITeConvertable.Converter => Converter;
 }
 
 public interface ITeRadioItem

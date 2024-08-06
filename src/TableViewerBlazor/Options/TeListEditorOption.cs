@@ -55,7 +55,7 @@ public class TeListEditorAttribute : Attribute
     }
 }
 
-public interface ITeListEditorOption : ITeFieldOption<object, IList>
+public interface ITeListEditorOption : ITeConvertableFieldOption<object, IList>
 {
     bool ShowNumber { get; }
     Func<object> CreateNew { get; }
@@ -74,8 +74,8 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
     public required TeListEditorConverter<TValue, TListField, TListItem> Converter { get; set; }
 
     Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
-    ITeConverter ITeFieldOption.Converter => Converter;
-    ITeConverter<object, IList> ITeFieldOption<object, IList>.Converter => new TeConverter<object, IList>
+    ITeConverter ITeConvertable.Converter => Converter;
+    ITeConverter<object, IList> ITeConvertableFieldOption<object, IList>.Converter => new TeConverter<object, IList>
     {
         ToField = userValue => userValue is TValue value ? Converter.ToField(value).Cast<object>().ToList() : default,
         //FromField = fieldValue => fieldValue is TListField value ? Converter.FromField(value) : default,
@@ -133,8 +133,8 @@ public class TeListEditorOption<TListItem> : ITeListEditorOption
     public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
 
     Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
-    ITeConverter ITeFieldOption.Converter => new TeListEditorConverter<List<TListItem>>();
-    ITeConverter<object, IList> ITeFieldOption<object, IList>.Converter => new TeConverter<object, IList>
+    ITeConverter ITeConvertable.Converter => new TeListEditorConverter<List<TListItem>>();
+    ITeConverter<object, IList> ITeConvertableFieldOption<object, IList>.Converter => new TeConverter<object, IList>
     {
         ToField = userValue => userValue as IList,
         //FromField = fieldValue => fieldValue,

@@ -70,7 +70,7 @@ public class TeTextFieldAttribute : Attribute
     }
 }
 
-public interface ITeTextFieldOption : ITeFieldOption<object, string>
+public interface ITeTextFieldOption : ITeConvertableFieldOption<object, string>
 {
     IEnumerable<ITeValidation> Validations { get; }
     ITeTextFieldProperty? Property { get; }
@@ -87,8 +87,8 @@ public class TeTextFieldOption<TValue> : ITeTextFieldOption
     public required TeTextFieldConverter<TValue> Converter { get; set; }
 
     public string TypeName => typeof(TValue).Name;
-    ITeConverter ITeFieldOption.Converter => Converter;
-    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    ITeConverter ITeConvertable.Converter => Converter;
+    ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : string.Empty,
         FromField = value => Converter.FromField(value) ?? default,
@@ -104,8 +104,8 @@ public class TeTextFieldOption : ITeTextFieldOption
     public TeTextFieldEvent<string>? Event { get; set; }
 
     public string TypeName => typeof(string).Name;
-    ITeConverter ITeFieldOption.Converter => new TeTextFieldConverter();
-    ITeConverter<object, string> ITeFieldOption<object, string>.Converter => new TeConverter<object, string>()
+    ITeConverter ITeConvertable.Converter => new TeTextFieldConverter();
+    ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
         ToField = value => value is string stringValue ? stringValue : string.Empty,
         FromField = value => value is string ? value : string.Empty,

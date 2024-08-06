@@ -5,15 +5,15 @@ public interface ITeFieldOption
     string? Id { get; }
 }
 
+public interface ITeFieldOption<TValue> : ITeFieldOption
+{
+}
+
 public interface ITeConvertable : ITeFieldOption
 {
     ITeConverter Converter { get; }
 }
 
-public interface ITeConvertableFieldOption<TValue> : ITeConvertable
-{
-    new ITeConverter<TValue, object> Converter { get; }
-}
 public interface ITeConvertableFieldOption<TValue, TField> : ITeConvertable
 {
     new ITeConverter<TValue, TField> Converter { get; }

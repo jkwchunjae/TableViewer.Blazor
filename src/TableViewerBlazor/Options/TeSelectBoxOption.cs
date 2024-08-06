@@ -33,7 +33,7 @@ public class TeSelectBoxAttribute : Attribute
     }
 }
 
-public interface ITeSelectBoxOption : ITeFieldOption<object, object>
+public interface ITeSelectBoxOption : ITeConvertableFieldOption<object, object>
 {
     IEnumerable<ITeSelectItem> Items { get; }
     ITeSelectBoxProperty? Property { get; }
@@ -52,7 +52,7 @@ public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
-    ITeConverter ITeFieldOption.Converter => Converter;
+    ITeConverter ITeConvertable.Converter => Converter;
 }
 
 public interface ITeSelectItem

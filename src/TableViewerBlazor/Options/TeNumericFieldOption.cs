@@ -65,7 +65,7 @@ public class TeNumericFieldAttribute : Attribute
     }
 }
 
-public interface ITeNumericFieldOption : ITeFieldOption<object, object>
+public interface ITeNumericFieldOption : ITeConvertableFieldOption<object, object>
 {
     IEnumerable<ITeValidation> Validations { get; }
     ITeNumericFieldProperty? Property { get; }
@@ -81,9 +81,9 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption
     public required TeNumericFieldConverter<TValue, TNumber> Converter { get; set; }
 
     public object DefaultValue => TNumber.Zero;
-    ITeConverter ITeFieldOption.Converter => Converter;
+    ITeConverter ITeConvertable.Converter => Converter;
     IEnumerable<ITeValidation> ITeNumericFieldOption.Validations => Validations;
-    ITeConverter<object, object> ITeFieldOption<object, object>.Converter => new TeConverter<object, object>
+    ITeConverter<object, object> ITeConvertableFieldOption<object, object>.Converter => new TeConverter<object, object>
     {
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : DefaultValue,
         FromField = value => value is TNumber number ? Converter.FromField(number) : DefaultValue,
@@ -99,9 +99,9 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
     public TeNumericFieldProperty<TNumber>? Property { get; set; }
 
     public object DefaultValue => TNumber.Zero;
-    ITeConverter ITeFieldOption.Converter => new TeNumericFieldConverter<TNumber>();
+    ITeConverter ITeConvertable.Converter => new TeNumericFieldConverter<TNumber>();
     IEnumerable<ITeValidation> ITeNumericFieldOption.Validations => Validations;
-    ITeConverter<object, object> ITeFieldOption<object, object>.Converter => new TeConverter<object, object>
+    ITeConverter<object, object> ITeConvertableFieldOption<object, object>.Converter => new TeConverter<object, object>
     {
         ToField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
         FromField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
