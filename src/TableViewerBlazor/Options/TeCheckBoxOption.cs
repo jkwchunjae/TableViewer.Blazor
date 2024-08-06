@@ -22,15 +22,6 @@ public static class TeCheckBoxOptionExtensions
                 return true;
             }
         }
-        checkBoxOption = options.CheckBoxOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
-            .FirstOrDefault() ?? default!;
-
-        if (checkBoxOption != null)
-        {
-            return true;
-        }
 
         checkBoxOption = teBase.Data switch
         {
@@ -58,7 +49,6 @@ public interface ITeCheckBoxOption : ITeFieldOption<object, bool>
 public class TeCheckBoxOption<TValue> : ITeCheckBoxOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
     public required TeCheckBoxConverter<TValue> Converter { get; set; }
 
@@ -68,24 +58,11 @@ public class TeCheckBoxOption<TValue> : ITeCheckBoxOption
         ToField = userValue => userValue is TValue value ? Converter.ToBoolean(value) : false,
         FromField = fieldValue => fieldValue is bool value ? Converter.FromBoolean(value) : default,
     };
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public class TeCheckBoxOption : ITeCheckBoxOption
 {
     public string? Id { get; set; }
-    public Func<bool?, int, string, bool>? Condition { get; set; }
     public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
 
     ITeConverter ITeFieldOption.Converter => new TeCheckBoxConverter();
@@ -94,18 +71,6 @@ public class TeCheckBoxOption : ITeCheckBoxOption
         ToField = userValue => userValue is bool value ? value : false,
         FromField = fieldValue => fieldValue,
     };
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is bool value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public class TeCheckBoxConverter<TValue> : ITeConverter<TValue, bool>

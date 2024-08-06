@@ -19,10 +19,7 @@ public static class TeRadioOptionExtensions
                 return true;
             }
         }
-        radioOption = options.RadioOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
-            .FirstOrDefault() ?? default;
+        radioOption = default;
         return radioOption != null;
     }
 }
@@ -46,7 +43,6 @@ public interface ITeRadioOption : ITeFieldOption<object, object>
 public class TeRadioOption<TValue> : ITeRadioOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public required List<TeRadioItem<TValue>> Items { get; set; }
     public TeRadioGroupProperty? Property { get; set; }
@@ -59,18 +55,6 @@ public class TeRadioOption<TValue> : ITeRadioOption
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
     ITeRadioGroupProperty? ITeRadioOption.Property => Property;
     ITeConverter ITeFieldOption.Converter => Converter;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public interface ITeRadioItem

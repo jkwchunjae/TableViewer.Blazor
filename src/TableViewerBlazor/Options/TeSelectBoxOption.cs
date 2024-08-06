@@ -19,10 +19,7 @@ public static class TeSelectBoxOptionExtensions
                 return true;
             }
         }
-        selectBoxOption = options.SelectBoxOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .Where(option => option.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true)
-            .FirstOrDefault() ?? default;
+        selectBoxOption = default;
         return selectBoxOption != null;
     }
 }
@@ -45,7 +42,6 @@ public interface ITeSelectBoxOption : ITeFieldOption<object, object>
 public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<TeSelectItem<TValue>> Items { get; set; } = [];
     public TeSelectBoxProperty<TValue>? Property { get; set; }
     public ITeConverter<object, object> Converter => new TeConverter<object, object>
@@ -57,18 +53,6 @@ public class TeSelectBoxOption<TValue> : ITeSelectBoxOption
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     ITeSelectBoxProperty? ITeSelectBoxOption.Property => Property;
     ITeConverter ITeFieldOption.Converter => Converter;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public interface ITeSelectItem

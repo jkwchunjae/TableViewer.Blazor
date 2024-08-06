@@ -23,15 +23,6 @@ public static class TeNumericFieldOptionExtensions
             }
         }
 
-        NumericFieldOption = options.NumericFieldOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true) ?? default;
-        if (NumericFieldOption != null)
-        {
-            numericValue = NumericFieldOption.DefaultValue;
-            return true;
-        }
-
         NumericFieldOption = teBase.Data switch
         {
             // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
@@ -85,7 +76,6 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption
     where TNumber: INumber<TNumber>, IMinMaxValue<TNumber>
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public TeNumericFieldProperty<TNumber>? Property { get; set; }
     public required TeNumericFieldConverter<TValue, TNumber> Converter { get; set; }
@@ -98,18 +88,6 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : DefaultValue,
         FromField = value => value is TNumber number ? Converter.FromField(number) : DefaultValue,
     };
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
     ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
 }
 
@@ -117,7 +95,6 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
     where TNumber: INumber<TNumber>, IMinMaxValue<TNumber>
 {
     public string? Id { get; set; }
-    public Func<object?, int, string, bool>? Condition { get; set; }
     public List<ITeValidation> Validations { get; set; } = [];
     public TeNumericFieldProperty<TNumber>? Property { get; set; }
 
@@ -129,18 +106,6 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
         ToField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
         FromField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
     };
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TNumber number)
-            {
-                return Condition?.Invoke(number, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
     ITeNumericFieldProperty? ITeNumericFieldOption.Property => Property;
 }
 

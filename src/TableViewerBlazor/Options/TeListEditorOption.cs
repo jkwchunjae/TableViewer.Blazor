@@ -19,14 +19,6 @@ public static class TeArrayOptionExtensions
             }
         }
 
-        listEditorOption = options.ListEditorOptions?
-            .Where(option => string.IsNullOrEmpty(option.Id))
-            .FirstOrDefault(o => o.Condition?.Invoke(teBase.Data, teBase.Depth, teBase.Path) ?? true) ?? default;
-        if (listEditorOption != null)
-        {
-            return true;
-        }
-
         listEditorOption = teBase.Data switch
         {
             IList<string> => TeListEditorOption<string>.Create(string.Empty),
@@ -75,7 +67,6 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
     where TListField : IList<TListItem>
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public bool ShowNumber { get; set; } = false;
     public required Func<TListItem> CreateNew { get; init; }
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
@@ -100,19 +91,6 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
             }
         }
     };
-
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 
     private static TvAction<object> CreateDefaultAddAction()
     {
@@ -149,7 +127,6 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
 public class TeListEditorOption<TListItem> : ITeListEditorOption
 {
     public string? Id { get; set; }
-    public Func<IList<TListItem>?, int, string, bool>? Condition { get; set; }
     public bool ShowNumber { get; set; } = false;
     public required Func<TListItem> CreateNew { get; init; }
     public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
@@ -173,19 +150,6 @@ public class TeListEditorOption<TListItem> : ITeListEditorOption
             }
         }
     };
-
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is IList<TListItem> value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 
     public static TeListEditorOption<TListItem> Create(TListItem defaultValue)
     {

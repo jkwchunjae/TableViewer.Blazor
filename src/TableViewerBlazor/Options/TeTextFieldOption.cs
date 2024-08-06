@@ -81,7 +81,6 @@ public interface ITeTextFieldOption : ITeFieldOption<object, string>
 public class TeTextFieldOption<TValue> : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public Func<TValue?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<TValue>? Event { get; set; }
@@ -95,24 +94,11 @@ public class TeTextFieldOption<TValue> : ITeTextFieldOption
         FromField = value => Converter.FromField(value) ?? default,
     };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-        (obj, depth, path) =>
-        {
-            if (obj is TValue value)
-            {
-                return Condition?.Invoke(value, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public class TeTextFieldOption : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public Func<string?, int, string, bool>? Condition { get; set; }
     public IEnumerable<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty? Property { get; set; }
     public TeTextFieldEvent<string>? Event { get; set; }
@@ -125,19 +111,6 @@ public class TeTextFieldOption : ITeTextFieldOption
         FromField = value => value is string ? value : string.Empty,
     };
     ITeTextFieldEvent? ITeTextFieldOption.Event => Event;
-    Func<object?, int, string, bool>? ITeFieldOption.Condition =>
-    (obj, depth, path) =>
-    {
-        if (obj is string value)
-        {
-            return Condition?.Invoke(value, depth, path) ?? true;
-        }
-        else
-        {
-            return false;
-        }
-    };
-
 }
 
 public class TeTextFieldConverter<TValue> : ITeConverter<TValue, string>
