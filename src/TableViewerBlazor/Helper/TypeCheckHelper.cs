@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using TableViewerBlazor.Public;
 
 [assembly: InternalsVisibleTo("UnitTest")]
 namespace TableViewerBlazor.Helper;
@@ -19,6 +20,10 @@ internal static class TypeCheckHelper
         {
             var arr = (data as IEnumerable)!.Cast<object>();
             var elementType = dataType.GetElementType()!;
+            if (elementType.GetCustomAttribute<TvStringAttribute>() != null)
+            {
+                return false;
+            }
             if (elementType.IsObject())
             {
                 return true;
@@ -31,6 +36,10 @@ internal static class TypeCheckHelper
             if (dataType.GenericTypeArguments.Length == 1)
             {
                 var nestedType = dataType.GenericTypeArguments[0];
+                if (nestedType.GetCustomAttribute<TvStringAttribute>() != null)
+                {
+                    return false;
+                }
                 if (nestedType.IsObject())
                 {
                     return true;

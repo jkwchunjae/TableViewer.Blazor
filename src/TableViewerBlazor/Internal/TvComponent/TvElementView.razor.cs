@@ -74,34 +74,40 @@ public partial class TvElementView : TvViewBase
 
     private bool DataHasStringViewerAttribute()
     {
-        if (MemberInfo == null)
-            return false;
-
-        var memberAttr = MemberInfo.GetCustomAttribute<TvStringAttribute>();
-
-        if (memberAttr != null)
+        if (MemberInfo != null)
         {
-            return true;
+            var memberAttr = MemberInfo.GetCustomAttribute<TvStringAttribute>();
+
+            if (memberAttr != null)
+            {
+                return true;
+            }
+
+            var memberType = GetMemberType(MemberInfo);
+
+            var isMemberTypeString = memberType?.GetCustomAttribute<TvStringAttribute>() != null;
+
+            if (isMemberTypeString)
+            {
+                return true;
+            }
+
+            var checkOptionStringType = Options.StringTypes.Any(type => type == GetMemberType(MemberInfo));
+            if (checkOptionStringType)
+            {
+                return true;
+            }
+        }
+        var dataType = Data?.GetType();
+        if (dataType != null)
+        {
+            if (dataType.GetCustomAttribute<TvStringAttribute>() != null)
+            {
+                return true;
+            }
         }
 
-        var memberType = GetMemberType(MemberInfo);
-
-        var isMemberTypeString = memberType?.GetCustomAttribute<TvStringAttribute>() != null;
-
-        if (isMemberTypeString)
-        {
-            return true;
-        }
-
-        var checkOptionStringType = Options.StringTypes.Any(type => type == GetMemberType(MemberInfo));
-        if (checkOptionStringType)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
 
         Type? GetMemberType(MemberInfo memberInfo)
         {
