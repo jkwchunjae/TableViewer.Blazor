@@ -20,11 +20,12 @@ public interface ITeTextFieldOption : ITeConvertableFieldOption<object, string>
 public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public IEnumerable<ITeValidation> Validations { get; set; } = [];
+    public List<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty Property { get; set; } = new TeTextFieldProperty();
     public TeTextFieldEvent<TValue>? Event { get; set; }
     public required TeTextFieldConverter<TValue> Converter { get; set; }
 
+    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     public string TypeName => typeof(TValue).Name;
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
@@ -38,10 +39,11 @@ public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOptio
 public class TeTextFieldOption : ITeTextFieldOption
 {
     public string? Id { get; set; }
-    public IEnumerable<ITeValidation> Validations { get; set; } = [];
+    public List<ITeValidation> Validations { get; set; } = [];
     public ITeTextFieldProperty Property { get; set; } = new TeTextFieldProperty();
     public TeTextFieldEvent<string>? Event { get; set; }
 
+    IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
     ITeConverter ITeConvertable.Converter => new TeTextFieldConverter();
     ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
