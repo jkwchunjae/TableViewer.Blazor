@@ -4,7 +4,7 @@
     T="string"
     Value="stringValue"
     ValueChanged="@(value => OnValueChanged(value))"
-    Label="@TextFieldOption.Property.Label"
+    Label="@(TextFieldOption.Property.Label ?? Label)"
     Validation="@(new Func<string, Task<IEnumerable<string>>>(TextFieldValidation))"
 
     InputType="@TextFieldOption.Property.InputType"
