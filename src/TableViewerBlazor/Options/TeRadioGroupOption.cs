@@ -35,7 +35,7 @@ public interface ITeRadioItem
     object? Value { get; }
     string Text { get; }
     bool Default { get; }
-    TeRadioProperty Property { get; }
+    TeRadioItemProperty Property { get; }
 }
 
 public record TeRadioItem<TValue> : ITeRadioItem
@@ -43,10 +43,10 @@ public record TeRadioItem<TValue> : ITeRadioItem
     public TValue? Value { get; init; } = default!;
     public string Text { get; init; } = string.Empty;
     public bool Default { get; init; } = false;
-    public TeRadioProperty Property { get; set; } = new TeRadioProperty();
+    public TeRadioItemProperty Property { get; set; } = new TeRadioItemProperty();
 
     object? ITeRadioItem.Value => Value;
-    TeRadioProperty ITeRadioItem.Property => Property;
+    TeRadioItemProperty ITeRadioItem.Property => Property;
 
     public TeRadioItem()
     {

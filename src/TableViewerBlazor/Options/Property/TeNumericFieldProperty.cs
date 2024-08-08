@@ -2,8 +2,7 @@ using System.Numerics;
 
 namespace TableViewerBlazor.Options.Property;
 
-public class TeNumericFieldProperty<T> : TeDebouncedInputProperty, ITeNumericFieldProperty
-    where T : INumber<T>, IMinMaxValue<T>
+public abstract class TeNumericFieldProperty : TeDebouncedInputProperty
 {
     /// <summary>
     /// Show clear button.
@@ -26,26 +25,28 @@ public class TeNumericFieldProperty<T> : TeDebouncedInputProperty, ITeNumericFie
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool InvertMouseWheel { get; set; } = false;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     /// <summary>
     /// The minimum value for the input.
     /// </summary>
     [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
-    public T Min { get; set; } = T.MinValue;
+    public virtual object Min { get; set; }
 
     /// <summary>
     /// The maximum value for the input.
     /// </summary>
     [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
-    public T Max { get; set; } = T.MaxValue;
+    public virtual object Max { get; set; }
 
     /// <summary>
     /// The increment added/subtracted by the spin buttons.
     /// </summary>
     [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
-    public T Step { get; set; } = T.One;
+    public virtual object Step { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     /// <summary>
     /// Hides the spin buttons, the user can still change value with keyboard arrows and manual update.
@@ -71,10 +72,29 @@ public class TeNumericFieldProperty<T> : TeDebouncedInputProperty, ITeNumericFie
     /// </summary>
     [Parameter]
     public override string? Pattern { get; set; } = @"[0-9,.\-]";
+}
 
-    object ITeNumericFieldProperty.Min => Min;
+public class TeNumericFieldProperty<T> : TeNumericFieldProperty
+    where T : INumber<T>, IMinMaxValue<T>
+{
+    /// <summary>
+    /// The minimum value for the input.
+    /// </summary>
+    [Parameter]
+    [Category(CategoryTypes.FormComponent.Validation)]
+    public new T Min { get; set; } = T.MinValue;
 
-    object ITeNumericFieldProperty.Max => Max;
+    /// <summary>
+    /// The maximum value for the input.
+    /// </summary>
+    [Parameter]
+    [Category(CategoryTypes.FormComponent.Validation)]
+    public new T Max { get; set; } = T.MaxValue;
 
-    object ITeNumericFieldProperty.Step => Step;
+    /// <summary>
+    /// The increment added/subtracted by the spin buttons.
+    /// </summary>
+    [Parameter]
+    [Category(CategoryTypes.FormComponent.Behavior)]
+    public new T Step { get; set; } = T.One;
 }

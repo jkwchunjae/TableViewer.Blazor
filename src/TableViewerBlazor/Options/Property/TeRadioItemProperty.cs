@@ -1,6 +1,6 @@
 namespace TableViewerBlazor.Options.Property;
 
-public class TeRadioProperty : TeComponentBaseProperty
+public class TeRadioItemProperty : TeComponentBaseProperty
 {
     /// <summary>
     /// The color of the component. It supports the theme colors.
