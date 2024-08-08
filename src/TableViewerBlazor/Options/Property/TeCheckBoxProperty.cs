@@ -1,6 +1,6 @@
 ﻿namespace TableViewerBlazor.Options.Property;
 
-public class TeCheckBoxInputProperty : TeBooleanInputProperty
+public class TeCheckBoxProperty : TeBooleanInputProperty
 {
     /// <summary>
     /// The color of the checkbox.
