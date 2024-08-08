@@ -265,4 +265,14 @@ public class TeBaseInputProperty : TeFormComponentProperty
     [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool ShrinkLabel { get; set; } = MudGlobal.InputDefaults.ShrinkLabel;
+
+    /// <summary>
+    /// The format applied to values.
+    /// </summary>
+    /// <remarks>
+    /// This property is passed into the <c>ToString()</c> method of the <see cref="Value"/> property, such as formatting <c>int</c>, <c>float</c>, <c>DateTime</c> and <c>TimeSpan</c> values.
+    /// </remarks>
+    [Parameter]
+    [Category(CategoryTypes.FormComponent.Behavior)]
+    public string? Format { get; set; }
 }

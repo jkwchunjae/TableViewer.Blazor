@@ -1,4 +1,6 @@
-﻿namespace TableViewerBlazor.Options.Property;
+﻿using System.Globalization;
+
+namespace TableViewerBlazor.Options.Property;
 
 public class TeFormComponentProperty : TeComponentBaseProperty
 {
@@ -48,4 +50,15 @@ public class TeFormComponentProperty : TeComponentBaseProperty
     [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public string? ErrorId { get; set; }
+
+    /// <summary>
+    /// The culture used to format and interpret values such as dates and currency.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <see cref="CultureInfo.InvariantCulture"/>.
+    /// </remarks>
+    [Parameter]
+    [Category(CategoryTypes.FormComponent.Behavior)]
+    public CultureInfo? Culture { get; set; }
+
 }
