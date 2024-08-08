@@ -7,24 +7,36 @@
         ValueChanged="@(async value => await OnValueChanged(value))"
         Validation="@(new Func<object, Task<IEnumerable<string>>>(RadioGroupValidation))"
 
+        Class="@RadioOption.Property.Class"
+        Style="@RadioOption.Property.Style"
+        Tag="@RadioOption.Property.Tag"
+        UserAttributes="@RadioOption.Property.UserAttributes"
         Required="@RadioOption.Property.Required"
+        RequiredError="@RadioOption.Property.RequiredError"
+        ErrorText="@RadioOption.Property.ErrorText"
+        Error="@RadioOption.Property.Error"
+        ErrorId="@RadioOption.Property.ErrorId"
         Culture="@RadioOption.Property.Culture"
-        Disabled="@RadioOption.Property.Disabled"
-        ReadOnly="@RadioOption.Property.ReadOnly"
         InputClass="@RadioOption.Property.InputClass"
         InputStyle="@RadioOption.Property.InputStyle"
+        Disabled="@RadioOption.Property.Disabled"
+        ReadOnly="@RadioOption.Property.ReadOnly"
     >
         @foreach (var item in RadioOption.Items)
         {
             <MudRadio
                 Value="@item.Value"
-                Disabled="@item.Property.Disabled"
-                Placement="@item.Property.Placement"
+                Class="@item.Property.Class"
+                Style="@item.Property.Style"
+                Tag="@item.Property.Tag"
+                UserAttributes="@item.Property.UserAttributes"
                 Color="@item.Property.Color"
-                Dense="@item.Property.Dense"
-                Ripple="@item.Property.Ripple"
-                Size="@item.Property.Size"
                 UncheckedColor="@item.Property.UncheckedColor"
+                Placement="@item.Property.Placement"
+                Dense="@item.Property.Dense"
+                Size="@item.Property.Size"
+                Ripple="@item.Property.Ripple"
+                Disabled="@item.Property.Disabled"
             >
                 @item.Text
             </MudRadio>
