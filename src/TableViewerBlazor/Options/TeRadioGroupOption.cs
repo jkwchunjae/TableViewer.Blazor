@@ -14,7 +14,7 @@ public interface ITeRadioOption : ITeFieldOption
 {
     IEnumerable<ITeValidation> Validations { get; }
     IEnumerable<ITeRadioItem> Items { get; }
-    ITeRadioGroupProperty Property { get; }
+    TeRadioGroupProperty Property { get; }
 }
 
 public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
@@ -27,7 +27,7 @@ public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
 
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
-    ITeRadioGroupProperty ITeRadioOption.Property => Property;
+    TeRadioGroupProperty ITeRadioOption.Property => Property;
 }
 
 public interface ITeRadioItem
@@ -35,7 +35,7 @@ public interface ITeRadioItem
     object? Value { get; }
     string Text { get; }
     bool Default { get; }
-    ITeRadioItemProperty Property { get; }
+    TeRadioProperty Property { get; }
 }
 
 public record TeRadioItem<TValue> : ITeRadioItem
@@ -43,10 +43,10 @@ public record TeRadioItem<TValue> : ITeRadioItem
     public TValue? Value { get; init; } = default!;
     public string Text { get; init; } = string.Empty;
     public bool Default { get; init; } = false;
-    public TeRadioItemProperty Property { get; set; } = new TeRadioItemProperty();
+    public TeRadioProperty Property { get; set; } = new TeRadioProperty();
 
     object? ITeRadioItem.Value => Value;
-    ITeRadioItemProperty ITeRadioItem.Property => Property;
+    TeRadioProperty ITeRadioItem.Property => Property;
 
     public TeRadioItem()
     {
