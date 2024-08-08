@@ -8,7 +8,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="Color.Default"/>.  Theme colors are supported.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Color Color { get; set; } = Color.Default;
 
@@ -18,7 +17,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  Theme colors are supported.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Radio.Appearance)]
     public Color? UncheckedColor { get; set; } = null;
 
@@ -28,7 +26,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>null</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? Label { get; set; }
 
@@ -38,7 +35,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="LabelPosition.End"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public LabelPosition LabelPosition { get; set; } = LabelPosition.End;
 
@@ -48,7 +44,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>true</c>.  The <c>Space</c> key cycles through true and false values (or true/false/null states if <see cref="TriState"/> is <c>true</c>). <c>Delete</c> will clear the checkbox. <c>Enter</c> (or <c>NumPadEnter</c>) will set the checkbox.  <c>Backspace</c> will set an indeterminate value.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool KeyboardEnabled { get; set; } = true;
 
@@ -58,7 +53,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>true</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool Ripple { get; set; } = true;
 
@@ -68,7 +62,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool Dense { get; set; }
 
@@ -78,7 +71,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="Size.Medium"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Size Size { get; set; } = Size.Medium;
 
@@ -88,7 +80,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="Icons.Material.Filled.CheckBox"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public string CheckedIcon { get; set; } = Icons.Material.Filled.CheckBox;
 
@@ -98,7 +89,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="Icons.Material.Filled.CheckBoxOutlineBlank"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public string UncheckedIcon { get; set; } = Icons.Material.Filled.CheckBoxOutlineBlank;
 
@@ -108,7 +98,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <see cref="Icons.Material.Filled.IndeterminateCheckBox"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public string IndeterminateIcon { get; set; } = Icons.Material.Filled.IndeterminateCheckBox;
 
@@ -118,7 +107,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the checkbox can support an indeterminate state such as a <c>null</c> value, in addition to <c>true</c> and <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public bool TriState { get; set; }
 
@@ -128,7 +116,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// <remarks>
     /// Defaults to <c>true</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool Underline { get; set; } = true;
 }

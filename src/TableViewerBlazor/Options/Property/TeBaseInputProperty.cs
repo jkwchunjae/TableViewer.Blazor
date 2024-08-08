@@ -8,7 +8,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Disabled { get; set; }
 
@@ -18,7 +17,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the user can copy text in the control, but cannot change the <see cref="Value" />.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool ReadOnly { get; set; }
 
@@ -28,7 +26,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool FullWidth { get; set; }
 
@@ -38,7 +35,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="Value"/> property will be updated any time user input occurs.  Otherwise, <see cref="Value"/> is updated when the user presses <c>Enter</c> or the input loses focus.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Immediate { get; set; }
 
@@ -48,7 +44,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>true</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool Underline { get; set; } = true;
 
@@ -58,7 +53,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  When set it is appended to the <c>aria-describedby</c> attribute to improve accessibility for users. This ID takes precedence over the helper element rendered when <see cref="HelperText"/> is provided.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public string? HelperId { get; set; }
 
@@ -68,7 +62,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// This property is typically used to help the user understand what kind of input is allowed.  The <see cref="HelperTextOnFocus"/> property controls when this text is visible.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? HelperText { get; set; }
 
@@ -78,7 +71,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool HelperTextOnFocus { get; set; }
 
@@ -88,7 +80,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  This icon will be displayed when <see cref="Adornment"/> is <c>Start</c> or <c>End</c>, and no value for <see cref="AdornmentText"/> is set.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? AdornmentIcon { get; set; }
 
@@ -98,7 +89,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  This text will be displayed when <see cref="Adornment"/> is <c>Start</c> or <c>End</c>.  The <see cref="AdornmentIcon"/> property will be ignored if this property is set.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? AdornmentText { get; set; }
 
@@ -108,7 +98,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="Adornment.None"/>.  When set to <c>Start</c> or <c>End</c>, the <see cref="AdornmentText"/> will be displayed, or <see cref="AdornmentIcon"/> if no adornment text is specified.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public Adornment Adornment { get; set; } = Adornment.None;
 
@@ -118,7 +107,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>. When <c>true</c>, validation only occurs if the user has changed the input value at least once.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool OnlyValidateIfDirty { get; set; }
 
@@ -128,7 +116,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="Color.Default"/>.  Theme colors are supported.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Color AdornmentColor { get; set; } = Color.Default;
 
@@ -138,7 +125,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public string? AdornmentAriaLabel { get; set; }
 
@@ -148,7 +134,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="Size.Medium"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Size IconSize { get; set; } = Size.Medium;
 
@@ -158,7 +143,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="Variant.Text"/>.  Other options are <c>Outlined</c> and <c>Filled</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Variant Variant { get; set; } = Variant.Text;
 
@@ -168,14 +152,12 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="Margin.None"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Margin Margin { get; set; } = Margin.None;
 
     /// <summary>
     /// Typography for the input text.
     /// </summary>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public Typo Typo { get; set; } = Typo.input;
 
@@ -185,7 +167,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// This property is typically used to give the user a hint as to what kind of input is expected.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? Placeholder { get; set; }
 
@@ -195,7 +176,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  When <c>0</c>, the current character count is displayed.  When <c>1</c> or greater, the character count and this count are displayed.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public int? Counter { get; set; }
 
@@ -205,7 +185,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>524288</c>.  This value is typically set to a maximum length such as the size of a database column the value will be persisted to.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public int MaxLength { get; set; } = 524288;
 
@@ -215,7 +194,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// If no <see cref="Value"/> is specified, the label will be displayed in the input.  Otherwise, it will be scaled down to the top of the input.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? Label { get; set; }
 
@@ -225,14 +203,12 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the input will receive focus automatically.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool AutoFocus { get; set; }
 
     /// <summary>
     ///  A multiline input (textarea) will be shown, if set to more than one line.
     /// </summary>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public int Lines { get; set; } = 1;
 
@@ -242,7 +218,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <see cref="InputMode.text"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public virtual InputMode InputMode { get; set; } = InputMode.text;
 
@@ -252,7 +227,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>null</c>.  This property is used to validate the input against a regular expression.  Not supported if <see cref="Lines"/> is <c>2</c> or greater.  Must be a valid JavaScript regular expression.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Validation)]
     public virtual string? Pattern { get; set; }
 
@@ -262,7 +236,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the label will not move into the input when the input is empty.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public bool ShrinkLabel { get; set; } = MudGlobal.InputDefaults.ShrinkLabel;
 
@@ -272,7 +245,6 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// <remarks>
     /// This property is passed into the <c>ToString()</c> method of the <see cref="Value"/> property, such as formatting <c>int</c>, <c>float</c>, <c>DateTime</c> and <c>TimeSpan</c> values.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public string? Format { get; set; }
 }

@@ -8,7 +8,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// <remarks>
     /// Defaults to <see cref="InputType.Text"/>.  Represents a valid HTML5 input type.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public InputType InputType { get; set; } = InputType.Text;
 
@@ -18,7 +17,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Clearable { get; set; } = false;
 
@@ -28,7 +26,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// <remarks>
     /// Defaults to <see cref="Icons.Material.Filled.Clear"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Appearance)]
     public string ClearIcon { get; set; } = Icons.Material.Filled.Clear;
 
@@ -38,7 +35,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.General.Behavior)]
     public bool AutoGrow { get; set; }
 
@@ -48,7 +44,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// <remarks>
     /// Defaults to <c>0</c>.  When <c>0</c>. this property is ignored.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.General.Behavior)]
     public int MaxLines { get; set; }
 
@@ -59,7 +54,6 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// Typically set to common masks such as <see cref="PatternMask"/>, <see cref="MultiMask"/>, <see cref="RegexMask"/>, and <see cref="BlockMask"/>.
     /// When set, some properties will be ignored such as <see cref="MudInput{T}.MaxLines"/>, <see cref="MudInput{T}.AutoGrow"/>, and <see cref="MudInput{T}.HideSpinButtons"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.General.Data)]
     public IMask? Mask { get; set; }
 }

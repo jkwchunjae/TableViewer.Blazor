@@ -8,7 +8,6 @@ public class TeBooleanInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Disabled { get; set; }
 
@@ -18,7 +17,6 @@ public class TeBooleanInputProperty : TeFormComponentProperty
     /// <remarks>
     /// Defaults to <c>false</c>.  When <c>true</c>, the user can copy the input but cannot change it.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool ReadOnly { get; set; }
 }
