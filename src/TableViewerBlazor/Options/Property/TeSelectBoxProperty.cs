@@ -1,163 +1,135 @@
-﻿using System.Globalization;
+﻿namespace TableViewerBlazor.Options.Property;
 
-namespace TableViewerBlazor.Options.Property;
-
-public class TeSelectBoxProperty : ITeSelectBoxProperty
+public class TeSelectBoxProperty : TeBaseInputProperty
 {
+    /// <summary>
+    /// The outer div's classnames, seperated by space.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Appearance)]
     public string? OuterClass { get; set; }
+
+    /// <summary>
+    /// Input's classnames, seperated by space.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Appearance)]
     public string? InputClass { get; set; }
+
+    /// <summary>
+    /// User class names for the popover, separated by space
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
     public string? PopoverClass { get; set; }
+
+    /// <summary>
+    /// User class names for the internal list, separated by space
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
     public string? ListClass { get; set; }
+
+    /// <summary>
+    /// If true, compact vertical padding will be applied to all Select items.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
     public bool Dense { get; set; }
-    public string? OpenIcon { get; set; }
-    public string? CloseIcon { get; set; }
+
+    /// <summary>
+    /// The Open Select Icon
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Appearance)]
+    public string OpenIcon { get; set; } = Icons.Material.Filled.ArrowDropDown;
+
+    /// <summary>
+    /// The Close Select Icon
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Appearance)]
+    public string CloseIcon { get; set; } = Icons.Material.Filled.ArrowDropUp;
+
+    /// <summary>
+    /// If set to true and the MultiSelection option is set to true, a "select all" checkbox is added at the top of the list of items.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListBehavior)]
     public bool SelectAll { get; set; }
-    public string? SelectAllText { get; set; }
+
+    /// <summary>
+    /// Define the text of the Select All option.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public string SelectAllText { get; set; } = "Select all";
+    /// <summary>
+    /// Function to define a customized multiselection text.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Behavior)]
     public Func<List<string>, string>? MultiSelectionTextFunc { get; set; }
-    public string? Delimiter { get; set; }
-    public IEnumerable<object>? SelectedValues { get; set; }
-    public IEqualityComparer<object>? Comparer { get; set; }
-    public Func<object, string>? ToStringFunc { get; set; }
-    public bool MultiSelection { get; set; }
-    public int MaxHeight { get; set; }
-    public Origin AnchorOrigin { get; set; }
-    public Origin TransformOrigin { get; set; }
+
+    /// <summary>
+    /// Parameter to define the delimited string separator.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Behavior)]
+    public string Delimiter { get; set; } = ", ";
+
+    /// <summary>
+    /// Sets the maxheight the Select can have when open.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public int MaxHeight { get; set; } = 300;
+
+    /// <summary>
+    /// Set the anchor origin point to determen where the popover will open from.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public Origin AnchorOrigin { get; set; } = Origin.TopCenter;
+
+    /// <summary>
+    /// Sets the transform origin point for the popover.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public Origin TransformOrigin { get; set; } = Origin.TopCenter;
+
+    /// <summary>
+    /// If true, the Select's input will not show any values that are not defined in the dropdown.
+    /// This can be useful if Value is bound to a variable which is initialized to a value which is not in the list
+    /// and you want the Select to show the label / placeholder instead.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Strict { get; set; }
-    public bool Clearable { get; set; }
-    public bool LockScroll { get; set; }
-    public string? CheckedIcon { get; set; }
-    public string? UncheckedIcon { get; set; }
-    public string? IndeterminateIcon { get; set; }
-    public bool Disabled { get; set; }
-    public bool ReadOnly { get; set; }
-    public bool FullWidth { get; set; }
-    public bool Immediate { get; set; }
-    public bool Underline { get; set; } = true;
-    public string? HelperText { get; set; }
-    public bool HelperTextOnFocus { get; set; }
-    public string? AdornmentIcon { get; set; }
-    public string? AdornmentText { get; set; }
-    public Adornment Adornment { get; set; }
-    public bool OnlyValidateIfDirty { get; set; }
-    public Color AdornmentColor { get; set; }
-    public string? AdornmentAriaLabel { get; set; }
-    public Size IconSize { get; set; }
-    public Variant Variant { get; set; }
-    public Margin Margin { get; set; }
-    public string? Placeholder { get; set; }
-    public int? Counter { get; set; }
-    public int MaxLength { get; set; }
-    public string? Label { get; set; }
-    public bool AutoFocus { get; set; }
-    public int Lines { get; set; }
-    public string? Text { get; set; }
-    public bool TextUpdateSuppression { get; set; }
-    public InputMode InputMode { get; set; }
-    public string? Pattern { get; set; }
-    public bool ShrinkLabel { get; set; }
-    public string? Format { get; set; }
-    public string? InputId { get; set; }
-    public bool Required { get; set; }
-    public CultureInfo? Culture { get; set; }
+
+    /// <summary>
+    /// Show clear button.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Behavior)]
+    public bool Clearable { get; set; } = false;
+
+    /// <summary>
+    /// Custom clear icon when <see cref="Clearable"/> is enabled.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.Appearance)]
+    public string ClearIcon { get; set; } = Icons.Material.Filled.Clear;
+
+    /// <summary>
+    /// If true, prevent scrolling while dropdown is open.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListBehavior)]
+    public bool LockScroll { get; set; } = false;
+
+    /// <summary>
+    /// Custom checked icon.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public string CheckedIcon { get; set; } = Icons.Material.Filled.CheckBox;
+
+    /// <summary>
+    /// Custom unchecked icon.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public string UncheckedIcon { get; set; } = Icons.Material.Filled.CheckBoxOutlineBlank;
+
+    /// <summary>
+    /// Custom indeterminate icon.
+    /// </summary>
+    [Category(CategoryTypes.FormComponent.ListAppearance)]
+    public string IndeterminateIcon { get; set; } = Icons.Material.Filled.IndeterminateCheckBox;
 }
-public class TeSelectBoxProperty<T> : ITeSelectBoxProperty
-{
-    public string? OuterClass { get; set; }
-    public string? InputClass { get; set; }
-    public string? PopoverClass { get; set; }
-    public string? ListClass { get; set; }
-    public bool Dense { get; set; }
-    public string? OpenIcon { get; set; }
-    public string? CloseIcon { get; set; }
-    public bool SelectAll { get; set; }
-    public string? SelectAllText { get; set; }
-    public Func<List<string>, string>? MultiSelectionTextFunc { get; set; }
-    public string? Delimiter { get; set; }
-    public IEnumerable<T>? SelectedValues { get; set; }
-    public IEqualityComparer<T>? Comparer { get; set; }
-    public Func<T, string>? ToStringFunc { get; set; }
-    public bool MultiSelection { get; set; }
-    public int MaxHeight { get; set; }
-    public Origin AnchorOrigin { get; set; }
-    public Origin TransformOrigin { get; set; }
-    public bool Strict { get; set; }
-    public bool Clearable { get; set; }
-    public bool LockScroll { get; set; }
-    public string? CheckedIcon { get; set; }
-    public string? UncheckedIcon { get; set; }
-    public string? IndeterminateIcon { get; set; }
-    public bool Disabled { get; set; }
-    public bool ReadOnly { get; set; }
-    public bool FullWidth { get; set; }
-    public bool Immediate { get; set; }
-    public bool Underline { get; set; } = true;
-    public string? HelperText { get; set; }
-    public bool HelperTextOnFocus { get; set; }
-    public string? AdornmentIcon { get; set; }
-    public string? AdornmentText { get; set; }
-    public Adornment Adornment { get; set; }
-    public bool OnlyValidateIfDirty { get; set; }
-    public Color AdornmentColor { get; set; }
-    public string? AdornmentAriaLabel { get; set; }
-    public Size IconSize { get; set; }
-    public Variant Variant { get; set; }
-    public Margin Margin { get; set; }
-    public string? Placeholder { get; set; }
-    public int? Counter { get; set; }
-    public int MaxLength { get; set; }
-    public string? Label { get; set; }
-    public bool AutoFocus { get; set; }
-    public int Lines { get; set; }
-    public string? Text { get; set; }
-    public bool TextUpdateSuppression { get; set; }
-    public InputMode InputMode { get; set; }
-    public string? Pattern { get; set; }
-    public bool ShrinkLabel { get; set; }
-    public string? Format { get; set; }
-    public string? InputId { get; set; }
-    public bool Required { get; set; }
-    public CultureInfo? Culture { get; set; }
 
-    IEnumerable<object>? ITeSelectBoxProperty.SelectedValues =>
-        SelectedValues == default ? default :
-        SelectedValues.Cast<object>();
-    IEqualityComparer<object>? ITeSelectBoxProperty.Comparer =>
-        Comparer == default ? default :
-        new ObjectComparer(Comparer);
-    Func<object, string>? ITeSelectBoxProperty.ToStringFunc =>
-        ToStringFunc == default ? default :
-        value =>
-        {
-            if (value is T tValue)
-            {
-            return ToStringFunc(tValue);
-            }
-            else
-            {
-            return value?.ToString() ?? string.Empty;
-            }
-        };
-    class ObjectComparer : IEqualityComparer<object>
-    {
-        private readonly IEqualityComparer<T> comparer;
-        public ObjectComparer(IEqualityComparer<T> comparer)
-        {
-            this.comparer = comparer;
-        }
-        public new bool Equals(object? x, object? y)
-        {
-            if (x is T tX && y is T tY)
-            {
-            return comparer.Equals(tX, tY);
-            }
-            else
-            {
-            return object.Equals(x, y);
-            }
-        }
-        public int GetHashCode(object obj)
-        {
-            return obj?.GetHashCode() ?? 0;
-        }
-    }
+public class TeSelectBoxProperty<T> : TeSelectBoxProperty
+{
 }

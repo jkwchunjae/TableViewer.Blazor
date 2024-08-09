@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 using TableViewerBlazor.Public;
 
 namespace TableViewerTest.Components.Pages;
 
 class EditItem
 {
+    [TeSelectBox(nameof(IsSelected))]
     public bool IsSelected { get; set; }
     public PersonName? Name { get; set; }
     public string Address { get; set; } = string.Empty;
@@ -61,6 +63,10 @@ public partial class EditorObjectArray : ComponentBase
                         FromString = (s) => new PersonName(s),
                         StringValue = (p) => p?.ToString() ?? string.Empty,
                     },
+                    Property = new TeTextFieldProperty
+                    {
+                        Style = "width: 50px; font-weight: bold;",
+                    },
                 },
                 new TeTextFieldOption<int>
                 {
@@ -71,6 +77,18 @@ public partial class EditorObjectArray : ComponentBase
                         StringValue = (i) => i.ToString(),
                     },
                 },
+            },
+            SelectBoxOptions =
+            {
+                new TeSelectBoxOption<bool>
+                {
+                    Id = nameof(EditItem.IsSelected),
+                    Items =
+                    {
+                        new TeSelectItem<bool>(true, "True", true),
+                        new TeSelectItem<bool>(false, "False", false),
+                    },
+                }
             },
             CustomEditorOptions = new TeCustomEditorOptionGroup
             {

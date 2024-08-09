@@ -12,13 +12,13 @@ public class TeCheckBoxAttribute : TeFieldAttribute
 
 public interface ITeCheckBoxOption : ITeConvertableFieldOption<object, bool>
 {
-    public ITeCheckBoxProperty Property { get; } 
+    public TeCheckBoxProperty Property { get; } 
 }
 
 public class TeCheckBoxOption<TValue> : ITeCheckBoxOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
+    public TeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
     public required TeCheckBoxConverter<TValue> Converter { get; set; }
     public string TypeName => typeof(TValue).Name;
 
@@ -33,7 +33,7 @@ public class TeCheckBoxOption<TValue> : ITeCheckBoxOption, ITeGenericTypeOption
 public class TeCheckBoxOption : ITeCheckBoxOption
 {
     public string? Id { get; set; }
-    public ITeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
+    public TeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
 
     ITeConverter ITeConvertable.Converter => new TeCheckBoxConverter();
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>

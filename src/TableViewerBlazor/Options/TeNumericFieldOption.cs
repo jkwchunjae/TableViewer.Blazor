@@ -14,7 +14,7 @@ public class TeNumericFieldAttribute : TeFieldAttribute
 public interface ITeNumericFieldOption : ITeConvertableFieldOption<object, object>
 {
     IEnumerable<ITeValidation> Validations { get; }
-    ITeNumericFieldProperty Property { get; }
+    TeNumericFieldProperty Property { get; }
     object DefaultValue { get; }
 }
 
@@ -35,7 +35,7 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption, ITeG
         ToField = value => value is TValue tValue ? Converter.ToField(tValue) : DefaultValue,
         FromField = value => value is TNumber number ? Converter.FromField(number) : DefaultValue,
     };
-    ITeNumericFieldProperty ITeNumericFieldOption.Property => Property;
+    TeNumericFieldProperty ITeNumericFieldOption.Property => Property;
 }
 
 public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
@@ -53,7 +53,7 @@ public class TeNumericFieldOption<TNumber> : ITeNumericFieldOption
         ToField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
         FromField = value => value is TNumber TNumberValue ? TNumberValue : TNumber.MinValue,
     };
-    ITeNumericFieldProperty ITeNumericFieldOption.Property => Property;
+    TeNumericFieldProperty ITeNumericFieldOption.Property => Property;
 }
 
 public class TeNumericFieldConverter<TValue, TNumber> : ITeConverter<TValue, TNumber>
