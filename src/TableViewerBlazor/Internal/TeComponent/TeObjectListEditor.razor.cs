@@ -2,22 +2,22 @@ namespace TableViewerBlazor.Internal.TeComponent;
 
 public partial class TeObjectListEditor : TeEditorBase
 {
-    [Parameter] public TeObjectListEditorOption ObjectListOption { get; set; } = new TeObjectListEditorOption();
+    [Parameter] public ITeObjectListEditorOption ObjectListOption { get; set; } = default!;
     private IList Items { get; set; } = default!;
     private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
     private ITvAction AddItemAction => new TvAction<object>
     {
         Action = _ => AddItem(),
-        Label = ObjectListOption.AddItemAction.Label,
-        Style = ObjectListOption.AddItemAction.Style,
-        LabelAfterClick = ObjectListOption.AddItemAction.LabelAfterClick,
+        Label = ObjectListOption.AddItemAction?.Label ?? string.Empty,
+        Style = ObjectListOption.AddItemAction?.Style ?? new(),
+        LabelAfterClick = ObjectListOption.AddItemAction?.LabelAfterClick ?? string.Empty,
     };
     private ITvAction RemoveItemAction => new TvAction<object>
     {
         Action = item => RemoveItem(item),
-        Label = ObjectListOption.RemoveItemAction.Label,
-        Style = ObjectListOption.RemoveItemAction.Style,
-        LabelAfterClick = ObjectListOption.RemoveItemAction.LabelAfterClick,
+        Label = ObjectListOption.RemoveItemAction?.Label ?? string.Empty,
+        Style = ObjectListOption.RemoveItemAction?.Style ?? new(),
+        LabelAfterClick = ObjectListOption.RemoveItemAction?.LabelAfterClick ?? string.Empty,
     };
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
@@ -79,9 +79,7 @@ public partial class TeObjectListEditor : TeEditorBase
 
     private async Task AddItem()
     {
-        var itemType = Items.GetType().GenericTypeArguments[0];
-        var item = Activator.CreateInstance(itemType);
-        Items.Add(item);
+        await ObjectListOption.AddItemAction!.Action.Invoke(Items);
         await DataChanged.InvokeAsync(Items);
     }
 

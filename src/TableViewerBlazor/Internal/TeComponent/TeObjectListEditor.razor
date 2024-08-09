@@ -38,7 +38,10 @@
             <TvButton Item="ItemsEnumerable" Button="button" />
         }
     }
-    <TvActionButton Item="@(new object())" Action="AddItemAction" />
+    @if (ObjectListOption.AddItemAction != default)
+    {
+      <TvActionButton Item="@(new object())" Action="AddItemAction" />
+    }
   </ToolBarContent>
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
@@ -47,7 +50,10 @@
         @memberInfo.Name
       </MudTh>
     }
-    <MudTh Class="@tdthClassText">...</MudTh>
+    @if (ObjectListOption.RemoveItemAction != default)
+    {
+      <MudTh Class="@tdthClassText">...</MudTh>
+    }
   </HeaderContent>
   <RowTemplate>
     @foreach (var memberInfo in MemberInfos)
@@ -75,8 +81,11 @@
         }
       </MudTd>
     }
-    <MudTd>
-      <TvActionButton Item="context" Action="RemoveItemAction" />
-    </MudTd>
+    @if (ObjectListOption.RemoveItemAction != default)
+    {
+      <MudTd>
+        <TvActionButton Item="context" Action="RemoveItemAction" />
+      </MudTd>
+    }
   </RowTemplate>
 </MudTable>
