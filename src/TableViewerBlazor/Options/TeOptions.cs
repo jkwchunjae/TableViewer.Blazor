@@ -14,7 +14,7 @@ public class TeOptions
     public List<ITeRadioOption> RadioOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
-    public List<TeObjectListEditorOption> ObjectListEditorOptions { get; set; } = [new()];
+    public List<ITeObjectListEditorOption> ObjectListEditorOptions { get; set; } = [];
     public List<ITeListEditorOption> ListEditorOptions { get; set; } = [];
     public List<ITvButton> ToolbarButtons { get; set; } = [];
 }
@@ -33,7 +33,8 @@ public static class TeOptionsExtension
             .Concat(options.CheckBoxOptions)
             .Concat(options.CustomEditorOptions.CustomEditors)
             .Concat(options.ObjectListEditorOptions)
-            .Concat(options.ListEditorOptions);
+            .Concat(options.ListEditorOptions)
+            .ToArray();
 
         // 1. ID가 양쪽에 정확히 일치 하는 경우
         var fieldAttribute = memberInfo?.GetCustomAttribute<TeFieldAttribute>();
@@ -52,7 +53,19 @@ public static class TeOptionsExtension
         // 2. data type으로 옵션을 추출
         if (teBase.Data != default)
         {
-            ITeFieldOption? option = teBase.Data switch
+            ITeFieldOption? option;
+            var dataTypeName = teBase.Data.GetType().FullName;
+            option = fieldOptions
+                .Where(o => o is ITeGenericTypeOption)
+                .Select(o => o as ITeGenericTypeOption)
+                .FirstOrDefault(o => o!.TypeName == dataTypeName);
+            if (option != default)
+            {
+                fieldOption = option;
+                return true;
+            }
+
+            option = teBase.Data switch
             {
                 string => new TeTextFieldOption(),
                 bool => new TeCheckBoxOption(),
@@ -107,8 +120,6 @@ public static class TeOptionsExtension
                 IList<double> => TeListEditorOption<double>.Create(default),
                 IList<decimal> => TeListEditorOption<decimal>.Create(default),
 
-                IList => new TeObjectListEditorOption(),
-
                 _ => default,
             };
             if (option != default)
@@ -121,7 +132,8 @@ public static class TeOptionsExtension
         if (memberInfo != null)
         {
             var memberType = MemberType(memberInfo);
-            ITeFieldOption? option = memberType == typeof(string) ? new TeTextFieldOption() :
+            ITeFieldOption? option =
+                memberType == typeof(string) ? new TeTextFieldOption() :
                 memberType == typeof(bool) ? new TeCheckBoxOption() :
 
                 // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
@@ -173,7 +185,7 @@ public static class TeOptionsExtension
             fieldOption = fieldOptions
                 .Where(option => option is ITeGenericTypeOption)
                 .Select(option => option as ITeGenericTypeOption)
-                .FirstOrDefault(option => option!.TypeName == memberType.Name);
+                .FirstOrDefault(option => option!.TypeName == memberType.FullName);
             if (fieldOption != default)
             {
                 return true;

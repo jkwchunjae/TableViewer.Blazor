@@ -79,7 +79,7 @@ else if (Options.TryGetFieldOption(MemberInfo, this, out var fieldOption))
             Label="@Label"
         />
     }
-    else if (fieldOption is TeObjectListEditorOption objectListEditorOption)
+    else if (fieldOption is ITeObjectListEditorOption objectListEditorOption)
     {
         <TeObjectListEditor
             Data="Data"

@@ -21,7 +21,7 @@ public class TeSelectBoxOption<TValue> : ITeSelectBoxOption, ITeGenericTypeOptio
     public string? Id { get; set; }
     public List<TeSelectItem<TValue>> Items { get; set; } = [];
     public TeSelectBoxProperty<TValue> Property { get; set; } = new TeSelectBoxProperty<TValue>();
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
 
     IEnumerable<ITeSelectItem> ITeSelectBoxOption.Items => Items;
     TeSelectBoxProperty ITeSelectBoxOption.Property => Property;

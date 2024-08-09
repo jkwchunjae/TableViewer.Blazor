@@ -23,7 +23,7 @@ public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
     public List<ITeValidation> Validations { get; set; } = [];
     public required List<TeRadioItem<TValue>> Items { get; set; }
     public TeRadioGroupProperty Property { get; set; } = new TeRadioGroupProperty();
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
 
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;

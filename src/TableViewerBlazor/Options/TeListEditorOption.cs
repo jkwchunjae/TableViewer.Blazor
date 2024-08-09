@@ -11,9 +11,10 @@ public class TeListEditorAttribute : TeFieldAttribute
 public interface ITeListEditorOption : ITeConvertableFieldOption<object, IList>
 {
     bool ShowNumber { get; }
-    Func<object> CreateNew { get; }
-    ITvAction AddItemAction { get; }
-    ITvAction RemoveItemAction { get; }
+    bool EnableAddItem => AddItemAction != null;
+    bool EnableRemoveItem => RemoveItemAction != null;
+    ITvAction? AddItemAction { get; }
+    ITvAction? RemoveItemAction { get; }
 }
 
 public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOption, ITeGenericTypeOption
@@ -21,13 +22,12 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
 {
     public string? Id { get; set; }
     public bool ShowNumber { get; set; } = false;
-    public required Func<TListItem> CreateNew { get; init; }
-    public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
-    public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
+    public TvAction<TListField>? AddItemAction { get; set; }
+    public ITvAction? RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
     public required TeListEditorConverter<TValue, TListField, TListItem> Converter { get; set; }
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
 
-    Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
+    ITvAction? ITeListEditorOption.AddItemAction => AddItemAction;
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, IList> ITeConvertableFieldOption<object, IList>.Converter => new TeConverter<object, IList>
     {
@@ -45,21 +45,6 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
             }
         }
     };
-
-    private static TvAction<object> CreateDefaultAddAction()
-    {
-        return new TvAction<object>
-        {
-            Action = _ => Task.CompletedTask,
-            Label = "Add Item",
-            Style = new TvButtonStyle
-            {
-                Size = Size.Medium,
-                Dense = true,
-                SuperDense = false,
-            },
-        };
-    }
 
     private static TvAction<object> CreateDefaultRemoveAction()
     {
@@ -82,17 +67,15 @@ public class TeListEditorOption<TListItem> : ITeListEditorOption, ITeGenericType
 {
     public string? Id { get; set; }
     public bool ShowNumber { get; set; } = false;
-    public required Func<TListItem> CreateNew { get; init; }
-    public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
-    public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
-    public string TypeName => typeof(TListItem).Name;
+    public TvAction<List<TListItem>>? AddItemAction { get; set; }
+    public ITvAction? RemoveItemAction { get; set; }
+    public string TypeName => typeof(List<TListItem>).FullName!;
 
-    Func<object> ITeListEditorOption.CreateNew => () => CreateNew()!;
+    ITvAction? ITeListEditorOption.AddItemAction => AddItemAction;
     ITeConverter ITeConvertable.Converter => new TeListEditorConverter<List<TListItem>>();
     ITeConverter<object, IList> ITeConvertableFieldOption<object, IList>.Converter => new TeConverter<object, IList>
     {
         ToField = userValue => userValue as IList,
-        //FromField = fieldValue => fieldValue,
         FromField = fieldValue =>
         {
             if (fieldValue.Cast<TListItem>().ToList() is IList<TListItem> value)
@@ -110,21 +93,20 @@ public class TeListEditorOption<TListItem> : ITeListEditorOption, ITeGenericType
     {
         return new TeListEditorOption<TListItem>()
         {
-            CreateNew = () => defaultValue,
-        };
-    }
-
-    private static TvAction<object> CreateDefaultAddAction()
-    {
-        return new TvAction<object>
-        {
-            Action = _ => Task.CompletedTask,
-            Label = "Add Item",
-            Style = new TvButtonStyle
+            AddItemAction = new TvAction<List<TListItem>>
             {
-                Size = Size.Medium,
-                Dense = true,
-                SuperDense = false,
+                Action = list =>
+                {
+                    list.Add(defaultValue);
+                    return Task.CompletedTask;
+                },
+                Label = "Add Item",
+                Style = new TvButtonStyle
+                {
+                    Size = Size.Medium,
+                    Dense = true,
+                    SuperDense = false,
+                },
             },
         };
     }

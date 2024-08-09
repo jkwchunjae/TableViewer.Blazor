@@ -20,7 +20,7 @@ public class TeCheckBoxOption<TValue> : ITeCheckBoxOption, ITeGenericTypeOption
     public string? Id { get; set; }
     public TeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
     public required TeCheckBoxConverter<TValue> Converter { get; set; }
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
 
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>

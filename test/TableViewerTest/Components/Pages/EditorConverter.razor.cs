@@ -43,7 +43,6 @@ public partial class EditorConverter : ComponentBase
                      FromList = (list) => string.Join("", list),
                      ToList = (s) => s.Select(x => x.ToString()).ToList(),
                  },
-                 CreateNew = () => "new value",
             },
             //new TeRadioOption<int>
             //{
@@ -117,7 +116,6 @@ public partial class EditorConverter : ComponentBase
                 //     FromNumber = number => number.ToString().Select(x => int.Parse($"{x}")).ToList(),
                 //     ToNumber = list => ulong.Parse(string.Join("", list)),
                 // },
-                CreateNew = () => 0,
             },
         },
     };

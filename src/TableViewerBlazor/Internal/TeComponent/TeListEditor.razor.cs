@@ -9,11 +9,8 @@ public partial class TeListEditor : TeEditorBase
     private IEnumerable<(int Index, object Item)> ItemsEnumerable => Items
                 .Select((item, index) => (index, item));
 
-    private object DefaultValue = default!;
-
     protected override void OnInitialized()
     {
-        DefaultValue = ListEditorOption.CreateNew();
         if (Data != null)
         {
             var items = ListEditorOption.Converter.ToField(Data);
@@ -38,22 +35,22 @@ public partial class TeListEditor : TeEditorBase
     private ITvAction AddItemAction => new TvAction<object>
     {
         Action = AddItem,
-        Label = ListEditorOption.AddItemAction.Label,
-        Style = ListEditorOption.AddItemAction.Style,
+        Label = ListEditorOption.AddItemAction?.Label ?? string.Empty,
+        Style = ListEditorOption.AddItemAction?.Style ?? new TvButtonStyle(),
     };
 
     private ITvAction RemoveItemAction => new TvAction<int>
     {
         Action = RemoveItem,
-        Label = ListEditorOption.RemoveItemAction.Label,
-        Style = ListEditorOption.RemoveItemAction.Style,
+        Label = ListEditorOption.RemoveItemAction?.Label ?? string.Empty,
+        Style = ListEditorOption.RemoveItemAction?.Style ?? new TvButtonStyle(),
     };
 
-    private async Task AddItem(object defaultValue)
+    private async Task AddItem(object dummy)
     {
-        Items.Add(defaultValue);
         if (Items is IList listData)
         {
+            await ListEditorOption.AddItemAction!.Action.Invoke(listData);
             Data = ListEditorOption.Converter.FromField(listData);
             await DataChanged.InvokeAsync(Data);
         }

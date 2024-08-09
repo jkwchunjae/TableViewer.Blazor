@@ -26,7 +26,7 @@ public class TeTextFieldOption<TValue> : ITeTextFieldOption, ITeGenericTypeOptio
     public required TeTextFieldConverter<TValue> Converter { get; set; }
 
     IEnumerable<ITeValidation> ITeTextFieldOption.Validations => Validations;
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, string> ITeConvertableFieldOption<object, string>.Converter => new TeConverter<object, string>()
     {
