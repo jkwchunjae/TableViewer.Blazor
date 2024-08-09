@@ -10,68 +10,21 @@ public class TeObjectListAttribute : TeFieldAttribute
 
 public interface ITeObjectListEditorOption : ITeFieldOption
 {
-    ITvAction AddItemAction { get; }
-    ITvAction RemoveItemAction { get; }
+    bool EnableAddItem => AddItemAction != null;
+    bool EnableRemoveItem => RemoveItemAction != null;
+    ITvAction? AddItemAction { get; }
+    ITvAction? RemoveItemAction { get; }
 }
 
-public class TeObjectListEditorOption : ITeFieldOption
+public class TeObjectListEditorOption<TListItem> : ITeObjectListEditorOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
-    public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
+    public TvAction<List<TListItem>>? AddItemAction { get; set; }
+    public ITvAction? RemoveItemAction { get; set; }
+    public string TypeName => typeof(List<TListItem>).FullName!;
 
-    private static TvAction<object> CreateDefaultAddAction()
-    {
-        return new TvAction<object>
-        {
-            Action = _ => Task.CompletedTask,
-            Label = "Add Item",
-            Style = new TvButtonStyle
-            {
-                Size = Size.Medium,
-                Dense = false,
-                SuperDense = false,
-            },
-        };
-    }
-    private static TvAction<object> CreateDefaultRemoveAction()
-    {
-        return new TvAction<object>
-        {
-            Action = _ => Task.CompletedTask,
-            Label = string.Empty,
-            Style = new TvButtonStyle
-            {
-                StartIcon = Icons.Material.Outlined.Cancel,
-                IconColor = Color.Error,
-                Dense = false,
-                SuperDense = false,
-            },
-        };
-    }
-}
+    ITvAction? ITeObjectListEditorOption.AddItemAction => AddItemAction;
 
-public class TeObjectListEditorOption<TValue> : ITeFieldOption, ITeGenericTypeOption
-{
-    public string? Id { get; set; }
-    public ITvAction AddItemAction { get; set; } = CreateDefaultAddAction();
-    public ITvAction RemoveItemAction { get; set; } = CreateDefaultRemoveAction();
-    public string TypeName => typeof(TValue).Name;
-
-    private static TvAction<object> CreateDefaultAddAction()
-    {
-        return new TvAction<object>
-        {
-            Action = _ => Task.CompletedTask,
-            Label = "Add Item",
-            Style = new TvButtonStyle
-            {
-                Size = Size.Medium,
-                Dense = false,
-                SuperDense = false,
-            },
-        };
-    }
     private static TvAction<object> CreateDefaultRemoveAction()
     {
         return new TvAction<object>

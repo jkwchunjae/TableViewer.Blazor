@@ -25,7 +25,7 @@ public class TeNumericFieldOption<TValue, TNumber> : ITeNumericFieldOption, ITeG
     public List<ITeValidation> Validations { get; set; } = [];
     public TeNumericFieldProperty<TNumber> Property { get; set; } = new TeNumericFieldProperty<TNumber>();
     public required TeNumericFieldConverter<TValue, TNumber> Converter { get; set; }
-    public string TypeName => typeof(TValue).Name;
+    public string TypeName => typeof(TValue).FullName!;
 
     public object DefaultValue => TNumber.Zero;
     ITeConverter ITeConvertable.Converter => Converter;
