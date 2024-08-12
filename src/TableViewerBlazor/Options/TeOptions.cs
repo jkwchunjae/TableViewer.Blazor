@@ -13,6 +13,7 @@ public class TeOptions
     public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
     public List<ITeRadioOption> RadioOptions { get; set; } = [];
     public List<ITeCheckBoxOption> CheckBoxOptions { get; set; } = [];
+    public List<ITeSwitchOption> SwitchOptions { get; set; } = [];
     public TeCustomEditorOptionGroup CustomEditorOptions { get; set; } = new();
     public List<ITeObjectListEditorOption> ObjectListEditorOptions { get; set; } = [];
     public List<ITeListEditorOption> ListEditorOptions { get; set; } = [];
@@ -31,6 +32,7 @@ public static class TeOptionsExtension
             .Concat(options.SelectBoxOptions)
             .Concat(options.RadioOptions)
             .Concat(options.CheckBoxOptions)
+            .Concat(options.SwitchOptions)
             .Concat(options.CustomEditorOptions.CustomEditors)
             .Concat(options.ObjectListEditorOptions)
             .Concat(options.ListEditorOptions)

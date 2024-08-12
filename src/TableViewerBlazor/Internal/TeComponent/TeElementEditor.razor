@@ -67,6 +67,18 @@ else if (Options.TryGetFieldOption(MemberInfo, this, out var fieldOption))
             CheckBoxOption="checkBoxOption"
         />
     }
+    else if (fieldOption is ITeSwitchOption switchOption)
+    {
+        <TeSwitch
+            Data="Data"
+            DataChanged="@(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            SwitchOption="switchOption"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+        />
+    }
     else if (fieldOption is ITeListEditorOption listEditorOption)
     {
         <TeListEditor
