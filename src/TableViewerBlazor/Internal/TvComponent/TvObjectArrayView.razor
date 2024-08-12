@@ -22,7 +22,7 @@
 <MudPaper Elevation="0" Class="@("d-flex flex-column " + string.Join(" ", Options.Style.RootClass))">
 @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
 {
-  <MudText Class="@(string.Join(" ", Options.Style.TitleStyle.Class))" Style="@(string.Join(" ", Options.Style.TitleStyle.Style))">
+  <MudText Class="@(Options.Style.TitleStyle.ClassStr)" Style="@(Options.Style.TitleStyle.StyleStr)">
     @Options.Title
   </MudText>
 }
@@ -55,13 +55,15 @@
       <MudTHeadRow>
         @foreach (var memberInfo in MemberInfos)
         {
-          <MudTh Class="@tdthClassText">
+          <MudTh Class="@(tdthClassText + Options.Style.ThStyle.ClassStr)" Style="@(Options.Style.ThStyle.StyleStr)">
             @memberInfo.Name
           </MudTh>
         }
         @if (HasAnyAction)
         {
-          <MudTh Class="@tdthClassText">...</MudTh>
+          <MudTh Class="@(tdthClassText + Options.Style.ThStyle.ClassStr)" Style="@(Options.Style.ThStyle.StyleStr)">
+              ...
+          </MudTh>
         }
       </MudTHeadRow>
     </HeaderContent>

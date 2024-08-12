@@ -256,6 +256,7 @@ public partial class Home : ComponentBase
                 TitleStyle = new()
                 {
                     Class = { "mb-2" },
+                    Style = { "font-weight: bold;" },
                 },
             },
         };
