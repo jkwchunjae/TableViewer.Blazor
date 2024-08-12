@@ -1,9 +1,28 @@
 ﻿@inherits TeEditorBase
 
-<MudField>
+<MudField Label="@Label" Underline="@(SwitchOption.Property.Underline)">
     <MudSwitch
         T="bool"
         Value="isChecked"
         ValueChanged="@(async isChecked => await OnValueChanged(isChecked))"
+        Label="@switchLabel"
+        
+        Class="@(SwitchOption.Property.Class)"
+        Style="@(SwitchOption.Property.Style)"
+        LabelPosition="@(SwitchOption.Property.LabelPosition)"
+        Culture="@(SwitchOption.Property.Culture)"
+        Disabled="@(SwitchOption.Property.Disabled)"
+        ReadOnly="@(SwitchOption.Property.ReadOnly)"
+        Required="@(SwitchOption.Property.Required)"
+        RequiredError="@(SwitchOption.Property.RequiredError)"
+        Error="@(SwitchOption.Property.Error)"
+        ErrorId="@(SwitchOption.Property.ErrorId)"
+        ErrorText="@(SwitchOption.Property.ErrorText)"
+        Color="@(SwitchOption.Property.Color)"
+        Ripple="@(SwitchOption.Property.Ripple)"
+        Size="@(SwitchOption.Property.Size)"
+        ThumbIcon="@(thumIcon)"
+        ThumbIconColor="@(SwitchOption.Property.ThumbIconColor)"
+        UncheckedColor="@(SwitchOption.Property.UncheckedColor)"
     />
 </MudField>

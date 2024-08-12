@@ -6,13 +6,13 @@ public class TeSwitchAttribute(string id) : TeFieldAttribute(id) { }
 
 public interface ITeSwitchOption : ITeConvertableFieldOption<object, bool>
 {
-    ITeSwitchProperty? Property { get; }
+    TeSwitchProperty Property { get; }
 }
 
 public class TeSwitchOption : ITeSwitchOption
 {
     public string? Id { get; init; }
-    public ITeSwitchProperty Property { get; init; } = new TeSwitchProperty();
+    public TeSwitchProperty Property { get; init; } = new TeSwitchProperty();
     ITeConverter ITeConvertable.Converter => new TeBoolConverter();
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>
     {
@@ -24,7 +24,7 @@ public class TeSwitchOption : ITeSwitchOption
 public class TeSwitchOption<TValue> : ITeSwitchOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
-    public ITeSwitchProperty? Property { get; set; } = new TeSwitchProperty();
+    public TeSwitchProperty Property { get; set; } = new TeSwitchProperty();
     public string TypeName => typeof(TValue).FullName!;
     public required TeBoolConverter<TValue> Converter { get; set; }
     ITeConverter ITeConvertable.Converter => Converter;

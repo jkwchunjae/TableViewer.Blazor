@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerTest.Components.Pages;
 
@@ -126,10 +128,6 @@ public partial class EditorConverter : ComponentBase
         },
         SwitchOptions =
         {
-            //new TeSwitchOption
-            //{
-            //    Id = nameof(StringTestData.Bool),
-            //}
             new TeSwitchOption<string>
             {
                 Id = nameof(StringTestData.Switch),
@@ -142,6 +140,14 @@ public partial class EditorConverter : ComponentBase
             new TeSwitchOption
             {
                 Id = nameof(StringTestData.Bool),
+                Property = new TeSwitchProperty
+                {
+                    ShowLabel = false,
+                    ThumbIcon = Icons.Material.Outlined.Check,
+                    ThumbIconUnChecked = Icons.Custom.Uncategorized.ChessKing,
+                    ThumbIconColor = MudBlazor.Color.Warning,
+                    UncheckedColor = MudBlazor.Color.Error,
+                }
             }
         }
     };
