@@ -2,6 +2,7 @@ namespace TableViewerBlazor.Options;
 
 public class TvStyleOption
 {
+    public bool UseTable { get; set; } = true;
     public bool Dense { get; set; } = true;
     public bool SuperDense { get; set; } = true;
     public bool Hover { get; set; } = false;
