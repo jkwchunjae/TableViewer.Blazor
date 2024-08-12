@@ -5,11 +5,12 @@
     List<string> tableClassList = new()
     {
       "d-inline-block",
+      "align-self-start",
       (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
     };
     if (Depth == 1)
     {
-      tableClassList.AddRange(Options.Style.RootClass);
+      // tableClassList.AddRange(Options.Style.RootClass);
     }
     var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
 
@@ -18,6 +19,13 @@
       (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
     };
     string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+<MudPaper Elevation="0" Class="@("d-flex flex-column " + string.Join(" ", Options.Style.RootClass))">
+@if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
+{
+  <MudText Class="@(string.Join(" ", Options.Style.TitleStyle.Class))" Style="@(string.Join(" ", Options.Style.TitleStyle.Style))">
+    @Options.Title
+  </MudText>
+}
   <MudTable
     Items="@array"
     Class="@tableClassText"
@@ -31,15 +39,9 @@
   >
     <HeaderContent>
       <MudTHeadRow>
-        @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
+        @if (Depth != 1 && Options.Style.VisibleInnerToolbar)
         {
         <MudTh colspan="@TableColumns" Class="@tdthClassText">
-          @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
-          {
-            <span class="tv-title">
-              @Options.Title
-            </span>
-          }
           <MudButton OnClick="ToggleOpen"
             Class="mud-button-super-dense"
             Variant="Variant.Text"
@@ -110,6 +112,8 @@
       @Options.Contents.NoRecordsContent
     </NoRecordsContent>
   </MudTable>
+
+</MudPaper>
   }
   else
   {

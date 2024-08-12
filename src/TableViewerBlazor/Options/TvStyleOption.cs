@@ -11,4 +11,11 @@ public class TvStyleOption
     public List<string> RootClass { get; set; } = [];
     public Color LoadingProgressColor { get; set; } = Color.Default;
     public bool VisibleInnerToolbar { get; set; } = true;
+    public TvClassAndStyle TitleStyle { get; set; } = new();
+}
+
+public class TvClassAndStyle
+{
+    public List<string> Class { get; set; } = [];
+    public List<string> Style { get; set; } = ["font-weight: bold;"];
 }
