@@ -1,0 +1,9 @@
+﻿@inherits TeEditorBase
+
+<MudField>
+    <MudSwitch
+        T="bool"
+        Value="isChecked"
+        ValueChanged="@(async isChecked => await OnValueChanged(isChecked))"
+    />
+</MudField>
