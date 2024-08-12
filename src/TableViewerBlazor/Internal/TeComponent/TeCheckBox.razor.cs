@@ -11,31 +11,34 @@ public partial class TeCheckBox : TeEditorBase
     protected override void OnInitialized()
     {
         isChecked = CheckBoxOption.Converter.ToField(Data!);
-        //CheckBoxLabel = GetLabel(isChecked);
+        CheckBoxLabel = GetLabel();
     }
 
     public async Task OnValueChanged(bool value)
     {
         isChecked = value;
-        //CheckBoxLabel = GetLabel(isChecked);
         Data = CheckBoxOption.Converter.FromField(value);
+        CheckBoxLabel = GetLabel();
         await DataChanged.InvokeAsync(Data);
     }
 
-    //private string GetLabel(bool isChecked)
-    //{
-    //    var labelOption = CheckBoxOption.Property.LabelOptions;
-    //    if (labelOption?.Condition(Parent) ?? false)
-    //    {
-    //        if (isChecked)
-    //        {
-    //            return labelOption.SelectedLabel(isChecked, Parent);
-    //        }
-    //        else
-    //        {
-    //            return labelOption.NotSelectedLabel(isChecked, Parent);
-    //        }
-    //    }
-    //    return string.Empty;
-    //}
+    private string GetLabel()
+    {
+        if (!string.IsNullOrEmpty(CheckBoxOption.Property.Label))
+        {
+            return CheckBoxOption.Property.Label;
+        }
+        if (CheckBoxOption.Property.ShowLabel)
+        {
+            if (Data is bool boolData)
+            {
+                return boolData.ToString();
+            }
+            if (Data is string stringData)
+            {
+                return stringData;
+            }
+        }
+        return string.Empty;
+    }
 }

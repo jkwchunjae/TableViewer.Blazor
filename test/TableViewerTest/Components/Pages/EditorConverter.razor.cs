@@ -39,6 +39,10 @@ public partial class EditorConverter : ComponentBase
             new TeCheckBoxOption<string>
             {
                 Id = nameof(StringTestData.String),
+                //Property =
+                //{
+                //    Label = "hihi"
+                //},
                 //Items = new List<TeRadioItem<string>>
                 //{
                 //    new TeRadioItem<string> { Value = "A", Text = "A" },
@@ -131,6 +135,10 @@ public partial class EditorConverter : ComponentBase
             new TeSwitchOption<string>
             {
                 Id = nameof(StringTestData.Switch),
+                //Property =
+                //{
+                //    Label = "hihi",
+                //},
                 Converter = new TeBoolConverter<string>
                 {
                     FromBoolean = b => b ? "트루" : "폴폴스",
