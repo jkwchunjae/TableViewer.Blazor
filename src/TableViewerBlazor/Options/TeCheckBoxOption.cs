@@ -19,7 +19,7 @@ public class TeCheckBoxOption<TValue> : ITeCheckBoxOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
     public TeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
-    public required TeCheckBoxConverter<TValue> Converter { get; set; }
+    public required TeBoolConverter<TValue> Converter { get; set; }
     public string TypeName => typeof(TValue).FullName!;
 
     ITeConverter ITeConvertable.Converter => Converter;
@@ -35,7 +35,7 @@ public class TeCheckBoxOption : ITeCheckBoxOption
     public string? Id { get; set; }
     public TeCheckBoxProperty Property { get; set; } = new TeCheckBoxProperty();
 
-    ITeConverter ITeConvertable.Converter => new TeCheckBoxConverter();
+    ITeConverter ITeConvertable.Converter => new TeBoolConverter();
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>
     {
         ToField = userValue => userValue is bool value ? value : false,
@@ -43,7 +43,7 @@ public class TeCheckBoxOption : ITeCheckBoxOption
     };
 }
 
-public class TeCheckBoxConverter<TValue> : ITeConverter<TValue, bool>
+public class TeBoolConverter<TValue> : ITeConverter<TValue, bool>
 {
     public required Func<TValue, bool> ToBoolean { get; set; }
     public required Func<bool, TValue?> FromBoolean { get; set; }
@@ -54,7 +54,7 @@ public class TeCheckBoxConverter<TValue> : ITeConverter<TValue, bool>
     Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue is bool value ? FromBoolean(value) : default;
 }
 
-public class TeCheckBoxConverter : ITeConverter<bool, bool>
+public class TeBoolConverter : ITeConverter<bool, bool>
 {
     public Func<bool, bool> ToField => userValue => userValue;
     public Func<bool, bool> FromField => fieldValue => fieldValue;

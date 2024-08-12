@@ -13,7 +13,7 @@ public class TeSwitchOption : ITeSwitchOption
 {
     public string? Id { get; init; }
     public ITeSwitchProperty Property { get; init; } = new TeSwitchProperty();
-    ITeConverter ITeConvertable.Converter => new TeCheckBoxConverter();
+    ITeConverter ITeConvertable.Converter => new TeBoolConverter();
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>
     {
         ToField = userValue => userValue is bool value ? value : false,
@@ -26,7 +26,7 @@ public class TeSwitchOption<TValue> : ITeSwitchOption, ITeGenericTypeOption
     public string? Id { get; set; }
     public ITeSwitchProperty? Property { get; set; } = new TeSwitchProperty();
     public string TypeName => typeof(TValue).FullName!;
-    public required TeCheckBoxConverter<TValue> Converter { get; set; }
+    public required TeBoolConverter<TValue> Converter { get; set; }
     ITeConverter ITeConvertable.Converter => Converter;
 
     ITeConverter<object, bool> ITeConvertableFieldOption<object, bool>.Converter => new TeConverter<object, bool>

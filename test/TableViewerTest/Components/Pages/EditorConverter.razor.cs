@@ -43,7 +43,7 @@ public partial class EditorConverter : ComponentBase
                 //    new TeRadioItem<string> { Value = "B", Text = "B" },
                 //    new TeRadioItem<string> { Value = "C", Text = "C" },
                 //},
-                Converter = new TeCheckBoxConverter<string>
+                Converter = new TeBoolConverter<string>
                 {
                     FromBoolean = b => b ? "트루" : "폴스", // = FromField
                     ToBoolean = str => str == "폴스" ? false : true, // = ToField
@@ -133,7 +133,7 @@ public partial class EditorConverter : ComponentBase
             new TeSwitchOption<string>
             {
                 Id = nameof(StringTestData.Switch),
-                Converter = new TeCheckBoxConverter<string>
+                Converter = new TeBoolConverter<string>
                 {
                     FromBoolean = b => b ? "트루" : "폴폴스",
                     ToBoolean = str => str != "폴폴스",
