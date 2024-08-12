@@ -24,21 +24,13 @@ public partial class TeCheckBox : TeEditorBase
 
     private string GetLabel()
     {
-        if (!string.IsNullOrEmpty(CheckBoxOption.Property.Label))
+        if (CheckBoxOption.Property.Label != null)
         {
             return CheckBoxOption.Property.Label;
         }
-        if (CheckBoxOption.Property.ShowLabel)
+        else
         {
-            if (Data is bool boolData)
-            {
-                return boolData.ToString();
-            }
-            if (Data is string stringData)
-            {
-                return stringData;
-            }
+            return Data?.ToString() ?? "";
         }
-        return string.Empty;
     }
 }

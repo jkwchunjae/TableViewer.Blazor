@@ -39,14 +39,6 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     public LabelPosition LabelPosition { get; set; } = LabelPosition.End;
 
     /// <summary>
-    /// Show the label
-    /// </summary>
-    /// <remarks>
-    /// Defaults to <c>true</c>.
-    /// </remarks>
-    public bool ShowLabel { get; set; } = true;
-
-    /// <summary>
     /// Allows this checkbox to be controlled via the keyboard.
     /// </summary>
     /// <remarks>

@@ -20,15 +20,6 @@ public class TeSwitchProperty : TeBooleanInputProperty
     public LabelPosition LabelPosition { get; set; } = LabelPosition.End;
 
     /// <summary>
-    /// Show the text/label.
-    /// </summary>
-    /// <remarks>
-    /// Defaults to <c>true</c>
-    /// </remarks>
-    public bool ShowLabel { get; set; } = true;
-
-
-    /// <summary>
     /// The color of the component. It supports the theme colors.
     /// </summary>
     /// /// <remarks>

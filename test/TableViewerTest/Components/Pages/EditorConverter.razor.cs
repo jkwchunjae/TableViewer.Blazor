@@ -150,7 +150,7 @@ public partial class EditorConverter : ComponentBase
                 Id = nameof(StringTestData.Bool),
                 Property = new TeSwitchProperty
                 {
-                    ShowLabel = false,
+                    //Label = "",
                     ThumbIcon = Icons.Material.Outlined.Check,
                     ThumbIconUnChecked = Icons.Custom.Uncategorized.ChessKing,
                     ThumbIconColor = MudBlazor.Color.Warning,

@@ -26,22 +26,14 @@ public partial class TeSwitch : TeEditorBase
 
     private string GetLabel()
     {
-        if (!string.IsNullOrEmpty(SwitchOption.Property.Label))
+        if (SwitchOption.Property.Label != null)
         {
             return SwitchOption.Property.Label;
         }
-        if (SwitchOption.Property.ShowLabel)
+        else
         {
-            if (Data is bool boolData)
-            {
-                return boolData.ToString();
-            }
-            if (Data is string stringData)
-            {
-                return stringData;
-            }
+            return Data?.ToString() ?? "";
         }
-        return string.Empty;
     }
 
     private string GetThumbIcon()
