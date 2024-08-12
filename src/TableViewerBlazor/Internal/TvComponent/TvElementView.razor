@@ -67,7 +67,14 @@ else if (Data is IEnumerable enumerableData)
 }
 else
 {
-    <div class="table-cell">
-        <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
+    @if (Depth == 1 && Options.Style.UseTable == false)
+    {
+        <TvObjectViewDepth1 Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+    }
+    else
+    {
+        <div class="table-cell">
+            <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
 }

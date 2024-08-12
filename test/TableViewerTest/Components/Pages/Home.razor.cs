@@ -19,6 +19,10 @@ public partial class Home : ComponentBase
         {
             typeof(PersonName),
         },
+        Style = new()
+        {
+            UseTable = false,
+        },
     };
     TvOptions? optionForPR = null;
 
@@ -245,6 +249,15 @@ public partial class Home : ComponentBase
             {
                 RelativeTime = true,
                 //Format = "MM-dd-yyyy HH:mm:ss",
+            },
+            Style = new TvStyleOption
+            {
+                RootClass = ["my-10"],
+                TitleStyle = new()
+                {
+                    Class = { "mb-2" },
+                    Style = { "font-weight: bold;" },
+                },
             },
         };
 

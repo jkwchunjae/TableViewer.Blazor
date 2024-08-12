@@ -29,6 +29,8 @@
     LoadingProgressColor="Options.Style.LoadingProgressColor"
     CustomHeader="true"
     CustomFooter="true"
+    Elevation="0"
+    Outlined="true"
   >
     <ColGroup>
       <col style="width: 40px;"/>
@@ -44,6 +46,8 @@
               @Options.Title
             </span>
           }
+          @if (Options.VisibleItemCount)
+          {
           <MudButton OnClick="ToggleOpen"
             Class="mud-button-super-dense"
             Variant="Variant.Text"
@@ -51,6 +55,7 @@
           >
             (@all.Count() Items)
           </MudButton>
+          }
         </MudTh>
         }
       </MudTHeadRow>

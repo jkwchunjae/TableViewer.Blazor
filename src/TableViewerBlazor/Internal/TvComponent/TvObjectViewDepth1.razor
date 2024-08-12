@@ -1,0 +1,44 @@
+﻿@inherits TvViewBase
+
+<MudPaper Elevation="0" Class="@(string.Join(" ", Options.Style.RootClass))">
+<dl>
+    @foreach (var item in Items)
+    {
+        var (key, value, memberInfo) = item;
+        <dt>@key</dt>
+        <dd>
+        <TvElementView
+          Parent="@this"
+          Data="value"
+          MemberInfo="memberInfo"
+          Options="Options"
+          Depth="Depth + 1"
+          OpenDepth="OpenDepth"
+        />
+        </dd>
+    }
+</dl>
+</MudPaper>
+
+<style>
+
+    dl {
+        display: grid;
+        grid-template-columns: max-content auto; /* dt 항목의 너비를 내용에 맞추고, dd 항목은 남은 공간을 차지하도록 설정 */
+        /* gap: 1.2em; /* dt와 dd 항목 사이의 간격 */ 
+        grid-row-gap: 1em; /* dt와 dd 항목 사이의 간격 */
+        grid-column-gap: 2.2em;
+    }
+
+    dt {
+        grid-column: 1; /* dt 항목은 첫 번째 열에 위치 */
+        font-weight: bolder;
+        font-size: 1.2em;
+    }
+
+    dd {
+        grid-column: 2; /* dd 항목은 두 번째 열에 위치 */
+        font-size: 1.2em;
+    }
+
+</style>

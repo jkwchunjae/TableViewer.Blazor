@@ -28,6 +28,8 @@
     Loading="Loading"
     LoadingProgressColor="Options.Style.LoadingProgressColor"
     CustomHeader="true"
+    Elevation="0"
+    Outlined="true"
   >
     <HeaderContent>
       <MudTHeadRow>
@@ -40,6 +42,8 @@
               @Options.Title
             </span>
           }
+          @if (Options.VisibleItemCount)
+          {
           <MudButton OnClick="ToggleOpen"
             Class="mud-button-super-dense"
             Variant="Variant.Text"
@@ -47,6 +51,7 @@
           >
             (@Items.Count() Keys)
           </MudButton>
+          }
         </MudTh>
         }
       </MudTHeadRow>
@@ -55,7 +60,7 @@
       @{
         var (key, value, memberInfo) = context;
       }
-      <MudTd Class="@tdthClassText">
+      <MudTd Class="@tdthClassText" Style="font-weight: bold;">
         @key
       </MudTd>
       <MudTd Class="@tdthClassText">
