@@ -7,6 +7,7 @@ public class TvOptions
     public int ArrayVisibleDepth { get; set; } = 1;
     public bool ReadProperty { get; set; } = true;
     public bool ReadField { get; set; } = true;
+    public bool VisibleItemCount { get; set; } = true;
     public List<ITvAction> Actions { get; set; } = [];
     public List<ITvLink> Links { get; set; } = [];
     public List<TvColumnVisibleOption> ColumnVisible { get; set; } = [];

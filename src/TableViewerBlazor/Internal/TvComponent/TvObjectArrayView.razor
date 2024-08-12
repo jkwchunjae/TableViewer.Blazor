@@ -41,7 +41,7 @@
   >
     <HeaderContent>
       <MudTHeadRow>
-        @if (Depth != 1 && Options.Style.VisibleInnerToolbar)
+        @if (Depth != 1 && Options.Style.VisibleInnerToolbar && Options.VisibleItemCount)
         {
         <MudTh colspan="@TableColumns" Class="@tdthClassText">
           <MudButton OnClick="ToggleOpen"

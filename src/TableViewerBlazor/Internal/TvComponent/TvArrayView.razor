@@ -46,6 +46,8 @@
               @Options.Title
             </span>
           }
+          @if (Options.VisibleItemCount)
+          {
           <MudButton OnClick="ToggleOpen"
             Class="mud-button-super-dense"
             Variant="Variant.Text"
@@ -53,6 +55,7 @@
           >
             (@all.Count() Items)
           </MudButton>
+          }
         </MudTh>
         }
       </MudTHeadRow>
