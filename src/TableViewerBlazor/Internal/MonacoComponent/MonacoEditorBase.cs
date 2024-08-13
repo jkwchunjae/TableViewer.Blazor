@@ -12,14 +12,16 @@ public class MonacoEditorBase : ComponentBase
     [Parameter] public string? Label { get; set; }
 
     protected StandaloneCodeEditor Editor { get; set; } = null!;
+    private bool isLayoutSet = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Task.Delay(100);
-        if (firstRender && Editor != null)
+        if (!isLayoutSet && Editor != null)
         {
             var dimension = GetEditorDimension();
             await Editor.Layout(dimension);
+            isLayoutSet = true;
         }
     }
 

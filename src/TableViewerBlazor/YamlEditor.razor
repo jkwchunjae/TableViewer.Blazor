@@ -8,9 +8,12 @@
     </h3>
 }
 
-<StandaloneCodeEditor
-    @ref="Editor"
-    Id="@editorId"
-    OnDidChangeModelContent="@OnYamlContentChanged"
-    ConstructionOptions="@(EditorConstructionOptions)"
-/>
+@if (Option != null)
+{
+    <StandaloneCodeEditor
+        @ref="Editor"
+        Id="@editorId"
+        OnDidChangeModelContent="@OnYamlContentChanged"
+        ConstructionOptions="@(EditorConstructionOptions)"
+    />
+}
