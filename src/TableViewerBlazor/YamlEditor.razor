@@ -1,0 +1,16 @@
+﻿@inherits MonacoEditorBase
+@using TableViewerBlazor.Internal.MonacoComponent
+
+@if (Label != null)
+{
+    <h3 class="mb-3 ml-3">
+        @Label
+    </h3>
+}
+
+<StandaloneCodeEditor
+    @ref="Editor"
+    Id="@editorId"
+    OnDidChangeModelContent="@OnYamlContentChanged"
+    ConstructionOptions="@(EditorConstructionOptions)"
+/>
