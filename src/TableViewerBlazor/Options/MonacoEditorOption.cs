@@ -17,7 +17,7 @@ public interface IMonacoEditorOption
     /// <summary>
     /// Control the behavior and rendering of the minimap.
     /// </summary>
-    public EditorMinimapOptions MiniMap { get; }
+    public EditorMinimapOptions Minimap { get; }
 
     /// <summary>
     /// Control the rendering of line numbers. If it is a function, it will be invoked when rendering a line number and the return value will be rendered. Otherwise, if it is a truthy, line numbers will be rendered normally (equivalent of using an identity function). Otherwise, line numbers will not be rendered. Defaults to on.
@@ -113,7 +113,7 @@ public class MonacoEditorOption : IMonacoEditorOption
 {
     public EditorDimension Dimension { get; set; } = new();
     public string? Language { get; set; }
-    public EditorMinimapOptions MiniMap { get; set; } = new();
+    public EditorMinimapOptions Minimap { get; set; } = new();
     public string LineNumbers { get; set; } = RenderLineNumbersType.On.ToString();
     public bool GlyphMargin { get; set; } = true;
     public bool Folding { get; set; } = true;
