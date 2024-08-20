@@ -11,9 +11,10 @@ class EditItem
 {
     [TeSelectBox(nameof(IsSelected))]
     public bool IsSelected { get; set; }
+    [TeTextField(nameof(Name))]
     public PersonName? Name { get; set; }
     public string Address { get; set; } = string.Empty;
-    [TeCustomEditor("Inner")]
+    [TeCustomEditor(nameof(Inner))]
     public EditInner Inner { get; set; } = new EditInner();
 }
 
@@ -54,6 +55,12 @@ public partial class EditorObjectArray : ComponentBase
         options = new TeOptions
         {
             Title = "User table",
+            ObjectListEditorOptions =
+            {
+                new TeObjectListEditorOption<EditItem>
+                {
+                },
+            },
             TextFieldOptions =
             {
                 new TeTextFieldOption<PersonName>
