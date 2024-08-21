@@ -3,8 +3,8 @@
 @if (items != null)
 {
     <MudAutocomplete
-        T="object"
-        Value="inputValue"
+        T="ITeAutocompleteItem"
+        Value="selectedItem"
         ValueChanged="@(async value => await OnValueChanged(value))"
         Label="@Label"
         SearchFunc="@SearchFunction"

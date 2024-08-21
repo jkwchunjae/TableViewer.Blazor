@@ -4,26 +4,22 @@ public partial class TeAutocomplete : TeEditorBase
 {
     [Parameter] public ITeAutocompleteOption AutocompleteOption { get; set; } = default!;
 
-    private IEnumerable<object>? items;
-    private object inputValue = string.Empty; // 이거 확인
+    private IEnumerable<ITeAutocompleteItem>? items;
+    private ITeAutocompleteItem selectedItem = default!;
     
 
     protected override void OnInitialized()
     {
-        if (Data is IEnumerable<object> data)
-        {
-            items = data;
-        }
+        items = AutocompleteOption.Items;
     }
 
-    private async Task OnValueChanged(object value)
+    private async Task OnValueChanged(ITeAutocompleteItem value)
     {
-        inputValue = value;
-        // 터짐
-        //await DataChanged.InvokeAsync(Data);
+        selectedItem = value;
+        await DataChanged.InvokeAsync(value.Value);
     }
 
-    private async Task<IEnumerable<object>> SearchFunction(string value, CancellationToken token)
+    private async Task<IEnumerable<ITeAutocompleteItem>> SearchFunction(string value, CancellationToken token)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -37,9 +33,8 @@ public partial class TeAutocomplete : TeEditorBase
         }
     }
 
-    private string StringConverter(object obj)
+    private string StringConverter(ITeAutocompleteItem obj)
     {
-        // 일단 항상 option으로 받게 구현
         return AutocompleteOption.StringConverter(obj);
     }
 }

@@ -6,23 +6,16 @@ namespace TableViewerTest.Components.Pages;
 
 public class EditorTestData
 {
-    [TeAutocomplete(nameof(states))]
-    public string[] states { get; set; } =
-    {
-        "Alabama", "Alaska", "American Samoa", "Arizona",
-        "Arkansas", "California", "Colorado", "Connecticut",
-        "Delaware", "District of Columbia", "Federated States of Micronesia",
-        "Florida", "Georgia", "Guam", "Hawaii", "Idaho",
-    };
-    [TeAutocomplete(nameof(countryData))]
-    public List<CountryData> countryData { get; set; } = new();
+    [TeAutocomplete(nameof(state))]
+    public string state { get; set; } = string.Empty;
+    [TeAutocomplete(nameof(stateData))]
+    public StateData stateData { get; set; } = new();
 }
 
-public class CountryData
+public class StateData
 {
     public int Index { get; set; }
     public string Name { get; set; } = string.Empty;
-    
 }
 
 [Route("/editor-test")]
@@ -30,52 +23,75 @@ public partial class EditorTest : ComponentBase
 {
     [Inject] private IJSRuntime Js { get; set; } = default!;
 
-    public EditorTestData data { get; set; } = new EditorTestData()
+    public EditorTestData data = new(); 
+    private List<StateData> stateData { get; set; } = new();
+
+    public TeOptions options = new TeOptions();
+
+    private List<string> states = new List<string>
     {
-        countryData =
+        "Alabama", "Alaska", "American Samoa", "Arizona",
+        "Arkansas", "California", "Colorado", "Connecticut",
+        "Delaware", "District of Columbia", "Federated States of Micronesia",
+        "Florida", "Georgia", "Guam", "Hawaii", "Idaho",
+    };
+
+    protected override void OnInitialized()
+    {
+        data = new EditorTestData
         {
-            new CountryData
+            state = "California"
+        };
+
+        // 외부에서 받은 데이터
+        stateData = new()
+        {
+            new StateData
             {
                 Index = 0,
                 Name = "Alabama"
             },
-            new CountryData
+            new StateData
             {
                 Index = 1,
                 Name = "Alaska"
             },
-            new CountryData
+            new StateData
             {
                 Index = 2,
                 Name = "California"
             },
-            new CountryData
+            new StateData
             {
                 Index = 3,
                 Name = "Guam"
             }
-        }
-    };
+        };
 
-    TeOptions options = new TeOptions
-    {
-        AutocompleteOptions =
+        options = new TeOptions
         {
-            new TeAutocompleteOption<EditorTestData>
+            AutocompleteOptions =
             {
-                Id = nameof(EditorTestData.states),
-            },
-            new TeAutocompleteOption<CountryData>
-            {
-                Id = nameof(EditorTestData.countryData),
-                StringConverter = value => $"{value.Index} {value.Name}"
+                new TeAutocompleteOption<string>
+                {
+                    Id = nameof(EditorTestData.state),
+                    Items = states.Select(s => new TeAutocompleteItem<string>(s)).ToList(),
+                    //StringConverter = obj => obj.Value
+                },
+                new TeAutocompleteOption<StateData>
+                {
+                    Id = nameof(EditorTestData.stateData),
+                    Items = stateData.Select(d => new TeAutocompleteItem<StateData>(d)).ToList(),
+                    StringConverter = value => $"{value.Value.Index} {value.Value.Name}",
+                }
             }
-        }
-    };
+        };
+        base.OnInitialized();
+    }
+
 
     private async Task OnDataChanged(object value)
     {
         await Js.InvokeVoidAsync("console.log", value);
     }
-
 }
