@@ -27,8 +27,7 @@ public partial class TeAutocomplete : TeEditorBase
         }
         else
         {
-            return items!
-                .Where(str => AutocompleteOption.CustomSearchFilter(StringConverter(str), value));
+            return items!.Where(item => AutocompleteOption.CustomSearchFilter(item, value));
         }
     }
 

@@ -76,14 +76,15 @@ public partial class EditorTest : ComponentBase
                 {
                     Id = nameof(EditorTestData.State),
                     Items = states.Select(s => new TeAutocompleteItem<string>(s)).ToList(),
-                    //StringConverter = obj => obj.Value
+                    StringConverter = obj => obj.Value,
+                    CustomSearchFilter = (item, input) => item.Value.Contains("Al")
                 },
                 new TeAutocompleteOption<StateData>
                 {
                     Id = nameof(EditorTestData.StateData),
                     Items = stateData.Select(d => new TeAutocompleteItem<StateData>(d)).ToList(),
                     StringConverter = value => $"{value.Value.Index} {value.Value.Name}",
-                    CustomSearchFilter = (itemText, input) => itemText.Contains("Al")
+                    //CustomSearchFilter = (item, input) => item.Value.Name.Contains("Al")
                 }
             }
         };

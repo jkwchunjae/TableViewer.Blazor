@@ -12,19 +12,7 @@ public interface ITeAutocompleteOption : ITeGenericTypeOption
     public TeAutocompleteProperty Property { get; }
     public IEnumerable<ITeAutocompleteItem> Items { get; }
     public Func<ITeAutocompleteItem, string> StringConverter { get; }
-
-    /// <summary>
-    /// <para>
-    /// @itemText - filter가 되는 string (StringConverter 존재 시, Converter에 의해 변환된 string)
-    /// </para>
-    /// <para>
-    /// @inputValue - 유저가 입력한 input value (filtering 기준)
-    /// </para>
-    /// <remarks>
-    /// Defaults to: (itemText, inputValue) => itemText?.Contains(inputValue, StringComparison.InvariantCultureIgnoreCase) ?? false
-    /// </remarks>
-    /// </summary>
-    public Func<string, string, bool> CustomSearchFilter { get; }
+    public Func<ITeAutocompleteItem, string, bool> CustomSearchFilter { get; }
 }
 
 public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
@@ -34,11 +22,11 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
     public TeAutocompleteProperty Property { get; set; } = new();
     public List<TeAutocompleteItem<TValue>> Items { get; set; } = [];
     IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items;
-    public Func<TeAutocompleteItem<TValue>, string>? StringConverter { get; set; }
+    public required Func<TeAutocompleteItem<TValue>, string>? StringConverter { get; set; }
 
     Func<ITeAutocompleteItem, string> ITeAutocompleteOption.StringConverter => obj =>
     {
-        
+
         if (obj is TeAutocompleteItem<TValue> item)
         {
             if (StringConverter == null)
@@ -56,7 +44,27 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
         }
     };
 
-    public Func<string, string, bool> CustomSearchFilter { get; set; } = (itemText, inputValue) => itemText?.Contains(inputValue, StringComparison.InvariantCultureIgnoreCase) ?? false;
+    /// <summary>
+    /// <para>
+    /// @param1 - TeAutocompleteItem item: 아이템 데이터
+    /// </para>
+    /// <para>
+    /// @param2 - string inputValue: 유저가 입력 값
+    /// </para>
+    /// </summary>
+    public Func<TeAutocompleteItem<TValue>, string, bool>? CustomSearchFilter { get; set; }
+
+    Func<ITeAutocompleteItem, string, bool> ITeAutocompleteOption.CustomSearchFilter => (item, input) =>
+    {
+        if (CustomSearchFilter == null)
+        {
+            return StringConverter?.Invoke((TeAutocompleteItem<TValue>)item).Contains(input, StringComparison.InvariantCultureIgnoreCase) ?? false;
+        }
+        else
+        {
+            return CustomSearchFilter?.Invoke((TeAutocompleteItem<TValue>)item, input) ?? false;
+        }
+    };
 }
 
 public interface ITeAutocompleteItem
