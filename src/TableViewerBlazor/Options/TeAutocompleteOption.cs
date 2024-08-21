@@ -12,6 +12,19 @@ public interface ITeAutocompleteOption : ITeGenericTypeOption
     public TeAutocompleteProperty Property { get; }
     public IEnumerable<ITeAutocompleteItem> Items { get; }
     public Func<ITeAutocompleteItem, string> StringConverter { get; }
+
+    /// <summary>
+    /// <para>
+    /// @itemText - filter가 되는 string (StringConverter 존재 시, Converter에 의해 변환된 string)
+    /// </para>
+    /// <para>
+    /// @inputValue - 유저가 입력한 input value (filtering 기준)
+    /// </para>
+    /// <remarks>
+    /// Defaults to: (itemText, inputValue) => itemText?.Contains(inputValue, StringComparison.InvariantCultureIgnoreCase) ?? false
+    /// </remarks>
+    /// </summary>
+    public Func<string, string, bool> CustomSearchFilter { get; }
 }
 
 public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
@@ -42,6 +55,8 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
             return obj?.ToString() ?? string.Empty;
         }
     };
+
+    public Func<string, string, bool> CustomSearchFilter { get; set; } = (itemText, inputValue) => itemText?.Contains(inputValue, StringComparison.InvariantCultureIgnoreCase) ?? false;
 }
 
 public interface ITeAutocompleteItem

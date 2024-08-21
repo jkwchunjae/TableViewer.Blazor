@@ -6,10 +6,10 @@ namespace TableViewerTest.Components.Pages;
 
 public class EditorTestData
 {
-    [TeAutocomplete(nameof(state))]
-    public string state { get; set; } = string.Empty;
-    [TeAutocomplete(nameof(stateData))]
-    public StateData stateData { get; set; } = new();
+    [TeAutocomplete(nameof(State))]
+    public string State { get; set; } = string.Empty;
+    [TeAutocomplete(nameof(StateData))]
+    public StateData StateData { get; set; } = new();
 }
 
 public class StateData
@@ -40,7 +40,7 @@ public partial class EditorTest : ComponentBase
     {
         data = new EditorTestData
         {
-            state = "California"
+            State = "California"
         };
 
         // 외부에서 받은 데이터
@@ -74,15 +74,16 @@ public partial class EditorTest : ComponentBase
             {
                 new TeAutocompleteOption<string>
                 {
-                    Id = nameof(EditorTestData.state),
+                    Id = nameof(EditorTestData.State),
                     Items = states.Select(s => new TeAutocompleteItem<string>(s)).ToList(),
                     //StringConverter = obj => obj.Value
                 },
                 new TeAutocompleteOption<StateData>
                 {
-                    Id = nameof(EditorTestData.stateData),
+                    Id = nameof(EditorTestData.StateData),
                     Items = stateData.Select(d => new TeAutocompleteItem<StateData>(d)).ToList(),
                     StringConverter = value => $"{value.Value.Index} {value.Value.Name}",
+                    CustomSearchFilter = (itemText, input) => itemText.Contains("Al")
                 }
             }
         };

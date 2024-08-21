@@ -28,8 +28,7 @@ public partial class TeAutocomplete : TeEditorBase
         else
         {
             return items!
-                .Where(x => StringConverter(x)
-                    ?.Contains(value, StringComparison.InvariantCultureIgnoreCase) ?? false);
+                .Where(str => AutocompleteOption.CustomSearchFilter(StringConverter(str), value));
         }
     }
 
