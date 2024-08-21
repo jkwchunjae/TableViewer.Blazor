@@ -1,0 +1,10 @@
+﻿@using TableViewerBlazor.Internal.TeComponent
+
+<TableEditor
+    T="object"
+    Data="data"
+    Options="options"
+    DataChanged="@(async value => await OnDataChanged(value))"
+/>
+
+<TableViewer Data="data" />
