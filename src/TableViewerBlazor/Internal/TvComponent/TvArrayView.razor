@@ -18,7 +18,8 @@
       (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
     };
     string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
-  <MudTable
+    string buttonGroupClassText = "display: flex; gap: 4px";
+    <MudTable
     Items="DataArray"
     Class="@tableClassText"
     Dense="Options.Style.Dense"
@@ -78,24 +79,26 @@
       @if (HasAnyAction)
       {
         <MudTd Class="@tdthClassText">
-          @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
-          {
-            <TvActionButton
-              Options="Options"
-              Depth="Depth"
-              Item="item"
-              Action="action"
-            />
-          }
-          @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
-          {
-            <TvLinkButton
-              Options="Options"
-              Depth="Depth"
-              Item="item"
-              Link="link"
-            />
-          }
+          <div style="@buttonGroupClassText">
+            @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+            {
+              <TvActionButton
+                Options="Options"
+                Depth="Depth"
+                Item="item"
+                Action="action"
+              />
+            }
+            @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
+            {
+              <TvLinkButton
+                Options="Options"
+                Depth="Depth"
+                Item="item"
+                Link="link"
+              />
+            }
+          </div>
         </MudTd>
       }
     </RowTemplate>

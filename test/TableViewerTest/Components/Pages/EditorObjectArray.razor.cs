@@ -113,6 +113,18 @@ public partial class EditorObjectArray : ComponentBase
                     Label = "Google",
                     Condition = (x, i) => true,
                 },
+                new TvLink<object>
+                {
+                    Href = x => "https://www.google.com",
+                    Label = "Google",
+                    Condition = (x, i) => true,
+                },
+                new TvLink<object>
+                {
+                    Href = x => "https://www.google.com",
+                    Label = "Google",
+                    Condition = (x, i) => true,
+                },
             },
         };
         return base.OnInitializedAsync();

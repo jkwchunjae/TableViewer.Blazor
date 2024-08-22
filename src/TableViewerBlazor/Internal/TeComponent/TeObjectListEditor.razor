@@ -17,6 +17,7 @@
     (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
   };
   string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
+  string buttonGroupClassText = "display: flex; gap: 4px";
 }
 <MudTable
   Items="@ItemsEnumerable"
@@ -31,17 +32,19 @@
       @(Options.Title ?? string.Empty)
     </MudText>
     <MudSpacer/>
-    @if (Depth == 1)
-    {
-        @foreach (var button in Options.ToolbarButtons)
+    <div style="@buttonGroupClassText">
+        @if (Depth == 1)
         {
-            <TvButton Item="ItemsEnumerable" Button="button" />
+            @foreach (var button in Options.ToolbarButtons)
+            {
+                <TvButton Item="ItemsEnumerable" Button="button" />
+            }
         }
-    }
-    @if (ObjectListOption.AddItemAction != default)
-    {
-      <TvActionButton Item="@(new object())" Action="AddItemAction" />
-    }
+        @if (ObjectListOption.AddItemAction != default)
+        {
+          <TvActionButton Item="@(new object())" Action="AddItemAction" />
+        }
+    </div>
   </ToolBarContent>
   <HeaderContent>
     @foreach (var memberInfo in MemberInfos)
