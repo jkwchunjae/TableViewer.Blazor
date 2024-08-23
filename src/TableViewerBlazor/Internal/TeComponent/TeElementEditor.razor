@@ -42,6 +42,18 @@ else if (Options.TryGetFieldOption(MemberInfo, this, out var fieldOption))
             SelectBoxOption="@selectBoxOption"
         />
     }
+    else if (fieldOption is ITeAutocompleteOption autocompleteOption)
+    {
+        <TeAutocomplete
+            Data="Data"
+            DataChanged="(async value => await DataChanged.InvokeAsync(value))"
+            Options="Options"
+            Depth="Depth"
+            Path="@Path"
+            Label="@Label"
+            AutocompleteOption="autocompleteOption"
+        />
+    }
     else if (fieldOption is ITeRadioOption radioOption)
     {
         <TeRadio
