@@ -4,14 +4,8 @@ public partial class TeAutocomplete : TeEditorBase
 {
     [Parameter] public ITeAutocompleteOption AutocompleteOption { get; set; } = default!;
 
-    private IEnumerable<ITeAutocompleteItem>? items;
+    private IEnumerable<ITeAutocompleteItem> items => AutocompleteOption.Items;
     private ITeAutocompleteItem selectedItem = default!;
-    
-
-    protected override void OnInitialized()
-    {
-        items = AutocompleteOption.Items;
-    }
 
     private async Task OnValueChanged(ITeAutocompleteItem value)
     {
@@ -19,15 +13,15 @@ public partial class TeAutocomplete : TeEditorBase
         await DataChanged.InvokeAsync(value.Value);
     }
 
-    private async Task<IEnumerable<ITeAutocompleteItem>> SearchFunction(string value, CancellationToken token)
+    private Task<IEnumerable<ITeAutocompleteItem>> SearchFunction(string value, CancellationToken token)
     {
         if (string.IsNullOrEmpty(value))
         {
-            return items!;
+            return Task.FromResult(items!);
         }
         else
         {
-            return items!.Where(item => AutocompleteOption.CustomSearchFilter(item, value));
+            return Task.FromResult(items!.Where(item => AutocompleteOption.CustomSearchFilter(item, value)));
         }
     }
 

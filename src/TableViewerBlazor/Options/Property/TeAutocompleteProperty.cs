@@ -1,18 +1,7 @@
-﻿using MudBlazor;
-using System.Reflection.Metadata;
-using System.Runtime.Intrinsics.X86;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Tokens;
-using static MudBlazor.CategoryTypes;
-using static MudBlazor.Colors;
-
-namespace TableViewerBlazor.Options.Property;
+﻿namespace TableViewerBlazor.Options.Property;
 
 public class TeAutocompleteProperty : TeBaseInputProperty
 {
-   
-
-
     /// <summary>
     /// The CSS classes applied to the popover. Defaults to null. You can use spaces to separate multiple classes.
     /// </summary>
@@ -130,12 +119,6 @@ public class TeAutocompleteProperty : TeBaseInputProperty
     /// </summary>
     [Category(CategoryTypes.FormComponent.Behavior)]
     public bool Clearable { get; set; } = false;
-
-    /// <summary>
-    /// The location of the adornment icon or text. Defaults to None. When set to Start or End, the AdornmentText will be displayed, or AdornmentIcon if no adornment text is specified.
-    /// </summary>
-    [Category(CategoryTypes.FormComponent.Behavior)]
-    public Adornment Adornment { get; set; } = Adornment.None;
 
     /// <summary>
     /// Reset the selected value if the user deletes the text. Defaults to false.

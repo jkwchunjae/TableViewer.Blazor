@@ -26,16 +26,15 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
 
     Func<ITeAutocompleteItem, string> ITeAutocompleteOption.StringConverter => obj =>
     {
-
         if (obj is TeAutocompleteItem<TValue> item)
         {
-            if (StringConverter == null)
+            if (StringConverter != null)
             {
-                return item.Value?.ToString() ?? string.Empty;
+                return StringConverter(item);
             }
             else
             {
-                return StringConverter(item);
+                return item.Value?.ToString() ?? string.Empty;
             }
         }
         else
@@ -56,13 +55,24 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
 
     Func<ITeAutocompleteItem, string, bool> ITeAutocompleteOption.CustomSearchFilter => (item, input) =>
     {
-        if (CustomSearchFilter == null)
+        if (item is TeAutocompleteItem<TValue> tItem)
         {
-            return StringConverter?.Invoke((TeAutocompleteItem<TValue>)item).Contains(input, StringComparison.InvariantCultureIgnoreCase) ?? false;
+            if (CustomSearchFilter != null)
+            {
+                return CustomSearchFilter(tItem, input);
+            }
+            else if (StringConverter != null)
+            {
+                return StringConverter(tItem).Contains(input, StringComparison.InvariantCultureIgnoreCase);
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            return CustomSearchFilter?.Invoke((TeAutocompleteItem<TValue>)item, input) ?? false;
+            return false;
         }
     };
 }
