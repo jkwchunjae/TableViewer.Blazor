@@ -75,7 +75,7 @@ public partial class EditorTest : ComponentBase
                 new TeAutocompleteOption
                 {
                     Id = nameof(EditorTestData.State),
-                    Items = states.Select(s => new TeAutocompleteItem(s)).ToList(),
+                    Items = states,
                     CustomSearchFilter = (item, input) => input.Split(' ').All(keyword => item.Value.Contains(keyword)),
                 },
                 new TeAutocompleteOption<StateData>

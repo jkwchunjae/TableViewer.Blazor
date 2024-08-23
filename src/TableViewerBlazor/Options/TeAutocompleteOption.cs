@@ -21,8 +21,8 @@ public class TeAutocompleteOption : ITeAutocompleteOption
     public string? Id { get; set; }
     public string TypeName => typeof(string).FullName!;
     public TeAutocompleteProperty Property { get; set; } = new();
-    public List<TeAutocompleteItem> Items { get; set; } = [];
-    IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items;
+    public IEnumerable<string> Items { get; set; } = [];
+    IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items.Select(x => new TeAutocompleteItem(x));
 
     public Func<ITeAutocompleteItem, string> StringConverter => obj =>
     {
@@ -70,7 +70,7 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
     public string? Id { get; set; }
     public string TypeName => typeof(TValue).FullName!;
     public TeAutocompleteProperty Property { get; set; } = new();
-    public List<TeAutocompleteItem<TValue>> Items { get; set; } = [];
+    public IEnumerable<TeAutocompleteItem<TValue>> Items { get; set; } = [];
     IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items;
     public required Func<TeAutocompleteItem<TValue>, string>? StringConverter { get; set; }
 
