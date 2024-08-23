@@ -1,4 +1,5 @@
 ﻿using TableViewerBlazor.Options.Property;
+using YamlDotNet.Core.Tokens;
 
 namespace TableViewerBlazor.Options;
 
@@ -13,6 +14,55 @@ public interface ITeAutocompleteOption : ITeGenericTypeOption
     public IEnumerable<ITeAutocompleteItem> Items { get; }
     public Func<ITeAutocompleteItem, string> StringConverter { get; }
     public Func<ITeAutocompleteItem, string, bool> CustomSearchFilter { get; }
+}
+
+public class TeAutocompleteOption : ITeAutocompleteOption
+{
+    public string? Id { get; set; }
+    public string TypeName => typeof(string).FullName!;
+    public TeAutocompleteProperty Property { get; set; } = new();
+    public List<TeAutocompleteItem> Items { get; set; } = [];
+    IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items;
+
+    public Func<ITeAutocompleteItem, string> StringConverter => obj =>
+    {
+        if (obj is TeAutocompleteItem item)
+        {
+            return item.Value;
+        }
+        else
+        {
+            return obj?.ToString() ?? string.Empty;
+        }
+    };
+
+    /// <summary>
+    /// <para>
+    /// @param1 - TeAutocompleteItem item: 아이템 데이터
+    /// </para>
+    /// <para>
+    /// @param2 - string inputValue: 유저가 입력 값
+    /// </para>
+    /// </summary>
+    public Func<TeAutocompleteItem, string, bool>? CustomSearchFilter { get; set; }
+    Func<ITeAutocompleteItem, string, bool> ITeAutocompleteOption.CustomSearchFilter => (item, input) =>
+    {
+        if (item is TeAutocompleteItem tItem)
+        {
+            if (CustomSearchFilter != null)
+            {
+                return CustomSearchFilter(tItem, input);
+            }
+            else
+            {
+                return StringConverter(tItem).Contains(input, StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
+        else
+        {
+            return false;
+        }
+    };
 }
 
 public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
@@ -80,6 +130,17 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
 public interface ITeAutocompleteItem
 {
     public object Value { get; }
+}
+
+public record TeAutocompleteItem : ITeAutocompleteItem
+{
+    public string Value { get; init; }
+    object ITeAutocompleteItem.Value => Value!;
+
+    public TeAutocompleteItem(string value)
+    {
+        Value = value;
+    }
 }
 
 public record TeAutocompleteItem<T> : ITeAutocompleteItem
