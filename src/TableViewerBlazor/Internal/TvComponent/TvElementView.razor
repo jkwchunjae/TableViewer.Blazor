@@ -1,80 +1,86 @@
 ﻿@inherits TvViewBase
 @using System.Collections
 
-@if (Data is null)
+@if (Options.IsIgnored(MemberInfo, this))
 {
-    <TvNullView />
-}
-else if (IsNumber)
-{
-    <div class="table-cell">
-        <TvNumberView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data is Enum)
-{
-    <div class="table-cell">
-        <TvEnumView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data is bool boolData)
-{
-    <div class="table-cell">
-        <TvBooleanView Data="boolData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data is DateTime datetimeData)
-{
-    <div class="table-cell">
-        <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data is string stringData)
-{
-    <div class="table-cell">
-        <TvStringView Data="@stringData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (DataHasStringViewerAttribute())
-{
-    var stringData2 = Data.ToString();
-    <div class="table-cell">
-        <TvStringView Data="@stringData2" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
-{
-    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption"/>
-}
-else if (Data is IDictionary dictionary)
-{
-    <div class="table-cell">
-        <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
-}
-else if (IsObjectArray && UseObjectArray)
-{
-    var array = (Data as IEnumerable)!.Cast<object?>();
-    <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
-}
-else if (Data is IEnumerable enumerableData)
-{
-    <div class="table-cell">
-        <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
 }
 else
 {
-    @if (Depth == 1 && Options.Style.UseTable == false)
+    if (Data is null)
     {
-        <TvObjectViewDepth1 Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        <TvNullView />
+    }
+    else if (IsNumber)
+    {
+        <div class="table-cell">
+            <TvNumberView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (Data is Enum)
+    {
+        <div class="table-cell">
+            <TvEnumView Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (Data is bool boolData)
+    {
+        <div class="table-cell">
+            <TvBooleanView Data="boolData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (Data is DateTime datetimeData)
+    {
+        <div class="table-cell">
+            <TvDateTimeView Data="datetimeData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (Data is string stringData)
+    {
+        <div class="table-cell">
+            <TvStringView Data="@stringData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (DataHasStringViewerAttribute())
+    {
+        var stringData2 = Data.ToString();
+        <div class="table-cell">
+            <TvStringView Data="@stringData2" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        </div>
+    }
+    else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
+    {
+        <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption"/>
+    }
+    else if (Data is IDictionary dictionary)
+    {
+        <div class="table-cell">
+            <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
+    else if (IsObjectArray && UseObjectArray)
+    {
+        var array = (Data as IEnumerable)!.Cast<object?>();
+        <div class="table-cell">
+            <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
+    else if (Data is IEnumerable enumerableData)
+    {
+        <div class="table-cell">
+            <TvArrayView Data="enumerableData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
     }
     else
     {
-        <div class="table-cell">
-            <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-        </div>
+        @if (Depth == 1 && Options.Style.UseTable == false)
+        {
+            <TvObjectViewDepth1 Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+        }
+        else
+        {
+            <div class="table-cell">
+                <TvObjectView Data="Data" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+            </div>
+        }
     }
 }

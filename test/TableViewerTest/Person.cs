@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using TableViewerBlazor.Helper;
+using TableViewerBlazor.Options;
 using TableViewerBlazor.Public;
 
 namespace TableViewerTest;
@@ -9,6 +10,7 @@ public class Person
     public int Id { get; set; }
     public PersonName? Name { get; set; }
     public DateTime? Birth { get; set; }
+    [TvIgnore]
     public DateTime? Death { get; set; }
     public Dictionary<string, object>? Attributes { get; set; }
     public TestEnum EnumValue { get; set; }

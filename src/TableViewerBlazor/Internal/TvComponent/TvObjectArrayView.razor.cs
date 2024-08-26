@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using TableViewerBlazor.Options;
-
 namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvObjectArrayView : TvViewBase
@@ -22,24 +19,7 @@ public partial class TvObjectArrayView : TvViewBase
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
-            var memberInfos = GetKeys(firstData);
-            var filteredKeys = memberInfos.Select(x => x.Name).ToArray();
-
-            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(filteredKeys));
-            if (columnOption != null)
-            {
-                filteredKeys = columnOption.NewKeys(filteredKeys).ToArray();
-            }
-            if (Options?.DisableKeys?.Any() ?? false)
-            {
-                filteredKeys = filteredKeys
-                    .Where(key => Options!.DisableKeys!.All(disable => disable != key))
-                    .ToArray();
-            }
-
-            MemberInfos = memberInfos
-                .Where(m => filteredKeys.Contains(m.Name))
-                .ToArray();
+            MemberInfos = GetKeys(firstData).ToArray();
         }
         if (Options != null)
         {
@@ -79,7 +59,8 @@ public partial class TvObjectArrayView : TvViewBase
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type));
+                .Where(p => p.PropertyType != typeof(Type))
+                .Where(p => p.GetCustomAttribute<TvIgnoreAttribute>() == null);
             foreach (var property in properties)
             {
                 yield return property;
@@ -90,7 +71,8 @@ public partial class TvObjectArrayView : TvViewBase
         {
             var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type));
+                .Where(f => f.FieldType != typeof(Type))
+                .Where(f => f.GetCustomAttribute<TvIgnoreAttribute>() == null);
             foreach (var field in fields)
             {
                 yield return field;
