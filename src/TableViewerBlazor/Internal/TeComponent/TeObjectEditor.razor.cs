@@ -9,7 +9,7 @@ public partial class TeObjectEditor : TeEditorBase
 
         var dataType = data.GetType();
 
-        if (Options?.ReadProperty ?? false)
+        if (dataType.GetProperties().Length > 0)
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
@@ -23,7 +23,7 @@ public partial class TeObjectEditor : TeEditorBase
             }
         }
 
-        if (Options?.ReadField ?? false)
+        if (dataType.GetFields().Length > 0)
         {
             var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
