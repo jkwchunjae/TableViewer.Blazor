@@ -4,7 +4,7 @@ namespace TableViewerBlazor.Options;
 
 public static class TvIgnoreOption
 {
-    public static bool IsIgnored(this TvOptions options, MemberInfo? memberInfo, TvViewBase tvBase)
+    public static bool IsIgnored(this TvOptions options, MemberInfo? memberInfo)
     {
         if (memberInfo != null)
         {
