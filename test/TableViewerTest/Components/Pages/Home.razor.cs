@@ -53,7 +53,7 @@ public partial class Home : ComponentBase
             People = new PersonRecord[]
             {
                 new PersonRecord(
-                    Id: 213,
+                    Id: 2,
                     Name: new PersonName("User name"),
                     Attributes: new Dictionary<string, object>
                     {
@@ -232,14 +232,11 @@ public partial class Home : ComponentBase
             },
             Editor =
             {
-                new TvYamlEditorOption<PersonRecord>()
+                new TvYamlEditorOption<PersonRecord>
                 {
-                    Condition = (data, depth, path) =>
-                    {
-                        return data?.Name == new PersonName("User name");
-                    },
-                },
-                // new TvYamlEditorOption<Dictionary<string, object>>(),
+                    Condition = (data, depth, path) => data?.Id == 2
+                }
+                 //new TvYamlEditorOption<Dictionary<string, object>>(),
             },
             DateTime = new TvDateTimeOption
             {

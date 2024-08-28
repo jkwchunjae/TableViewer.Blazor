@@ -19,12 +19,22 @@ else if (DataHasStringViewerAttribute())
         <TvStringView Data="@stringData2" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
-else if (IsObjectArray && UseObjectArray)
+else if (IsObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
-    <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
+    var element = array.FirstOrDefault();
+    if (Options.HasEditorOption(element, Depth, "path"))
+    {
+        <div class="table-cell">
+            <TvArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
+    else
+    {
+        <div class="table-cell">
+            <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
 }
 else if (IsNumber)
 {
