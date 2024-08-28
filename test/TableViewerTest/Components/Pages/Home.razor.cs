@@ -15,10 +15,6 @@ public partial class Home : ComponentBase
     TvOptions? personOption = new TvOptions
     {
         GlobalOpenDepth = 1,
-        StringTypes =
-        {
-            typeof(PersonName),
-        },
         Style = new()
         {
             UseTable = false,

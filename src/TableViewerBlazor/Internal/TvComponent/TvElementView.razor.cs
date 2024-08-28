@@ -91,12 +91,6 @@ public partial class TvElementView : TvViewBase
             {
                 return true;
             }
-
-            var checkOptionStringType = Options.StringTypes.Any(type => type == GetMemberType(MemberInfo));
-            if (checkOptionStringType)
-            {
-                return true;
-            }
         }
         var dataType = Data?.GetType();
         if (dataType != null)
