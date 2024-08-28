@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
-using System.Text.Json;
 using TableViewerBlazor.Options;
 
 namespace TableViewerTest.Components.Pages;
@@ -252,6 +251,27 @@ public partial class Home : ComponentBase
                     Style = { "font-weight: bold;" },
                 },
             },
+            TitleButtons =
+            {
+                new TvLink<object>
+                {
+                    Href= _ =>"https://www.naver.com",
+                    Condition = (_, _) => true,
+                    Label="Naver",
+                    Style = new TvButtonStyle
+                    {
+                        Variant = Variant.Filled,
+                        Color = Color.Secondary,
+                        Size = Size.Large
+                    }
+                },
+                new TvLink<object>
+                {
+                    Href= _ =>"https://www.google.com",
+                    Condition = (_, _) => true,
+                    Label="google"
+                }
+            }
         };
 
         optionForPR = new TvOptions

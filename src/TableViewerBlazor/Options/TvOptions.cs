@@ -7,6 +7,7 @@ public class TvOptions
     public int ArrayVisibleDepth { get; set; } = 1;
     public bool VisibleItemCount { get; set; } = true;
     public List<ITvAction> Actions { get; set; } = [];
+    public List<ITvButton> TitleButtons { get; set; } = [];
     public List<ITvLink> Links { get; set; } = [];
     public TvStyleOption Style { get; set; } = new();
     public List<ITvEditorOption> Editor { get; set; } = [];
