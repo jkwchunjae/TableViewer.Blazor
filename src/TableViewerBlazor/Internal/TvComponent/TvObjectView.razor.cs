@@ -32,8 +32,7 @@ public partial class TvObjectView : TvViewBase
 
     private int? ChildrenOpen()
     {
-        var openOption = Options.OpenDepth?
-            .FirstOrDefault(option => option.Condition != null ? option.Condition(Data, Depth, "path") : false);
+        var openOption = Options.OpenDepth?.FirstOrDefault(option => option.Condition?.Invoke(Data, Depth, "path") ?? false);
         if (openOption != null)
         {
             return openOption.OpenDepth + Depth - 1;
