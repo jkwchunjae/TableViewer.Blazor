@@ -159,6 +159,19 @@ public partial class EditorConverter : ComponentBase
             }
         }
     };
+    TvOptions tvOptions = new TvOptions
+    {
+        Title = "제목",
+        TitleButtons =
+        {
+            new TvLink<object>
+            {
+                Href = data => "https://www.naver.com",
+                Label = "Naver",
+                Condition = (data, depth) => true,
+            },
+        }
+    };
 
     private async Task OnDataChanged<T>(T data)
     {

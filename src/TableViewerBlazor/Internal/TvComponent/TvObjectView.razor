@@ -1,103 +1,122 @@
 @inherits TvViewBase
 
-  @if (Open ?? false)
-  {
+@if (Open ?? false)
+{
+    #region style
     List<string> tableClassList = new()
     {
-      "d-inline-block",
-      (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
+        "d-inline-block",
+        (Options.Style.SuperDense ? "mud-table-super-dense" : string.Empty),
     };
     if (Depth == 1)
     {
-      tableClassList.AddRange(Options.Style.RootClass);
+        tableClassList.AddRange(Options.Style.RootClass);
     }
     var tableClassText = string.Join(" ", tableClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
-
     List<string> tdthClassList = new()
     {
-      (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
+        (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
     };
     string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
-  <MudTable
-    Items="Items"
-    Class="@tableClassText"
-    Dense="Options.Style.Dense"
-    Hover="Options.Style.Hover"
-    Striped="Options.Style.Striped"
-    Bordered="Options.Style.Bordered"
-    Loading="Loading"
-    LoadingProgressColor="Options.Style.LoadingProgressColor"
-    CustomHeader="true"
-    Elevation="0"
-    Outlined="true"
-  >
+    string titleContainerStyleText = "display: flex; justify-content: space-between; align-items: center;";
+    string titleContainerStyleText2 = "display: flex; align-items: center;";
+    string buttonGroupClassText = "display: inline-flex; gap: 4px; height: 22px;";
+    #endregion
+    #region table content
+    <MudTable
+        Items="Items"
+        Class="@tableClassText"
+        Dense="Options.Style.Dense"
+        Hover="Options.Style.Hover"
+        Striped="Options.Style.Striped"
+        Bordered="Options.Style.Bordered"
+        Loading="Loading"
+        LoadingProgressColor="Options.Style.LoadingProgressColor"
+        CustomHeader="true"
+        Elevation="0"
+        Outlined="true"
+    >
     <HeaderContent>
-      <MudTHeadRow>
+        <MudTHeadRow>
         @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
         {
-        <MudTh colspan="2" Class="@tdthClassText">
-          @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
-          {
-            <span class="tv-title">
-              @Options.Title
-            </span>
-          }
-          @if (Options.VisibleItemCount)
-          {
-          <MudButton OnClick="ToggleOpen"
-            Class="mud-button-super-dense"
-            Variant="Variant.Text"
-            Style="text-transform: none;"
-          >
-            (@Items.Count() Keys)
-          </MudButton>
-          }
-        </MudTh>
+            <MudTh colspan="2" Class="@tdthClassText">
+                <div style="@titleContainerStyleText">
+                    <div style="@titleContainerStyleText2">
+                        @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
+                        {
+                            <span class="tv-title">
+                                @Options.Title
+                            </span>
+                        }
+                        @if (Options.VisibleItemCount)
+                        {
+                            <MudButton OnClick="ToggleOpen"
+                                Class="mud-button-super-dense"
+                                Variant="Variant.Text"
+                                Style="text-transform: none;"
+                            >
+                                (@Items.Count() Keys)
+                            </MudButton>
+                        }
+                    </div>
+                    @if (Depth == 1 && Options.TitleButtons.Any())
+                    {
+                        <div style="@(buttonGroupClassText)">
+                            @foreach (var button in Options.TitleButtons)
+                            {
+                                <TvButton Item="@(Data)" Button="button" />
+                            }
+                        </div>
+                    }
+                </div>
+            </MudTh>
         }
-      </MudTHeadRow>
+        </MudTHeadRow>
     </HeaderContent>
     <RowTemplate>
-      @{
+        @{
         var (key, value, memberInfo) = context;
-      }
-      <MudTd Class="@tdthClassText" Style="font-weight: bold;">
+        }
+        <MudTd Class="@tdthClassText" Style="font-weight: bold;">
         @key
-      </MudTd>
-      <MudTd Class="@tdthClassText">
+        </MudTd>
+        <MudTd Class="@tdthClassText">
         <TvElementView
-          Parent="@this"
-          Data="value"
-          MemberInfo="memberInfo"
-          Options="Options"
-          Depth="Depth + 1"
-          OpenDepth="@(ThisOpenDepth ?? OpenDepth)"
+            Parent="@this"
+            Data="value"
+            MemberInfo="memberInfo"
+            Options="Options"
+            Depth="Depth + 1"
+            OpenDepth="OpenDepth"
         />
-      </MudTd>
+        </MudTd>
     </RowTemplate>
     <LoadingContent>
-      @Options.Contents.LoadingContent
+        @Options.Contents.LoadingContent
     </LoadingContent>
     <NoRecordsContent>
-      @Options.Contents.NoRecordsContent
+        @Options.Contents.NoRecordsContent
     </NoRecordsContent>
-  </MudTable>
-  }
-  else
-  {
+    </MudTable>
+    #endregion
+}
+else
+{
     string classText = string.Empty;
     if (Options.Style.SuperDense)
     {
-      classText += " mud-button-super-dense";
+        classText += " mud-button-super-dense";
     }
     else if (Options.Style.Dense)
     {
-      classText += " mud-button-dense";
+        classText += " mud-button-dense";
     }
     <MudButton OnClick="ToggleOpen"
-      Class="@classText"
-      Variant="Variant.Outlined"
-      Size="Size.Small"
+        Class="@classText"
+        Variant="Variant.Outlined"
+        Size="Size.Small"
     >
         object (@Items.Count() keys)
     </MudButton>
-  }
+}
