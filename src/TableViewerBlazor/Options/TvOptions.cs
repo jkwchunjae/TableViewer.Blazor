@@ -9,6 +9,8 @@ public class TvOptions
     public List<ITvAction> Actions { get; set; } = [];
     public List<ITvButton> TitleButtons { get; set; } = [];
     public List<ITvLink> Links { get; set; } = [];
+    public List<TvColumnVisibleOption> ColumnVisible { get; set; } = [];
+    public List<string> DisableKeys { get; set; } = [];
     public TvStyleOption Style { get; set; } = new();
     public List<ITvEditorOption> Editor { get; set; } = [];
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
