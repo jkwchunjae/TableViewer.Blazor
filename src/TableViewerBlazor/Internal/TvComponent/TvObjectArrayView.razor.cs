@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Components;
+using TableViewerBlazor.Options;
+
 namespace TableViewerBlazor.Internal.TvComponent;
 
 public partial class TvObjectArrayView : TvViewBase
@@ -19,7 +22,24 @@ public partial class TvObjectArrayView : TvViewBase
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
-            MemberInfos = GetKeys(firstData).ToArray();
+            var memberInfos = GetKeys(firstData);
+            var filteredKeys = memberInfos.Select(x => x.Name).ToArray();
+
+            var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(filteredKeys));
+            if (columnOption != null)
+            {
+                filteredKeys = columnOption.NewKeys(filteredKeys).ToArray();
+            }
+            if (Options?.DisableKeys?.Any() ?? false)
+            {
+                filteredKeys = filteredKeys
+                    .Where(key => Options!.DisableKeys!.All(disable => disable != key))
+                    .ToArray();
+            }
+
+            MemberInfos = memberInfos
+                .Where(m => filteredKeys.Contains(m.Name))
+                .ToArray();
         }
         if (Options != null)
         {
@@ -59,8 +79,7 @@ public partial class TvObjectArrayView : TvViewBase
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type))
-                .Where(p => p.GetCustomAttribute<TvIgnoreAttribute>() == null);
+                .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
                 yield return property;
@@ -71,8 +90,7 @@ public partial class TvObjectArrayView : TvViewBase
         {
             var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type))
-                .Where(f => f.GetCustomAttribute<TvIgnoreAttribute>() == null);
+                .Where(f => f.FieldType != typeof(Type));
             foreach (var field in fields)
             {
                 yield return field;

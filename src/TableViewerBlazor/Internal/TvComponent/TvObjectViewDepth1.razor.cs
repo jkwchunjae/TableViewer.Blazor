@@ -18,8 +18,21 @@ public partial class TvObjectViewDepth1 : TvViewBase
 
     private void UpdateData(object data)
     {
+        var keys = GetKeys(data);
 
-        Items = GetKeys(data)
+        var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys, keyInfo => keyInfo.Key));
+        if (columnOption != null)
+        {
+            keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
+        }
+
+        if (Options?.DisableKeys?.Any() ?? false)
+        {
+            keys = keys
+                .Where(key => Options!.DisableKeys!.All(disable => disable != key.Key));
+        }
+
+        Items = keys
             .Select(keyInfo => (keyInfo.Key, GetValue(data, keyInfo.MemberInfo), keyInfo.MemberInfo))
             .ToArray();
     }
@@ -35,8 +48,7 @@ public partial class TvObjectViewDepth1 : TvViewBase
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type))
-                .Where(p => p.GetCustomAttribute<TvIgnoreAttribute>() == null);
+                .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
                 yield return (property.Name, property);
@@ -47,8 +59,7 @@ public partial class TvObjectViewDepth1 : TvViewBase
         {
             var fields = dataType.GetFields()
                 .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type))
-                .Where(f => f.GetCustomAttribute<TvIgnoreAttribute>() == null);
+                .Where(f => f.FieldType != typeof(Type));
             foreach (var field in fields)
             {
                 yield return (field.Name, field);

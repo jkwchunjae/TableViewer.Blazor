@@ -24,8 +24,21 @@ public partial class TvObjectView : TvViewBase
 
     private void UpdateData(object data)
     {
+        var keys = GetKeys(data);
 
-        Items = GetKeys(data)
+        var columnOption = Options?.ColumnVisible?.FirstOrDefault(x => x.Matched(keys, keyInfo => keyInfo.Key));
+        if (columnOption != null)
+        {
+            keys = columnOption.NewKeys(keys, keyInfo => keyInfo.Key);
+        }
+
+        if (Options?.DisableKeys?.Any() ?? false)
+        {
+            keys = keys
+                .Where(key => Options!.DisableKeys!.All(disable => disable != key.Key));
+        }
+
+        Items = keys
             .Select(keyInfo => (keyInfo.Key, GetValue(data, keyInfo.MemberInfo), keyInfo.MemberInfo))
             .ToArray();
     }
@@ -54,8 +67,7 @@ public partial class TvObjectView : TvViewBase
         {
             var properties = dataType.GetProperties()
                 .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type))
-                .Where(p => p.GetCustomAttribute<TvIgnoreAttribute>() == null);
+                .Where(p => p.PropertyType != typeof(Type));
             foreach (var property in properties)
             {
                 yield return (property.Name, property);

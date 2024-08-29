@@ -1,10 +1,7 @@
 ﻿@inherits TvViewBase
 @using System.Collections
 
-@if (Options.IsIgnored(MemberInfo))
-{
-}
-else if (Data is null)
+@if (Data is null)
 {
     <TvNullView />
 }
