@@ -25,7 +25,7 @@ public class TvStyleOption
         Style =
         {
             "font-weight: bold;",
-            "background-color: #ccc;",
+            "background-color: #E0E0E0;",
         },
     };
 }

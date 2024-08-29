@@ -40,7 +40,7 @@
       <MudTHeadRow>
         @if (Depth == 1 || Options.Style.VisibleInnerToolbar)
         {
-        <MudTh colspan="@(HasAnyAction ? 3 : 2)" Class="@tdthClassText">
+        <MudTh colspan="@(HasAnyAction ? 3 : 2)" Class="@(tdthClassText + Options.Style.ThStyle.ClassStr)" Style="@(Options.Style.ThStyle.StyleStr)">
           @if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
           {
             <span class="tv-title">
