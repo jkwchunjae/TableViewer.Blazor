@@ -245,11 +245,11 @@ public partial class Home : ComponentBase
             Style = new TvStyleOption
             {
                 RootClass = ["my-10"],
-                TitleStyle = new()
-                {
-                    Class = { "mb-2" },
-                    Style = { "font-weight: bold;" },
-                },
+                //TitleStyle = new()
+                //{
+                //    Class = { "mb-2" },
+                //    Style = { "font-weight: bold;" },
+                //},
             },
             TitleButtons =
             {
