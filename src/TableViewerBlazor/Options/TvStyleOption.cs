@@ -13,15 +13,19 @@ public class TvStyleOption
     public bool VisibleInnerToolbar { get; set; } = true;
     public TvClassAndStyle TitleStyle { get; set; } = new TvClassAndStyle
     {
-        Class = { "mb-2" },
-        Style = { "font-weight: bold;" },
+        Class = { "mb-3" },
+        Style =
+        {
+            "font-size: 17px;",
+            "font-weight: bold;",
+        },
     };
     public TvClassAndStyle ThStyle { get; set; } = new TvClassAndStyle
     {
         Style =
         {
             "font-weight: bold;",
-            "background-color: #ccc;",
+            "background-color: #E0E0E0;",
         },
     };
 }

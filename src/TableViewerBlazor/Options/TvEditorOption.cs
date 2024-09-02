@@ -19,17 +19,21 @@ public static class TvEditorOptionExtension
             return false;
         }
     }
+
+
+    public static bool HasEditorOption(this TvOptions tvOptions, object? data, int depth, string path)
+    {
+        return tvOptions.Editor?.FirstOrDefault(e => e.Condition?.Invoke(data, depth, path) ?? false) != null;
+    }
 }
 
 public interface ITvEditorOption
 {
     delegate bool EditorOptionCondition(object? data, int depth, string path);
-    delegate bool EditorOptionConditionByType(Type type, int depth, string path);
     string Language { get; }
     EditorSize? LayoutMaxSize { get; }
     Func<object, string>? Serializer { get; }
     EditorOptionCondition? Condition { get; }
-    EditorOptionConditionByType ConditionByType { get; }
 }
 
 public record EditorSize(int? Height, int? Width);
@@ -51,19 +55,6 @@ public class TvEditorOption<T> : ITvEditorOption
             if (data is T t)
             {
                 return Condition?.Invoke(t, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
-
-    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) =>
-        {
-            if (typeof(T) == type)
-            {
-                return Condition != null;
             }
             else
             {
@@ -100,19 +91,6 @@ public class TvJsonEditorOption<T> : ITvEditorOption
                 return false;
             }
         };
-
-    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) =>
-        {
-            if (typeof(T) == type)
-            {
-                return Condition != null;
-            }
-            else
-            {
-                return false;
-            }
-        };
 }
 
 public class TvYamlEditorOption<T> : ITvEditorOption
@@ -137,19 +115,6 @@ public class TvYamlEditorOption<T> : ITvEditorOption
             if (data is T t)
             {
                 return Condition?.Invoke(t, depth, path) ?? true;
-            }
-            else
-            {
-                return false;
-            }
-        };
-
-    public ITvEditorOption.EditorOptionConditionByType ConditionByType =>
-        (type, depth, path) =>
-        {
-            if (typeof(T) == type)
-            {
-                return Condition != null;
             }
             else
             {

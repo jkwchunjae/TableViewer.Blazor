@@ -19,14 +19,32 @@
       (Options.Style.SuperDense ? "px-2 py-1" : string.Empty),
     };
     string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
-    string buttonGroupClassText = "display: flex; gap: 4px";
-    <MudPaper Elevation="0" Class="@("d-flex flex-column " + string.Join(" ", Options.Style.RootClass))">
-@if (Depth == 1 && !string.IsNullOrWhiteSpace(Options.Title))
-{
-  <MudText Class="@(Options.Style.TitleStyle.ClassStr)" Style="@(Options.Style.TitleStyle.StyleStr)">
-    @Options.Title
-  </MudText>
-}
+    string buttonGroupClassText = "display: flex; gap: 4px; ";
+    <MudPaper Elevation="0" Class="@("d-inline-flex flex-column " + string.Join(" ", Options.Style.RootClass))">
+    @if (Depth == 1 && (!string.IsNullOrWhiteSpace(Options.Title) || Options.TitleButtons.Any()))
+    {
+      <MudPaper Elevation="0" Class="d-flex justify-space-between align-baseline">
+        @if (!string.IsNullOrWhiteSpace(Options.Title))
+        {
+          <MudText
+              Class="@(Options.Style.TitleStyle.ClassStr)"
+              Style="@(Options.Style.TitleStyle.StyleStr)"
+          >
+              @Options.Title
+          </MudText>
+        }
+        @if (Options.TitleButtons.Any())
+        {
+          var titleButtonStyleText = "margin-bottom: 5px; height: 30px;";
+          <div style="@(buttonGroupClassText + titleButtonStyleText)">
+            @foreach (var button in Options.TitleButtons)
+            {
+                <TvButton Item="@(array)" Button="button" />
+            }
+          </div>
+        }
+      </MudPaper>
+    }
   <MudTable
     Items="@array"
     Class="@tableClassText"

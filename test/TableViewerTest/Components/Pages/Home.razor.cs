@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
-using System.Text.Json;
 using TableViewerBlazor.Options;
 
 namespace TableViewerTest.Components.Pages;
@@ -15,10 +14,6 @@ public partial class Home : ComponentBase
     TvOptions? personOption = new TvOptions
     {
         GlobalOpenDepth = 1,
-        StringTypes =
-        {
-            typeof(PersonName),
-        },
         Style = new()
         {
             UseTable = false,
@@ -57,7 +52,7 @@ public partial class Home : ComponentBase
             People = new PersonRecord[]
             {
                 new PersonRecord(
-                    Id: 213,
+                    Id: 2,
                     Name: new PersonName("User name"),
                     Attributes: new Dictionary<string, object>
                     {
@@ -236,14 +231,11 @@ public partial class Home : ComponentBase
             },
             Editor =
             {
-                new TvYamlEditorOption<PersonRecord>()
+                new TvYamlEditorOption<PersonRecord>
                 {
-                    Condition = (data, depth, path) =>
-                    {
-                        return data?.Name == new PersonName("User name");
-                    },
-                },
-                // new TvYamlEditorOption<Dictionary<string, object>>(),
+                    Condition = (data, depth, path) => data?.Id == 2
+                }
+                 //new TvYamlEditorOption<Dictionary<string, object>>(),
             },
             DateTime = new TvDateTimeOption
             {
@@ -253,12 +245,33 @@ public partial class Home : ComponentBase
             Style = new TvStyleOption
             {
                 RootClass = ["my-10"],
-                TitleStyle = new()
-                {
-                    Class = { "mb-2" },
-                    Style = { "font-weight: bold;" },
-                },
+                //TitleStyle = new()
+                //{
+                //    Class = { "mb-2" },
+                //    Style = { "font-weight: bold;" },
+                //},
             },
+            TitleButtons =
+            {
+                new TvLink<object>
+                {
+                    Href= _ =>"https://www.naver.com",
+                    Condition = (_, _) => true,
+                    Label="Naver",
+                    Style = new TvButtonStyle
+                    {
+                        Variant = Variant.Filled,
+                        Color = Color.Secondary,
+                        Size = Size.Large
+                    }
+                },
+                new TvLink<object>
+                {
+                    Href= _ =>"https://www.google.com",
+                    Condition = (_, _) => true,
+                    Label="google"
+                }
+            }
         };
 
         optionForPR = new TvOptions

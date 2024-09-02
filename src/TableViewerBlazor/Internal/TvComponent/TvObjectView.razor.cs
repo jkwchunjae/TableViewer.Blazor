@@ -45,8 +45,7 @@ public partial class TvObjectView : TvViewBase
 
     private int? ChildrenOpen()
     {
-        var openOption = Options.OpenDepth?
-            .FirstOrDefault(option => option.Condition != null ? option.Condition(Data, Depth, "path") : false);
+        var openOption = Options.OpenDepth?.FirstOrDefault(option => option.Condition?.Invoke(Data, Depth, "path") ?? false);
         if (openOption != null)
         {
             return openOption.OpenDepth + Depth - 1;
@@ -64,26 +63,20 @@ public partial class TvObjectView : TvViewBase
 
         var dataType = data.GetType();
 
-        if (Options?.ReadProperty ?? false)
+        var properties = dataType.GetProperties()
+            .Where(p => p.CanRead)
+            .Where(p => p.PropertyType != typeof(Type));
+        foreach (var property in properties)
         {
-            var properties = dataType.GetProperties()
-                .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type));
-            foreach (var property in properties)
-            {
-                yield return (property.Name, property);
-            }
+            yield return (property.Name, property);
         }
 
-        if (Options?.ReadField ?? false)
+        var fields = dataType.GetFields()
+            .Where(f => f.IsPublic)
+            .Where(f => f.FieldType != typeof(Type));
+        foreach (var field in fields)
         {
-            var fields = dataType.GetFields()
-                .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type));
-            foreach (var field in fields)
-            {
-                yield return (field.Name, field);
-            }
+            yield return (field.Name, field);
         }
     }
 

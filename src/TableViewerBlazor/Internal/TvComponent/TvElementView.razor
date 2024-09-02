@@ -5,6 +5,34 @@
 {
     <TvNullView />
 }
+else if (Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
+{
+    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption" />
+}
+else if (DataHasStringViewerAttribute())
+{
+    var stringData2 = Data.ToString();
+    <div class="table-cell">
+        <TvStringView Data="@stringData2" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
+    </div>
+}
+else if (IsObjectArray)
+{
+    var array = (Data as IEnumerable)!.Cast<object?>();
+    var element = array.FirstOrDefault();
+    if (Options.HasEditorOption(element, Depth, "path"))
+    {
+        <div class="table-cell">
+            <TvArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
+    else
+    {
+        <div class="table-cell">
+            <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
+        </div>
+    }
+}
 else if (IsNumber)
 {
     <div class="table-cell">
@@ -35,28 +63,10 @@ else if (Data is string stringData)
         <TvStringView Data="@stringData" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
     </div>
 }
-else if (DataHasStringViewerAttribute())
-{
-    var stringData2 = Data.ToString();
-    <div class="table-cell">
-        <TvStringView Data="@stringData2" Options="Options" Depth="Depth" OpenDepth="OpenDepth" />
-    </div>
-}
-else if (Data != null && Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
-{
-    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption"/>
-}
 else if (Data is IDictionary dictionary)
 {
     <div class="table-cell">
         <TvDictionaryView Data="dictionary" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
-    </div>
-}
-else if (IsObjectArray && UseObjectArray)
-{
-    var array = (Data as IEnumerable)!.Cast<object?>();
-    <div class="table-cell">
-        <TvObjectArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
     </div>
 }
 else if (Data is IEnumerable enumerableData)
