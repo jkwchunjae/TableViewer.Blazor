@@ -75,26 +75,20 @@ public partial class TvObjectArrayView : TvViewBase
 
         var dataType = data.GetType();
 
-        if (dataType.GetProperties().Length > 0)
+        var properties = dataType.GetProperties()
+            .Where(p => p.CanRead)
+            .Where(p => p.PropertyType != typeof(Type));
+        foreach (var property in properties)
         {
-            var properties = dataType.GetProperties()
-                .Where(p => p.CanRead)
-                .Where(p => p.PropertyType != typeof(Type));
-            foreach (var property in properties)
-            {
-                yield return property;
-            }
+            yield return property;
         }
 
-        if (dataType.GetFields().Length > 0)
+        var fields = dataType.GetFields()
+            .Where(f => f.IsPublic)
+            .Where(f => f.FieldType != typeof(Type));
+        foreach (var field in fields)
         {
-            var fields = dataType.GetFields()
-                .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type));
-            foreach (var field in fields)
-            {
-                yield return field;
-            }
+            yield return field;
         }
     }
 

@@ -9,31 +9,25 @@ public partial class TeObjectEditor : TeEditorBase
 
         var dataType = data.GetType();
 
-        if (dataType.GetProperties().Length > 0)
+        var properties = dataType.GetProperties()
+            .Where(p => p.CanRead)
+            .Where(p => p.CanWrite)
+            .Where(p => p.PropertyType != typeof(Type))
+            .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
+            .ToArray();
+        foreach (var property in properties)
         {
-            var properties = dataType.GetProperties()
-                .Where(p => p.CanRead)
-                .Where(p => p.CanWrite)
-                .Where(p => p.PropertyType != typeof(Type))
-                .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
-                .ToArray();
-            foreach (var property in properties)
-            {
-                yield return (property.Name, property, property.GetValue(data));
-            }
+            yield return (property.Name, property, property.GetValue(data));
         }
 
-        if (dataType.GetFields().Length > 0)
+        var fields = dataType.GetFields()
+            .Where(f => f.IsPublic)
+            .Where(f => f.FieldType != typeof(Type))
+            .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
+            .ToArray();
+        foreach (var field in fields)
         {
-            var fields = dataType.GetFields()
-                .Where(f => f.IsPublic)
-                .Where(f => f.FieldType != typeof(Type))
-                .Where(p => p.GetCustomAttribute<TeIgnoreAttribute>() == null)
-                .ToArray();
-            foreach (var field in fields)
-            {
-                yield return (field.Name, field, field.GetValue(data));
-            }
+            yield return (field.Name, field, field.GetValue(data));
         }
     }
 
