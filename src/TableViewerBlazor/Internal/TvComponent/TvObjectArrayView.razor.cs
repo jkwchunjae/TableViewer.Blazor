@@ -6,6 +6,8 @@ namespace TableViewerBlazor.Internal.TvComponent;
 public partial class TvObjectArrayView : TvViewBase
 {
     [Parameter] public IEnumerable<object?> Data { get; set; } = null!;
+    // NOTE: struct[]인 경우 위 데이터만으로 type 유추가 불가능해 TitleButtons Condition 조건에서 false
+    [Parameter] public object? OriginalData { get; set; } = null!;
     [Parameter] public bool Loading { get; set; }
 
     bool? Open = null;

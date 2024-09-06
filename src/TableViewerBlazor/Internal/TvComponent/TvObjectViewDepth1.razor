@@ -1,24 +1,58 @@
 ﻿@inherits TvViewBase
 
-<MudPaper Elevation="0" Class="@(string.Join(" ", Options.Style.RootClass))">
-<dl>
-    @foreach (var item in Items)
+@if (Data != null)
+{
+    #region style
+    List<string> rootClassList = new()
     {
-        var (key, value, memberInfo) = item;
-        <dt>@key</dt>
-        <dd>
-        <TvElementView
-          Parent="@this"
-          Data="value"
-          MemberInfo="memberInfo"
-          Options="Options"
-          Depth="Depth + 1"
-          OpenDepth="OpenDepth"
-        />
-        </dd>
+        "d-inline-block",
+    };
+    rootClassList.AddRange(Options.Style.RootClass);
+    var titleStyleText = "display: flex; justify-content: space-between; align-items: center;";
+    #endregion
+    #region content
+    <MudPaper Elevation="0" Class="@(string.Join(" ", rootClassList))">
+    <div style="@titleStyleText">
+        @if (!string.IsNullOrWhiteSpace(Options.Title))
+        {
+            <span class="tv-title">
+                @Options.Title
+            </span>
+        }
+        @if (Options.TitleButtons.Any())
+        {
+            <div>
+                @foreach (var button in Options.TitleButtons)
+                {
+                    <TvButton Item="@Data" Button="button" />
+                }
+            </div>
+        }
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Options.Title) || Options.TitleButtons.Any())
+    {
+        <MudDivider Class="my-3" />
     }
-</dl>
-</MudPaper>
+    <dl>
+        @foreach (var item in Items)
+        {
+            var (key, value, memberInfo) = item;
+            <dt>@key</dt>
+            <dd>
+            <TvElementView
+              Parent="@this"
+              Data="value"
+              MemberInfo="memberInfo"
+              Options="Options"
+              Depth="Depth + 1"
+              OpenDepth="OpenDepth"
+            />
+            </dd>
+        }
+    </dl>
+    </MudPaper>
+    #endregion
+}
 
 <style>
 
