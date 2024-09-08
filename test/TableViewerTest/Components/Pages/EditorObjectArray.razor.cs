@@ -7,7 +7,7 @@ using TableViewerBlazor.Public;
 
 namespace TableViewerTest.Components.Pages;
 
-class EditItem
+public class EditItem
 {
     [TeSelectBox(nameof(IsSelected))]
     public bool IsSelected { get; set; }
@@ -16,13 +16,22 @@ class EditItem
     public string Address { get; set; } = string.Empty;
     [TeCustomEditor(nameof(Inner))]
     public EditInner Inner { get; set; } = new EditInner();
+    [TeCustomEditor(nameof(Inner2))]
+    public EditInner2 Inner2 { get; set; } = new EditInner2();
 }
 
-class EditInner
+public class EditInner
 {
     public string Birth { get; set; } = string.Empty;
     [TeTextField(nameof(Age))]
     public int Age { get; set; }
+}
+
+public class EditInner2
+{
+    public string Name { get; set; } = string.Empty;
+    [TeTextField(nameof(Level))]
+    public int Level { get; set; } = 0;
 }
 
 class GsmValue2
@@ -50,6 +59,11 @@ public partial class EditorObjectArray : ComponentBase
                     Birth = DateTime.Now.ToString(),
                     Age = 20,
                 },
+                Inner2 = new EditInner2
+                {
+                    Name = "ddean",
+                    Level = 10,
+                }
             },
         };
         options = new TeOptions
@@ -104,6 +118,11 @@ public partial class EditorObjectArray : ComponentBase
                     Id = "Inner",
                     Condition = (memberInfo, type) => type == typeof(EditInner),
                 },
+                CustomEditor2 = new TeCustomEditorOption
+                {
+                    Id = "Inner2",
+                    Condition = (memberInfo, type) => type == typeof(EditInner2),
+                }
             },
             ToolbarButtons =
             {
