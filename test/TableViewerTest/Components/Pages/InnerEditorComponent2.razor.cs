@@ -5,13 +5,11 @@ namespace TableViewerTest.Components.Pages;
 
 public partial class InnerEditorComponent2 : ComponentBase
 {
-    [Parameter] public ICustomEditorArgument BaseArgument { get; set; } = default!;
-    private CustomEditorTypedArgument<EditItem, EditInner2>? Argument;
+    [Parameter] public CustomEditorTypedArgument<EditItem, EditInner2> Argument { get; set; } = default!;
     string Value = string.Empty;
 
     protected override void OnInitialized()
     {
-        Argument = BaseArgument.Convert<EditItem, EditInner2>();
         Value = GetValue(Argument.Parent!);
         Argument.ParentChanged += Argument_ParentChanged;
     }

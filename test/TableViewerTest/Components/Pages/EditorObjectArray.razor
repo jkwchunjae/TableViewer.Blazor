@@ -7,10 +7,12 @@
 
 @if (items != null && options != null)
 {
-    <CustomTableEditor1
+    <CustomTableEditor2
         T="List<EditItem>"
         TParent1="EditItem"
         TItem1="EditInner"
+        TParent2="EditItem"
+        TItem2="EditInner2"
         Data="items"
         Options="options"
         DataChanged="OnDataChanged"
@@ -18,7 +20,10 @@
         <CustomEditor1>
             <InnerEditorComponent Argument="context"/>
         </CustomEditor1>
-    </CustomTableEditor1>
+        <CustomEditor2>
+            <InnerEditorComponent2 Argument="context" />
+        </CustomEditor2>
+    </CustomTableEditor2>
 
     <TableViewer Data="items" />
 }
