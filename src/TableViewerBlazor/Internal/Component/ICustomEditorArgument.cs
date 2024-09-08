@@ -1,88 +1,59 @@
 ﻿namespace TableViewerBlazor.Internal.Component;
 
-public interface IUpdatable
-{
-    void Update(object parent);
-}
-
-public interface ICustomEditorArgument : IUpdatable
+public interface ICustomEditorArgument
 {
     event EventHandler<object> ParentChanged;
     object Parent { get; }
     object? Value { get; }
     Func<object?, Task> DataChanged { get; }
-
-    CustomEditorTypedArgument<TParent, TItem> Convert<TParent, TItem>();
+    void OnParentChanged(object obj);
 }
 
-public class CustomEditorArguemnt : ICustomEditorArgument
-{
-    public event EventHandler<object> ParentChanged = default!;
-    public required object Parent { get; set; }
-    public object? Value { get; set; }
-    public Func<object?, Task> DataChanged { get; set; } = default!;
-
-    List<IUpdatable> updatables = new List<IUpdatable>();
-
-    public void Update(object parent)
-    {
-        ParentChanged?.Invoke(this, parent);
-        foreach (var updatable in updatables)
-        {
-            try
-            {
-                updatable.Update(parent);
-            }
-            finally
-            {
-            }
-        }
-    }
-
-    public CustomEditorTypedArgument<TParent, TItem> Convert<TParent, TItem>()
-    {
-        if (Parent is TParent parent)
-        {
-            if (Value is TItem item)
-            {
-                var arg = new CustomEditorTypedArgument<TParent, TItem>()
-                {
-                    Parent = parent,
-                    Value = item,
-                    DataChanged = value => DataChanged(value),
-                };
-                updatables.Add(arg);
-                return arg;
-            }
-            else if (Value == null)
-            {
-                var arg = new CustomEditorTypedArgument<TParent, TItem>()
-                {
-                    Parent = parent,
-                    Value = default,
-                    DataChanged = value => DataChanged(value),
-                };
-                updatables.Add(arg);
-                return arg;
-            }
-        }
-        throw new Exception();
-    }
-}
-
-public class CustomEditorTypedArgument<TParent, TItem> : IUpdatable
+public class CustomEditorTypedArgument<TParent, TItem> : ICustomEditorArgument
 {
     public event EventHandler<TParent> ParentChanged = default!;
     public required TParent Parent { get; set; }
     public TItem? Value { get; set; }
     public Func<TItem?, Task> DataChanged { get; set; } = default!;
 
-    public void Update(object parent)
+    public void OnParentChanged(object parent)
     {
         if (parent is TParent tParent)
         {
             ParentChanged?.Invoke(this, tParent);
         }
     }
+
+    object ICustomEditorArgument.Parent => Parent!;
+
+    object? ICustomEditorArgument.Value => Value;
+
+    Func<object?, Task> ICustomEditorArgument.DataChanged => data => data is TItem item ? DataChanged(item) : default!;
+
+    event EventHandler<object> ICustomEditorArgument.ParentChanged
+    {
+        add
+        {
+            ParentChanged += (sender, parent) =>
+            {
+                if (parent is TParent typedParent)
+                {
+                    value(sender, typedParent);
+                }
+            };
+        }
+        remove
+        {
+            ParentChanged -= (sender, parent) =>
+            {
+                if (parent is TParent typedParent)
+                {
+                    value(sender, typedParent);
+                }
+            };
+        }
+    }
+
+
 }
 

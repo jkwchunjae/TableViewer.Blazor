@@ -1,4 +1,5 @@
 @page "/editor-object-array"
+@using TableViewerBlazor.Internal.TeComponent.CustomTableEditor
 
 <PageTitle>Editor Object Array</PageTitle>
 
@@ -6,18 +7,18 @@
 
 @if (items != null && options != null)
 {
-    <TableEditor T="List<EditItem>"
+    <CustomTableEditor1
+        T="List<EditItem>"
+        TParent1="EditItem"
+        TItem1="EditInner"
         Data="items"
         Options="options"
         DataChanged="OnDataChanged"
     >
         <CustomEditor1>
-            <InnerEditorComponent BaseArgument="context"/>
+            <InnerEditorComponent Argument="context"/>
         </CustomEditor1>
-        <CustomEditor2>
-            <InnerEditorComponent2 BaseArgument="context" />
-        </CustomEditor2>
-    </TableEditor>
+    </CustomTableEditor1>
 
     <TableViewer Data="items" />
 }
