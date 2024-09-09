@@ -99,7 +99,7 @@ public partial class TeObjectListEditor : TeEditorBase
         }
         else
         {
-            argument = new CustomEditorTypedArgument<object, object>
+            argument = new CustomEditorArgument<object, object>
             {
                 Value = value,
                 Parent = parent,

@@ -10,7 +10,7 @@ public partial class TableEditor3<T,
         TParent2, TItem2
         > where T : class
 {
-    [Parameter] public RenderFragment<CustomEditorTypedArgument<TParent3, TItem3>>? CustomEditor3 { get; set; }
+    [Parameter] public RenderFragment<CustomEditorArgument<TParent3, TItem3>>? CustomEditor3 { get; set; }
 
     protected override void OnInitialized()
     {

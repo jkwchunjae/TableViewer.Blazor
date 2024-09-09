@@ -35,11 +35,11 @@ public abstract class TableEditorBase<T> : ComponentBase
     }
 
     protected static RenderFragment<ICustomEditorArgument> ConvertRenderFragment<TParent, TItem>(
-    RenderFragment<CustomEditorTypedArgument<TParent, TItem>> renderFragment)
+        RenderFragment<CustomEditorArgument<TParent, TItem>> renderFragment)
     {
         return context =>
         {
-            var typedContext = new CustomEditorTypedArgument<TParent, TItem>
+            var typedContext = new CustomEditorArgument<TParent, TItem>
             {
                 Parent = (TParent)context.Parent,
                 Value = (TItem?)context.Value,

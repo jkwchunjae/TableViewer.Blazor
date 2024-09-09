@@ -5,7 +5,7 @@ namespace TableViewerTest.Components.Pages;
 
 public partial class InnerEditorComponent : ComponentBase
 {
-    [Parameter] public CustomEditorTypedArgument<EditItem, EditInner> Argument { get; set; } = default!;
+    [Parameter] public CustomEditorArgument<EditItem, EditInner> Argument { get; set; } = default!;
     string Value = string.Empty;
 
     protected override void OnInitialized()

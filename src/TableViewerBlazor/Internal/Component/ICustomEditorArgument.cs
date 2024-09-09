@@ -9,7 +9,7 @@ public interface ICustomEditorArgument
     void OnParentChanged(object obj);
 }
 
-public class CustomEditorTypedArgument<TParent, TItem> : ICustomEditorArgument
+public class CustomEditorArgument<TParent, TItem> : ICustomEditorArgument
 {
     public event EventHandler<TParent> ParentChanged = default!;
     public required TParent Parent { get; set; }
