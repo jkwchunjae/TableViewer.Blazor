@@ -30,27 +30,29 @@ public class CustomEditorArgument<TParent, TItem> : ICustomEditorArgument
 
     Func<object?, Task> ICustomEditorArgument.DataChanged => data => data is TItem item ? DataChanged(item) : default!;
 
+    Dictionary<EventHandler<object>, EventHandler<TParent>> dic = new();
+
     event EventHandler<object> ICustomEditorArgument.ParentChanged
     {
         add
         {
-            ParentChanged += (sender, parent) =>
+            EventHandler<TParent> handler = (sender, parent) =>
             {
                 if (parent is TParent typedParent)
                 {
                     value(sender, typedParent);
                 }
             };
+            dic[value] = handler;
+            ParentChanged += handler;
         }
         remove
         {
-            ParentChanged -= (sender, parent) =>
+            if (dic.TryGetValue(value, out var handler))
             {
-                if (parent is TParent typedParent)
-                {
-                    value(sender, typedParent);
-                }
-            };
+                ParentChanged -= handler;
+                dic.Remove(value);
+            }
         }
     }
 
