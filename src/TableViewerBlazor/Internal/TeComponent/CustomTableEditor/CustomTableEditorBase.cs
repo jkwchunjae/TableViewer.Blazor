@@ -8,6 +8,32 @@ public abstract class CustomTableEditorBase<T> : ComponentBase
     [Parameter] public EventCallback<bool> IsValidChanged { get; set; }
     [Parameter] public EventCallback<string[]> ErrorsChanged { get; set; }
 
+    protected MudForm form = default!;
+    protected bool success;
+    protected string[] errors = { };
+
+    protected Task OnValidChanged(bool success)
+    {
+        this.success = success;
+        return IsValidChanged.InvokeAsync(success);
+    }
+
+    protected Task OnDataChanged(object? data)
+    {
+        if (data is T newData)
+        {
+            Data = newData;
+            return DataChanged.InvokeAsync(newData);
+        }
+        return Task.CompletedTask;
+    }
+
+    protected async Task OnErrorsChanged(string[] errors)
+    {
+        this.errors = errors;
+        await ErrorsChanged.InvokeAsync(errors);
+    }
+
     protected static RenderFragment<ICustomEditorArgument> ConvertRenderFragment<TParent, TItem>(
     RenderFragment<CustomEditorTypedArgument<TParent, TItem>> renderFragment)
     {

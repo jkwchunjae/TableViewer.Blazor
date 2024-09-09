@@ -11,9 +11,18 @@
 @typeparam TParent5
 @typeparam TItem5
 
-<TableEditor
-    T="T"
-    Data="Data"
-    Options="Options"
-    DataChanged="DataChanged"
-/>
+<MudForm @ref="form"
+    Class="d-block"
+    IsValid="@success"
+    IsValidChanged="OnValidChanged"
+    Errors="@errors"
+    ErrorsChanged="OnErrorsChanged"
+>
+    <TeElementEditor
+        Data="Data"
+        DataChanged="@(async value => await OnDataChanged(value))"
+        Options="Options"
+        Depth="1"
+        Path="@string.Empty"
+    />
+</MudForm>
