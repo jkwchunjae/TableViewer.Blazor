@@ -39,20 +39,27 @@ public abstract class TableEditorBase<T> : ComponentBase
     {
         return context =>
         {
-            var typedContext = new CustomEditorArgument<TParent, TItem>
+            CustomEditorArgument<TParent, TItem> typedContext;
+            if (context.Parent is TParent tParent && context.Value is TItem tValue)
             {
-                Parent = (TParent)context.Parent,
-                Value = (TItem?)context.Value,
-                DataChanged = async (data) => await context.DataChanged(data)
-            };
-
-            context.ParentChanged += (sender, parent) =>
-            {
-                if (parent is TParent typedParent)
+                typedContext = new CustomEditorArgument<TParent, TItem>
                 {
-                    typedContext.OnParentChanged(typedParent);
-                }
-            };
+                    Parent = tParent,
+                    Value = tValue,
+                    DataChanged = async (data) => await context.DataChanged(data)
+                };
+                context.ParentChanged += (sender, parent) =>
+                {
+                    if (parent is TParent typedParent)
+                    {
+                        typedContext.OnParentChanged(typedParent);
+                    }
+                };
+            }
+            else
+            {
+                typedContext = new CustomEditorArgument<TParent, TItem>() { Parent = default! };
+            }
             return renderFragment(typedContext);
         };
     }
