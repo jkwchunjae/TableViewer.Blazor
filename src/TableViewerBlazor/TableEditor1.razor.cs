@@ -1,6 +1,6 @@
-﻿namespace TableViewerBlazor.Internal.TeComponent.CustomTableEditor;
+﻿namespace TableViewerBlazor;
 
-public partial class CustomTableEditor1<T, TParent1, TItem1> : CustomTableEditorBase<T> where T : class
+public partial class TableEditor1<T, TParent1, TItem1> : TableEditorBase<T> where T : class
 {
     [Parameter] public RenderFragment<CustomEditorTypedArgument<TParent1, TItem1>>? CustomEditor1 { get; set; }
 

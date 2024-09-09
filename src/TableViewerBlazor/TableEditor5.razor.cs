@@ -1,13 +1,13 @@
-﻿namespace TableViewerBlazor.Internal.TeComponent.CustomTableEditor;
+﻿namespace TableViewerBlazor;
 
-public partial class CustomTableEditor5<T,
+public partial class TableEditor5<T,
     TParent1, TItem1,
     TParent2, TItem2,
     TParent3, TItem3,
     TParent4, TItem4,
     TParent5, TItem5
     >
-    : CustomTableEditor4<T,
+    : TableEditor4<T,
         TParent1, TItem1,
         TParent2, TItem2,
         TParent3, TItem3,

@@ -1,6 +1,6 @@
-﻿namespace TableViewerBlazor.Internal.TeComponent.CustomTableEditor;
+﻿namespace TableViewerBlazor;
 
-public abstract class CustomTableEditorBase<T> : ComponentBase
+public abstract class TableEditorBase<T> : ComponentBase
 {
     [Parameter] public T Data { get; set; } = default!;
     [Parameter] public EventCallback<T> DataChanged { get; set; }

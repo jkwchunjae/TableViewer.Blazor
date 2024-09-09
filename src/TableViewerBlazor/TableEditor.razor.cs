@@ -1,8 +1,6 @@
-﻿using TableViewerBlazor.Internal.TeComponent.CustomTableEditor;
+﻿namespace TableViewerBlazor;
 
-namespace TableViewerBlazor;
-
-public partial class TableEditor<T> : CustomTableEditorBase<T>
+public partial class TableEditor<T> : TableEditorBase<T>
     where T : class
 {
 }

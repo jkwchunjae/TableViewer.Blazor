@@ -1,5 +1,4 @@
 @page "/editor-object-array"
-@using TableViewerBlazor.Internal.TeComponent.CustomTableEditor
 
 <PageTitle>Editor Object Array</PageTitle>
 
@@ -7,7 +6,7 @@
 
 @if (items != null && options != null)
 {
-    <CustomTableEditor2
+    <TableEditor2
         T="List<EditItem>"
         TParent1="EditItem"
         TItem1="EditInner"
@@ -23,7 +22,7 @@
         <CustomEditor2>
             <InnerEditorComponent2 Argument="context" />
         </CustomEditor2>
-    </CustomTableEditor2>
+    </TableEditor2>
 
     <TableViewer Data="items" />
 }
