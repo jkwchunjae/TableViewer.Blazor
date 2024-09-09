@@ -3,7 +3,7 @@ using TableViewerBlazor.Internal.Component;
 
 namespace TableViewerTest.Components.Pages;
 
-public partial class InnerEditorComponent : ComponentBase
+public partial class InnerEditorComponent : ComponentBase, IDisposable
 {
     [Parameter] public CustomEditorArgument<EditItem, EditInner> Argument { get; set; } = default!;
     string Value = string.Empty;
@@ -57,6 +57,11 @@ public partial class InnerEditorComponent : ComponentBase
                 });
             }
         }
+    }
+
+    public void Dispose()
+    {
+        Argument.ParentChanged -= Argument_ParentChanged;
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace TableViewerBlazor;
 
-public abstract class TableEditorBase<T> : ComponentBase
+public abstract class TableEditorBase<T> : ComponentBase, IDisposable
 {
     [Parameter] public T Data { get; set; } = default!;
     [Parameter] public EventCallback<T> DataChanged { get; set; }
@@ -11,6 +11,8 @@ public abstract class TableEditorBase<T> : ComponentBase
     protected MudForm form = default!;
     protected bool success;
     protected string[] errors = { };
+
+    private readonly List<(ICustomEditorArgument argument, EventHandler<object> handler)> argumentsAndHandlers = [];
 
     protected Task OnValidChanged(bool success)
     {
@@ -34,7 +36,7 @@ public abstract class TableEditorBase<T> : ComponentBase
         await ErrorsChanged.InvokeAsync(errors);
     }
 
-    protected static RenderFragment<ICustomEditorArgument> ConvertRenderFragment<TParent, TItem>(
+    protected RenderFragment<ICustomEditorArgument> ConvertRenderFragment<TParent, TItem>(
         RenderFragment<CustomEditorArgument<TParent, TItem>> renderFragment)
     {
         return context =>
@@ -48,13 +50,15 @@ public abstract class TableEditorBase<T> : ComponentBase
                     Value = tValue,
                     DataChanged = async (data) => await context.DataChanged(data)
                 };
-                context.ParentChanged += (sender, parent) =>
+                EventHandler<object> handler = (sender, parent) =>
                 {
                     if (parent is TParent typedParent)
                     {
                         typedContext.OnParentChanged(typedParent);
                     }
                 };
+                context.ParentChanged += handler;
+                argumentsAndHandlers.Add((context, handler));
             }
             else
             {
@@ -62,5 +66,13 @@ public abstract class TableEditorBase<T> : ComponentBase
             }
             return renderFragment(typedContext);
         };
+    }
+
+    public void Dispose()
+    {
+        foreach (var (argument, handler) in argumentsAndHandlers)
+        {
+            argument.ParentChanged -= handler;
+        }
     }
 }
