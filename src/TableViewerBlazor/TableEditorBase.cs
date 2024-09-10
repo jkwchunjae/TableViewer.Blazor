@@ -41,10 +41,9 @@ public abstract class TableEditorBase<T> : ComponentBase, IDisposable
     {
         return context =>
         {
-            CustomEditorArgument<TParent, TItem> typedContext;
             if (context.Parent is TParent tParent && context.Value is TItem tValue)
             {
-                typedContext = new CustomEditorArgument<TParent, TItem>
+                var typedContext = new CustomEditorArgument<TParent, TItem>
                 {
                     Parent = tParent,
                     Value = tValue,
@@ -59,12 +58,13 @@ public abstract class TableEditorBase<T> : ComponentBase, IDisposable
                 };
                 context.ParentChanged += handler;
                 argumentsAndHandlers.Add((context, handler));
+
+                return renderFragment(typedContext);
             }
             else
             {
-                typedContext = new CustomEditorArgument<TParent, TItem>() { Parent = default! };
+                throw new Exception("Converting RenderFragment is failed. Check out the types of data");
             }
-            return renderFragment(typedContext);
         };
     }
 
