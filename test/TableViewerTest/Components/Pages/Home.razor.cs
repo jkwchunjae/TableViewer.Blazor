@@ -221,6 +221,29 @@ public partial class Home : ComponentBase
                     },
                     Condition = (person, depth) => person.Name == new PersonName("User 2"),
                 },
+                new TvPopupAction<Person>
+                {
+                    Action = data => Task.CompletedTask, // 이거 popup 띄워주면 돼서 필요 없는거 같은데..?
+                    Label = "Popup Button",
+                    PopupTitle = data => $"{data.Name} 타이틀",
+                    PopupContent = data => $"{data.Name} 내용",
+                    PopupInnerButtonOptions = new PopupInnerButtonOptions<Person>
+                    {
+                        Buttons =
+                        {
+                            new TvAction<Person>
+                            {
+                                Label = "A button",
+                                Action = async data => await Js.InvokeVoidAsync("console.log", $"{data.Name}"),
+                                Style = new TvButtonStyle
+                                {
+                                    Color = Color.Primary,
+                                    Variant = Variant.Filled,
+                                }
+                            },
+                        },
+                    }
+                }
             },
             OpenDepth =
             {

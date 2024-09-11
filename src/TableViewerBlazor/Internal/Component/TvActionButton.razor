@@ -42,6 +42,22 @@
             IconColor="action.Style.IconColor"
         />
     }
+    else if (action is ITvPopupAction popupAction)
+    {
+        <TvPopupButton
+            Item="Item"
+            PopupAction="popupAction"
+            Class="@classText"
+            Variant="action.Style.Variant"
+            Size="action.Style.Size"
+            Color="action.Style.Color"
+            Style="@action.Style.Style"
+            StartIcon="@action.Style.StartIcon"
+            EndIcon="@action.Style.EndIcon"
+            IconSize="action.Style.IconSize"
+            IconColor="action.Style.IconColor"
+        />
+    }
     else if (string.IsNullOrWhiteSpace(action.Label) && !string.IsNullOrEmpty(action.Style.StartIcon))
     {
         <MudIconButton
