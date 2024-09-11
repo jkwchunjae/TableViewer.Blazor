@@ -9,7 +9,7 @@ public partial class TableEditor1<T, TParent1, TItem1> : TableEditorBase<T> wher
         SetCustomEditor();
     }
 
-    private void SetCustomEditor()
+    protected virtual void SetCustomEditor()
     {
         if (CustomEditor1 != null)
         {

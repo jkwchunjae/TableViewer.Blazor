@@ -14,12 +14,12 @@ public partial class TableEditor3<T,
 
     protected override void OnInitialized()
     {
-        base.OnInitialized();
         SetCustomEditor();
     }
 
-    private void SetCustomEditor()
+    protected override void SetCustomEditor()
     {
+        base.SetCustomEditor();
         if (CustomEditor3 != null)
         {
             if (Options.CustomEditorOptions.CustomEditor3 == null)
