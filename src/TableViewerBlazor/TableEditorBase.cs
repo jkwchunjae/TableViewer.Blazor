@@ -68,6 +68,11 @@ public abstract class TableEditorBase<T> : ComponentBase, IDisposable
         };
     }
 
+    public Task Validate()
+    {
+        return form.Validate();
+    }
+
     public void Dispose()
     {
         foreach (var (argument, handler) in argumentsAndHandlers)
