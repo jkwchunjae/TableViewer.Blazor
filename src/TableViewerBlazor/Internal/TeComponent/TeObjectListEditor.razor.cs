@@ -73,7 +73,7 @@ public partial class TeObjectListEditor : TeEditorBase
 
         foreach (var argument in CustomEditorArguments.Where(x => x.Parent == item))
         {
-            argument.Update(item);
+            argument.OnParentChanged(item);
         }
     }
 
@@ -99,14 +99,13 @@ public partial class TeObjectListEditor : TeEditorBase
         }
         else
         {
-            argument = new CustomEditorArguemnt
+            argument = new CustomEditorArgument<object, object>
             {
                 Value = value,
                 Parent = parent,
                 DataChanged = value => OnDataChanged(parent, memberInfo, value),
             };
             CustomEditorArguments.Add(argument);
-
             return argument;
         }
     }

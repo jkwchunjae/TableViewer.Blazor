@@ -3,23 +3,21 @@ using TableViewerBlazor.Internal.Component;
 
 namespace TableViewerTest.Components.Pages;
 
-public partial class InnerEditorComponent : ComponentBase
+public partial class InnerEditorComponent : ComponentBase, IDisposable
 {
-    [Parameter] public ICustomEditorArgument BaseArgument { get; set; } = default!;
-    private CustomEditorTypedArgument<EditItem, EditInner>? Argument;
+    [Parameter] public CustomEditorArgument<EditItem, EditInner> Argument { get; set; } = default!;
     string Value = string.Empty;
 
     protected override void OnInitialized()
     {
-        Argument = BaseArgument.Convert<EditItem, EditInner>();
-        Value = GetValue(Argument.Parent!);
+        Value = GetValue(Argument.Parent);
         Argument.ParentChanged += Argument_ParentChanged;
     }
 
     private void Argument_ParentChanged(object? sender, EditItem parent)
     {
-        Argument!.Parent = parent;
-        Argument!.Value = parent.Inner;
+        Argument.Parent = parent;
+        Argument.Value = parent.Inner;
 
         Value = GetValue(parent!);
         StateHasChanged();
@@ -40,9 +38,9 @@ public partial class InnerEditorComponent : ComponentBase
     private async Task OnValueChanged(string v)
     {
         Value = v;
-        if (Argument!.DataChanged != null)
+        if (Argument.DataChanged != null)
         {
-            if (Argument!.Parent?.IsSelected ?? false)
+            if (Argument.Parent?.IsSelected ?? false)
             {
                 await Argument.DataChanged(new EditInner
                 {
@@ -59,6 +57,11 @@ public partial class InnerEditorComponent : ComponentBase
                 });
             }
         }
+    }
+
+    public void Dispose()
+    {
+        Argument.ParentChanged -= Argument_ParentChanged;
     }
 }
 

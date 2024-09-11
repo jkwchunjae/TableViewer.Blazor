@@ -6,15 +6,23 @@
 
 @if (items != null && options != null)
 {
-    <TableEditor T="List<EditItem>"
+    <TableEditor2
+        T="List<EditItem>"
+        TParent1="EditItem"
+        TItem1="EditInner"
+        TParent2="EditItem"
+        TItem2="EditInner2"
         Data="items"
         Options="options"
         DataChanged="OnDataChanged"
     >
         <CustomEditor1>
-            <InnerEditorComponent BaseArgument="context"/>
+            <InnerEditorComponent Argument="context"/>
         </CustomEditor1>
-    </TableEditor>
+        <CustomEditor2>
+            <InnerEditorComponent2 Argument="context" />
+        </CustomEditor2>
+    </TableEditor2>
 
     <TableViewer Data="items" />
 }
