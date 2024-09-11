@@ -1,10 +1,12 @@
 ﻿@{
     var buttonOptions = PopupAction.InnerButtonOptions;
+    var confirmButtonStyle = buttonOptions.ConfirmButtonStyle;
+    var closeButtonStyle = buttonOptions.CloseButtonStyle;
 }
 
 <MudDialog>
     <TitleContent>
-        @PopupAction.PopupTitle.Invoke(Item).ToString()
+        @PopupAction.PopupTitle.Invoke(Item)
     </TitleContent>
     <DialogContent>
         <MudText>
@@ -13,17 +15,27 @@
     </DialogContent>
     <DialogActions>
         <MudButton
-            Variant="buttonOptions.ConfirmButtonStyle.Variant"
-            Color="buttonOptions.ConfirmButtonStyle.Color"
-            Size="buttonOptions.ConfirmButtonStyle.Size"
+            Variant="confirmButtonStyle.Variant"
+            Color="confirmButtonStyle.Color"
+            Size="confirmButtonStyle.Size"
+            Style="@confirmButtonStyle.Style"
+            StartIcon="@confirmButtonStyle.StartIcon"
+            EndIcon="@confirmButtonStyle.EndIcon"
+            IconSize="confirmButtonStyle.IconSize"
+            IconColor="confirmButtonStyle.IconColor"
             OnClick="OnConfirm"
         >
             @buttonOptions.ConfirmLabel
         </MudButton>
         <MudButton
-            Variant="buttonOptions.CloseButtonStyle.Variant"
-            Color="buttonOptions.CloseButtonStyle.Color"
-            Size="buttonOptions.CloseButtonStyle.Size"
+            Variant="closeButtonStyle.Variant"
+            Color="closeButtonStyle.Color"
+            Size="closeButtonStyle.Size"
+            Style="@closeButtonStyle.Style"
+            StartIcon="@closeButtonStyle.StartIcon"
+            EndIcon="@closeButtonStyle.EndIcon"
+            IconSize="closeButtonStyle.IconSize"
+            IconColor="closeButtonStyle.IconColor"
             OnClick="OnClose"
         >
             @buttonOptions.CloseLabel

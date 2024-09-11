@@ -2,12 +2,23 @@
 
 <MudButton
     OnClick="OnClickPopupButton"
-    Size="PopupAction.Style.Size"
-    Color="PopupAction.Style.Color"
-    Variant="PopupAction.Style.Variant"
-    StartIcon="@PopupAction.Style.StartIcon"
+    ButtonType="ButtonType"
+    Href="@Href"
+    Target="@Target"
+    DropShadow="DropShadow"
+    Ripple="Ripple"
+    StartIcon="@StartIcon"
+    EndIcon="@EndIcon"
+    IconColor="IconColor"
+    IconClass="@IconClass"
+    Color="Color"
+    Size="Size"
+    Variant="Variant"
+    FullWidth="FullWidth"
+    Class="@Class"
+    Style="@Style"
+    Tag="Tag"
+    UserAttributes="UserAttributes"
 >
     @PopupAction.Label
 </MudButton>
-
-@* MudButton inherit 해서 위에꺼 다 수정 필요*@
