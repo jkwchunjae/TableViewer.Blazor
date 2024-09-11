@@ -1,0 +1,38 @@
+﻿@{
+    var buttonOptions = PopupAction.PopupInnerButtonOptions;
+}
+
+<MudDialog>
+    <TitleContent>
+        @PopupAction.PopupTitle.Invoke(Item).ToString()
+    </TitleContent>
+    <DialogContent>
+        <MudText>
+            @PopupAction.PopupContent.Invoke(Item)
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        @foreach (var button in buttonOptions.Buttons)
+        {
+            <MudButton
+                Variant="button.Style.Variant"
+                Color="button.Style.Color"
+                Size="button.Style.Size"
+                OnClick="OnClickButton"
+            >
+                @button.Label
+            </MudButton>
+        }
+        @if (buttonOptions.CloseButton.Condition(Item, 0))
+        {
+            <MudButton
+                Variant="buttonOptions.CloseButton.Style.Variant"
+                Color="buttonOptions.CloseButton.Style.Color"
+                Size="buttonOptions.CloseButton.Style.Size"
+                OnClick="OnClose"
+            >
+                @buttonOptions.CloseButton.Label
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
