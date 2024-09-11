@@ -10,14 +10,14 @@ public partial class InnerEditorComponent : ComponentBase, IDisposable
 
     protected override void OnInitialized()
     {
-        Value = GetValue(Argument.Parent!);
+        Value = GetValue(Argument.Parent);
         Argument.ParentChanged += Argument_ParentChanged;
     }
 
     private void Argument_ParentChanged(object? sender, EditItem parent)
     {
-        Argument!.Parent = parent;
-        Argument!.Value = parent.Inner;
+        Argument.Parent = parent;
+        Argument.Value = parent.Inner;
 
         Value = GetValue(parent!);
         StateHasChanged();
@@ -38,9 +38,9 @@ public partial class InnerEditorComponent : ComponentBase, IDisposable
     private async Task OnValueChanged(string v)
     {
         Value = v;
-        if (Argument!.DataChanged != null)
+        if (Argument.DataChanged != null)
         {
-            if (Argument!.Parent?.IsSelected ?? false)
+            if (Argument.Parent?.IsSelected ?? false)
             {
                 await Argument.DataChanged(new EditInner
                 {

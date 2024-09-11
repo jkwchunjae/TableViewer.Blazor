@@ -55,7 +55,5 @@ public class CustomEditorArgument<TParent, TItem> : ICustomEditorArgument
             }
         }
     }
-
-
 }
 
