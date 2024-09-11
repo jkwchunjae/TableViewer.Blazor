@@ -221,6 +221,18 @@ public partial class Home : ComponentBase
                     },
                     Condition = (person, depth) => person.Name == new PersonName("User 2"),
                 },
+                new TvPopupAction<Person>
+                {
+                    Action = async data => await Js.InvokeVoidAsync("console.log", data?.Name?.ToString()),
+                    Label = "Popup Button",
+                    PopupTitle = data => $"{data.Name} 타이틀",
+                    PopupContent = data => $"{data.Name} 내용",
+                    InnerButtonOptions =
+                    {
+                        CloseLabel = "닫기",
+                        ConfirmLabel = "확인!"
+                    }
+                }
             },
             OpenDepth =
             {

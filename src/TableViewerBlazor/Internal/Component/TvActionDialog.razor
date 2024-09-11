@@ -1,0 +1,44 @@
+﻿@{
+    var buttonOptions = PopupAction.InnerButtonOptions;
+    var confirmButtonStyle = buttonOptions.ConfirmButtonStyle;
+    var closeButtonStyle = buttonOptions.CloseButtonStyle;
+}
+
+<MudDialog>
+    <TitleContent>
+        @PopupAction.PopupTitle.Invoke(Item)
+    </TitleContent>
+    <DialogContent>
+        <MudText>
+            @PopupAction.PopupContent.Invoke(Item)
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton
+            Variant="confirmButtonStyle.Variant"
+            Color="confirmButtonStyle.Color"
+            Size="confirmButtonStyle.Size"
+            Style="@confirmButtonStyle.Style"
+            StartIcon="@confirmButtonStyle.StartIcon"
+            EndIcon="@confirmButtonStyle.EndIcon"
+            IconSize="confirmButtonStyle.IconSize"
+            IconColor="confirmButtonStyle.IconColor"
+            OnClick="OnConfirm"
+        >
+            @buttonOptions.ConfirmLabel
+        </MudButton>
+        <MudButton
+            Variant="closeButtonStyle.Variant"
+            Color="closeButtonStyle.Color"
+            Size="closeButtonStyle.Size"
+            Style="@closeButtonStyle.Style"
+            StartIcon="@closeButtonStyle.StartIcon"
+            EndIcon="@closeButtonStyle.EndIcon"
+            IconSize="closeButtonStyle.IconSize"
+            IconColor="closeButtonStyle.IconColor"
+            OnClick="OnClose"
+        >
+            @buttonOptions.CloseLabel
+        </MudButton>
+    </DialogActions>
+</MudDialog>
