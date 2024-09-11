@@ -10,7 +10,6 @@ public partial class TvPopupButton : MudButton
 
     private async Task OnClickPopupButton(MouseEventArgs e)
     {
-        await PopupAction.Action(Item);
         var parameters = new DialogParameters<TvActionDialog>
         {
             { x => x.Item, Item },

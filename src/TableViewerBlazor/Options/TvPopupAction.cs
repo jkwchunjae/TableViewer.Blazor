@@ -5,7 +5,7 @@ public interface ITvPopupAction : ITvAction
     Func<object, string> PopupTitle { get; }
     Func<object, string> PopupContent { get; }
     DialogOptions PopupStyle { get; }
-    PopupInnerButtonOptions<object> PopupInnerButtonOptions { get; }
+    InnerButtonsOptions InnerButtonOptions { get; }
 }
 
 public class TvPopupAction<T> : TvAction<T>, ITvPopupAction
@@ -18,45 +18,25 @@ public class TvPopupAction<T> : TvAction<T>, ITvPopupAction
         CloseOnEscapeKey = true,
         NoHeader = false,
     };
-    public PopupInnerButtonOptions<T> PopupInnerButtonOptions { get; set; } = new();
+    public InnerButtonsOptions InnerButtonOptions { get; set; } = new();
 
-    Func<object, string> ITvPopupAction.PopupTitle => o => o is T t ? PopupTitle(t) : string.Empty;
+    Func<object, string> ITvPopupAction.PopupTitle => o => o is T t ? PopupTitle(t) : "제목을 입력하세요";
 
-    Func<object, string> ITvPopupAction.PopupContent => o => o is T t ? PopupContent(t) : string.Empty;
-
-    PopupInnerButtonOptions<object> ITvPopupAction.PopupInnerButtonOptions => new PopupInnerButtonOptions<object>
-    {
-        CloseButton = new TvAction<object>
-        {
-            Action = o => o is T t ? PopupInnerButtonOptions.CloseButton.Action(t) : Task.CompletedTask,
-            Label = PopupInnerButtonOptions.CloseButton.Label,
-            Condition = (o, i) => o is T t? PopupInnerButtonOptions.CloseButton.Condition(t, i) : false,
-            Style = PopupInnerButtonOptions.CloseButton.Style,
-        },
-        Buttons = PopupInnerButtonOptions.Buttons
-            .Select(button => new TvAction<object>
-            {
-                Action = o => o is T t ? button.Action(t) : Task.CompletedTask,
-                Label = button.Label,
-                Condition = (o, i) => o is T t ? button.Condition(t, i) : false,
-                Style = button.Style,
-                LabelAfterClick = button.LabelAfterClick,
-            }).ToList()
-    };
+    Func<object, string> ITvPopupAction.PopupContent => o => o is T t ? PopupContent(t) : "내용을 입력하세요";
 }
 
-public class PopupInnerButtonOptions<T>
+public class InnerButtonsOptions
 {
-    public TvAction<T> CloseButton { get; set; } = new TvAction<T>
+    public string CloseLabel { get; set; } = "Close";
+    public string ConfirmLabel { get; set; } = "Confirm";
+    public TvButtonStyle CloseButtonStyle { get; set; } = new TvButtonStyle()
     {
-        Action = _ => Task.CompletedTask,
-        Label = "Close",
-        Condition = (_, _) => true,
-        Style =
-        {
-            Color = Color.Default,
-            Variant = Variant.Outlined,
-        }
+        Color = Color.Default,
+        Variant = Variant.Filled,
     };
-    public List<TvAction<T>> Buttons { get; set; } = [];
+    public TvButtonStyle ConfirmButtonStyle { get; set; } = new TvButtonStyle()
+    {
+        Color = Color.Primary,
+        Variant = Variant.Filled,
+    };
 }

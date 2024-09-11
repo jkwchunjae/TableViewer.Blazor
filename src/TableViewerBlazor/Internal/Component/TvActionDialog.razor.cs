@@ -1,6 +1,5 @@
 ﻿namespace TableViewerBlazor.Internal.Component;
 
-// TODO: generic으로 받아야하는지 고민
 public partial class TvActionDialog : ComponentBase
 {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
@@ -10,8 +9,9 @@ public partial class TvActionDialog : ComponentBase
 
     private void OnClose() => MudDialog.Close();
 
-    private void OnClickButton()
+    private async void OnConfirm()
     {
-        PopupAction.Action(Item);
+        await PopupAction.Action(Item);
+        OnClose();
     }
 }

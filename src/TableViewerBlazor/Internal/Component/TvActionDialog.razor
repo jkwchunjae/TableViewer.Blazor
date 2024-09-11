@@ -1,5 +1,5 @@
 ﻿@{
-    var buttonOptions = PopupAction.PopupInnerButtonOptions;
+    var buttonOptions = PopupAction.InnerButtonOptions;
 }
 
 <MudDialog>
@@ -12,27 +12,21 @@
         </MudText>
     </DialogContent>
     <DialogActions>
-        @foreach (var button in buttonOptions.Buttons)
-        {
-            <MudButton
-                Variant="button.Style.Variant"
-                Color="button.Style.Color"
-                Size="button.Style.Size"
-                OnClick="OnClickButton"
-            >
-                @button.Label
-            </MudButton>
-        }
-        @if (buttonOptions.CloseButton.Condition(Item, 0))
-        {
-            <MudButton
-                Variant="buttonOptions.CloseButton.Style.Variant"
-                Color="buttonOptions.CloseButton.Style.Color"
-                Size="buttonOptions.CloseButton.Style.Size"
-                OnClick="OnClose"
-            >
-                @buttonOptions.CloseButton.Label
-            </MudButton>
-        }
+        <MudButton
+            Variant="buttonOptions.ConfirmButtonStyle.Variant"
+            Color="buttonOptions.ConfirmButtonStyle.Color"
+            Size="buttonOptions.ConfirmButtonStyle.Size"
+            OnClick="OnConfirm"
+        >
+            @buttonOptions.ConfirmLabel
+        </MudButton>
+        <MudButton
+            Variant="buttonOptions.CloseButtonStyle.Variant"
+            Color="buttonOptions.CloseButtonStyle.Color"
+            Size="buttonOptions.CloseButtonStyle.Size"
+            OnClick="OnClose"
+        >
+            @buttonOptions.CloseLabel
+        </MudButton>
     </DialogActions>
 </MudDialog>
