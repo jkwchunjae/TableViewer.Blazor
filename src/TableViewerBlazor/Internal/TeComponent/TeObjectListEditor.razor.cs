@@ -29,7 +29,16 @@ public partial class TeObjectListEditor : TeEditorBase
         {
             Items = listData;
         }
-        MemberInfos = GetMembers(Items.GetType().GenericTypeArguments[0]);
+        Type type;
+        if (Items.GetType().GenericTypeArguments.Length > 0)
+        {
+            type = Items.GetType().GenericTypeArguments[0];
+        }
+        else
+        {
+            type = Items.GetType().BaseType!.GenericTypeArguments[0];
+        }
+        MemberInfos = GetMembers(type);
     }
 
     private MemberInfo[] GetMembers(Type itemType)

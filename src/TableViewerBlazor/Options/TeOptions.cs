@@ -57,10 +57,11 @@ public static class TeOptionsExtension
         {
             ITeFieldOption? option;
             var dataTypeName = teBase.Data.GetType().FullName;
+            var dataBaseTypeName = teBase.Data.GetType().BaseType?.FullName;
             option = fieldOptions
                 .Where(o => o is ITeGenericTypeOption)
                 .Select(o => o as ITeGenericTypeOption)
-                .FirstOrDefault(o => o!.TypeName == dataTypeName);
+                .FirstOrDefault(o => o!.TypeName == dataTypeName || o!.TypeName == dataBaseTypeName);
             if (option != default)
             {
                 fieldOption = option;
