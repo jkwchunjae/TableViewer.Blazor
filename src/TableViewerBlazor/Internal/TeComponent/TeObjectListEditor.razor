@@ -20,7 +20,10 @@
   string buttonGroupClassText = "display: flex; gap: 4px";
 }
 
-@if (!string.IsNullOrWhiteSpace(Options.Title) || Options.ToolbarButtons.Any())
+@if (!string.IsNullOrWhiteSpace(ObjectListOption.Title)
+    || (Depth == 1 && Options.ToolbarButtons.Any())
+    || ObjectListOption.AddItemAction != default
+)
 {
     <MudTable
       Items="@ItemsEnumerable"
@@ -33,7 +36,7 @@
     >
         <ToolBarContent>
             <MudText Typo="Typo.h6">
-                @(Options.Title ?? string.Empty)
+                @(ObjectListOption.Title)
             </MudText>
             <MudSpacer/>
             <div style="@buttonGroupClassText">
