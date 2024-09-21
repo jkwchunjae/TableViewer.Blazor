@@ -31,16 +31,20 @@ public partial class TeObjectListEditor : TeEditorBase
         {
             Items = listData;
         }
-        Type type;
-        if (Items.GetType().GenericTypeArguments.Length > 0)
+        Type objectType = GetInnerObjectType(Items);
+        MemberInfos = GetMembers(objectType);
+
+        Type GetInnerObjectType(IList items)
         {
-            type = Items.GetType().GenericTypeArguments[0];
+            if (items.GetType().GenericTypeArguments.Length > 0)
+            {
+                return items.GetType().GenericTypeArguments[0];
+            }
+            else
+            {
+                return items.GetType().BaseType!.GenericTypeArguments[0];
+            }
         }
-        else
-        {
-            type = Items.GetType().BaseType!.GenericTypeArguments[0];
-        }
-        MemberInfos = GetMembers(type);
     }
 
     private MemberInfo[] GetMembers(Type itemType)
@@ -68,7 +72,7 @@ public partial class TeObjectListEditor : TeEditorBase
 
     private async Task OnDataChanged((int index, object item) itemWithIndex, MemberInfo memberInfo, object? value)
     {
-        var item = itemWithIndex.item;
+        var (index, item) = itemWithIndex;
         if (item == null)
         {
             return;
@@ -81,7 +85,7 @@ public partial class TeObjectListEditor : TeEditorBase
         {
             field.SetValue(item, value);
         }
-        Items[itemWithIndex.index] = item;
+        Items[index] = item;
         await DataChanged.InvokeAsync(Items);
 
         foreach (var argument in CustomEditorArguments.Where(x => x.Parent == item))
