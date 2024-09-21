@@ -19,77 +19,139 @@
   string tdthClassText = string.Join(" ", tdthClassList.Where(x => !string.IsNullOrWhiteSpace(x)));
   string buttonGroupClassText = "display: flex; gap: 4px";
 }
-<MudTable
-  Items="@ItemsEnumerable"
-  Class="@tableClassText"
-  Dense="Options.Style.Dense"
-  Hover="Options.Style.Hover"
-  Striped="Options.Style.Striped"
-  Bordered="Options.Style.Bordered"
-  Virtualize="true"
->
-  <ToolBarContent>
-    <MudText Typo="Typo.h6">
-      @(Options.Title ?? string.Empty)
-    </MudText>
-    <MudSpacer/>
-    <div style="@buttonGroupClassText">
-        @if (Depth == 1)
-        {
-            @foreach (var button in Options.ToolbarButtons)
+
+@if (!string.IsNullOrWhiteSpace(ObjectListOption.Title)
+    || (Depth == 1 && Options.ToolbarButtons.Any())
+    || ObjectListOption.AddItemAction != default
+)
+{
+    <MudTable
+      Items="@ItemsEnumerable"
+      Class="@tableClassText"
+      Dense="Options.Style.Dense"
+      Hover="Options.Style.Hover"
+      Striped="Options.Style.Striped"
+      Bordered="Options.Style.Bordered"
+      Virtualize="true"
+      Elevation="Depth == 1 ? 1 : 0"
+    >
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">
+                @(ObjectListOption.Title)
+            </MudText>
+            <MudSpacer/>
+            <div style="@buttonGroupClassText">
+                @if (Depth == 1)
+                {
+                    @foreach (var button in Options.ToolbarButtons)
+                    {
+                        <TvButton Item="ItemsEnumerable" Button="button" />
+                    }
+                }
+                @if (ObjectListOption.AddItemAction != default)
+                {
+                    <TvActionButton Item="@(new object())" Action="AddItemAction" />
+                }
+            </div>
+        </ToolBarContent>
+        <HeaderContent>
+            @foreach (var memberInfo in MemberInfos)
             {
-                <TvButton Item="ItemsEnumerable" Button="button" />
+                <MudTh Class="@tdthClassText">
+                @memberInfo.Name
+                </MudTh>
             }
-        }
-        @if (ObjectListOption.AddItemAction != default)
-        {
-          <TvActionButton Item="@(new object())" Action="AddItemAction" />
-        }
-    </div>
-  </ToolBarContent>
-  <HeaderContent>
-    @foreach (var memberInfo in MemberInfos)
-    {
-      <MudTh Class="@tdthClassText">
-        @memberInfo.Name
-      </MudTh>
-    }
-    @if (ObjectListOption.RemoveItemAction != default)
-    {
-      <MudTh Class="@tdthClassText">...</MudTh>
-    }
-  </HeaderContent>
-  <RowTemplate>
-    @foreach (var memberInfo in MemberInfos)
-    {
-      var value = GetValue(context, memberInfo);
-      <MudTd
-        Class="@tdthClassText"
-      >
-        @if (Options.TryGetCustomEditor(memberInfo, value?.GetType(), out var customEditor))
-        {
-          @customEditor!.RenderFragment!(GetCustomEditorArgument(value, context, memberInfo))
-        }
-        else
-        {
-          <TeElementEditor
-            Data="value"
-            DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
-            Options="Options"
-            Depth="Depth + 1"
-            MemberInfo="memberInfo"
-            Path="@memberInfo.Name"
-            Label="@string.Empty"
-            Parent="context"
-          />
-        }
-      </MudTd>
-    }
-    @if (ObjectListOption.RemoveItemAction != default)
-    {
-      <MudTd>
-        <TvActionButton Item="context" Action="RemoveItemAction" />
-      </MudTd>
-    }
-  </RowTemplate>
-</MudTable>
+            @if (ObjectListOption.RemoveItemAction != default)
+            {
+                <MudTh Class="@tdthClassText">...</MudTh>
+            }
+        </HeaderContent>
+        <RowTemplate>
+            @foreach (var memberInfo in MemberInfos)
+            {
+                var value = GetValue(context.obj, memberInfo);
+                <MudTd Class="@tdthClassText">
+                @if (Options.TryGetCustomEditor(memberInfo, value?.GetType(), out var customEditor))
+                {
+                    @customEditor!.RenderFragment!(GetCustomEditorArgument(value, context, memberInfo))
+                }
+                else
+                {
+                    <TeElementEditor
+                        Data="value"
+                        DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
+                        Options="Options"
+                        Depth="Depth + 1"
+                        MemberInfo="memberInfo"
+                        Path="@memberInfo.Name"
+                        Label="@string.Empty"
+                        Parent="context.obj"
+                    />
+                }
+                </MudTd>
+            }
+            @if (ObjectListOption.RemoveItemAction != default)
+            {
+                <MudTd>
+                    <TvActionButton Item="context.obj" Action="RemoveItemAction" />
+                </MudTd>
+            }
+        </RowTemplate>
+    </MudTable>
+}
+else @* <ToolBarContent>만 없어지고 나머지 위와 같음 *@
+{
+    <MudTable
+      Items="@ItemsEnumerable"
+      Class="@tableClassText"
+      Dense="Options.Style.Dense"
+      Hover="Options.Style.Hover"
+      Striped="Options.Style.Striped"
+      Bordered="Options.Style.Bordered"
+      Virtualize="true"
+    >
+        <HeaderContent>
+            @foreach (var memberInfo in MemberInfos)
+            {
+                <MudTh Class="@tdthClassText">
+                @memberInfo.Name
+                </MudTh>
+            }
+            @if (ObjectListOption.RemoveItemAction != default)
+            {
+                <MudTh Class="@tdthClassText">...</MudTh>
+            }
+        </HeaderContent>
+        <RowTemplate>
+            @foreach (var memberInfo in MemberInfos)
+            {
+                var value = GetValue(context.obj, memberInfo);
+                <MudTd Class="@tdthClassText">
+                @if (Options.TryGetCustomEditor(memberInfo, value?.GetType(), out var customEditor))
+                {
+                    @customEditor!.RenderFragment!(GetCustomEditorArgument(value, context, memberInfo))
+                }
+                else
+                {
+                    <TeElementEditor
+                        Data="value"
+                        DataChanged="@(async value => await OnDataChanged(context, memberInfo, value))"
+                        Options="Options"
+                        Depth="Depth + 1"
+                        MemberInfo="memberInfo"
+                        Path="@memberInfo.Name"
+                        Label="@string.Empty"
+                        Parent="context.obj"
+                    />
+                }
+                </MudTd>
+            }
+            @if (ObjectListOption.RemoveItemAction != default)
+            {
+                <MudTd>
+                    <TvActionButton Item="context.obj" Action="RemoveItemAction" />
+                </MudTd>
+            }
+        </RowTemplate>
+    </MudTable>
+}

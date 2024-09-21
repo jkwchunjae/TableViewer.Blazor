@@ -4,7 +4,9 @@ public partial class TeObjectListEditor : TeEditorBase
 {
     [Parameter] public ITeObjectListEditorOption ObjectListOption { get; set; } = default!;
     private IList Items { get; set; } = default!;
-    private IEnumerable<object> ItemsEnumerable => Items.Cast<object>();
+    private IEnumerable<(int index, object obj)> ItemsEnumerable => Items
+        .Cast<object>()
+        .Select((item, index) => (index, item));
     private ITvAction AddItemAction => new TvAction<object>
     {
         Action = _ => AddItem(),
@@ -29,7 +31,20 @@ public partial class TeObjectListEditor : TeEditorBase
         {
             Items = listData;
         }
-        MemberInfos = GetMembers(Items.GetType().GenericTypeArguments[0]);
+        Type objectType = GetInnerObjectType(Items);
+        MemberInfos = GetMembers(objectType);
+
+        Type GetInnerObjectType(IList items)
+        {
+            if (items.GetType().GenericTypeArguments.Length > 0)
+            {
+                return items.GetType().GenericTypeArguments[0];
+            }
+            else
+            {
+                return items.GetType().BaseType!.GenericTypeArguments[0];
+            }
+        }
     }
 
     private MemberInfo[] GetMembers(Type itemType)
@@ -55,8 +70,9 @@ public partial class TeObjectListEditor : TeEditorBase
         return null;
     }
 
-    private async Task OnDataChanged(object? item, MemberInfo memberInfo, object? value)
+    private async Task OnDataChanged((int index, object item) itemWithIndex, MemberInfo memberInfo, object? value)
     {
+        var (index, item) = itemWithIndex;
         if (item == null)
         {
             return;
@@ -69,6 +85,7 @@ public partial class TeObjectListEditor : TeEditorBase
         {
             field.SetValue(item, value);
         }
+        Items[index] = item;
         await DataChanged.InvokeAsync(Items);
 
         foreach (var argument in CustomEditorArguments.Where(x => x.Parent == item))
@@ -89,9 +106,9 @@ public partial class TeObjectListEditor : TeEditorBase
         await DataChanged.InvokeAsync(Items);
     }
 
-    private ICustomEditorArgument GetCustomEditorArgument(object? value, object parent, MemberInfo memberInfo)
+    private ICustomEditorArgument GetCustomEditorArgument(object? value, (int index, object parent) parentWithIndex, MemberInfo memberInfo)
     {
-        var argument = CustomEditorArguments.FirstOrDefault(x => x.Value == value && x.Parent == parent);
+        var argument = CustomEditorArguments.FirstOrDefault(x => x.Value == value && x.Parent == parentWithIndex.parent);
 
         if (argument != default)
         {
@@ -102,8 +119,8 @@ public partial class TeObjectListEditor : TeEditorBase
             argument = new CustomEditorArgument<object, object>
             {
                 Value = value,
-                Parent = parent,
-                DataChanged = value => OnDataChanged(parent, memberInfo, value),
+                Parent = parentWithIndex.parent,
+                DataChanged = value => OnDataChanged(parentWithIndex, memberInfo, value),
             };
             CustomEditorArguments.Add(argument);
             return argument;

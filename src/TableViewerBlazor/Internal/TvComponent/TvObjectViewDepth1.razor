@@ -21,12 +21,12 @@
         }
         @if (Options.TitleButtons.Any())
         {
-            <div>
+            <MudPaper Elevation="0" Class="d-flex gap-1">
                 @foreach (var button in Options.TitleButtons)
                 {
                     <TvButton Item="@Data" Button="button" />
                 }
-            </div>
+            </MudPaper>
         }
     </div>
     @if (!string.IsNullOrWhiteSpace(Options.Title) || Options.TitleButtons.Any())

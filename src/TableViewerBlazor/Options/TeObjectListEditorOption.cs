@@ -10,6 +10,7 @@ public class TeObjectListAttribute : TeFieldAttribute
 
 public interface ITeObjectListEditorOption : ITeFieldOption
 {
+    string Title { get; }
     bool EnableAddItem => AddItemAction != null;
     bool EnableRemoveItem => RemoveItemAction != null;
     ITvAction? AddItemAction { get; }
@@ -19,6 +20,7 @@ public interface ITeObjectListEditorOption : ITeFieldOption
 public class TeObjectListEditorOption<TListItem> : ITeObjectListEditorOption, ITeGenericTypeOption
 {
     public string? Id { get; set; }
+    public string Title { get; set; } = string.Empty;
     public TvAction<List<TListItem>>? AddItemAction { get; set; }
     public ITvAction? RemoveItemAction { get; set; }
     public string TypeName => typeof(List<TListItem>).FullName!;
