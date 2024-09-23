@@ -5,6 +5,20 @@
 {
     <TvNullView />
 }
+else if (Options.TryGetFieldOption(MemberInfo, out var fieldOption))
+{
+    if (fieldOption is ITvTextLinkOption textLinkOption)
+    {
+        <TvTextLinkView
+            Data="Data"
+            Options="Options"
+            Depth="Depth"
+            OpenDepth="OpenDepth"
+            Parent="Parent"
+            TextLinkOption="textLinkOption"
+        />
+    }
+}
 else if (Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
 {
     <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption" />

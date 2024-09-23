@@ -1,0 +1,22 @@
+﻿@inherits TvViewBase
+
+@if (string.IsNullOrEmpty(Data.ToString()))
+{
+    <span class="empty-string">Empty</span>
+}
+else
+{
+    <MudLink
+        Href="@TextLinkOption.Href(Parent)"
+        Style=""
+    >
+        @Data.ToString()
+    </MudLink>
+}
+
+<style>
+    .empty-string {
+        color: #bbb;
+        font-style: italic;
+    }
+</style>

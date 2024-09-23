@@ -9,7 +9,7 @@ public class Person
 {
     public int Id { get; set; }
     public PersonName? Name { get; set; }
-    [TvTextLink(nameof(Birth))]
+    [TvTextLink(nameof(HomepageUrl))]
     public string HomepageUrl { get; set; } = string.Empty;
     public DateTime? Birth { get; set; }
     public DateTime? Death { get; set; }
