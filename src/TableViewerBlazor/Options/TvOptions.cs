@@ -19,3 +19,29 @@ public class TvOptions
     public TvContents Contents { get; set; } = new();
 
 }
+
+public static class TvOptionsExtension
+{
+    public static bool TryGetFieldOption(this TvOptions options, MemberInfo? memberInfo, out ITvFieldOption? fieldOption)
+    {
+        var fieldOptions = Enumerable.Empty<ITvFieldOption>()
+            .Concat(options.TextLinkOptions)
+            .ToArray();
+
+        var fieldAttribute = memberInfo?.GetCustomAttribute<TvFieldAttribute>();
+        if (fieldAttribute != default)
+        {
+            var option = fieldOptions
+                .Where(o => !string.IsNullOrEmpty(o.Id))
+                .FirstOrDefault(o => o.Id == fieldAttribute.Id);
+            if (option != null)
+            {
+                fieldOption = option;
+                return true;
+            }
+        }
+
+        fieldOption = default;
+        return false;
+    }
+}
