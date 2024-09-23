@@ -43,6 +43,7 @@ public partial class Home : ComponentBase
             Name = new PersonName("User name"),
             Birth = DateTime.UtcNow,
             Death = new DateTime(2300, 1, 11, 5, 12, 1, DateTimeKind.Utc),
+            HomepageUrl = "www.naver.com",
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -92,6 +93,7 @@ public partial class Home : ComponentBase
             Id = 999,
             Name = new PersonName("second name"),
             Birth = new DateTime(1989, 2, 1, 5, 12, 1, DateTimeKind.Utc),
+            HomepageUrl = "www.google.com",
             Attributes = new Dictionary<string, object>
             {
                 ["age"] = 12,
@@ -282,6 +284,14 @@ public partial class Home : ComponentBase
                     Href= _ =>"https://www.google.com",
                     Condition = (_, _) => true,
                     Label="google"
+                }
+            },
+            TextLinkOptions =
+            {
+                new TvTextLinkOption<Person>
+                {
+                    Href = Parent => Parent.HomepageUrl,
+                    Condition = _ => true
                 }
             }
         };

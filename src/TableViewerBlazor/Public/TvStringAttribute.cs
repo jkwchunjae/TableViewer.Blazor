@@ -1,5 +1,7 @@
 ﻿namespace TableViewerBlazor.Public;
 
-public class TvStringAttribute : Attribute
+public class TvStringAttribute : TvFieldAttribute
 {
+    public TvStringAttribute(string id)
+        : base(id) { }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using TableViewerBlazor.Helper;
+using TableViewerBlazor.Options;
 using TableViewerBlazor.Public;
 
 namespace TableViewerTest;
@@ -8,6 +9,8 @@ public class Person
 {
     public int Id { get; set; }
     public PersonName? Name { get; set; }
+    [TvTextLink(nameof(Birth))]
+    public string HomepageUrl { get; set; } = string.Empty;
     public DateTime? Birth { get; set; }
     public DateTime? Death { get; set; }
     public Dictionary<string, object>? Attributes { get; set; }
