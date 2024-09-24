@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using MudBlazor;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerTest.Components.Pages;
 
@@ -217,6 +218,16 @@ public partial class Home : ComponentBase
                         await ConsoleWrite(person);
                     },
                     Condition = (person, depth) => person.Name == new PersonName("User 2"),
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "tooltip",
+                        TooltipStyleProperty = new TvTooltipProperty
+                        {
+                            Arrow = true,
+                            Placement = Placement.Top,
+                            Color = Color.Primary
+                        }
+                    },
                 },
                 new TvPopupAction<Person>
                 {
@@ -224,6 +235,16 @@ public partial class Home : ComponentBase
                     Label = "Popup Button",
                     PopupTitle = data => $"{data.Name} 타이틀",
                     PopupContent = data => $"{data.Name} 내용",
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "팝업 버튼 확인",
+                        TooltipStyleProperty = new TvTooltipProperty
+                        {
+                            Arrow = true,
+                            Placement = Placement.Top,
+                            Color = Color.Primary
+                        }
+                    },
                     InnerButtonOptions =
                     {
                         CloseLabel = "닫기",
@@ -278,8 +299,12 @@ public partial class Home : ComponentBase
                 {
                     Href= _ =>"https://www.google.com",
                     Condition = (_, _) => true,
-                    Label="google"
-                }
+                    Label="google",
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "google.com"
+                    }
+                },
             },
             StringLinkOptions =
             {

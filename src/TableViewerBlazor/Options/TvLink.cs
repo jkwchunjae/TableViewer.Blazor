@@ -13,6 +13,7 @@ public class TvLink<T> : ITvLink
     public required Func<T, string> Href { get; set; }
     public string Label { get; set; } = "LINK";
     public TvButtonStyle Style { get; set; } = new();
+    public TvTooltipOption? TooltipOption { get; set; }
 
     Func<object?, int, bool> ITvButton.Condition => (o, i) => o is T t && Condition(t, i);
     Func<object?, string> ITvLink.Href => o => o is T t ? Href(t) : string.Empty;
