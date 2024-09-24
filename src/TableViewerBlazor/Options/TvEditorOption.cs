@@ -4,36 +4,17 @@ namespace TableViewerBlazor.Options;
 
 public static class TvEditorOptionExtension
 {
-    public static bool TryGetEditorOption(this TvOptions tvOptions, object? data, int depth, string path, out ITvEditorOption option)
-    {
-        var editorOption = tvOptions.Editor?.FirstOrDefault(x => x.Condition?.Invoke(data, depth, path) ?? false);
-
-        if (editorOption != null)
-        {
-            option = editorOption;
-            return true;
-        }
-        else
-        {
-            option = null!;
-            return false;
-        }
-    }
-
-
     public static bool HasEditorOption(this TvOptions tvOptions, object? data, int depth, string path)
     {
-        return tvOptions.Editor?.FirstOrDefault(e => e.Condition?.Invoke(data, depth, path) ?? false) != null;
+        return tvOptions.EditorOptions?.FirstOrDefault(e => e.Condition?.Invoke(data, depth, path) ?? false) != null;
     }
 }
 
-public interface ITvEditorOption
+public interface ITvEditorOption : ITvCustomOption
 {
-    delegate bool EditorOptionCondition(object? data, int depth, string path);
     string Language { get; }
     EditorSize? LayoutMaxSize { get; }
     Func<object, string>? Serializer { get; }
-    EditorOptionCondition? Condition { get; }
 }
 
 public record EditorSize(int? Height, int? Width);
@@ -49,7 +30,7 @@ public class TvEditorOption<T> : ITvEditorOption
     Func<object, string>? ITvEditorOption.Serializer =>
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
-    ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
+    Func<object, int, string, bool> ITvCustomOption.Condition =>
         (data, depth, path) =>
         {
             if (data is T t)
@@ -79,7 +60,7 @@ public class TvJsonEditorOption<T> : ITvEditorOption
     Func<object, string>? ITvEditorOption.Serializer =>
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
-    ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
+    Func<object, int, string, bool> ITvCustomOption.Condition =>
         (data, depth, path) =>
         {
             if (data is T t)
@@ -109,7 +90,7 @@ public class TvYamlEditorOption<T> : ITvEditorOption
     Func<object, string>? ITvEditorOption.Serializer =>
         (data) => data is T t && Serializer != null ? Serializer.Invoke(t) : string.Empty;
 
-    ITvEditorOption.EditorOptionCondition? ITvEditorOption.Condition =>
+    Func<object, int, string, bool> ITvCustomOption.Condition =>
         (data, depth, path) =>
         {
             if (data is T t)

@@ -5,9 +5,12 @@
 {
     <TvNullView />
 }
-else if (Options.TryGetEditorOption(Data, Depth, "path", out ITvEditorOption editorOption))
+else if (Options.TryGetCustomOption(Data, Depth, "path", out ITvCustomOption customOption))
 {
-    <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption" />
+    if (customOption is ITvEditorOption editorOption)
+    {
+        <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption" />
+    }
 }
 else if (DataHasStringViewerAttribute())
 {

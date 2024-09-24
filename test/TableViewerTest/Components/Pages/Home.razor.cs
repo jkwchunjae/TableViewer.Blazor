@@ -241,7 +241,7 @@ public partial class Home : ComponentBase
                     OpenDepth = 3,
                 },
             },
-            Editor =
+            EditorOptions =
             {
                 new TvYamlEditorOption<PersonRecord>
                 {
