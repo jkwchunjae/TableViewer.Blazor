@@ -13,6 +13,7 @@ public class TvOptions
     public List<string> DisableKeys { get; set; } = [];
     public TvStyleOption Style { get; set; } = new();
     public List<ITvEditorOption> EditorOptions { get; set; } = [];
+    public List<ITvStringLinkOption> StringLinkOptions { get; set; } = [];
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
     public TvDateTimeOption? DateTime { get; set; }
     public TvContents Contents { get; set; } = new();
@@ -29,6 +30,7 @@ public static class TvOptionsExtension
     {
         var customOptions = Enumerable.Empty<ITvCustomOption>()
             .Concat(options.EditorOptions)
+            .Concat(options.StringLinkOptions)
             .ToArray();
 
         var customOption = customOptions.FirstOrDefault(option => option.Condition.Invoke(data, depth, path));

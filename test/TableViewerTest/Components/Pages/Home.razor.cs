@@ -283,6 +283,14 @@ public partial class Home : ComponentBase
                     Condition = (_, _) => true,
                     Label="google"
                 }
+            },
+            StringLinkOptions =
+            {
+                new TvStringLinkOption<Person, PersonName>
+                {
+                    Href = (p, v) => "http://naver.com",
+                    Condition = (v, depth, path) => v.ToString() == "User name"
+                },
             }
         };
 

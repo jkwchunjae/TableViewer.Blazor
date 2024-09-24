@@ -11,6 +11,14 @@ else if (Options.TryGetCustomOption(Data, Depth, "path", out ITvCustomOption cus
     {
         <TvMonacoEditorViewer Data="Data!" Options="Options" Depth="Depth" OpenDepth="OpenDepth" EditorOption="editorOption" />
     }
+    else if (customOption is ITvStringLinkOption stringLinkOption)
+    {
+        <TvStringLinkView
+            Data="Data"
+            Parent="Parent"
+            StringLinkOption="stringLinkOption"
+        />
+    }
 }
 else if (DataHasStringViewerAttribute())
 {
