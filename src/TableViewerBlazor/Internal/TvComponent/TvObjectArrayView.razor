@@ -80,7 +80,7 @@
             @memberInfo.Name
           </MudTh>
         }
-        @if (HasAnyAction)
+        @if (HasAnyButton)
         {
           <MudTh Class="@(tdthClassText + Options.Style.ThStyle.ClassStr)" Style="@(Options.Style.ThStyle.StyleStr)">
               ...
@@ -104,27 +104,18 @@
         </MudTd>
       }
 
-      @if (HasAnyAction)
+      @if (HasAnyButton)
       {
         <MudTd Class="@(tdthClassText)">
           <div style="@buttonGroupClassText">
-            @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+            @foreach (var button in (Options?.Buttons ?? Enumerable.Empty<ITvButton>()))
             {
-              <TvActionButton
-                Options="Options"
-                Depth="Depth"
-                Item="context"
-                Action="action"
-              />
-            }
-            @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
-            {
-              <TvLinkButton
-                Options="Options"
-                Depth="Depth"
-                Item="context"
-                Link="link"
-              />
+              <TvButton
+                  Options="Options"
+                  Depth="Depth"
+                  Item="context"
+                  Button="button"
+                />
             }
           </div>
         </MudTd>

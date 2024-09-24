@@ -80,23 +80,13 @@
       {
         <MudTd Class="@tdthClassText">
           <div style="@buttonGroupClassText">
-            @foreach (var action in (Options?.Actions ?? Enumerable.Empty<ITvAction>()))
+            @foreach (var button in (Options?.Buttons ?? Enumerable.Empty<ITvButton>()))
             {
-              <TvActionButton
-                Options="Options"
-                Depth="Depth"
-                Item="item"
-                Action="action"
-              />
-            }
-            @foreach (var link in Options?.Links ?? Enumerable.Empty<ITvLink>())
-            {
-              <TvLinkButton
-                Options="Options"
-                Depth="Depth"
-                Item="item"
-                Link="link"
-              />
+              <TvButton
+                  Item="item"
+                  Button="button"
+                  Depth="Depth"
+                  Options="Options" />
             }
           </div>
         </MudTd>

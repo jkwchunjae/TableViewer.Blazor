@@ -151,7 +151,7 @@ public partial class Home : ComponentBase
         arrayDataOption = new TvOptions
         {
             Title = "배열 테스트",
-            Actions =
+            Buttons =
             {
                 new TvDoubleClickAction<int>
                 {
@@ -174,9 +174,6 @@ public partial class Home : ComponentBase
                         await Js.InvokeVoidAsync("console.log", number);
                     },
                 },
-            },
-            Links =
-            {
                 new TvLink<int>
                 {
                     Href = number => $"/update-{number}",
@@ -188,7 +185,7 @@ public partial class Home : ComponentBase
         {
             Title = "테이블 테스트",
             GlobalOpenDepth = 1,
-            Actions = new List<ITvAction>()
+            Buttons = new List<ITvButton>()
             {
                 new TvDoubleClickAction<Person>
                 {
@@ -297,7 +294,7 @@ public partial class Home : ComponentBase
         optionForPR = new TvOptions
         {
             Title = "PersonRecord 테스트",
-            Actions =
+            Buttons =
             {
                 new TvAction<PersonRecord>
                 {
@@ -306,9 +303,6 @@ public partial class Home : ComponentBase
                         await Js.InvokeVoidAsync("console.log", person);
                     },
                 },
-            },
-            Links =
-            {
                 new TvLink<PersonRecord>
                 {
                     Href = p => $"/update-{p.Name}",
