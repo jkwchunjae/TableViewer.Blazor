@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using MudBlazor;
 using TableViewerBlazor.Options;
+using TableViewerBlazor.Options.Property;
 
 namespace TableViewerTest.Components.Pages;
 
@@ -151,7 +152,7 @@ public partial class Home : ComponentBase
         arrayDataOption = new TvOptions
         {
             Title = "배열 테스트",
-            Actions =
+            Buttons =
             {
                 new TvDoubleClickAction<int>
                 {
@@ -174,9 +175,6 @@ public partial class Home : ComponentBase
                         await Js.InvokeVoidAsync("console.log", number);
                     },
                 },
-            },
-            Links =
-            {
                 new TvLink<int>
                 {
                     Href = number => $"/update-{number}",
@@ -188,7 +186,7 @@ public partial class Home : ComponentBase
         {
             Title = "테이블 테스트",
             GlobalOpenDepth = 1,
-            Actions = new List<ITvAction>()
+            Buttons = new List<ITvButton>()
             {
                 new TvDoubleClickAction<Person>
                 {
@@ -220,6 +218,16 @@ public partial class Home : ComponentBase
                         await ConsoleWrite(person);
                     },
                     Condition = (person, depth) => person.Name == new PersonName("User 2"),
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "tooltip",
+                        TooltipStyleProperty = new TvTooltipProperty
+                        {
+                            Arrow = true,
+                            Placement = Placement.Top,
+                            Color = Color.Primary
+                        }
+                    },
                 },
                 new TvPopupAction<Person>
                 {
@@ -227,6 +235,16 @@ public partial class Home : ComponentBase
                     Label = "Popup Button",
                     PopupTitle = data => $"{data.Name} 타이틀",
                     PopupContent = data => $"{data.Name} 내용",
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "팝업 버튼 확인",
+                        TooltipStyleProperty = new TvTooltipProperty
+                        {
+                            Arrow = true,
+                            Placement = Placement.Top,
+                            Color = Color.Primary
+                        }
+                    },
                     InnerButtonOptions =
                     {
                         CloseLabel = "닫기",
@@ -241,7 +259,7 @@ public partial class Home : ComponentBase
                     OpenDepth = 3,
                 },
             },
-            Editor =
+            EditorOptions =
             {
                 new TvYamlEditorOption<PersonRecord>
                 {
@@ -281,15 +299,27 @@ public partial class Home : ComponentBase
                 {
                     Href= _ =>"https://www.google.com",
                     Condition = (_, _) => true,
-                    Label="google"
-                }
+                    Label="google",
+                    TooltipOption = new TvTooltipOption
+                    {
+                        Text = "google.com"
+                    }
+                },
+            },
+            StringLinkOptions =
+            {
+                new TvStringLinkOption<Person, PersonName>
+                {
+                    Href = (p, v) => "http://naver.com",
+                    Condition = (v, depth, path) => v.ToString() == "User name"
+                },
             }
         };
 
         optionForPR = new TvOptions
         {
             Title = "PersonRecord 테스트",
-            Actions =
+            Buttons =
             {
                 new TvAction<PersonRecord>
                 {
@@ -298,9 +328,6 @@ public partial class Home : ComponentBase
                         await Js.InvokeVoidAsync("console.log", person);
                     },
                 },
-            },
-            Links =
-            {
                 new TvLink<PersonRecord>
                 {
                     Href = p => $"/update-{p.Name}",

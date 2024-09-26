@@ -5,11 +5,62 @@
     var button = Button;
 }
 
-@if (button is ITvAction action)
+@if (button.TooltipOption == null)
 {
-    <TvActionButton Item="item" Action="action" />
+    @if (button is ITvAction action)
+    {
+        <TvActionButton Item="item" Action="action" />
+    }
+    else if (button is ITvLink link)
+    {
+        <TvLinkButton Item="item" Link="link" />
+    }
 }
-else if (button is ITvLink link)
+else
 {
-    <TvLinkButton Item="item" Link="link" />
+    var tooltipStyle = button.TooltipOption.TooltipStyleProperty;
+    @if (button is ITvAction action)
+    {
+        <MudTooltip
+            Text="@button.TooltipOption.Text"
+            Disabled="tooltipStyle.Disabled"
+            Visible="tooltipStyle.Visible"
+            VisibleChanged="tooltipStyle.VisibleChanged"
+            Arrow="tooltipStyle.Arrow"
+            Color="tooltipStyle.Color"
+            Delay="tooltipStyle.Delay"
+            Duration="tooltipStyle.Duration"
+            Inline="tooltipStyle.Inline"
+            Placement="tooltipStyle.Placement"
+            RootClass="@tooltipStyle.RootClass"
+            RootStyle="@tooltipStyle.RootStyle"
+            ShowOnClick="tooltipStyle.ShowOnClick"
+            ShowOnFocus="tooltipStyle.ShowOnFocus"
+            ShowOnHover="tooltipStyle.ShowOnHover"
+        >
+            <TvActionButton Item="item" Action="action" />
+        </MudTooltip>
+    }
+    else if (button is ITvLink link)
+    {
+        <MudTooltip
+            Text="@button.TooltipOption.Text"
+            Disabled="tooltipStyle.Disabled"
+            Visible="tooltipStyle.Visible"
+            VisibleChanged="tooltipStyle.VisibleChanged"
+            Arrow="tooltipStyle.Arrow"
+            Color="tooltipStyle.Color"
+            Delay="tooltipStyle.Delay"
+            Duration="tooltipStyle.Duration"
+            Inline="tooltipStyle.Inline"
+            Placement="tooltipStyle.Placement"
+            RootClass="@tooltipStyle.RootClass"
+            RootStyle="@tooltipStyle.RootStyle"
+            ShowOnClick="tooltipStyle.ShowOnClick"
+            ShowOnFocus="tooltipStyle.ShowOnFocus"
+            ShowOnHover="tooltipStyle.ShowOnHover"
+        >
+            <TvLinkButton Item="item" Link="link" />
+        </MudTooltip>
+    }
 }

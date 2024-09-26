@@ -13,6 +13,7 @@ public class TvAction<T> : ITvAction
     public string Label { get; set; } = "ACTION";
     public string LabelAfterClick { get; set; } = "DONE";
     public TvButtonStyle Style { get; set; } = new();
+    public TvTooltipOption? TooltipOption { get; set; }
 
     Func<object?, int, bool> ITvButton.Condition => (o, i) => o is T t && Condition(t, i);
     Func<object?, Task> ITvAction.Action => (o) => o is T t ? Action(t) : Task.CompletedTask;

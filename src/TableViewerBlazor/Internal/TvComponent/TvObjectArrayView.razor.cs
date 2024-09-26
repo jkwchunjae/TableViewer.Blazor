@@ -15,12 +15,12 @@ public partial class TvObjectArrayView : TvViewBase
     IEnumerable<object?> array => Data ?? Enumerable.Empty<object?>();
 
     private MemberInfo[] MemberInfos = Array.Empty<MemberInfo>();
-    private bool HasAnyAction;
-    private int TableColumns => MemberInfos.Length + (HasAnyAction ? 1 : 0);
+    private bool HasAnyButton;
+    private int TableColumns => MemberInfos.Length + (HasAnyButton ? 1 : 0);
 
     protected override void OnInitialized()
     {
-        HasAnyAction = Data.Any(x => HasAction(x) || HasLink(x));
+        HasAnyButton = Data.Any(x => HasButton(x));
         var firstData = Data.FirstOrDefault(x => x != null);
         if (firstData != null)
         {
@@ -94,13 +94,8 @@ public partial class TvObjectArrayView : TvViewBase
         }
     }
 
-    private bool HasAction(object? item)
+    private bool HasButton(object? item)
     {
-        return Options?.Actions?.Any(action => action.Condition(item, Depth)) ?? false;
-    }
-
-    private bool HasLink(object? item)
-    {
-        return Options?.Links?.Any(link => link.Condition(item, Depth)) ?? false;
+        return Options?.Buttons?.Any(action => action.Condition(item, Depth)) ?? false;
     }
 }
