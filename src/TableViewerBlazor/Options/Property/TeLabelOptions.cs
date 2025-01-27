@@ -15,7 +15,7 @@ public interface ITeLabelOptions
     /// <summary>
     /// The position of the Label text. Defaults to End.
     /// </summary>
-    public LabelPosition LabelPosition { get; }
+    public Placement LabelPlacement { get; }
 }
 
 public class TeLabelOptions<T> : ITeLabelOptions
@@ -23,7 +23,7 @@ public class TeLabelOptions<T> : ITeLabelOptions
     public Func<T, bool> Condition { get; init; } = _ => true;
     public Func<bool, T, string>? SelectedLabel { get; init; }
     public Func<bool, T, string>? NotSelectedLabel { get; init; }
-    public LabelPosition LabelPosition { get; init; } = LabelPosition.End;
+    public Placement LabelPlacement { get; init; } = Placement.End;
 
     Func<object, bool> ITeLabelOptions.Condition => o => o is T value ? Condition(value) : false;
 

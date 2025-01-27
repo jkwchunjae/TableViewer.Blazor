@@ -36,7 +36,7 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// Defaults to <see cref="LabelPosition.End"/>.
     /// </remarks>
     [Category(CategoryTypes.FormComponent.Behavior)]
-    public LabelPosition LabelPosition { get; set; } = LabelPosition.End;
+    public Placement LabelPlacement { get; set; } = Placement.End;
 
     /// <summary>
     /// Allows this checkbox to be controlled via the keyboard.

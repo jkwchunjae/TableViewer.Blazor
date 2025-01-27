@@ -2,7 +2,7 @@
 
 public partial class TvActionDialog : ComponentBase
 {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter] public object Item { get; set; } = null!;
     [Parameter] public ITvPopupAction PopupAction { get; set; } = null!;
