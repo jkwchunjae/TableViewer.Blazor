@@ -2,7 +2,6 @@
 
 @if (Open ?? false)
 {
-    #region style
     List<string> tableClassList = new()
     {
         "d-inline-block",
@@ -21,8 +20,6 @@
     string titleContainerStyleText = "display: flex; justify-content: space-between; align-items: center;";
     string titleContainerStyleText2 = "display: flex; align-items: center;";
     string buttonGroupClassText = "display: inline-flex; gap: 4px; height: 22px;";
-    #endregion
-    #region table content
     <MudTable
         Items="Items"
         Class="@tableClassText"
@@ -99,7 +96,6 @@
         @Options.Contents.NoRecordsContent
     </NoRecordsContent>
     </MudTable>
-    #endregion
 }
 else
 {
