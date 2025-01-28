@@ -7,3 +7,5 @@
 <TableEditor T="List<int>" Data="intList" Options="intOptions" DataChanged="@(data => OnDataChanged<List<int>>(data))" />
 
 <TableEditor T="List<bool>" Data="boolList" DataChanged="@(data => OnDataChanged<List<bool>>(data))" />
+
+<TableEditor T="string" Data="arrayDataString" Options="stringNumberListOption" DataChanged="@(data => OnStringDataChanged(data))" />

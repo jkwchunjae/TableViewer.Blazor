@@ -32,7 +32,7 @@
       @(Options.Title ?? string.Empty)
     </MudText>
     <MudSpacer />
-    @if (ListEditorOption.AddItemAction != default)
+    @if (ListEditorOption.EnableAddItem)
     {
       <TvActionButton Item="@(new object())" Action="AddItemAction" />
     }
@@ -47,7 +47,7 @@
     <MudTh Class="@tdthClassText">
       Value
     </MudTh>
-    @if (ListEditorOption.RemoveItemAction != default)
+    @if (ListEditorOption.EnableRemoveItem)
     {
       <MudTh Class="@tdthClassText">
         ...
@@ -71,7 +71,7 @@
         Parent="@Data"
       />
     </MudTd>
-    @if (ListEditorOption.RemoveItemAction != default)
+    @if (ListEditorOption.EnableRemoveItem)
     {
       <MudTd Class="@tdthClassText">
         <TvActionButton Item="context.Index" Action="RemoveItemAction" />

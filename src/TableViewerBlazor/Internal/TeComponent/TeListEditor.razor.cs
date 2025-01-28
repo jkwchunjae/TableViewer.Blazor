@@ -48,10 +48,13 @@ public partial class TeListEditor : TeEditorBase
 
     private async Task AddItem(object dummy)
     {
-        if (Items is IList listData)
+        if (ListEditorOption.AddItemAction != null)
         {
-            await ListEditorOption.AddItemAction!.Action.Invoke(listData);
-            Data = ListEditorOption.Converter.FromField(listData);
+            var items = ListEditorOption.Converter.ToField(Data!);
+            await ListEditorOption.AddItemAction.Action.Invoke(items);
+
+            Data = ListEditorOption.Converter.FromField(items!);
+            Items = items?.Cast<object>().ToList() ?? new List<object>();
             await DataChanged.InvokeAsync(Data);
         }
     }
