@@ -46,7 +46,9 @@ public interface ITeConverter
 /// <typeparam name="TField">TableEditor쪽 데이터 타입</typeparam>
 public interface ITeConverter<TValue, TField> : ITeConverter
 {
+    /// <summary> 유저가 가지고 있는 데이터 타입을 TableEditor쪽 데이터 타입으로 변환 </summary>
     new Func<TValue, TField?> ToField { get; }
+    /// <summary> TableEditor쪽 데이터를 유저가 가지고 있는 데이터 타입으로 변환 </summary>
     new Func<TField, TValue?> FromField { get; }
 }
 

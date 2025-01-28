@@ -31,7 +31,7 @@ public class TeListEditorOption<TValue, TListField, TListItem> : ITeListEditorOp
     ITeConverter ITeConvertable.Converter => Converter;
     ITeConverter<object, IList> ITeConvertableFieldOption<object, IList>.Converter => new TeConverter<object, IList>
     {
-        ToField = userValue => userValue is TValue value ? Converter.ToField(value).Cast<object>().ToList() : default,
+        ToField = userValue => userValue is TValue value ? Converter.ToField(value).ToList() : default,
         //FromField = fieldValue => fieldValue is TListField value ? Converter.FromField(value) : default,
         FromField = fieldValue =>
         {
