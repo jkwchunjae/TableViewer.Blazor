@@ -14,10 +14,10 @@ public class TeSwitchProperty : TeBooleanInputProperty
     /// The position of the text/label.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="LabelPosition.End"/>
+    /// Defaults to <see cref="LabelPlacement.End"/>
     /// </remarks>
     [Category(CategoryTypes.FormComponent.Behavior)]
-    public LabelPosition LabelPosition { get; set; } = LabelPosition.End;
+    public Placement LabelPlacement { get; set; } = Placement.End;
 
     /// <summary>
     /// The color of the component. It supports the theme colors.

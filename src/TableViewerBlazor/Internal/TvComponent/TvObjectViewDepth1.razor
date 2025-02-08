@@ -2,15 +2,12 @@
 
 @if (Data != null)
 {
-    #region style
     List<string> rootClassList = new()
     {
         "d-inline-block",
     };
     rootClassList.AddRange(Options.Style.RootClass);
     var titleStyleText = "display: flex; justify-content: space-between; align-items: center;";
-    #endregion
-    #region content
     <MudPaper Elevation="0" Class="@(string.Join(" ", rootClassList))">
     <div style="@titleStyleText">
         @if (!string.IsNullOrWhiteSpace(Options.Title))
@@ -51,7 +48,6 @@
         }
     </dl>
     </MudPaper>
-    #endregion
 }
 
 <style>
