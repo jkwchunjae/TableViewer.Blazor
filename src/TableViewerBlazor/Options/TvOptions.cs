@@ -20,19 +20,19 @@ public class TvOptions
 
 public interface ITvCustomOption
 {
-    Func<object , int, string, bool> Condition { get; }
+    Func<object?, object, int, string, bool> Condition { get; }
 }
 
 public static class TvOptionsExtension
 {
-    public static bool TryGetCustomOption(this TvOptions options, object data, int depth, string path, out ITvCustomOption option)
+    public static bool TryGetCustomOption(this TvOptions options, object? parent, object data, int depth, string path, out ITvCustomOption option)
     {
         var customOptions = Enumerable.Empty<ITvCustomOption>()
             .Concat(options.EditorOptions)
             .Concat(options.StringLinkOptions)
             .ToArray();
 
-        var customOption = customOptions.FirstOrDefault(option => option.Condition.Invoke(data, depth, path));
+        var customOption = customOptions.FirstOrDefault(option => option.Condition.Invoke(parent, data, depth, path));
         
         if (customOption != null)
         {
