@@ -5,7 +5,7 @@
 {
     <TvNullView />
 }
-else if (Options.TryGetCustomOption(Data, Depth, "path", out ITvCustomOption customOption))
+else if (Options.TryGetCustomOption(Parent, Data, Depth, "path", out ITvCustomOption customOption))
 {
     if (customOption is ITvEditorOption editorOption)
     {
