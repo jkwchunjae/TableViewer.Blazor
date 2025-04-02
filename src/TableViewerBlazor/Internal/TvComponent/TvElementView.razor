@@ -31,7 +31,7 @@ else if (IsObjectArray)
 {
     var array = (Data as IEnumerable)!.Cast<object?>();
     var element = array.FirstOrDefault();
-    if (Options.HasEditorOption(element, Depth, "path"))
+    if (Options.HasEditorOption(Parent, element!, Depth, "path"))
     {
         <div class="table-cell">
             <TvArrayView Data="array" Options="Options" Depth="Depth" OpenDepth="OpenDepth" Loading="Loading" />
