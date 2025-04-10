@@ -1,0 +1,19 @@
+﻿@inherits TvViewBase
+
+<MudImage
+    Src="@ImageViewerOption.ImageUrl(Parent, Data)"
+    FallbackSrc="@ImageViewerOption.FallbackUrl(Parent, Data)"
+    Fluid="@ImageViewerOption.Fluid"
+    Alt="@ImageViewerOption.Alt"
+    Height="@ImageViewerOption.Height"
+    Width="@ImageViewerOption.Width"
+    Elevation="@ImageViewerOption.Elevation"
+    ObjectFit="@ImageViewerOption.ObjectFit"
+    ObjectPosition="@ImageViewerOption.ObjectPosition"
+/>
+
+@code {
+    [Parameter] public required object Data { get; set; }
+    [Parameter] public required object Parent { get; set; }
+    [Parameter] public required ITvImageViewerOption ImageViewerOption { get; set; }
+}

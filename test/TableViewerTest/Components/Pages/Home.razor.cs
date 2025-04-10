@@ -311,7 +311,7 @@ public partial class Home : ComponentBase
                 new TvStringLinkOption<Person, PersonName>
                 {
                     Href = (p, v) => "http://naver.com",
-                    Condition = (v, depth, path) => v.ToString() == "User name"
+                    Condition = (parent, v, depth, path) => v.ToString() == "User name"
                 },
             }
         };

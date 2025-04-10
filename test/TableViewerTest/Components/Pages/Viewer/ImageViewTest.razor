@@ -1,0 +1,39 @@
+﻿@page "/image-view-test"
+
+<TableViewer Data="list" Options="options" />
+
+@code {
+    class Data
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Image { get; set; } = string.Empty;
+    }
+
+    List<Data> list = new List<Data>
+    {
+        new Data
+        {
+            Name = "Name 1",
+            Image = "https://placehold.co/600x400"
+        },
+        new Data
+        {
+            Name = "Name 2",
+            Image = "https://placehold.co/400"
+        },
+    };
+    TvOptions options = new TvOptions
+    {
+        ImageViewerOptions =
+        {
+            new TvImageViewerOption<Data, string>
+            {
+                Condition = (data, path, _, _) => path.StartsWith("https"),
+                ImageUrl = (data, path) => path,
+                Width = 200,
+                Height = 200,
+                ObjectFit = ObjectFit.ScaleDown,
+            },
+        },
+    };
+}

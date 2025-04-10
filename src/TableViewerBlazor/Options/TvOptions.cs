@@ -14,6 +14,7 @@ public class TvOptions
     public List<ITvEditorOption> EditorOptions { get; set; } = [];
     public List<ITvStringLinkOption> StringLinkOptions { get; set; } = [];
     public List<ITvOpenDepthOption> OpenDepth { get; set; } = [];
+    public List<ITvImageViewerOption> ImageViewerOptions { get; set; } = [];
     public TvDateTimeOption? DateTime { get; set; }
     public TvContents Contents { get; set; } = new();
 }
@@ -30,6 +31,7 @@ public static class TvOptionsExtension
         var customOptions = Enumerable.Empty<ITvCustomOption>()
             .Concat(options.EditorOptions)
             .Concat(options.StringLinkOptions)
+            .Concat(options.ImageViewerOptions)
             .ToArray();
 
         var customOption = customOptions.FirstOrDefault(option => option.Condition.Invoke(parent, data, depth, path));
