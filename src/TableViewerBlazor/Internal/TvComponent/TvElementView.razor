@@ -19,6 +19,14 @@ else if (Options.TryGetCustomOption(Parent, Data, Depth, "path", out ITvCustomOp
             StringLinkOption="stringLinkOption"
         />
     }
+    else if (customOption is ITvImageViewerOption imageViewerOption)
+    {
+        <TvImageView
+            Data="Data"
+            Parent="Parent"
+            ImageViewerOption="imageViewerOption"
+        />
+    }
 }
 else if (DataHasStringViewerAttribute())
 {
