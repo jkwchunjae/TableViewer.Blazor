@@ -31,6 +31,7 @@ public static class TvOptionsExtension
         var customOptions = Enumerable.Empty<ITvCustomOption>()
             .Concat(options.EditorOptions)
             .Concat(options.StringLinkOptions)
+            .Concat(options.ImageViewerOptions)
             .ToArray();
 
         var customOption = customOptions.FirstOrDefault(option => option.Condition.Invoke(parent, data, depth, path));
