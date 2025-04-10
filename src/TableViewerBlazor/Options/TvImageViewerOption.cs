@@ -85,14 +85,12 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <c>false</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Behavior)]
     public bool Fluid { get; set; } = false;
 
     /// <summary>
     /// The alternate text for this image.
     /// </summary>
-    [Parameter]
     [Category(CategoryTypes.Image.Behavior)]
     public string? Alt { get; set; }
 
@@ -102,7 +100,6 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <c>null</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Appearance)]
     public int? Height { get; set; } = null;
 
@@ -112,7 +109,6 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <c>null</c>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Appearance)]
     public int? Width { get; set; } = null;
 
@@ -122,7 +118,6 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <c>0</c>.  
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Appearance)]
     public int Elevation { get; set; } = 0;
 
@@ -132,7 +127,6 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <see cref="ObjectFit.Fill"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Appearance)]
     public ObjectFit ObjectFit { get; set; } = ObjectFit.Fill;
 
@@ -142,7 +136,6 @@ public class TvImageViewerOption<TParent, TValue> : ITvImageViewerOption
     /// <remarks>
     /// Defaults to <see cref="ObjectPosition.Center"/>.
     /// </remarks>
-    [Parameter]
     [Category(CategoryTypes.Image.Appearance)]
     public ObjectPosition ObjectPosition { get; set; } = ObjectPosition.Center;
 
