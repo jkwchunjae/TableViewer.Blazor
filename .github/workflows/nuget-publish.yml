@@ -1,0 +1,33 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - 'v*' # v로 시작하는 태그가 푸시될 때 실행
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Extract version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Pack
+      run: dotnet pack --configuration Release --no-build --output ./nupkgs --include-symbols --include-source -p:Version=${{ steps.get_version.outputs.VERSION }}
+    
+    - name: Publish to NuGet
+      run: dotnet nuget push ./nupkgs/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json 
