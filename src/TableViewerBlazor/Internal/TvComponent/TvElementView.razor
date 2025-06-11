@@ -27,6 +27,14 @@ else if (Options.TryGetCustomOption(Parent, Data, Depth, "path", out ITvCustomOp
             ImageViewerOption="imageViewerOption"
         />
     }
+    else if (customOption is ITvHtmlViewerOption htmlViewerOption)
+    {
+        <TvHtmlView
+            Data="Data"
+            Parent="Parent"
+            HtmlViewerOption="htmlViewerOption"
+        />
+    }
 }
 else if (DataHasStringViewerAttribute())
 {

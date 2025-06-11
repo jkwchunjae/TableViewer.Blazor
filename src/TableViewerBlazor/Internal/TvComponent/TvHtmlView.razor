@@ -1,0 +1,37 @@
+@inherits TvViewBase
+
+@if (string.IsNullOrEmpty(HtmlViewerOption.HtmlContent(Parent, Data)))
+{
+    <div class="table-cell">
+        @HtmlViewerOption.FallbackText
+    </div>
+}
+else
+{
+    <div class="table-cell" style="@GetStyle()">
+        @((MarkupString)HtmlViewerOption.HtmlContent(Parent, Data))
+    </div>
+}
+
+@code {
+    [Parameter] public required object Data { get; set; }
+    [Parameter] public required object Parent { get; set; }
+    [Parameter] public required ITvHtmlViewerOption HtmlViewerOption { get; set; }
+
+    private string GetStyle()
+    {
+        var style = HtmlViewerOption.Style ?? string.Empty;
+        
+        if (HtmlViewerOption.MaxHeight.HasValue)
+        {
+            style += $"max-height: {HtmlViewerOption.MaxHeight}px; overflow-y: auto;";
+        }
+        
+        if (HtmlViewerOption.MaxWidth.HasValue)
+        {
+            style += $"max-width: {HtmlViewerOption.MaxWidth}px; overflow-x: auto;";
+        }
+
+        return style;
+    }
+} 
