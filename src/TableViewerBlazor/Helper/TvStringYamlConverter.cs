@@ -12,12 +12,12 @@ public class TvStringYamlConverter : IYamlTypeConverter
         return type.GetCustomAttribute<TvStringAttribute>() != null;
     }
 
-    public object ReadYaml(IParser parser, Type type)
+    public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
     {
         throw new NotImplementedException();
     }
 
-    public void WriteYaml(IEmitter emitter, object? value, Type type)
+    public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
     {
         emitter.Emit(new Scalar(value?.ToString() ?? string.Empty));
     }
