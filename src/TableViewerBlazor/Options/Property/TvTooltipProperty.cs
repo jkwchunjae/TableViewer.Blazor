@@ -51,11 +51,11 @@ public class TvTooltipProperty
     /// Sets the length of time that the opening transition takes to complete.
     /// </summary>
     /// <remarks>
-    /// Set globally via <see cref="MudGlobal.TransitionDefaults.Duration"/>.
+    /// Set globally via <see cref="MudGlobal.TooltipDefaults.Duration"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Tooltip.Appearance)]
-    public double Duration { get; init; } = MudGlobal.TransitionDefaults.Duration.TotalMilliseconds;
+    public double Duration { get; init; } = MudGlobal.TooltipDefaults.Duration.TotalMilliseconds;
 
     /// <summary>
     /// Determines if this component should be inline with it's surrounding (default) or if it should behave like a block element.

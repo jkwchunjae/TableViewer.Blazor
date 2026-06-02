@@ -47,7 +47,7 @@
     CloseIcon="@SelectBoxOption.Property.CloseIcon"
     SelectAll="@SelectBoxOption.Property.SelectAll"
     SelectAllText="@SelectBoxOption.Property.SelectAllText"
-    MultiSelectionTextFunc="@(SelectBoxOption.Property.MultiSelectionTextFunc ?? (list => string.Join(SelectBoxOption.Property.Delimiter, list)))"
+    MultiSelectionTextFunc="GetMultiSelectionText"
     Delimiter="@SelectBoxOption.Property.Delimiter"
     MaxHeight="@SelectBoxOption.Property.MaxHeight"
     AnchorOrigin="@SelectBoxOption.Property.AnchorOrigin"

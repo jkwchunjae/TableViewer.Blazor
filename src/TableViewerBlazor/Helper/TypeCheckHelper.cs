@@ -31,11 +31,15 @@ internal static class TypeCheckHelper
             var firstType = arr.FirstOrDefault()?.GetType();
             return firstType?.IsObject() ?? false;
         }
+        else if (data is IDictionary)
+        {
+            return false;
+        }
         else if (data is IEnumerable arr)
         {
-            if (dataType.GenericTypeArguments.Length == 1)
+            var nestedType = dataType.GetEnumerableElementType();
+            if (nestedType != null)
             {
-                var nestedType = dataType.GenericTypeArguments[0];
                 if (nestedType.GetCustomAttribute<TvStringAttribute>() != null)
                 {
                     return false;
@@ -53,6 +57,18 @@ internal static class TypeCheckHelper
             }
         }
         return false;
+    }
+
+    private static Type? GetEnumerableElementType(this Type type)
+    {
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+        {
+            return type.GenericTypeArguments[0];
+        }
+
+        return type.GetInterfaces()
+            .FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            ?.GenericTypeArguments[0];
     }
 
     public static bool IsObject(this Type type)

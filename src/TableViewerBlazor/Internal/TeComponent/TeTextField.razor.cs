@@ -86,11 +86,11 @@ public partial class TeTextField : TeEditorBase
         }
     }
 
-    public async Task OnInternalInputChanged(ChangeEventArgs args)
+    public async Task OnInternalInputChanged(string args)
     {
         if (TextFieldOption?.Event?.OnInternalInputChanged != null)
         {
-            await TextFieldOption.Event.OnInternalInputChanged.Invoke(args);
+            await TextFieldOption.Event.OnInternalInputChanged.Invoke(new ChangeEventArgs { Value = args });
         }
     }
 }
