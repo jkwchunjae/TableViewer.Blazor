@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>TableViewer.MewUI</PackageId>
+    <Title>TableViewer.MewUI</Title>
+    <Version>0.3.6</Version>
+    <Description>MewUI port of the TableViewer.MudBlazor viewer and editor components.</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Aprillz.MewUI.Core" Version="0.22.1" />
+    <PackageReference Include="Aprillz.MewUI.MewvalonEdit" Version="0.22.1" />
+    <PackageReference Include="YamlDotNet" Version="18.1.0" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>
