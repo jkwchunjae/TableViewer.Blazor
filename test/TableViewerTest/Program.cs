@@ -11,7 +11,10 @@ builder.Services.AddRazorComponents()
         config.DetailedErrors = true;
     });
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.PopoverOptions.ThrowOnDuplicateProvider = false;
+});
 builder.Services.AddTableViewer();
 
 var app = builder.Build();

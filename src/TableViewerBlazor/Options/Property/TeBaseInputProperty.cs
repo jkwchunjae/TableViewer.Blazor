@@ -237,7 +237,7 @@ public class TeBaseInputProperty : TeFormComponentProperty
     /// Defaults to <c>false</c>.  When <c>true</c>, the label will not move into the input when the input is empty.
     /// </remarks>
     [Category(CategoryTypes.FormComponent.Appearance)]
-    public bool ShrinkLabel { get; set; } = MudGlobal.InputDefaults.ShrinkLabel;
+    public bool ShrinkLabel { get; set; }
 
     /// <summary>
     /// The format applied to values.

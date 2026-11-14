@@ -20,6 +20,7 @@ public abstract class TeNumericFieldProperty : TeDebouncedInputProperty
     /// Reverts mouse wheel up and down events, if true.
     /// </summary>
     [Category(CategoryTypes.FormComponent.Behavior)]
+    [Obsolete("MudBlazor no longer supports this setting; the value is ignored.")]
     public bool InvertMouseWheel { get; set; } = false;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

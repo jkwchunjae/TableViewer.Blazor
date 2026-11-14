@@ -70,7 +70,7 @@ public abstract class TableEditorBase<T> : ComponentBase, IDisposable
 
     public Task Validate()
     {
-        return form.Validate();
+        return form.ValidateAsync();
     }
 
     public void Dispose()

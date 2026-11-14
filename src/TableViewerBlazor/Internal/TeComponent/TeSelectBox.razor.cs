@@ -11,4 +11,10 @@ public partial class TeSelectBox : TeEditorBase
         Data = value;
         await DataChanged.InvokeAsync(Data);
     }
+
+    private string GetMultiSelectionText(IReadOnlyList<string> selectedValues)
+    {
+        return SelectBoxOption.Property.MultiSelectionTextFunc?.Invoke([.. selectedValues])
+            ?? string.Join(SelectBoxOption.Property.Delimiter, selectedValues);
+    }
 }

@@ -12,6 +12,7 @@ public class TeRadioGroupProperty : TeFormComponentProperty
     /// User style definitions for the input
     /// </summary>
     [Category(CategoryTypes.Radio.Appearance)]
+    [Obsolete("MudBlazor no longer supports inline input styles; use InputClass with CSS instead.")]
     public string? InputStyle { get; set; }
 
     /// <summary>

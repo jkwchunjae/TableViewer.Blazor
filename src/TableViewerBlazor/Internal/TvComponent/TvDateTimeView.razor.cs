@@ -1,4 +1,4 @@
-﻿using moment.net;
+using MomentNet.Display;
 
 namespace TableViewerBlazor.Internal.TvComponent;
 

@@ -115,7 +115,7 @@ public partial class Home : ComponentBase
         },
     };
 
-    PersonRecord[] peopleRecord = new PersonRecord[]
+    PersonRecord?[] peopleRecord = new PersonRecord?[]
     {
         null,
         new PersonRecord(
