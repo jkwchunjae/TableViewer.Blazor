@@ -73,7 +73,9 @@
 
 CSS class/style 문자열과 Material SVG 아이콘은 네이티브 화면에서 자동으로 적용되지 않는다. MewUI 포트는 지원하는 네이티브 속성과 스타일 팩터리로 의미를 옮기고, 지원하지 않는 브라우저 전용 항목을 문서화해야 한다. 이름만 남기고 동작을 무시한 상태를 스타일 동등 지원으로 표시하지 않는다.
 
-현재 MewUI 공개 편집 속성에는 `Configure: Action<Control>`가 추가되어 네이티브 크기·색·스타일·동작을 직접 구성할 수 있다. 남겨진 `Class`, CSS `Style`, HTML `UserAttributes`, ARIA 식별자는 이 호환 데이터만으로 DOM을 만들지 않는다. `StyleName`/`StyleSheet` 또는 `Configure`로 옮겨야 한다. 애니메이션, popup origin, Material icon의 세부 외형은 네이티브 컨트롤 방식으로 대응하며 웹 화면과 pixel 단위로 같은 외형을 보장한다는 의미가 아니다.
+현재 MewUI 공개 편집 속성에는 `Configure: Action<Control>`가 추가되어 네이티브 크기·색·스타일·동작을 직접 구성할 수 있다. `NativeStyle`은 CSS 중 색·배경·테두리·글꼴·간격·크기·opacity·text-align 및 MudBlazor의 px/py/margin 계열 class를 네이티브 속성으로 변환한다. 이 부분은 단순 보관이 아니라 실제 변환 대상이다. 그 밖의 임의 DOM layout CSS는 `Configure`, `StyleName`/`StyleSheet`로 옮기고, 미지원 선언은 `UnmappedCss`로 관찰할 수 있다. HTML `UserAttributes`, ARIA 식별자는 이 호환 데이터만으로 DOM을 만들지 않는다. 애니메이션, popup origin, Material icon의 세부 외형은 네이티브 컨트롤 방식으로 대응하며 웹 화면과 pixel 단위로 같은 외형을 보장한다는 의미가 아니다.
+
+네이티브 tooltip은 popup을 사용해 배치·지연·지속/페이드·화살표·표시 상태/알림·클릭/포커스/호버 정책을 구현한다. `Inline`의 DOM 배치 개념은 해당되지 않으며, focus trigger는 native focus를 기준으로 하므로 브라우저의 keyboard-only focus origin을 구분하는 계약은 아니다.
 
 ## 조건부 사용자 지정 표시
 
@@ -86,7 +88,7 @@ CSS class/style 문자열과 Material SVG 아이콘은 네이티브 화면에서
 
 `TryGetCustomOption`은 **EditorOptions → StringLinkOptions → ImageViewerOptions** 순서로 모든 정책을 이어 붙여 처음 일치한 하나를 선택한다. 일반 `TvEditorOption<T>`는 조건이 없으면 타입이 맞는 모든 값에 적용한다. JSON 옵션 기본 serializer는 들여쓴 JSON이다. YAML 옵션 기본 serializer는 `TvStringYamlConverter`를 등록한 YamlDotNet serializer다.
 
-원본 코드 뷰어는 Monaco를 읽기 전용으로 사용하고 줄 번호·미니맵·glyph margin·folding을 끈다. 콘텐츠의 줄 수·최대 줄 길이로 크기를 계산한 뒤 `LayoutMaxSize`로 제한한다. 따라서 단순 한 줄 `ToString()` 표시는 C01의 대체가 아니다. MewUI에서는 네이티브 코드/텍스트 표시로 직렬화 결과, 읽기 전용 동작, 크기 제한을 대응시킨다. 구문 강조나 Monaco 전용 편집 명령의 차이는 별도로 표기한다.
+원본 코드 뷰어는 Monaco를 읽기 전용으로 사용하고 줄 번호·미니맵·glyph margin·folding을 끈다. 콘텐츠의 줄 수·최대 줄 길이로 크기를 계산한 뒤 `LayoutMaxSize`로 제한한다. MewUI에서는 `Aprillz.MewUI.MewvalonEdit` 0.22.1의 네이티브 `TextEditor`를 사용한다. 읽기 전용, 줄 번호 숨김, 직렬화 결과와 크기 제한을 반영하며 JSON은 패키지의 `Json` 정의, YAML은 포트에 포함한 XSHD 정의로 구문을 강조한다. Monaco의 language service·브라우저 명령 전체를 포함하는 것은 아니다. 원본 C01이 사용하는 동작은 읽기 전용 표시이며 편집기 자체를 데이터 수정기로 사용하지 않는다.
 
 ## 행·제목·툴바 액션
 
@@ -177,6 +179,7 @@ DateTime과 TimeSpan의 기본 편집기는 전용 날짜 컨트롤이 아니라
 - View의 사용자 조건에 전달되는 path는 현재 대부분 문자열 리터럴 `"path"`다. MewUI에서 실제 경로를 전달하면 정정으로 기록하고 경로 조건 테스트를 추가한다.
 - `TvObjectView.ChildrenOpen()`은 조건부 펼침 깊이를 계산하지만 결과 `ThisOpenDepth`가 Razor의 자식 `OpenDepth`에 반영되지 않는다. MewUI에서는 공개 옵션의 의도대로 적용했는지 검증한다.
 - `TvYamlEditorOption<T>.Language` 기본값이 소스에서 `"json"`이다. 실제 serializer는 YAML이다. 네이티브 코드 보기의 언어는 YAML로 정정 가능하다.
+- 원본 `TvEditorOption<T>`는 `Serializer=null`이어도 interface가 빈 문자열 반환 delegate를 제공하여 renderer의 기본 JSON fallback을 가린다. MewUI에서는 실제 null을 반환해 기본 serializer가 작동하도록 정정한다.
 - 날짜 provider의 JS offset 갱신은 코드에 타이밍 이슈 주석이 있으며 offset 분을 정수 시간으로 나누는 구현이다. OS 시간대의 분 단위 offset과 DST를 사용하는 구현과 차이를 기록한다.
 - JSON/YAML string converter의 역직렬화 메서드는 `NotImplementedException`이다. 직렬화 전용 계약이다.
 - 원본 `TvColumnVisibleOption.NewKeys`는 문자열 overload와 멤버 overload의 순서 의미가 다르다. 실제 Viewer 경로는 멤버 원래 순서를 유지한다.
@@ -192,22 +195,54 @@ DateTime과 TimeSpan의 기본 편집기는 전용 날짜 컨트롤이 아니라
 
 다음은 원본과 같은 입력을 사용해 비교할 시나리오다. 단위 테스트는 정책·변환·변경 전파를, 실제 Windows 화면 검증은 입력·포커스·모달·표현을 담당한다.
 
-| 범위 | 필요한 시나리오 | 자동 검증 | 화면 검증 |
+| 범위 | 필요한 시나리오 | 자동 검증 근거 | Windows 화면 검증 근거 |
 | --- | --- | --- | --- |
-| V01~V06 | null/Empty/숫자 13종/bool/enum/date format·relative | [ ] | [ ] |
-| V07~V10 | 객체 public field/property, 객체 배열/record/struct/null행, primitive more, 사전 key/value 중첩 | [ ] | [ ] |
-| V11~V12 | 멤버·타입 특성, 로딩·빈 표 문구 | [ ] | [ ] |
-| O01~O04 | 전역/조건부 펼침, more, column 정책/DisableKeys, 제목/개수/툴바, UseTable=false | [ ] | [ ] |
-| C01~C04 | JSON/YAML/custom serializer·크기 제한, string link, 이미지/fallback/fit, converter | [ ] | [ ] |
-| A01~A06 | 조건부 노출, async 진행/완료/재사용, 2단계 제한시간, popup 취소/확인, link, tooltip | [ ] | [ ] |
-| S01~S03 | 표 밀도·줄무늬·테두리·호버, 제목/머리글/버튼 스타일, tooltip 동작 | [ ] | [ ] |
-| E01~E02 | 객체·중첩·필드, Ignore, attribute/type 우선순위, null 멤버 | [ ] | [ ] |
-| E03~E09 | 텍스트·숫자·select·radio·checkbox·switch·autocomplete 실제 입력과 source 변경 | [ ] | [ ] |
-| E10~E11 | primitive·객체 목록 추가/삭제, 번호, 중첩 셀, 리스트 converter, toolbar | [ ] | [ ] |
-| E12~E14 | converter 왕복, 순차 async 검증·예외·필수, 폼 알림, debounce/clear/focus/key 이벤트 | [ ] | [ ] |
-| E15 | custom 1~5 슬롯, typed 부모/값, 같은 행 ParentChanged, 구독 해제 | [ ] | [ ] |
+| V01~V06 | null/Empty/숫자 13종/bool/enum/date format·relative | 숫자13종·분기·분단위 시간대·과거/미래 상대값 통과. 전체 픽셀 표현 검증 아님 | case 01 기본 값 렌더링. 모든 숫자 타입·시간대 조합 입력은 미실행 |
+| V07~V10 | 객체 public field/property, 객체 배열/record/struct/null행, primitive more, 사전 key/value 중첩 | 원본15 fixture, 멤버/행 분기·실제 native 중첩 Grid·객체/사전 숨김·처음2개+more 트리 통과 | case 01 중첩 표 확인. Tags more를 눌러 처음2→4개 표시 확인 |
+| V11~V12 | 멤버·타입 특성, 로딩·빈 표 문구 | 특성3위치·로딩/빈 문구·진행 UI 트리 통과 | 개별 로딩 전환/특성 전용 화면 미실행 |
+| O01~O04 | 전역/조건부 펼침, more, column 정책/DisableKeys, 제목/개수/툴바, UseTable=false | 실제 path·조건부깊이·첫일치 열정책·DisableKeys, UseTable=false의 루트 섹션/하위 표 트리 통과 | case 01 Address 개수 버튼으로 `object (2 keys)` 접기 확인. 그 밖의 모든 옵션 조합은 미실행 |
+| C01~C04 | JSON/YAML/custom serializer·크기 제한, string link, 이미지/fallback/fit, converter | serializer·priority·string converters, read-only syntax editor의 Json/YAML 정의·크기제한 트리 통과. 실제 이미지 decode/fallback은 UI 대상 | 코드·이미지·외부링크 실제 입력/표시는 후속 화면 검증 기록 필요 |
+| A01~A06 | 조건부 노출, async 진행/완료/재사용, 2단계 제한시간, popup 취소/확인, link, tooltip | generic 조건·async 중복방지·완료/재사용·두단계/만료·실패재시도·값별 popup/link 설정·실제 typed 원본배열 제목/행 액션 트리 통과 | popup 확인/취소·hover·키보드 focus·외부링크 미실행 |
+| S01~S03 | 표 밀도·줄무늬·테두리·호버, 제목/머리글/버튼 스타일, tooltip 동작 | CSS 속성·간격class·미지원선언 알림 통과. 상태 표현 전체 검증 아님 | 기본 native 표 확인. hover/tooltip/테마/모든 appearance 조합 미실행 |
+| E01~E02 | 객체·중첩·필드, Ignore, attribute/type 우선순위, null 멤버 | public field·nested source변경·Ignore/읽기전용 제외·ID우선 통과 | case 08 편집기를 렌더하고 Name 변경과 하단 viewer 동기화 확인 |
+| E03~E09 | 텍스트·숫자·select·radio·checkbox·switch·autocomplete 실제 입력과 source 변경 | converter·typed bool·정밀 숫자·native TextBox Configure/초기값 통과. 전 input event는 단위검증 아님 | case 08 7종 필드와 converter 렌더 확인. Name `Ada`→`Grace` 실제 키보드 입력 확인. 나머지 선택기 조작 미실행 |
+| E10~E11 | primitive·객체 목록 추가/삭제, 번호, 중첩 셀, 리스트 converter, toolbar | primitive list 교체/추가/삭제, objectlist 같은행 값/통지 통과 | 실제 추가/삭제 버튼·목록 포커스 미실행 |
+| E12~E14 | converter 왕복, 순차 async 검증·예외·필수, 폼 알림, debounce/clear/focus/key 이벤트 | 원본값 sequential validation·변환실패 source보존·required/readonly·오류상태 통과. debounce/키/clear 실제 입력은 UI 대상 | Name `A` 입력 후 inline 오류와 `IsValidChanged=false` 확인 |
+| E15 | custom 1~5 슬롯, typed 부모/값, 같은 행 ParentChanged, 구독 해제 | 슬롯1~5 typed adaptation·ParentChanged·Dispose 구독해제·반복값변경 통과 | native custom UI 직접 클릭 미실행 |
 
-현재 확인란은 검증 결과를 기록하기 전 상태다. 빌드 통과는 기능별 화면 검증을 대신하지 않는다. 플랫폼 전환 차이와 아직 실행하지 않은 시나리오는 별도 기록 없이 완료로 처리하지 않는다.
+자동 검증 근거는 다음 파일에 기록한다. 표의 범위 전체를 통과한 것이 아니라 해당 테스트가 확인하는 세부 계약만 검증한 것으로 읽는다.
+
+- [`ParityViewerTests`](../test/TableViewer.MewUI.Tests/ParityViewerTests.cs): 원본 UnitTest의 class/anonymous/primitive 배열·enumerable 15개 fixture, 숫자 13종, 타입 분기, 특성 세 적용 위치, 멤버/열 필터, 실제 path·조건부 깊이, custom 옵션 우선순위, JSON/YAML/string converter, 분 단위 시간대·상대 시간.
+- [`ParityActionTests`](../test/TableViewer.MewUI.Tests/ParityActionTests.cs): generic 조건과 잘못된 타입 거부, 비동기 실행 중 재진입 방지, one-click 완료/재사용, 두 단계 확인/만료, 실패와 재시도, link/popup/tooltip의 값별 설정. 모달을 실제로 클릭했다는 의미는 아니다.
+- [`ViewerStyleTests`](../test/TableViewer.MewUI.Tests/ViewerStyleTests.cs): 네이티브 style 어댑터의 자동 검증. tooltip의 실제 hover/focus popup은 화면 검증 대상이다.
+- [`ViewerLayoutTests`](../test/TableViewer.MewUI.Tests/ViewerLayoutTests.cs): 네이티브 표의 공유 열 너비·행 높이 합·좌표, Ripple 설정 전달. 단순 컨트롤 layout만 확인하며 글꼴을 포함한 전체 화면과 다르다.
+- [`ViewerDictionaryTests`](../test/TableViewer.MewUI.Tests/ViewerDictionaryTests.cs): generic dictionary의 실제 열거·숨김·갱신 회귀 검증.
+- [`ParityNativeTreeTests`](../test/TableViewer.MewUI.Tests/ParityNativeTreeTests.cs): 실제 `TableViewer`·`TableEditor`를 구성하여 재귀 표, 초기 표시 개수와 more 버튼, 객체/사전 숨김, 로딩/빈 콘텐츠, JSON/YAML 코드 컨트롤, 편집기 native configure를 검사한다. graphics backend 없는 환경에서 첫 measure의 font 측정 직전 경계를 사용하므로 실제 레이아웃·폰트·픽셀·포인터 입력은 검증하지 않는다.
+- [`EditorPortTests`](../test/TableViewer.MewUI.Tests/EditorPortTests.cs): 필드 옵션·도메인 converter·validation·값 변경 전파·목록·custom 편집기 세션 검증.
+- [`TextMaskTests`](../test/TableViewer.MewUI.Tests/TextMaskTests.cs): Pattern/Multi/Block mask의 raw/formatted 왕복, 부분입력과 오류 거부. caret·포커스는 별도 실제 입력 검증 대상이다.
+
+2026-11-15 기준 `dotnet test test/TableViewer.MewUI.Tests -c Release --no-restore -p:UseSharedCompilation=false`에서 자동 테스트 69개가 통과했다. 기존 MudBlazor 프로젝트의 테스트 15개도 통과했다. 위 화면 근거는 Windows/Direct2D 데모에서 확인한 조작만 기록한다. 단위/트리 테스트 통과는 화면 전체 동작 확인이나 모든 플랫폼에서의 검증을 뜻하지 않는다.
+
+추가로 `dotnet run --project samples/TableViewer.MewUI.Demo -c Release -- --smoke-test artifacts/mewui-smoke.json`을 실행하여 **실제 Windows Direct2D UI 스레드에서 10개 예제의 구성·Measure/Arrange가 모두 통과**한 것을 확인했다. 예제별 양수 레이아웃 크기와 렌더러 오류 여부, JSON/YAML의 읽기 전용 구문 강조 정의, 주 이미지 실패 후 96×48 fallback 이미지 디코딩, 날짜·색상 native picker 생성을 검사한다. 보고서는 `artifacts/mewui-smoke.json`에 생성된다. 이 검사는 화면 픽셀 비교나 popup의 마우스·키보드 조작을 검증했다고 주장하지 않는다. 최신 모달·선택/자동완성 메뉴의 모든 조합과 입력 마스크 caret 동작은 추가 수동 비교 대상이다.
+
+## 네이티브 대응의 남은 차이와 확인 범위
+
+원본 기능을 native control로 옮긴 구현과 100% 행동·외형 동등 검증은 구분한다. 다음은 아직 동일 동작으로 단정하지 않는 부분이다.
+
+| 항목 | 현재 대응과 차이 |
+| --- | --- |
+| CSS/HTML | 지원하는 CSS subset과 간격 class만 native 속성으로 변환. DOM 속성·ARIA ID·브라우저 layout에는 직접 대응 없음 |
+| Monaco 언어 기능 | MewvalonEdit 읽기 전용 syntax editor 사용. YAML은 전용 정의를 포함. Monaco의 임의 언어 service·모든 명령을 포함하지 않음 |
+| input type | PasswordBox·DatePicker·ColorPicker, 날짜+시각 조합·시간 텍스트·Hidden을 native로 대응. Month/Week은 날짜 선택 후 해당 형식으로 저장. Email/Number/URL/Telephone 같은 HTML 입력 종류의 브라우저 picker·가상키보드 힌트는 동일 실행환경이 아니며 모든 초기값/입력 edge case를 검증한 것은 아님 |
+| mask | MudBlazor `IMask`를 `ITeTextMask.Apply(string)`·`ITeInputMask.FormatInput(string)` native 계약으로 바꿈. `TePatternMask`·`TeMultiMask`·`TeBlockMask`·`TeRegexMask`와 typed 선택/블록 정책을 제공하고 raw/formatted·부분입력·잘못된 값 테스트 통과. 원본 mask의 모든 caret·선택영역·중간삽입 정책까지 동등하다고 검증하지 않음 |
+| 선택기·아이콘 | native DropDownBase/ListBox, RadioButton/CheckBox/ToggleSwitch로 구성. select 크기/밀도/아이콘/기본 popup 위치, checkbox 상태별 SVG glyph, switch thumb glyph/상태색, radio label placement를 native template로 대응. 액션 버튼 Ripple은 native 원 피드백이다. 모두 연결된 구현이지만 각 사용자 아이콘·배치·상태 조합을 실제 화면에서 검증한 것은 아님 |
+| autocomplete | native Popup·후보 필터·debounce·템플릿·키보드/외부클릭 닫기 구현. `TextUpdateSuppression`은 원본 Blazor Server 전용 네트워크 동기화 설정이므로 native에 같은 전송 계층은 없음 |
+| tooltip Inline | native popup이므로 DOM inline 배치와 다름. hover/focus/click·delay/duration/visible 상태는 별도 정책으로 대응 |
+| URL Target | `LinkRequested(href,target)`로 호스트에 전달하거나 OS로 열기. `_self`/`_blank` 브라우저 탭 동작은 최종 호스트 정책 |
+| 날짜 locale | 절대 시간은 .NET culture/timezone, 상대시간 문구는 포트의 영어 기준. 모든 문화권 상대시간 번역을 포함한 검증은 없음 |
+| 가상화 | 원본 객체 목록의 MudTable 가상화를 그대로 공유하지 않는다. 네이티브 재귀 셀/편집 포커스와 큰 목록 성능은 별도 확인 대상 |
+
+따라서 현재 검증표는 구현·검증 근거를 추적하기 위한 것이며, 위 차이가 해소되거나 의도된 플랫폼 대응으로 확정되기 전에 "모든 UI 속성·모든 플랫폼 100% 동등 검증 완료"로 읽으면 안 된다.
 
 ## 원본 소스 안내
 

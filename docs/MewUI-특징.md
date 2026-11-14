@@ -151,7 +151,7 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:MewUIBackend=Direc
 | 스타일 | CSS, MudBlazor theme/enum | Palette/Metrics, typed property, StyleSheet |
 | 탐색 | Href/Target, browser route | 호스트 navigation 또는 OS URL 열기 |
 | 시간대 | JavaScript Intl/브라우저 offset | .NET/OS 시간대 |
-| 코드 표시 | Monaco/JS module | 네이티브 텍스트/코드 컨트롤 또는 명시적 확장 |
+| 코드 표시 | Monaco/JS module | 선택 확장 `Aprillz.MewUI.MewvalonEdit`의 native `TextEditor`·highlighting |
 | 서비스 | ASP.NET DI와 JS interop | 앱이 소유하는 일반 .NET service/platform API |
 | 검증 | MudForm/field validation | native binding validation과 앱의 폼 정책 |
 
