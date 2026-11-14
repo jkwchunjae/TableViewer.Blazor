@@ -9,7 +9,7 @@ public partial class TvActionDialog : ComponentBase
 
     private void OnClose() => MudDialog.Close();
 
-    private async void OnConfirm()
+    private async Task OnConfirm()
     {
         await PopupAction.Action(Item);
         OnClose();

@@ -78,7 +78,7 @@ public class TvTooltipProperty
     public bool ShowOnClick { get; init; }
 
     /// <summary>
-    /// Determines on which events the tooltip will act
+    /// Shows the tooltip on keyboard focus. Click, touch, and programmatic focus do not open it.
     /// </summary>
     [Category(CategoryTypes.Tooltip.Appearance)]
     public bool ShowOnFocus { get; init; }
