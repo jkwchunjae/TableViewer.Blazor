@@ -70,25 +70,25 @@ public class TeCheckBoxProperty : TeBooleanInputProperty
     /// The icon to display for a checked state.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref=""●""/>.
+    /// Defaults to the native checked-square glyph.
     /// </remarks>
-    public string CheckedIcon { get; set; } = "●";
+    public string CheckedIcon { get; set; } = "☑";
 
     /// <summary>
     /// The icon to display for an unchecked state.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref=""●""/>.
+    /// Defaults to the native empty-square glyph.
     /// </remarks>
-    public string UncheckedIcon { get; set; } = "●";
+    public string UncheckedIcon { get; set; } = "☐";
 
     /// <summary>
     /// The icon to display for an indeterminate state.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref=""●""/>.
+    /// Defaults to the native indeterminate-square glyph.
     /// </remarks>
-    public string IndeterminateIcon { get; set; } = "●";
+    public string IndeterminateIcon { get; set; } = "▣";
 
     /// <summary>
     /// Allows the checkbox to have an indeterminate state.

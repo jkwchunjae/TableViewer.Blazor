@@ -30,12 +30,12 @@ public class TeSelectBoxProperty : TeBaseInputProperty
     /// <summary>
     /// The Open Select Icon
     /// </summary>
-    public string OpenIcon { get; set; } = "●";
+    public string OpenIcon { get; set; } = "▾";
 
     /// <summary>
     /// The Close Select Icon
     /// </summary>
-    public string CloseIcon { get; set; } = "●";
+    public string CloseIcon { get; set; } = "▴";
 
     /// <summary>
     /// If set to true and the MultiSelection option is set to true, a "select all" checkbox is added at the top of the list of items.
@@ -86,7 +86,7 @@ public class TeSelectBoxProperty : TeBaseInputProperty
     /// <summary>
     /// Custom clear icon when <see cref="Clearable"/> is enabled.
     /// </summary>
-    public string ClearIcon { get; set; } = "●";
+    public string ClearIcon { get; set; } = "×";
 
     /// <summary>
     /// If true, prevent scrolling while dropdown is open.
@@ -96,17 +96,17 @@ public class TeSelectBoxProperty : TeBaseInputProperty
     /// <summary>
     /// Custom checked icon.
     /// </summary>
-    public string CheckedIcon { get; set; } = "●";
+    public string CheckedIcon { get; set; } = "☑";
 
     /// <summary>
     /// Custom unchecked icon.
     /// </summary>
-    public string UncheckedIcon { get; set; } = "●";
+    public string UncheckedIcon { get; set; } = "☐";
 
     /// <summary>
     /// Custom indeterminate icon.
     /// </summary>
-    public string IndeterminateIcon { get; set; } = "●";
+    public string IndeterminateIcon { get; set; } = "▣";
 }
 
 public class TeSelectBoxProperty<T> : TeSelectBoxProperty

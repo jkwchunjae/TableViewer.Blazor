@@ -12,7 +12,7 @@ public abstract class TeNumericFieldProperty : TeDebouncedInputProperty
     /// <summary>
     /// Custom clear icon when <see cref="Clearable"/> is enabled.
     /// </summary>
-    public string ClearIcon { get; set; } = "●";
+    public string ClearIcon { get; set; } = "×";
 
     /// <summary>
     /// Reverts mouse wheel up and down events, if true.

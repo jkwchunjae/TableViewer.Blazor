@@ -22,9 +22,9 @@ public class TeTextFieldProperty : TeDebouncedInputProperty
     /// The icon to display when <see cref="Clearable"/> is <c>true</c>.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref=""●""/>.
+    /// Defaults to the native multiplication-sign clear glyph.
     /// </remarks>
-    public string ClearIcon { get; set; } = "●";
+    public string ClearIcon { get; set; } = "×";
 
     /// <summary>
     /// Stretches this input vertically to accommodate the <see cref="MudBaseInput{T}.Text"/> value.
