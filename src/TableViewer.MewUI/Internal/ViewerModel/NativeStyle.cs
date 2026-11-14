@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using Aprillz.MewUI;
 using Aprillz.MewUI.Controls;
 using TableViewer.MewUI.Options;
@@ -11,27 +12,53 @@ namespace TableViewer.MewUI.Internal.ViewerModel;
 /// <summary>Maps source appearance options to native properties and native style callbacks.</summary>
 public static class NativeStyle
 {
+    private static readonly ConditionalWeakTable<Button, ButtonAppearance> ButtonAppearances = new();
     /// <summary>Raised for CSS declarations that need an application-specific native Configure callback.</summary>
     public static event Action<string>? UnmappedCss;
 
     public static Button Button(Button button, TvButtonStyle style)
     {
+        if (!ButtonAppearances.TryGetValue(button, out var appearance))
+        {
+            appearance = new ButtonAppearance { Style = style };
+            ButtonAppearances.Add(button, appearance);
+            // A reused action button registers one callback. Later state changes replace only
+            // its current appearance so theme changes cannot replay stale action styles.
+            button.WithTheme((theme, control) =>
+            {
+                appearance.Theme = theme;
+                if (appearance.Initialized) ApplyButton(control, appearance.Style, theme);
+            });
+            appearance.Initialized = true;
+        }
+        appearance.Style = style;
+        ApplyButton(button, style, appearance.Theme);
+        return button;
+    }
+
+    private sealed class ButtonAppearance
+    {
+        public required TvButtonStyle Style { get; set; }
+        public Theme? Theme { get; set; }
+        public bool Initialized { get; set; }
+    }
+
+    private static void ApplyButton(Button button, TvButtonStyle style, Theme? theme)
+    {
         if (button is NativeActionButton feedback) feedback.Ripple = style.Ripple;
-        var padding = style.SuperDense ? new Thickness(4, 1) : style.Dense ? new Thickness(8, 3) : new Thickness(12, 7);
-        button.Padding = padding;
+        button.Padding = style.SuperDense ? new Thickness(4, 1) : style.Dense ? new Thickness(8, 3) : new Thickness(12, 7);
         button.FontSize = style.Size switch { Options.Size.Small => 12, Options.Size.Large => 16, _ => 14 };
-        button.WithTheme((theme, control) =>
+        button.BorderThickness = style.Variant == Variant.Outlined ? 1 : 0;
+        if (theme is not null)
         {
             var accent = ThemeColor(style.Color, theme.Palette);
             var neutral = style.Color is TvColor.Default or TvColor.Inherit;
-            control.Background = style.Variant == Variant.Filled ? (neutral ? theme.Palette.ButtonFace : accent) : MewColor.Transparent;
-            control.Foreground = style.Variant == Variant.Filled ? (neutral ? theme.Palette.WindowText : theme.Palette.AccentText) : accent;
-            control.BorderThickness = style.Variant == Variant.Outlined ? 1 : 0;
-            control.BorderBrush = accent;
-        });
+            button.Background = style.Variant == Variant.Filled ? (neutral ? theme.Palette.ButtonFace : accent) : MewColor.Transparent;
+            button.Foreground = style.Variant == Variant.Filled ? (neutral ? theme.Palette.WindowText : theme.Palette.AccentText) : accent;
+            button.BorderBrush = accent;
+        }
         ApplyCss(button, style.Style);
         style.Configure?.Invoke(button);
-        return button;
     }
 
     public static Element ButtonChrome(Button button, TvButtonStyle style) => style.DropShadow && style.Variant == Variant.Filled

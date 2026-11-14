@@ -6,8 +6,38 @@ using Xunit;
 
 namespace TableViewer.MewUI.Tests;
 
+[Collection(NativeControlCollection.Name)]
 public class ViewerStyleTests
 {
+    [Fact]
+    public void InitiallyVisibleTooltipCanBeComposedAndDisposedBeforeApplicationStartup()
+    {
+        using var target = new Button();
+        using var tooltip = new NativeTooltip(target, new()
+        {
+            Text = "Information",
+            TooltipStyleProperty = new() { Visible = true, Delay = 0, Duration = 0 }
+        });
+        Assert.False(tooltip.IsVisible);
+        tooltip.SetVisible(false);
+        tooltip.Dispose();
+        tooltip.SetVisible(true);
+        Assert.False(tooltip.IsVisible);
+    }
+
+    [Fact]
+    public void ReusingAButtonAppliesOnlyItsLatestStyleAndPreservesNativeConfigurationOrder()
+    {
+        using var button = new Button();
+        var configurations = new List<string>();
+        NativeStyle.Button(button, new() { Size = Options.Size.Small, Dense = true, Configure = control => { configurations.Add("first"); control.Width = 42; } });
+        NativeStyle.Button(button, new() { Size = Options.Size.Large, Dense = false, Configure = control => { configurations.Add("second"); control.Width = 84; } });
+        Assert.Equal(16, button.FontSize);
+        Assert.Equal(new Thickness(12, 7), button.Padding);
+        Assert.Equal(84, button.Width);
+        Assert.Equal(["first", "second"], configurations);
+    }
+
     [Fact]
     public void CssAppearanceAndNativeCallbacksApplyToTheSameElement()
     {

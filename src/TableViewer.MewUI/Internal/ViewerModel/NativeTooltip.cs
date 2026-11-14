@@ -14,6 +14,7 @@ public sealed class NativeTooltip : IDisposable
     private readonly Border _body;
     private CancellationTokenSource? _pending;
     private bool _disposed;
+    public event Action<Exception>? Error;
 
     public NativeTooltip(FrameworkElement target, TvTooltipOption option)
     {
@@ -49,7 +50,13 @@ public sealed class NativeTooltip : IDisposable
             if (settings.ShowOnHover) { target.MouseEnter += Enter; target.MouseLeave += Leave; }
             if (settings.ShowOnFocus) { target.GotFocus += Enter; target.LostFocus += Leave; }
             if (settings.ShowOnClick) target.MouseUp += Click;
-            if (settings.Visible) Application.Current?.Dispatcher?.BeginInvoke(() => SetVisible(true));
+            if (settings.Visible)
+            {
+                // Preview/headless composition may precede Application.Run. A real app posts
+                // this until after the newly composed button has joined its native window.
+                try { Application.Current.Dispatcher?.BeginInvoke(() => SetVisible(true)); }
+                catch (InvalidOperationException) when (target.FindVisualRoot() is not Window) { }
+            }
         }
     }
 
@@ -75,7 +82,7 @@ public sealed class NativeTooltip : IDisposable
             var settings = _option.TooltipStyleProperty;
             if (visible)
             {
-                if (settings.Delay > 0) await Task.Delay(TimeSpan.FromMilliseconds(settings.Delay), cancellationToken);
+                if (settings.Delay > 0) await Task.Delay(TimeSpan.FromMilliseconds(Math.Min(settings.Delay, int.MaxValue)), cancellationToken);
                 if (_disposed || cancellationToken.IsCancellationRequested || _target.FindVisualRoot() is not Window window) return;
                 var anchor = _target.TransformToAncestor(window).TransformBounds(new Rect(0, 0, _target.ActualWidth, _target.ActualHeight));
                 var wasOpen = _popup.IsOpen;
@@ -87,7 +94,7 @@ public sealed class NativeTooltip : IDisposable
                     _ => PopupAnchorSide.Below
                 });
                 if (!_popup.IsOpen) return;
-                if (!wasOpen) settings.VisibleChanged?.Invoke(true);
+                if (!wasOpen) NotifyVisible(true);
             }
             if (settings.Duration > 0)
             {
@@ -96,15 +103,22 @@ public sealed class NativeTooltip : IDisposable
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     _body.Opacity = visible ? frame / (double)frames : 1 - frame / (double)frames;
-                    await Task.Delay(TimeSpan.FromMilliseconds(settings.Duration / frames), cancellationToken);
+                    await Task.Delay(TimeSpan.FromMilliseconds(Math.Min(settings.Duration / frames, int.MaxValue)), cancellationToken);
                 }
             }
             if (!visible) _popup.Close();
         }
         catch (OperationCanceledException) { }
+        catch (Exception exception) { Error?.Invoke(exception); if (!_disposed) _popup.Close(); }
     }
 
-    private void PopupClosed(object? sender, PopupClosedEventArgs args) => _option.TooltipStyleProperty.VisibleChanged?.Invoke(false);
+    private void PopupClosed(object? sender, PopupClosedEventArgs args) => NotifyVisible(false);
+
+    private void NotifyVisible(bool visible)
+    {
+        try { _option.TooltipStyleProperty.VisibleChanged?.Invoke(visible); }
+        catch (Exception exception) { Error?.Invoke(exception); }
+    }
 
     public void Dispose()
     {
@@ -119,5 +133,6 @@ public sealed class NativeTooltip : IDisposable
         _target.MouseUp -= Click;
         _popup.Close();
         _popup.Closed -= PopupClosed;
+        _popup.Dispose();
     }
 }

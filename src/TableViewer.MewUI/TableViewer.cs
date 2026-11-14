@@ -247,6 +247,7 @@ public sealed class TableViewer : UserControl, IDisposable
             if (option.TooltipOption is { } tip)
             {
                 var tooltip = new NativeTooltip(button, tip);
+                tooltip.Error += exception => Error?.Invoke(exception);
                 _unsubscriptions.Add(tooltip.Dispose);
             }
             if (option is ITvLink link) button.OnClick(async () => await OpenLink(link.Href(item), link.Target));
@@ -379,9 +380,13 @@ public sealed class TableViewer : UserControl, IDisposable
             owner.ClientSizeChanged += Resize;
             owner.Closed += Finish;
             _closeDialogs.Add(Finish);
-            owner.OverlayLayer.Add(backdrop);
-            confirm.Focus();
-            await completion.Task;
+            try
+            {
+                owner.OverlayLayer.Add(backdrop);
+                confirm.Focus();
+                await completion.Task;
+            }
+            finally { Finish(); }
         }
         catch (Exception exception) { Error?.Invoke(exception); }
     }
