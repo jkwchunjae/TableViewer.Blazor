@@ -1,0 +1,73 @@
+namespace TableViewer.MewUI.Options.Property;
+
+public class TeSwitchProperty : TeBooleanInputProperty
+{
+    /// <summary>
+    /// The text/label will be displayed next to the switch if set.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>null</c>;
+    /// </remarks>
+    public string? Label { get; set; }
+
+    /// <summary>
+    /// The position of the text/label.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <see cref="LabelPlacement.End"/>
+    /// </remarks>
+    public Placement LabelPlacement { get; set; } = Placement.End;
+
+    /// <summary>
+    /// The color of the component. It supports the theme colors.
+    /// </summary>
+    /// /// <remarks>
+    /// Defaults to <see cref="Color.Primary"/>
+    /// </remarks>
+    public Color Color { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// Gets or sets whether to show a ripple effect when the user clicks the button. Default is true.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>true</c>
+    /// </remarks>
+    public bool Ripple { get; set; }
+
+    /// <summary>
+    /// The Size of the switch.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <see cref="Size.Medium"/>.
+    /// </remarks>
+    public Size Size { get; set; }
+
+    /// <summary>
+    /// Shows an icon on Switch's thumb when checked.
+    /// </summary>
+    public string ThumbIcon { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Shows an icon on Switch's thumb when unchecked.
+    /// </summary>
+    public string ThumbIconUnChecked { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The color of the thumb icon. Supports the theme colors.
+    /// </summary>
+    public Color ThumbIconColor { get; set; }
+
+    /// <summary>
+    /// The base color of the component in its none active/unchecked state. It supports the theme colors.
+    /// </summary>
+    public Color UncheckedColor { get; set; }
+
+    /// <summary>
+    /// Displays an underline for the input.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>true</c>.
+    /// </remarks>
+    public bool Underline { get; set; } = true;
+}
+
