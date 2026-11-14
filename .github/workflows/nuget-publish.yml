@@ -14,20 +14,20 @@ jobs:
       id-token: write
     steps:
     - uses: actions/checkout@v5
-    
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: '10.0.x'
-    
+
     - name: Extract version from tag
       id: get_version
       run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-    
+
     - name: Restore dependencies
       working-directory: test
       run: dotnet restore TableViewerTest.sln
-    
+
     - name: Build
       working-directory: test
       run: dotnet build TableViewerTest.sln --configuration Release --no-restore
@@ -35,22 +35,30 @@ jobs:
     - name: Test
       working-directory: test
       run: dotnet test TableViewerTest.sln --configuration Release --no-build
-    
+
+    - name: Pack shared contracts
+      run: dotnet pack src/TableViewer.Share --configuration Release --no-build --output nupkgs --include-symbols --include-source -p:Version=${{ steps.get_version.outputs.VERSION }}
+
     - name: Pack
       working-directory: src/TableViewerBlazor
       run: dotnet pack --configuration Release --no-build --output ../../nupkgs --include-symbols --include-source -p:Version=${{ steps.get_version.outputs.VERSION }}
-    
+
     - name: NuGet login with Trusted Publishing
       uses: NuGet/login@v1
       id: nuget_login
       with:
         user: ${{ secrets.NUGET_USER }}
 
+    - name: Publish shared package to NuGet
+      env:
+        NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
+      run: dotnet nuget push ./nupkgs/TableViewer.Share.*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
     - name: Publish main package to NuGet
       env:
         NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
-      run: dotnet nuget push ./nupkgs/*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-    
+      run: dotnet nuget push ./nupkgs/TableViewer.MudBlazor.*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
     - name: Publish symbol package to NuGet
       env:
         NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}

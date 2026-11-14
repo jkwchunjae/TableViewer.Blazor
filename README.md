@@ -7,6 +7,17 @@ Spread anything!!
 | --- | --- | --- |
 | `TableViewer.MudBlazor` | `src/TableViewerBlazor` | Blazor / MudBlazor |
 | `TableViewer.MewUI` | `src/TableViewer.MewUI` | 네이티브 MewUI 컨트롤 라이브러리 |
+| `TableViewer.Share` | `src/TableViewer.Share` | UI 비종속 옵션·모델 특성·변환·검증 계약 |
+
+두 UI 프로젝트는 `TableViewer.Share`를 함께 참조합니다. 모델에 붙이는 특성과 공통 옵션은 다음 네임스페이스를 사용합니다.
+
+```csharp
+using TableViewer.Share.Options;
+using TableViewer.Share.Public;
+using TableViewer.Share.Helper;
+```
+
+`TvContents`, 열 선택·날짜·펼침·직렬화 옵션, 편집 특성·변환기·검증기·선택 항목은 공유 프로젝트의 단일 타입입니다. 동일한 모델과 검증기를 두 UI에서 재사용할 수 있습니다. UI별 `TvOptions`, 필드 옵션, 액션은 공유 제네릭 기반에 각 프레임워크의 스타일·이벤트·렌더 팩터리를 연결합니다. 기존 `TableViewerBlazor.Options` 또는 `TableViewer.MewUI.Options`에 있던 공통 타입을 직접 사용하던 코드는 위 공유 네임스페이스를 함께 가져와야 합니다.
 
 MewUI 버전은 원본의 뷰어·편집기·조건부 옵션·액션·커스텀 편집기를 포팅합니다. 웹 프레임워크를 참조하지 않고 C# Markup으로 중첩 표를 구성합니다.
 
@@ -20,6 +31,7 @@ MewUI 버전은 원본의 뷰어·편집기·조건부 옵션·액션·커스텀
 ```powershell
 dotnet build TableViewer.MewUI.slnx
 dotnet test test/TableViewer.MewUI.Tests
+dotnet test test/TableViewer.Share.Tests
 dotnet run --project samples/TableViewer.MewUI.Demo
 ```
 
@@ -39,6 +51,7 @@ dotnet run --project samples/TableViewer.MewUI.Demo -c Release -- --smoke-test a
 using Aprillz.MewUI;
 using Aprillz.MewUI.Controls;
 using TableViewer.MewUI.Options;
+using TableViewer.Share.Options;
 using NativeTableViewer = TableViewer.MewUI.TableViewer;
 
 var people = new[] { new { Name = "Ada", Address = new { City = "Seoul" } } };
@@ -72,6 +85,9 @@ MudBlazor의 UI enum은 `TableViewer.MewUI.Options`의 값으로 바뀌며, Razo
 
 ```powershell
 dotnet pack src/TableViewer.MewUI -c Release -o artifacts
+dotnet pack src/TableViewer.Share -c Release -o artifacts
 ```
+
+UI 패키지는 같은 버전의 `TableViewer.Share` 패키지에 의존합니다. 배포할 때 공유 패키지를 먼저 게시하며, 버전 태그 워크플로에도 이 순서가 반영되어 있습니다.
 
 임의 객체의 속성과 필드를 리플렉션으로 탐색하므로 trimming/NativeAOT를 사용할 경우 앱이 표시·편집할 모델 메타데이터를 보존해야 합니다. 현재 실행 검증 플랫폼은 Windows Direct2D입니다.

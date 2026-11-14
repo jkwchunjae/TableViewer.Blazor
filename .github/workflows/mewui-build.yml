@@ -3,6 +3,9 @@ name: MewUI port
 on:
   push:
     paths:
+      - 'src/TableViewer.Share/**'
+      - 'src/TableViewerBlazor/**'
+      - 'test/TableViewer.Share.Tests/**'
       - 'src/TableViewer.MewUI/**'
       - 'samples/TableViewer.MewUI.Demo/**'
       - 'test/TableViewer.MewUI.Tests/**'
@@ -12,6 +15,9 @@ on:
       - '.github/workflows/mewui-build.yml'
   pull_request:
     paths:
+      - 'src/TableViewer.Share/**'
+      - 'src/TableViewerBlazor/**'
+      - 'test/TableViewer.Share.Tests/**'
       - 'src/TableViewer.MewUI/**'
       - 'samples/TableViewer.MewUI.Demo/**'
       - 'test/TableViewer.MewUI.Tests/**'
@@ -34,4 +40,6 @@ jobs:
       - run: dotnet restore TableViewer.MewUI.slnx
       - run: dotnet build TableViewer.MewUI.slnx -c Release --no-restore
       - run: dotnet test test/TableViewer.MewUI.Tests -c Release --no-build
+      - run: dotnet test test/TableViewer.Share.Tests -c Release --no-build
+      - run: dotnet pack src/TableViewer.Share -c Release --no-build -o artifacts
       - run: dotnet pack src/TableViewer.MewUI -c Release --no-build -o artifacts

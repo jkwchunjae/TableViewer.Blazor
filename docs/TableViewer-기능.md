@@ -13,6 +13,26 @@
 
 ## 공개 진입점
 
+### 공통 프로젝트
+
+`TableViewer.Share`는 두 UI의 공통 계약을 소유한다. `YamlDotNet` 외에 MudBlazor, Blazor, MewUI 의존성은 없다.
+
+| 공유 영역 | 타입과 책임 |
+| --- | --- |
+| 모델 특성 | `TableViewer.Share.Public.TvStringAttribute`와 `Share.Options.Te*Attribute`. 같은 모델의 특성을 양쪽 UI가 동일 타입으로 인식 |
+| 보기 정책 | `TvOptions<TStyle,TButton,TImageOption>`, `TvContents`, `TvColumnVisibleOption`, `TvDateTimeOption`, `TvOpenDepthOption<T>`, `TvStringLinkOption<,>`, 코드 직렬화 옵션 |
+| 액션·이미지 | 제네릭 공통 조건·타입 검사·동작·라벨·확인 설정·이미지 URL/크기. UI 프로젝트가 네이티브 스타일 타입과 기본값을 연결 |
+| 편집 | 필드 계약·특성·옵션 기반·변환기·검증기·선택 항목·`TeStyleOption`, 공통 옵션/사용자 편집기 선택 정책 |
+| 직렬화 보조 | `TableViewer.Share.Helper.TvStringJsonConverter<T>`, `TvStringYamlConverter` |
+
+UI별 `TvOptions`, 액션, 입력 옵션은 공유 제네릭 클래스를 상속하는 어댑터다. MudBlazor와 MewUI의 enum·컨트롤·이벤트·렌더 팩터리는 각 UI 프로젝트에 둔다. 공통 클래스를 source link로 두 번 컴파일하는 방식이 아니라 같은 공유 어셈블리의 타입을 참조한다.
+
+공통 타입을 사용하던 소비 코드는 `using TableViewer.Share.Options;`, `using TableViewer.Share.Public;`, 필요시 `using TableViewer.Share.Helper;`를 추가한다. Razor의 `TableViewer` 컴포넌트 이름과 루트 namespace가 충돌할 때는 `@using global::TableViewer.Share.Options`로 명시한다. 공유 직렬화 옵션은 기존 MewUI 포트의 `Serializer=null` 기본 JSON fallback과 YAML 언어명을 양쪽에서 동일하게 사용한다.
+
+`test/TableViewer.Share.Tests`는 실제로 양쪽 라이브러리를 참조하여 같은 모델 특성·직렬화 옵션·검증기·변환기를 공유하는지와 공통 어셈블리의 UI 의존성 부재를 검증한다. UI별 기존 기능 검증과 별도로 실행한다.
+
+공통화 이후 공유 통합 테스트 8개, MewUI 테스트 69개, 기존 Blazor 테스트 15개가 통과했다. 두 솔루션의 Release 빌드는 경고·오류가 없었으며, 공유 어셈블리를 사용하는 Windows Direct2D 예제 10개도 스모크 검사를 통과했다. 세 NuGet 패키지를 생성하고 두 UI 패키지의 `TableViewer.Share` 의존 버전이 함께 변경되는 것을 확인했다.
+
 | 진입점 | 원본 계약 | MewUI 대응 |
 | --- | --- | --- |
 | `TableViewer` | `Data: object?`, `Loading: bool`, `Options: TvOptions`. 루트 깊이는 1, 최초 펼침 깊이는 `GlobalOpenDepth` | 같은 입력을 받는 재사용 `UserControl` |
