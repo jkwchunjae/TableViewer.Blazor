@@ -411,6 +411,7 @@ public sealed class TableViewer : UserControl, IDisposable
             : host;
         async Task LoadImage()
         {
+            Exception? lastError = null;
             foreach (var urlFactory in new Func<string>[] { () => option.ImageUrl(parent, data), () => option.FallbackUrl(parent, data) })
             {
                 ImageSource? pendingSource = null;
@@ -452,11 +453,13 @@ public sealed class TableViewer : UserControl, IDisposable
                 catch (OperationCanceledException) { pendingSource?.Dispose(); return; }
                 catch (Exception exception)
                 {
+                    lastError = exception;
                     pendingSource?.Dispose();
                     if (token.IsCancellationRequested) return;
                     host.Child = Text(option.Alt ?? exception.Message);
                 }
             }
+            if (lastError is not null && !token.IsCancellationRequested) Error?.Invoke(lastError);
         }
     }
 

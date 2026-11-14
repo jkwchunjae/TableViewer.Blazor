@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TableViewer.MewUI/TableViewer.MewUI.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/TableViewer.MewUI.Demo/TableViewer.MewUI.Demo.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/TableViewer.MewUI.Tests/TableViewer.MewUI.Tests.csproj" />
+  </Folder>
+</Solution>
