@@ -2,13 +2,7 @@ using TableViewer.MewUI.Options.Property;
 
 namespace TableViewer.MewUI.Options;
 
-public class TeRadioAttribute : TeFieldAttribute
-{
-    public TeRadioAttribute(string id)
-        : base(id)
-    {
-    }
-}
+
 
 public interface ITeRadioOption : ITeFieldOption
 {
@@ -17,13 +11,10 @@ public interface ITeRadioOption : ITeFieldOption
     TeRadioGroupProperty Property { get; }
 }
 
-public class TeRadioOption<TValue> : ITeRadioOption, ITeGenericTypeOption
+public class TeRadioOption<TValue> : global::TableViewer.Share.Options.TeValidatedFieldOption<TValue, TeRadioGroupProperty>, ITeRadioOption, ITeGenericTypeOption
 {
-    public string? Id { get; set; }
-    public List<ITeValidation> Validations { get; set; } = [];
+
     public required List<TeRadioItem<TValue>> Items { get; set; }
-    public TeRadioGroupProperty Property { get; set; } = new TeRadioGroupProperty();
-    public string TypeName => typeof(TValue).FullName!;
 
     IEnumerable<ITeValidation> ITeRadioOption.Validations => Validations;
     IEnumerable<ITeRadioItem> ITeRadioOption.Items => Items;
@@ -58,4 +49,3 @@ public record TeRadioItem<TValue> : ITeRadioItem
         Default = @default;
     }
 }
-

@@ -18,9 +18,3 @@ public static class TeIgnoreOptionExtensions
         }
     }
 }
-
-public class TeIgnoreAttribute : Attribute
-{
-}
-
-

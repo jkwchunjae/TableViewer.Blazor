@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using TableViewerBlazor.Helper;
-using TableViewerBlazor.Public;
+using TableViewer.Share.Public;
 
 namespace TableViewerTest;
 

@@ -2,7 +2,7 @@ using TableViewer.MewUI.Options.Property;
 
 namespace TableViewer.MewUI.Options;
 
-public class TeSwitchAttribute(string id) : TeFieldAttribute(id) { }
+
 
 public interface ITeSwitchOption : ITeConvertableFieldOption<object, bool>
 {
@@ -21,11 +21,9 @@ public class TeSwitchOption : ITeSwitchOption
     };
 }
 
-public class TeSwitchOption<TValue> : ITeSwitchOption, ITeGenericTypeOption
+public class TeSwitchOption<TValue> : global::TableViewer.Share.Options.TeFieldOption<TValue, TeSwitchProperty>, ITeSwitchOption, ITeGenericTypeOption
 {
-    public string? Id { get; set; }
-    public TeSwitchProperty Property { get; set; } = new TeSwitchProperty();
-    public string TypeName => typeof(TValue).FullName!;
+
     public required TeBoolConverter<TValue> Converter { get; set; }
     ITeConverter ITeConvertable.Converter => Converter;
 

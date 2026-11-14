@@ -1,4 +1,4 @@
-﻿using TableViewerBlazor.Public;
+using TableViewer.Share.Public;
 
 namespace TableViewerBlazor.Internal.TvComponent;
 

@@ -1,25 +1,20 @@
 namespace TableViewer.MewUI.Options;
 
-public interface ITvOneClickAction : ITvAction
+public interface ITvOneClickAction : ITvAction, global::TableViewer.Share.Options.ITvOneClickAction<ITvOneClickProgressStyle>
 {
-    public bool Reusable { get; }
-    public ITvOneClickProgressStyle ProgressStyle { get; }
 }
 
-public interface ITvOneClickProgressStyle
+public interface ITvOneClickProgressStyle : global::TableViewer.Share.Options.ITvOneClickProgressStyle<Color, Size>
 {
-    public Color Color { get; }
-    public Size Size { get; }
 }
 
 public class TvOneClickAction<T> : TvAction<T>, ITvOneClickAction
 {
-    public bool Reusable { get; set; } = false;
-    public ITvOneClickProgressStyle ProgressStyle { get; set; } = new TvOneClickProgressStyle();
+    private readonly global::TableViewer.Share.Options.TvOneClickOptions<ITvOneClickProgressStyle> _options = new(new TvOneClickProgressStyle());
+    public bool Reusable { get => _options.Reusable; set => _options.Reusable = value; }
+    public ITvOneClickProgressStyle ProgressStyle { get => _options.ProgressStyle; set => _options.ProgressStyle = value; }
 }
 
-public class TvOneClickProgressStyle : ITvOneClickProgressStyle
+public class TvOneClickProgressStyle() : global::TableViewer.Share.Options.TvOneClickProgressStyle<Color, Size>(Color.Default, Size.Small), ITvOneClickProgressStyle
 {
-    public Color Color { get; set; } = Color.Default;
-    public Size Size { get; set; } = Size.Small;
 }

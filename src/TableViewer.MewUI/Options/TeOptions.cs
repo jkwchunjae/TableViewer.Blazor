@@ -2,10 +2,8 @@ using TableViewer.MewUI.Internal.Editing;
 
 namespace TableViewer.MewUI.Options;
 
-public class TeOptions
+public class TeOptions : global::TableViewer.Share.Options.TeOptionsBase
 {
-    public string? Title { get; set; }
-    public TeStyleOption Style { get; set; } = new();
     public List<ITeTextFieldOption> TextFieldOptions { get; set; } = [];
     public List<ITeNumericFieldOption> NumericFieldOptions { get; set; } = [];
     public List<ITeSelectBoxOption> SelectBoxOptions { get; set; } = [];
@@ -38,37 +36,11 @@ public static class TeOptionsExtension
             .Concat(options.ListEditorOptions)
             .ToArray();
 
-        // 1. ID가 양쪽에 정확히 일치 하는 경우
-        var fieldAttribute = memberInfo?.GetCustomAttribute<TeFieldAttribute>();
-        if (fieldAttribute != default)
-        {
-            var option = fieldOptions
-                .Where(o => !string.IsNullOrEmpty(o.Id))
-                .FirstOrDefault(o => o.Id == fieldAttribute.Id);
-            if (option != default)
-            {
-                fieldOption = option;
-                return true;
-            }
-        }
+        return TeFieldOptionResolver.TryResolve(memberInfo, teBase.Data, fieldOptions, DefaultForValue, DefaultForMember, out fieldOption);
+    }
 
-        // 2. data type으로 옵션을 추출
-        if (teBase.Data != default)
-        {
-            ITeFieldOption? option;
-            var dataTypeName = teBase.Data.GetType().FullName;
-            var dataBaseTypeName = teBase.Data.GetType().BaseType?.FullName;
-            option = fieldOptions
-                .Where(o => o is ITeGenericTypeOption)
-                .Select(o => o as ITeGenericTypeOption)
-                .FirstOrDefault(o => o!.TypeName == dataTypeName || o!.TypeName == dataBaseTypeName);
-            if (option != default)
-            {
-                fieldOption = option;
-                return true;
-            }
-
-            option = teBase.Data switch
+    private static ITeFieldOption? DefaultForValue(object data) =>
+        data switch
             {
                 string => new TeTextFieldOption(),
                 bool => new TeCheckBoxOption(),
@@ -125,18 +97,9 @@ public static class TeOptionsExtension
 
                 _ => default,
             };
-            if (option != default)
-            {
-                fieldOption = option;
-                return true;
-            }
-        }
 
-        if (memberInfo != null)
-        {
-            var memberType = MemberType(memberInfo);
-            ITeFieldOption? option =
-                memberType == typeof(string) ? new TeTextFieldOption() :
+    private static ITeFieldOption? DefaultForMember(Type memberType) =>
+        memberType == typeof(string) ? new TeTextFieldOption() :
                 memberType == typeof(bool) ? new TeCheckBoxOption() :
 
                 // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
@@ -173,45 +136,4 @@ public static class TeOptionsExtension
                 memberType == typeof(List<decimal>) ? TeListEditorOption<decimal>.Create(default) :
 
                 default;
-
-            if (option != default)
-            {
-                fieldOption = option;
-                return true;
-            }
-        }
-
-        // 3. Option의 generic type이 일치하는 경우 (primitive type이 아닌 경우)
-        if (memberInfo != null)
-        {
-            var memberType = MemberType(memberInfo);
-            fieldOption = fieldOptions
-                .Where(option => option is ITeGenericTypeOption)
-                .Select(option => option as ITeGenericTypeOption)
-                .FirstOrDefault(option => option!.TypeName == memberType.FullName);
-            if (fieldOption != default)
-            {
-                return true;
-            }
-        }
-
-        fieldOption = default;
-        return false;
-    }
-
-    private static Type MemberType(this MemberInfo memberInfo)
-    {
-        if (memberInfo is PropertyInfo property)
-        {
-            return property.PropertyType;
-        }
-        if (memberInfo is FieldInfo field)
-        {
-            return field.FieldType;
-        }
-        throw new Exception();
-    }
-
 }
-
-

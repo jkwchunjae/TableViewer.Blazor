@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using TableViewerBlazor.Public;
+using TableViewer.Share.Public;
 
 [assembly: InternalsVisibleTo("UnitTest")]
 namespace TableViewerBlazor.Helper;

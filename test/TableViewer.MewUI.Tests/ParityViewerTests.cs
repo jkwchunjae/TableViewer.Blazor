@@ -4,7 +4,7 @@ using System.Text.Json;
 using TableViewer.MewUI.Helper;
 using TableViewer.MewUI.Internal.ViewerModel;
 using TableViewer.MewUI.Options;
-using TableViewer.MewUI.Public;
+using TableViewer.Share.Public;
 using TableViewer.MewUI.Service;
 using Xunit;
 

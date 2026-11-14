@@ -1,4 +1,4 @@
-﻿using TableViewerBlazor.Internal.TeComponent;
+using TableViewerBlazor.Internal.TeComponent;
 
 namespace TableViewerBlazor.Options;
 
@@ -18,8 +18,3 @@ public static class TeIgnoreOptionExtensions
         }
     }
 }
-
-public class TeIgnoreAttribute : Attribute
-{
-}
-

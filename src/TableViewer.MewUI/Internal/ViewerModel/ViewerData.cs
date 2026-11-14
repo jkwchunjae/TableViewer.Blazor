@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using TableViewer.MewUI.Options;
-using TableViewer.MewUI.Public;
+using TableViewer.Share.Public;
 
 namespace TableViewer.MewUI.Internal.ViewerModel;
 

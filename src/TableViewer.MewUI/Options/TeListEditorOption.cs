@@ -1,12 +1,6 @@
 namespace TableViewer.MewUI.Options;
 
-public class TeListEditorAttribute : TeFieldAttribute
-{
-    public TeListEditorAttribute(string id)
-        : base(id)
-    {
-    }
-}
+
 
 public interface ITeListEditorOption : ITeConvertableFieldOption<object, IList>
 {
@@ -127,38 +121,3 @@ public class TeListEditorOption<TListItem> : ITeListEditorOption, ITeGenericType
         };
     }
 }
-
-public class TeListEditorConverter<TValue, TListField> : ITeConverter<TValue, TListField>
-    where TListField : IList
-{
-    public required Func<TValue, TListField> ToList { get; set; }
-    public required Func<TListField, TValue?> FromList { get; set; }
-
-    public Func<TValue, TListField> ToField => userValue => ToList(userValue);
-    public Func<TListField, TValue?> FromField => fieldValue => FromList(fieldValue);
-    Func<object, object?> ITeConverter.ToField => userValue => userValue is TValue value ? ToList(value) : default;
-    Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue is TListField value ? FromList(value) : default;
-}
-
-public class TeListEditorConverter<TValue, TListField, TListItem> : ITeConverter<TValue, TListField>
-    where TListField : IList<TListItem>
-{
-    public required Func<TValue, TListField> ToList { get; set; }
-    public required Func<TListField, TValue?> FromList { get; set; }
-
-    public Func<TValue, TListField> ToField => userValue => ToList(userValue);
-    public Func<TListField, TValue?> FromField => fieldValue => FromList(fieldValue);
-    Func<object, object?> ITeConverter.ToField => userValue => userValue is TValue value ? ToList(value) : default;
-    Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue is TListField value ? FromList(value) : default;
-}
-
-public class TeListEditorConverter<TList> : ITeConverter<TList, TList>
-    where TList : IList
-{
-    public Func<TList, TList> ToField => userValue => userValue;
-    public Func<TList, TList> FromField => fieldValue => fieldValue;
-    Func<object, object?> ITeConverter.ToField => userValue => userValue;
-    Func<object, object?> ITeConverter.FromField => fieldValue => fieldValue;
-}
-
-

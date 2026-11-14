@@ -1,9 +1,5 @@
-﻿namespace TableViewerBlazor.Options;
+namespace TableViewerBlazor.Options;
 
-public interface ITvButton
+public interface ITvButton : global::TableViewer.Share.Options.ITvButton<TvButtonStyle, TvTooltipOption>
 {
-    public Func<object?, int, bool> Condition { get; }
-    public string Label { get; }
-    public TvButtonStyle Style { get; }
-    public TvTooltipOption? TooltipOption { get; }
 }

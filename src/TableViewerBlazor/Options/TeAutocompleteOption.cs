@@ -1,12 +1,9 @@
-﻿using TableViewerBlazor.Options.Property;
+using TableViewerBlazor.Options.Property;
 using YamlDotNet.Core.Tokens;
 
 namespace TableViewerBlazor.Options;
 
-public class TeAutocompleteAttribute : TeFieldAttribute
-{
-    public TeAutocompleteAttribute(string id) : base(id) { }
-}
+
 
 public interface ITeAutocompleteOption : ITeGenericTypeOption
 {
@@ -16,11 +13,9 @@ public interface ITeAutocompleteOption : ITeGenericTypeOption
     public Func<ITeAutocompleteItem, string, bool> CustomSearchFilter { get; }
 }
 
-public class TeAutocompleteOption : ITeAutocompleteOption
+public class TeAutocompleteOption : global::TableViewer.Share.Options.TeFieldOption<string, TeAutocompleteProperty>, ITeAutocompleteOption
 {
-    public string? Id { get; set; }
-    public string TypeName => typeof(string).FullName!;
-    public TeAutocompleteProperty Property { get; set; } = new();
+
     public IEnumerable<string> Items { get; set; } = [];
     IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items.Select(x => new TeAutocompleteItem(x));
 
@@ -65,11 +60,9 @@ public class TeAutocompleteOption : ITeAutocompleteOption
     };
 }
 
-public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
+public class TeAutocompleteOption<TValue> : global::TableViewer.Share.Options.TeFieldOption<TValue, TeAutocompleteProperty>, ITeAutocompleteOption
 {
-    public string? Id { get; set; }
-    public string TypeName => typeof(TValue).FullName!;
-    public TeAutocompleteProperty Property { get; set; } = new();
+
     public IEnumerable<TeAutocompleteItem<TValue>> Items { get; set; } = [];
     IEnumerable<ITeAutocompleteItem> ITeAutocompleteOption.Items => Items;
     public required Func<TeAutocompleteItem<TValue>, string>? StringConverter { get; set; }
@@ -125,31 +118,4 @@ public class TeAutocompleteOption<TValue> : ITeAutocompleteOption
             return false;
         }
     };
-}
-
-public interface ITeAutocompleteItem
-{
-    public object Value { get; }
-}
-
-public record TeAutocompleteItem : ITeAutocompleteItem
-{
-    public string Value { get; init; }
-    object ITeAutocompleteItem.Value => Value!;
-
-    public TeAutocompleteItem(string value)
-    {
-        Value = value;
-    }
-}
-
-public record TeAutocompleteItem<T> : ITeAutocompleteItem
-{
-    public T Value { get; init; }
-    object ITeAutocompleteItem.Value => Value!;
-
-    public TeAutocompleteItem(T value)
-    {
-        Value = value;
-    }
 }

@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Aprillz.MewUI.Core" Version="0.22.1" />
     <PackageReference Include="Aprillz.MewUI.MewvalonEdit" Version="0.22.1" />
-    <PackageReference Include="YamlDotNet" Version="18.1.0" />
+    <ProjectReference Include="../TableViewer.Share/TableViewer.Share.csproj" />
     <None Include="../../README.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE" Pack="true" PackagePath="/" />
   </ItemGroup>

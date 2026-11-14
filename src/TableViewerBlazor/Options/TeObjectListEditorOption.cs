@@ -1,12 +1,6 @@
-﻿namespace TableViewerBlazor.Options;
+namespace TableViewerBlazor.Options;
 
-public class TeObjectListAttribute : TeFieldAttribute
-{
-    public TeObjectListAttribute(string id)
-        : base(id)
-    {
-    }
-}
+
 
 public interface ITeObjectListEditorOption : ITeFieldOption
 {

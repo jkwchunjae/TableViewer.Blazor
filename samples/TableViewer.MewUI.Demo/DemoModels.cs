@@ -1,5 +1,5 @@
 using TableViewer.MewUI.Options;
-using TableViewer.MewUI.Public;
+using TableViewer.Share.Public;
 
 namespace TableViewer.MewUI.Demo;
 

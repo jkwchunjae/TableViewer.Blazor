@@ -1,66 +1,14 @@
-﻿namespace TableViewerBlazor.Options;
-
+namespace TableViewerBlazor.Options;
 
 public static class TeCustomEditorOptionExtensions
 {
-    public static bool TryGetCustomEditor(
-        this TeOptions options,
-        MemberInfo? memberInfo,
-        Type? type,
-        out TeCustomEditorOption? customEditorOption
-        )
+    public static bool TryGetCustomEditor(this TeOptions options, MemberInfo? memberInfo, Type? type, out TeCustomEditorOption? customEditorOption)
     {
-        var customEditorAttribute = memberInfo?.GetCustomAttribute<TeCustomEditorAttribute>();
-        if (customEditorAttribute != null)
-        {
-            var id = customEditorAttribute.Id;
-            customEditorOption = options.CustomEditorOptions.CustomEditors
-                .FirstOrDefault(option => option?.Id == id);
-
-            if (customEditorOption != default)
-            {
-                return true;
-            }
-        }
-
-        customEditorOption = options.CustomEditorOptions.CustomEditors
-            .Where(option => option?.Condition?.Invoke(memberInfo, type) ?? false)
-            .FirstOrDefault();
-        return customEditorOption != default;
-    }
-}
-public class TeCustomEditorOptionGroup
-{
-    public TeCustomEditorOption? CustomEditor1 { get; set; }
-    public TeCustomEditorOption? CustomEditor2 { get; set; }
-    public TeCustomEditorOption? CustomEditor3 { get; set; }
-    public TeCustomEditorOption? CustomEditor4 { get; set; }
-    public TeCustomEditorOption? CustomEditor5 { get; set; }
-
-    public IEnumerable<TeCustomEditorOption> CustomEditors => new[]
-        {
-            CustomEditor1,
-            CustomEditor2,
-            CustomEditor3,
-            CustomEditor4,
-            CustomEditor5,
-        }
-        .Where(x => x != null)
-        .Select(x => x!);
-}
-
-public class TeCustomEditorOption : ITeFieldOption
-{
-    public string? Id { get; set; }
-    public Func<MemberInfo?, Type?, bool> Condition { get; set; } = default!;
-    public RenderFragment<ICustomEditorArgument>? RenderFragment { get; set; } = default;
-}
-
-public class TeCustomEditorAttribute : TeFieldAttribute
-{
-    public TeCustomEditorAttribute(string id)
-        : base(id)
-    {
+        customEditorOption = TeCustomEditorPolicy.Find(memberInfo, type, options.CustomEditorOptions.CustomEditors);
+        return customEditorOption is not null;
     }
 }
 
+public class TeCustomEditorOptionGroup : global::TableViewer.Share.Options.TeCustomEditorOptionGroup<TeCustomEditorOption> { }
+
+public class TeCustomEditorOption : global::TableViewer.Share.Options.TeCustomEditorOption<RenderFragment<ICustomEditorArgument>> { }

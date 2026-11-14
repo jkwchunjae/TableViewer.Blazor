@@ -1,42 +1,27 @@
-﻿namespace TableViewerBlazor.Options;
+namespace TableViewerBlazor.Options;
 
-public interface ITvPopupAction : ITvAction
+public interface ITvPopupAction : ITvAction, global::TableViewer.Share.Options.ITvPopupAction<DialogOptions, InnerButtonsOptions>
 {
-    Func<object, string> PopupTitle { get; }
-    Func<object, string> PopupContent { get; }
-    DialogOptions PopupStyle { get; }
-    InnerButtonsOptions InnerButtonOptions { get; }
 }
 
 public class TvPopupAction<T> : TvAction<T>, ITvPopupAction
 {
-    public Func<T, string> PopupTitle { get; set; } = _ => string.Empty;
-    public Func<T, string> PopupContent { get; set; } = _ => string.Empty;
-    public DialogOptions PopupStyle { get; set; } = new()
-    { 
+    private readonly global::TableViewer.Share.Options.TvPopupOptions<T, DialogOptions, InnerButtonsOptions> _options = new(new()
+    {
         FullWidth = true,
         CloseOnEscapeKey = true,
         NoHeader = false,
-    };
-    public InnerButtonsOptions InnerButtonOptions { get; set; } = new();
-
-    Func<object, string> ITvPopupAction.PopupTitle => o => o is T t ? PopupTitle(t) : "제목을 입력하세요";
-
-    Func<object, string> ITvPopupAction.PopupContent => o => o is T t ? PopupContent(t) : "내용을 입력하세요";
+    });
+    public Func<T, string> PopupTitle { get => _options.PopupTitle; set => _options.PopupTitle = value; }
+    public Func<T, string> PopupContent { get => _options.PopupContent; set => _options.PopupContent = value; }
+    public DialogOptions PopupStyle { get => _options.PopupStyle; set => _options.PopupStyle = value; }
+    public InnerButtonsOptions InnerButtonOptions { get => _options.InnerButtonOptions; set => _options.InnerButtonOptions = value; }
+    Func<object, string> global::TableViewer.Share.Options.ITvPopupAction<DialogOptions, InnerButtonsOptions>.PopupTitle => _options.GetTitle;
+    Func<object, string> global::TableViewer.Share.Options.ITvPopupAction<DialogOptions, InnerButtonsOptions>.PopupContent => _options.GetContent;
 }
 
-public class InnerButtonsOptions
+public class InnerButtonsOptions() : global::TableViewer.Share.Options.InnerButtonsOptions<TvButtonStyle>(
+    new() { Color = Color.Default, Variant = Variant.Filled },
+    new() { Color = Color.Primary, Variant = Variant.Filled })
 {
-    public string CloseLabel { get; set; } = "Close";
-    public string ConfirmLabel { get; set; } = "Confirm";
-    public TvButtonStyle CloseButtonStyle { get; set; } = new TvButtonStyle()
-    {
-        Color = Color.Default,
-        Variant = Variant.Filled,
-    };
-    public TvButtonStyle ConfirmButtonStyle { get; set; } = new TvButtonStyle()
-    {
-        Color = Color.Primary,
-        Variant = Variant.Filled,
-    };
 }
