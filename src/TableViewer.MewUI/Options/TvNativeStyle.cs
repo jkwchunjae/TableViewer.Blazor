@@ -17,11 +17,11 @@ public sealed class DialogOptions
     public bool FullWidth { get; set; } = true;
     public bool CloseOnEscapeKey { get; set; } = true;
     public bool NoHeader { get; set; }
-    public bool CloseButton { get; set; } = true;
+    public bool CloseButton { get; set; }
     public bool BackdropClick { get; set; } = true;
     public bool FullScreen { get; set; }
-    public MaxWidth? MaxWidth { get; set; }
-    public double Width { get; set; } = 480;
+    public MaxWidth? MaxWidth { get; set; } = Options.MaxWidth.Small;
+    public double Width { get; set; } = 600;
     public double Height { get; set; } = 260;
-    public Action<Window>? Configure { get; set; }
+    public Action<Border>? Configure { get; set; }
 }

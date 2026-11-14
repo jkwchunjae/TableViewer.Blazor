@@ -49,7 +49,7 @@ public sealed class NativeTooltip : IDisposable
             if (settings.ShowOnHover) { target.MouseEnter += Enter; target.MouseLeave += Leave; }
             if (settings.ShowOnFocus) { target.GotFocus += Enter; target.LostFocus += Leave; }
             if (settings.ShowOnClick) target.MouseUp += Click;
-            if (settings.Visible) Application.Current?.Dispatcher.BeginInvoke(() => SetVisible(true));
+            if (settings.Visible) Application.Current?.Dispatcher?.BeginInvoke(() => SetVisible(true));
         }
     }
 

@@ -100,6 +100,18 @@ public static class ViewerData
     };
 
     public static IReadOnlyList<object?> Items(IEnumerable data) => data.Cast<object?>().ToArray();
+    public static IReadOnlyList<DictionaryEntry> Entries(IDictionary data, TvOptions options)
+    {
+        var entries = new List<DictionaryEntry>();
+        var iterator = data.GetEnumerator();
+        try
+        {
+            while (iterator.MoveNext())
+                if (iterator.Key is not string key || !options.DisableKeys.Contains(key)) entries.Add(iterator.Entry);
+        }
+        finally { (iterator as IDisposable)?.Dispose(); }
+        return entries;
+    }
     public static IReadOnlyList<MemberInfo> Columns(IEnumerable<object?> items, TvOptions options) =>
         items.FirstOrDefault(item => item is not null) is { } first ? Members(first, options) : [];
 

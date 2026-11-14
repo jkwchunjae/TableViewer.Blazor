@@ -16,6 +16,7 @@ public static class NativeStyle
 
     public static Button Button(Button button, TvButtonStyle style)
     {
+        if (button is NativeActionButton feedback) feedback.Ripple = style.Ripple;
         var padding = style.SuperDense ? new Thickness(4, 1) : style.Dense ? new Thickness(8, 3) : new Thickness(12, 7);
         button.Padding = padding;
         button.FontSize = style.Size switch { Options.Size.Small => 12, Options.Size.Large => 16, _ => 14 };
